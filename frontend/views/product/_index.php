@@ -276,17 +276,20 @@ use frontend\widgets\RelatedProducts;
                                 if ($product->status_id == 1) {
                                     echo '<i style="font-size:1.5rem; margin: 5px;" class="fas fa-check"></i> ' . $product->status->name;
                                 } elseif ($product->status_id == 2) {
-                                    echo "<span style='color: #ff0000!important;
+                                    echo '<i style="font-size:1.5rem; color: #ff0000!important; margin: 5px;" class="fas fa-ban"></i> ';
+                                    echo "<span style='color: #ff0000 !important;
                                                 font-weight: 600;
                                                 letter-spacing: 0.6px;
                                             '> " . $product->status->name . " </span>";
                                 } elseif ($product->status_id == 3) {
+                                    echo '<i style="font-size:1.5rem; color: #ff8300!important; margin: 5px;" class="fas fa-truck"></i> ';
                                     echo "<span style='color: #ff8300 !important;
                                                 font-weight: 600;
                                                 letter-spacing: 0.6px;
                                             '> " . $product->status->name . " </span>";
                                 } elseif ($product->status_id == 4) {
-                                    echo "<span style='color: #0331fc!important;
+                                    echo '<i style="font-size:1.5rem; color: #0331fc!important; margin: 5px;" class="fa fa-bars"></i> ';
+                                    echo "<span style='color: #0331fc !important;
                                                 font-weight: 600;
                                                 letter-spacing: 0.6px;
                                             '> " . $product->status->name . " </span>";
