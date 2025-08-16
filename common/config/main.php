@@ -5,7 +5,7 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    // 'bootstrap' => ['assetsAutoCompress'],898989898988888
+    // 'bootstrap' => ['assetsAutoCompress'],2222222222222222222222222222222
     'components' => [
         'cache' => [
             'class' => \yii\caching\FileCache::class,
