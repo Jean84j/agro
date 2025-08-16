@@ -2,12 +2,17 @@
 
 namespace backend\controllers;
 
+use common\models\shop\CategoriesProperties;
+use common\models\shop\CategoriesTranslate;
 use common\models\shop\Category;
 use backend\models\search\CategorySearch;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 use Yii;
+use yii\helpers\Inflector;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -42,7 +47,7 @@ class CategoryController extends Controller
     {
         $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-//        debug($dataProvider);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -69,22 +74,17 @@ class CategoryController extends Controller
      */
     public function actionCreate()
     {
-//        debug($this->request->post());
-//        die;
-//        Yii::$app->cache->flush();
         $model = new Category();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-//
-                $dir = Yii::getAlias('@frontendWeb/category');
 
-                $file = UploadedFile::getInstance($model, 'file');
-                $imageName = uniqid();
-                $file->saveAs($dir . '/' . $imageName . '.' . $file->extension);
-                $model->file = $imageName . '.' . $file->extension;
+                $model->file = $this->uploadFile($model);
 
                 if ($model->save()) {
+
+                    $this->getCreateTranslate($model);
+
                     return $this->redirect(['update', 'id' => $model->id]);
                 }
             }
@@ -97,6 +97,64 @@ class CategoryController extends Controller
         ]);
     }
 
+    protected function getCreateTranslate($model)
+    {
+        $sourceLanguage = 'uk'; // Исходный язык
+        $targetLanguages = ['ru']; // Языки перевода
+
+        $tr = new GoogleTranslate();
+
+        foreach ($targetLanguages as $language) {
+            $translation = $model->getTranslation($language)->one();
+            if (!$translation) {
+                $translation = new CategoriesTranslate();
+                $translation->category_id = $model->id;
+                $translation->language = $language;
+            }
+
+            $tr->setSource($sourceLanguage);
+            $tr->setTarget($language);
+
+            $translation->name = $tr->translate($model->name ?? '');
+
+                if (strlen($model->description) < 5000) {
+                    $translation->description = $tr->translate($model->description);
+                } else {
+                    $description = $model->description;
+                    $translatedDescription = '';
+                    $partSize = 5000;
+                    $parts = [];
+
+                    // Разбиваем текст на части по 5000 символов, не нарушая структуру тегов
+                    while (strlen($description) > $partSize) {
+                        $part = substr($description, 0, $partSize);
+                        $lastSpace = strrpos($part, ' ');
+                        $parts[] = substr($description, 0, $lastSpace);
+                        $description = substr($description, $lastSpace);
+                    }
+                    $parts[] = $description;
+
+                    // Переводим каждую часть отдельно
+                    foreach ($parts as $part) {
+                        $translatedDescription .= $tr->translate($part);
+                    }
+
+                    // Сохраняем переведенное описание
+                    $translation->description = $translatedDescription;
+                }
+
+            $translation->pageTitle = $tr->translate($model->pageTitle ?? '');
+            $translation->metaDescription = $tr->translate($model->metaDescription ?? '');
+            $translation->prefix = $tr->translate($model->prefix ?? '');
+            $translation->keywords = $tr->translate($model->keywords ?? '');
+            $translation->product_keywords = $tr->translate($model->product_keywords ?? '');
+            $translation->product_footer_description = $tr->translate($model->product_footer_description ?? '');
+            $translation->product_title = $tr->translate($model->product_title ?? '');
+            $translation->product_description = $tr->translate($model->product_description ?? '');
+            $translation->save();
+        }
+    }
+
     /**
      * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -106,34 +164,89 @@ class CategoryController extends Controller
      */
     public function actionUpdate($id)
     {
-//        Yii::$app->cache->flush();
         $model = $this->findModel($id);
 
+        $translateRu = CategoriesTranslate::findOne(['category_id' => $id, 'language' => 'ru']);
+
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $post_file = $_FILES['Category']['size']['file'];
-            if($post_file <= 0 ){
+
+            $postCategory = Yii::$app->request->post('Category', []);
+            $properties = $postCategory['properties'] ?? [];
+
+            $this->updateCategoryProperties($model, $properties ?? null);
+
+            $postTranslates = Yii::$app->request->post('CategoriesTranslate', []);
+
+            $this->updateTranslate($model->id, 'ru', $postTranslates['ru'] ?? null);
+
+            if ($_FILES['Category']['size']['file'] > 0) {
+                $model->file = $this->uploadFile($model);
+            } else {
                 $old = $this->findModel($id);
                 $model->file = $old->file;
-            }else {
-                $dir = Yii::getAlias('@frontendWeb/category');
-
-                $file = UploadedFile::getInstance($model, 'file');
-                $imageName = uniqid();
-                $file->saveAs($dir . '/' . $imageName . '.' . $file->extension);
-                $model->file = $imageName . '.' . $file->extension;
             }
-            if($model->save(false)) {
+
+            if ($model->save(false)) {
                 return $this->redirect(['update', 'id' => $model->id]);
-            }else{
-                debug($model->errors);
-                debug($model->file);
-                die;
+            } else {
+                dd($model->errors, $model->file);
             }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'translateRu' => $translateRu,
         ]);
+    }
+
+    private function updateTranslate($categoryId, $language, $data)
+    {
+        if ($data) {
+            $translate = CategoriesTranslate::findOne(['category_id' => $categoryId, 'language' => $language]);
+            if ($translate) {
+                $translate->setAttributes($data);
+                $translate->save();
+            }
+        }
+    }
+
+    private function uploadFile($model)
+    {
+        $dir = Yii::getAlias('@frontendWeb/images/category/');
+        $file = UploadedFile::getInstance($model, 'file');
+        if (empty($model->slug)) {
+            $imageName = Inflector::slug($model->name);
+        }else{
+            $imageName = $model->slug;
+        }
+        $file->saveAs($dir . $imageName . '.' . $file->extension);
+        return $imageName . '.' . $file->extension;
+    }
+
+    private
+    function updateCategoryProperties($model, $data)
+    {
+        if (!empty($data)) {
+            $properties = CategoriesProperties::find()->where(['category_id' => $model->id])->all();
+            if ($properties) {
+                foreach ($properties as $p) {
+                    $p->delete();
+                }
+            }
+
+            foreach ($data as $datum_id) {
+                $property = CategoriesProperties::find()
+                    ->where(['category_id' => $model->id])
+                    ->andWhere(['property_id' => $datum_id])
+                    ->one();
+                if (!$property) {
+                    $add_property = new CategoriesProperties();
+                    $add_property->category_id = $model->id;
+                    $add_property->property_id = $datum_id;
+                    $add_property->save();
+                }
+            }
+        }
     }
 
     /**
@@ -145,7 +258,17 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $dir = Yii::getAlias('@frontendWeb/images');
+        $model = $this->findModel($id);
+
+        if (file_exists($dir . '/category/' . $model->file)) {
+            unlink($dir . '/category/' . $model->file);
+        }
+
+        CategoriesTranslate::deleteAll(['category_id' => $id]);
+
+        $model->delete();
+
 
         return $this->redirect(['index']);
     }
@@ -162,8 +285,32 @@ class CategoryController extends Controller
         if (($model = Category::findOne(['id' => $id])) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
+    public function actionUpdateVisibility()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+        $value = Yii::$app->request->post('value');
+
+         $model = Category::findOne($id);
+         $model->visibility = $value;
+         if ($model->save()){
+             $message = ' Збережено Нове Значення ! ! ! ';
+             $background = 'bg-success';
+         }else{
+             $message = ' Сталася Помилка ! ! ! ';
+             $background = 'bg-danger';
+         }
+
+        return [
+            'status' => 'ok',
+            'message' => $message,
+            'background' => $background,
+
+        ];
+    }
 
 }

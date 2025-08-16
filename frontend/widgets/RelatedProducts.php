@@ -3,11 +3,12 @@
 
 namespace frontend\widgets;
 
-
+use app\widgets\BaseWidgetFronted;
 use common\models\shop\Product;
-use yii\base\Widget;
+use Yii;
+use yii\db\Expression;
 
-class RelatedProducts extends Widget
+class RelatedProducts extends BaseWidgetFronted
 {
 
     public function init()
@@ -15,14 +16,42 @@ class RelatedProducts extends Widget
         parent::init();
 
     }
+    public $package;
 
     public function run()
     {
-        $products = Product::find()->limit(20)->all();
+        $language =Yii::$app->session->get('_language');
 
-        return $this->render('related-products', [
-            'products' => $products,
-        ]);
+        $title = 'Може зацікавити';
+
+        $package = $this->package;
+        $products = Product::find()
+            ->select([
+                'id',
+                'name',
+                'slug',
+                'price',
+                'old_price',
+                'status_id',
+                'label_id',
+                'currency',
+                'package',
+                'category_id',
+            ])
+            ->where(['IN', 'status_id', [1, 3, 4]])
+            ->andWhere(['package' => $package])
+            ->orderBy(new Expression('RAND()'))
+            ->limit(15)
+            ->all();
+
+        $products = $this->translateProductsItem($language, $products);
+
+        return $this->render('products-carousel-slide',
+            [
+                'products' => $products,
+                'language' => $language,
+                'title' => $title,
+            ]);
     }
 
 

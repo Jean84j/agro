@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "about".
@@ -10,8 +11,9 @@ use Yii;
  * @property int $id
  * @property string|null $name Назва
  * @property string|null $description Опис
+ * @property string $language Мова
  */
-class About extends \yii\db\ActiveRecord
+class About extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -28,7 +30,7 @@ class About extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'string'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'language'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,4 +45,5 @@ class About extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
         ];
     }
+
 }

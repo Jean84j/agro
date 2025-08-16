@@ -8,9 +8,14 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = $name;
-?>
+if (Yii::$app->user->isGuest) {
+    Yii::$app->response->redirect(['/'])->send();
+    Yii::$app->end();
+}
 
+$this->title = $name;
+
+?>
 <!-- sa-app__body -->
 <div id="top" class="sa-app__body">
     <div class="sa-error">

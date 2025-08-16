@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
 /** @var common\models\shop\Product $model */
 
@@ -10,7 +8,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+<?= $this->render('_form', [
+    'model' => $model,
+]) ?>
 

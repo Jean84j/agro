@@ -3,10 +3,14 @@
 namespace backend\controllers;
 
 use common\models\shop\Order;
-use backend\models\search\shop\OrderSearch;
+use backend\models\search\OrderSearch;
+use common\models\shop\OrderItem;
+use Yii;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -86,20 +90,84 @@ class OrderController extends Controller
      * Updates an existing Order model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string|\yii\web\Response
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
+//        $request = Yii::$app->request;
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', ' Інформація про замовлення оновлена!');
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+//        if ($request->isAjax) {
+//            Yii::$app->response->format = Response::FORMAT_JSON;
+//            if ($request->isGet) {
+//                return [
+//                    'title' => "Змовлення № " . $model->id,
+//                    'content' => $this->renderAjax('update', [
+//                        'model' => $model,
+//                    ]),
+////                    'footer' => Html::button('Зберегти', ['class' => 'btn btn-primary', 'type' => "submit"])
+//                ];
+//            } else if ($model->load($request->post()) && $model->save()) {
+//                return ['forceClose' => true, 'forceReload' => '#top'];
+//            }
+//        }
+//        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        }
 
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionAddOrderItem()
+    {
+        $model = new OrderItem();
+        if (Yii::$app->request->isGet) {
+
+            $order_item = Yii::$app->request->get();
+
+            $model->order_id = $order_item['orderId'];
+            $model->product_id = $order_item['productId'];
+            $model->quantity = $order_item['quantity'];
+            $model->price = $model->getPrice($order_item['productId']);
+            $model->save(true);
+
+        }
+        return $this->redirect(['view', 'id' => $order_item['orderId']]);
+    }
+
+    public function actionUpdateOrderItem()
+    {
+        if (Yii::$app->request->isGet) {
+
+            $order_item = Yii::$app->request->get();
+            $item = OrderItem::find()->where(['id' => $order_item['orderItemId']])->one();
+
+            $item->quantity = $order_item['quantity'];
+            $item->price = $order_item['price'];
+            $item->save(true);
+
+            return $this->redirect(['view', 'id' => $item->order_id]);
+        }
+    }
+
+    public function actionDeleteOrderItem($id)
+    {
+        $orderItem = OrderItem::findOne($id);
+        if ($orderItem) {
+            $orderItem->delete();
+
+            return $this->redirect(['view', 'id' => $orderItem->order_id]);
+        } else {
+            throw new NotFoundHttpException('Товар не найден');
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\About;
 use backend\models\search\AboutSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

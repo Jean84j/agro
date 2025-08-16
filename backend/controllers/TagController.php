@@ -2,8 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\shop\ProductTag;
 use common\models\shop\Tag;
 use backend\models\search\TagSearch;
+use common\models\TagTranslate;
+use Stichoza\GoogleTranslate\GoogleTranslate;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,8 +74,14 @@ class TagController extends Controller
         $model = new Tag();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['update', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                if ($model->save()) {
+
+                    $this->getCreateTranslate($model);
+
+                    return $this->redirect(['update', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -80,6 +90,58 @@ class TagController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    protected function getCreateTranslate($model)
+    {
+        $sourceLanguage = 'uk'; // Исходный язык
+        $targetLanguages = ['ru']; // Языки перевода
+
+        $tr = new GoogleTranslate();
+
+        foreach ($targetLanguages as $language) {
+            $translation = $model->getTranslation($language)->one();
+            if (!$translation) {
+                $translation = new TagTranslate();
+                $translation->tag_id = $model->id;
+                $translation->language = $language;
+            }
+
+            $tr->setSource($sourceLanguage);
+            $tr->setTarget($language);
+
+            $translation->name = $tr->translate($model->name ?? '');
+            $translation->seo_title = $tr->translate($model->seo_title ?? '');
+            $translation->seo_description = $tr->translate($model->seo_description ?? '');
+
+            if (strlen($model->description) < 5000) {
+                $translation->description = $tr->translate($model->description);
+            } else {
+                $description = $model->description;
+                $translatedDescription = '';
+                $partSize = 5000;
+                $parts = [];
+
+                // Разбиваем текст на части по 5000 символов, не нарушая структуру тегов
+                while (strlen($description) > $partSize) {
+                    $part = substr($description, 0, $partSize);
+                    $lastSpace = strrpos($part, ' ');
+                    $parts[] = substr($description, 0, $lastSpace);
+                    $description = substr($description, $lastSpace);
+                }
+                $parts[] = $description;
+
+                // Переводим каждую часть отдельно
+                foreach ($parts as $part) {
+                    $translatedDescription .= $tr->translate($part);
+                }
+
+                // Сохраняем переведенное описание
+                $translation->description = $translatedDescription;
+            }
+
+            $translation->save();
+        }
     }
 
     /**
@@ -93,13 +155,35 @@ class TagController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $translateRu = TagTranslate::findOne(['tag_id' => $id, 'language' => 'ru']);
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $postTranslates = Yii::$app->request->post('TagTranslate', []);
+
+            $this->updateTranslate($model->id, 'ru', $postTranslates['ru'] ?? null);
+
+            if ($model->save(false)) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            } else {
+                dd($model->errors);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'translateRu' => $translateRu,
         ]);
+    }
+
+    private function updateTranslate($tagId, $language, $data)
+    {
+        if ($data) {
+            $translate = TagTranslate::findOne(['tag_id' => $tagId, 'language' => $language]);
+            if ($translate) {
+                $translate->setAttributes($data);
+                $translate->save();
+            }
+        }
     }
 
     /**
@@ -111,7 +195,16 @@ class TagController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $tags = ProductTag::find()->where(['tag_id' => $model->id])->all();
+        foreach ($tags as $tag) {
+
+            $tag->delete();
+        }
+
+        TagTranslate::deleteAll(['tag_id' => $id]);
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

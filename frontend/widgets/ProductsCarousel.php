@@ -1,13 +1,11 @@
 <?php
 
-
 namespace frontend\widgets;
 
+use app\widgets\BaseWidgetFronted;
+use Yii;
 
-use common\models\shop\Product;
-use yii\base\Widget;
-
-class ProductsCarousel extends Widget
+class ProductsCarousel extends BaseWidgetFronted
 {
 
     public function init()
@@ -18,10 +16,30 @@ class ProductsCarousel extends Widget
 
     public function run()
     {
-        $products = Product::find()->with('label')->limit(16)->all();
+        $language = Yii::$app->session->get('_language', 'uk');
 
-        return $this->render('products-carousel', ['products' => $products]);
+        $title = 'Нові надходження';
+        $grup_id = 3;
+        $limit = 20;
+//        $cacheKey = 'productsCarousel_cache_key';
+//        $dependency = new DbDependency([
+//            'sql' => 'SELECT MAX(date_updated) FROM product',
+//        ]);
+//
+//        $products = Yii::$app->cache->get($cacheKey);
+//        if ($products === false || !Yii::$app->cache->get($cacheKey . '_db')) {
+
+        $products = $this->translateProductsCarousel($language, $grup_id, $limit);
+
+//            Yii::$app->cache->set($cacheKey, $products, 3600, $dependency);
+//            Yii::$app->cache->set($cacheKey . '_db', true, 0, $dependency);
+//        }
+
+        return $this->render('products-carousel',
+            [
+                'products' => $products,
+                'language' => $language,
+                'title' => $title,
+            ]);
     }
-
-
 }

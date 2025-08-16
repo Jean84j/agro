@@ -3,6 +3,7 @@
 namespace common\models\shop;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "status".
@@ -10,7 +11,7 @@ use Yii;
  * @property int $id
  * @property string|null $name
  */
-class Status extends \yii\db\ActiveRecord
+class Status extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -40,4 +41,10 @@ class Status extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
         ];
     }
+
+    public function getProductStatus($id)
+    {
+        return Product::find()->where(['status_id' => $id])->count();
+    }
+
 }

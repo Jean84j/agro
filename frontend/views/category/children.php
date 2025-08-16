@@ -1,11 +1,15 @@
 <?php
+
+use common\models\shop\ActivePages;
+use frontend\assets\CategoryChildrenPageAsset;
 use yii\helpers\Url;
 
 /** @var \common\models\shop\Product $categories */
 
-?>
+CategoryChildrenPageAsset::register($this);
+ActivePages::setActiveUser();
 
-<!-- site__body -->
+?>
 <div class="site__body">
     <div class="page-header">
         <div class="page-header__container container">
@@ -13,13 +17,13 @@ use yii\helpers\Url;
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="/">Головна</a>
+                            <a href="/"> <i class="fas fa-home"></i> <?=Yii::t('app','Головна')?></a>
                             <svg class="breadcrumb-arrow" width="6px" height="9px">
-                                <use xlink:href="/frontend/web/images/sprite.svg#arrow-rounded-right-6x9"></use>
+                                <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
                             </svg>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="<?= Url::to(['category/list']) ?>">Категорії</a>
+                            <a href="<?= Url::to(['category/list']) ?>"><?=Yii::t('app','Категорії')?></a>
                             <svg class="breadcrumb-arrow" width="6px" height="9px">
                                 <use xlink:href="/frontend/web/images/sprite.svg#arrow-rounded-right-6x9"></use>
                             </svg>
@@ -29,7 +33,7 @@ use yii\helpers\Url;
                 </nav>
             </div>
             <div class="page-header__title">
-                <h1><?= $category->name ?></h1>
+                <h1><?= $category->h1 ?: $category->name ?></h1>
             </div>
         </div>
     </div>
@@ -38,29 +42,38 @@ use yii\helpers\Url;
             <div class="col-12">
                 <div class="block">
                     <div class="products-view">
-                        <div class="products-view__list products-list" data-layout="grid-4-full" data-with-features="false" data-mobile-grid-columns="2">
+                        <div class="products-view__list products-list" data-layout="grid-4-full"
+                             data-with-features="false" data-mobile-grid-columns="2">
                             <div class="products-list__body">
                                 <?php foreach ($category->parents as $parent): ?>
-                                    <div class="products-list__item">
-                                        <div class="product-card product-card--hidden-actions ">
-                                            <div class="product-card__image product-image">
-                                                <a href="<?=Url::to(['category/catalog', 'slug' => $parent->slug])?>" class="product-image__body">
-                                                    <img class="product-image__img" src="/category/<?= $parent->file ?>" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-card__info">
-                                                <div class="product-card__name">
-                                                    <a href="<?=Url::to(['category/catalog', 'slug' => $parent->slug])?>"><?= $parent->name ?></a>
+                                    <?php if ($parent->visibility == 1): ?>
+                                        <div class="products-list__item">
+                                            <div class="product-card ">
+                                                <div class="product-card__image product-image">
+                                                    <a href="<?= Url::to(['category/catalog', 'slug' => $parent->slug]) ?>"
+                                                       class="product-image__body">
+                                                        <img class="product-image__img"
+                                                             src="/images/category/<?= $parent->file ?>"
+                                                             width="231" height="231"
+                                                             alt="<?= $parent->name ?>">
+                                                    </a>
                                                 </div>
-                                            </div>
-                                            <div class="product-card__actions">
-                                                <div class="product-card__availability">
-                                                    Availability: <span class="text-success">In Stock</span>
+                                                <div class="product-card__info">
+                                                    <div class="product-card__name">
+                                                        <a href="<?= Url::to(['category/catalog', 'slug' => $parent->slug]) ?>"><?= $parent->name ?></a>
+                                                    </div>
+                                                </div>
+                                                <div class="product-card__actions">
+                                                    <div class="product-card__availability">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
+                            </div>
+                            <div class="spec__disclaimer">
+                                <?= $category->description ?>
                             </div>
                         </div>
                     </div>
@@ -69,5 +82,3 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-<!-- site__body / end -->
-

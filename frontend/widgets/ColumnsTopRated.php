@@ -1,13 +1,12 @@
 <?php
 
-
 namespace frontend\widgets;
 
+use app\widgets\BaseWidgetFronted;
+use Yii;
+use yii\helpers\Url;
 
-use common\models\shop\Product;
-use yii\base\Widget;
-
-class ColumnsTopRated extends Widget
+class ColumnsTopRated extends BaseWidgetFronted   //  Гербіциди
 {
 
     public function init()
@@ -18,14 +17,22 @@ class ColumnsTopRated extends Widget
 
     public function run()
     {
-//      $products = Product::find()->with('label')->orderBy('id DESC')->limit(3)->all();
-        $products = Product::find()->with('label')->limit(3)->where(['category_id' => 5])->all();
+        $language = Yii::$app->session->get('_language', 'uk');
+        $title = 'Гербіциди';
+        $url = Url::to(['product-list/gerbitsidi']);
 
-//debug($products);
-//die;
+        $grup_id = 4;
+        $limit = 3;
 
-        return $this->render('columns-top-rated', ['products' => $products]);
+        $products = $this->translateProductsCarousel($language, $grup_id, $limit);
+
+        return $this->render('product-columns',
+            [
+                'products' => $products,
+                'title' => $title,
+                'url' => $url,
+                'language' => $language,
+            ]);
     }
-
 
 }

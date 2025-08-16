@@ -46,6 +46,9 @@ class TagSearch extends Tag
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pagesize' => false,
+            ]
         ]);
 
         $this->load($params);

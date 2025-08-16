@@ -9,6 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'language' => 'uk-UA',
+    'timeZone' => 'Europe/Kiev',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -24,8 +25,10 @@ return [
         ]
     ],
     'components' => [
-
-//        'defaultRoute' => 'main/index',
+        //        'defaultRoute' => 'main/index',
+        'devicedetect' => [
+            'class' => 'alexandernst\devicedetect\DeviceDetect'
+        ],
         'i18n' => [
             'translations' => [
                 'app*' => [
@@ -73,6 +76,13 @@ return [
                 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 ],
+                'kartik\icons\FlagIconAsset' => [
+                    'basePath' => '@webroot/vendor/flag-icon-css',
+                    'baseUrl' => '@web/vendor/flag-icon-css',
+                    'css' => [
+                        'css/flag-icon.css',
+                    ],
+                ],
             ],
         ],
         'urlManager' => [
@@ -85,6 +95,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'cabinet' => 'site/login',
 //                '<action:\w+>' => 'category/<action>'
 //                '<module:\w+>/<controller:\w+>/<action:(\w|-)+>/<id:\d+>' => '<module>/<controller>/<action>',
                 '<controller:\w+>/<action:(\w|-)+>/<id:\d+>' => '<controller>/<action>',
@@ -92,6 +103,21 @@ return [
 
         ],
         
+    ],
+    'as access' => [
+        'class' => 'yii\filters\AccessControl',
+        'except' => [
+            'site/login', 'site/error', 'site/signup', 'site/verify-email',
+            'site/resend-verification-email',
+            'site/request-password-reset',
+            'site/reset-password',
+        ],
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ],
     ],
     'params' => $params,
 ];

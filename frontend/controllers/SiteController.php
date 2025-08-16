@@ -2,8 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\models\Messages;
+use common\models\Settings;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -14,18 +17,38 @@ use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use yii\web\Cookie;
+use yii\web\Response;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+
+     public function actionError()
+    {
+        $exception = Yii::$app->errorHandler->exception;
+
+        if ($exception !== null) {
+            $statusCode = $exception->statusCode ?? 500;
+            
+            if ($statusCode === 404) {
+                return $this->render('404', ['exception' => $exception]);
+            }
+            
+            return $this->render('404', ['exception' => $exception]);
+        }
+        
+        return $this->redirect(Yii::$app->homeUrl);
+    }
+
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
+
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -51,23 +74,7 @@ class SiteController extends Controller
             ],
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }
-
+    
     /**
      * Displays homepage.
      *
@@ -75,6 +82,60 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
+//                Yii::$app->session->removeAll();
+
+
+        $seo = Settings::seoPageTranslate('home');
+
+        $organization = Schema::localBusiness()
+            ->url('https://agropro.org.ua/')
+            ->name('Інтернет-магазин | AgroPro')
+            ->description('Купуйте |️ Засоби захисту рослин |️ Посівний матеріал |️ Мікродобрива ⚡ За вигідними цінами в Україні в агромаркеті AgroPro.org.ua.')
+            ->email('nisatatyana@gmail.com')
+            ->telephone('+3(066)394-18-28')
+            ->priceRange('UAH')
+            ->contactPoint(Schema::contactPoint()
+                ->telephone('+3(066)394-18-28')
+                ->areaServed('UA')
+                ->contactType('customer service')
+                ->url(Yii::$app->request->absoluteUrl)
+                ->hoursAvailable(Schema::openingHoursSpecification()
+                    ->opens('9:00')
+                    ->closes('19:00')
+                    ->dayOfWeek([
+                        'Monday',
+                        'Tuesday',
+                        'Wednesday',
+                        'Thursday',
+                        'Friday'
+                    ])
+                )
+            )
+            ->address([
+                "@type" => "PostalAddress",
+                "streetAddress" => 'Україна Полтава вул.Зіньківська 35',
+                "postalCode" => '36000',
+                "addressLocality" => 'Полтава',
+                "addressRegion" => 'Полтавська область',
+                "addressCountry" => 'Україна'
+            ])
+            ->image(Yii::$app->request->hostInfo . '/images/logos/meta_logo.jpg');
+        Yii::$app->params['organization'] = $organization->toScript();
+
+        $homepage = Schema::WebPage()
+            ->name($seo->title)
+            ->description($seo->description)
+            ->url(Yii::$app->request->absoluteUrl);
+        Yii::$app->params['webPage'] = $homepage->toScript();
+
+        $type = 'website';
+        $title = $seo->title;
+        $description = $seo->description;
+        $image = '';
+        $keywords = '';
+        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+
         return $this->render('index');
     }
 
@@ -85,6 +146,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -113,38 +175,6 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-            }
-
-            return $this->refresh();
-        }
-
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
 
     /**
      * Signs user up.
@@ -217,8 +247,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {
@@ -256,4 +286,76 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
+    public function actionLoadContent()
+    {
+        $name = Yii::$app->request->get('widgetName');
+
+        switch ($name) {
+            case 'bestsellers':
+                $content = $this->renderPartial('_load-bestsellers-widgets');
+                break;
+            case 'popular-categories':
+                $content = $this->renderPartial('_load-popular-categories-widgets');
+                break;
+            case 'bestsellers-dacha':
+                $content = $this->renderPartial('_load-bestsellers-dacha-widgets');
+                break;
+            case 'columns':
+                $content = $this->renderPartial('_load-columns-widgets');
+                break;
+            default:
+                // Обработка ситуации, когда значение widgetName не соответствует ожидаемым
+                $content = 'Unknown widgetName';
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'success' => true,
+            'content' => $content,
+        ];
+    }
+
+    public function actionMailingList()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (Yii::$app->request->isPost) {
+            $email = Yii::$app->request->post('email');
+
+                $model = new Messages();
+                $model->name = 'AgroPro';
+                $model->email = $email;
+                $model->message = 'Додати в розсилку';
+                if ($model->save()) {
+                    return ['success' => true, 'message' => 'Подписка оформлена!'];
+                } else {
+                    return ['success' => false, 'message' => 'Ошибка при сохранении данных.'];
+                }
+
+        } else {
+            throw new BadRequestHttpException('Неверный запрос.');
+        }
+    }
+
+    public function actionAcceptCookies()
+    {
+        Yii::$app->response->cookies->add(new Cookie([
+            'name' => 'cookies_accepted',
+            'value' => '1',
+            'expire' => time() + 3600 * 24 * 365, // 1 год
+        ]));
+        return $this->asJson(['success' => true]);
+    }
+    
+     public function actionLanguageCookies()
+    {
+        Yii::$app->response->cookies->add(new Cookie([
+            'name' => 'cookies_language',
+            'value' => '1',
+            'expire' => time() + 3600 * 24 * 365, // 1 год
+        ]));
+        return $this->asJson(['success' => true]);
+    }
+
 }

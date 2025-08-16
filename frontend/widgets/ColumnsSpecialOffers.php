@@ -1,13 +1,12 @@
 <?php
 
-
 namespace frontend\widgets;
 
+use app\widgets\BaseWidgetFronted;
+use Yii;
+use yii\helpers\Url;
 
-use common\models\shop\Product;
-use yii\base\Widget;
-
-class ColumnsSpecialOffers extends Widget
+class ColumnsSpecialOffers extends BaseWidgetFronted  // Фунгіциди
 {
 
     public function init()
@@ -18,10 +17,22 @@ class ColumnsSpecialOffers extends Widget
 
     public function run()
     {
-//      $products = Product::find()->with('label')->limit(3)->all();
-        $products = Product::find()->with('label')->limit(3)->where(['category_id' => 6])->all();
-        return $this->render('columns-special-offers', ['products' => $products]);
-    }
+        $language = Yii::$app->session->get('_language', 'uk');
+        $title = 'Фунгіциди';
+        $url = Url::to(['product-list/fungitsidi']);
 
+        $grup_id = 5;
+        $limit = 3;
+
+        $products = $this->translateProductsCarousel($language, $grup_id, $limit);
+
+        return $this->render('product-columns',
+            [
+                'products' => $products,
+                'title' => $title,
+                'url' => $url,
+                'language' => $language,
+            ]);
+    }
 
 }

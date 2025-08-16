@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "delivery".
@@ -10,8 +11,9 @@ use Yii;
  * @property int $id
  * @property string|null $name Name
  * @property string|null $description Description
+ * @property string $language Мова
  */
-class Delivery extends \yii\db\ActiveRecord
+class Delivery extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -28,7 +30,7 @@ class Delivery extends \yii\db\ActiveRecord
     {
         return [
             [['description'], 'string'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'language'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,4 +45,5 @@ class Delivery extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
         ];
     }
+
 }

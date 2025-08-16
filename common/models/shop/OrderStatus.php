@@ -2,7 +2,7 @@
 
 namespace common\models\shop;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "order_status".
@@ -12,7 +12,7 @@ use Yii;
  *
  * @property Order[] $orders
  */
-class OrderStatus extends \yii\db\ActiveRecord
+class OrderStatus extends ActiveRecord
 {
     /**
      * {@inheritdoc}

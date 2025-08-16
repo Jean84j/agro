@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ?>
                             </ol>
                         </nav>
-                        <h1 class="h3 m-0"><?=$this->title?></h1>
                     </div>
                     <div class="col-auto d-flex"><a href="<?=Url::to(['create'])?>" class="btn btn-primary"><?=Yii::t('app', 'New +')?></a></div>
                 </div>
@@ -66,10 +65,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <span class="me-4"><?=$model->id?></span>
                                 </div>
                             </td>
-                            <td><a href="<?=Url::to(['label/update', 'id' => $model->id])?>" class="text-reset"><?=$model->name?></a></td>
+                            <td><a href="<?=Url::to(['status/update', 'id' => $model->id])?>" class="text-reset"><?=$model->name?></a></td>
                             <td>
-                                <!--                                К-ть товарів у мітки-->
-
+                                <?= $model->getProductStatus($model->id) ?>
                             </td>
 
                             <td>
@@ -92,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <li><a class="dropdown-item" href="<?php //Url::to(['category/remove-tag', 'id' => $model->id])?>"><?php //Yii::t('app', 'Remove tag')?></a></li>
                                         <li><hr class="dropdown-divider" /></li>
                                         <li>
-                                            <?= Html::a(Yii::t('app', 'Delete'), ['label/delete', 'id' => $model->id], ['class'=>"dropdown-item text-danger",
+                                            <?= Html::a(Yii::t('app', 'Delete'), ['status/delete', 'id' => $model->id], ['class'=>"dropdown-item text-danger",
                                                 'data' => [
                                                     'confirm' => 'Are you sure you want to delete this item?',
                                                     'method' => 'post'

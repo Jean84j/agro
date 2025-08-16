@@ -29,6 +29,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public $password;
+
 
     /**
      * {@inheritdoc}
@@ -54,9 +56,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'email'], 'required'],
+            [['username', 'email', 'password'], 'string'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeSave($insert)
+    {
+        if ($this->password){
+            $this->setPassword($this->password);
+            $this->generateAuthKey();
+        }elseif ($insert){
+            $this->addError('password', 'Пароль не может быть пустым');
+       return false;
+        }
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -110,7 +129,8 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
             'verification_token' => $token,
             'status' => self::STATUS_INACTIVE
@@ -129,7 +149,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }

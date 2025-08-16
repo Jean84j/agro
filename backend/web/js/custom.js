@@ -19,7 +19,7 @@
     */
     window.stroyka.search.getAjaxSettings = function(query) {
         return {
-            url: '/shop-admin/app/default/suggestions?search=' + encodeURIComponent(query),
+            url: '/admin/uk/search/ajax-search?search=' + encodeURIComponent(query),
         };
     };
 
@@ -42,7 +42,7 @@
     // Search simulate no results
     */
     window.stroyka.search.requestMiddleware.add(function(next, query, abortController) {
-        if (query.length >= 15) {
+        if (query.length >= 20) {
             return Promise.resolve('');
         } else {
             return Promise.resolve(next(query, abortController));
@@ -52,7 +52,7 @@
     /*
     // Datatables
     */
-    (function() {
+    (function () {
         $.fn.DataTable.ext.pager.numbers_length = 5;
         $.fn.DataTable.defaults.oLanguage.sInfo = 'Показано _START_ от _END_ до _TOTAL_';
         $.fn.DataTable.defaults.oLanguage.sLengthMenu = 'Строк на странице _MENU_';
@@ -73,16 +73,16 @@
             $('.sa-datatables-init').each(function() {
             const tableSearchSelector = $(this).data('sa-search-input');
             const table = $(this).DataTable({
-                
+
                 dom: template,
                 paging: true,
                 ordering: false,
                 // order: [[0, 'asc']],
-                "lengthMenu": [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "Все"] ],
+                "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "Все"] ],
                 "language": {
                     "paginate": {
-                      "next": "Следующая",
-                      "previous": "Предыдущая"
+                      "next": ">>",
+                      "previous": "<<"
                     },
                     "infoFiltered": " - отфильтровано из _MAX_ записей",
                          "loadingRecords": "Подождите, идет загрузка...",
@@ -98,51 +98,9 @@
                 });
             }
         });
-        
+
     })();
 
-    (function() {
-        $.fn.DataTable.ext.pager.numbers_length = 5;
-        $.fn.DataTable.defaults.oLanguage.sInfo = 'Показано _START_ от _END_ до _TOTAL_';
-        $.fn.DataTable.defaults.oLanguage.sLengthMenu = 'Строк на странице _MENU_';
-
-        const template = '' +
-            '<"sa-datatables"' +
-                '<"sa-datatables__table"t>' +
-                '<"sa-datatables__footer"' +
-                    // '<"sa-datatables__pagination"p>' +
-                    '<"sa-datatables__controls"' +
-                        '<"sa-datatables__legend"i>' +
-                        // '<"sa-datatables__divider">' +
-                        // '<"sa-datatables__page-size"l>' +
-                    '>' +
-                '>' +
-            '>';
-
-            $('.sa-datatables-order-parts').each(function() {
-            const tableSearchSelector = $(this).data('id');
-            const table = $(this).DataTable({
-                
-                dom: template,
-                paging: true,
-                ordering: true,
-                "language": {
-                    
-                  },
-                drawCallback: function() {
-                    $(this.api().table().container()).find('.pagination').addClass('pagination-sm');
-                },
-            });
-
-            if (tableSearchSelector) {
-                $(tableSearchSelector).on('input', function() {
-                    console.log(this.value);
-                    table.search(this.value).draw();
-                });
-            }
-        });
-        
-    })();
 
     /*
     // Analytics chart
@@ -227,20 +185,38 @@
     /*
     // Widget chart (.saw-chart)
     */
-    (function() {
+     (function() {
         $('.saw-chart[data-sa-data]').each(function() {
             const data = $(this).data('sa-data');
+            const sumb = $(this).data('sumb-data');
             const labels = data.map(function(item) { return item.label; });
             const values = data.map(function(item) { return item.value; });
             const canvas = $(this).find('canvas')[0];
 
+            // Цвета
+            const defaultColor = window.stroyka.colors.getThemeColor(); // Жёлтый
+            const highlightColor = '#ff8000';
+
+            // Получаем текущий месяц (например: "Червень")
+            const now = new Date();
+            const monthNames = [
+                'Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер',
+                'Лип', 'Сер', 'Вер', 'Жов', 'Лис', 'Гру'
+            ];
+            const currentMonthName = monthNames[now.getMonth()];
+
+            // Формируем массив цветов: красный — для текущего месяца, остальные — жёлтые
+            const backgroundColors = labels.map(label =>
+                label === currentMonthName ? highlightColor : defaultColor
+            );
+            
             new Chart(canvas.getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [
                         {
-                            backgroundColor: window.stroyka.colors.getThemeColor(),
+                            backgroundColor: backgroundColors,
                             borderColor: 'transparent',
                             borderWidth: 0,
                             fill: 'origin',
@@ -264,7 +240,11 @@
                                 fontSize: 13,
                                 fontColor: '#828f99',
                                 callback: function (value) {
+                                   if (sumb){
+                                       return sumb + ' ' + value;
+                                   }else {
                                     return '₴ ' + value;
+                                   }
                                 },
                             },
                             gridLines: {
@@ -434,7 +414,5 @@ function pageLoad() {
         $(this).toggleClass("minus").siblings("ul").toggle();
     })
 }
-
-
 
 }(jQuery, window));

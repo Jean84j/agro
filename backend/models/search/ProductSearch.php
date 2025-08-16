@@ -2,9 +2,11 @@
 
 namespace backend\models\search;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\shop\Product;
+use yii\db\Query;
 
 /**
  * ProductSearch represents the model behind the search form of `common\models\shop\Product`.
@@ -39,16 +41,34 @@ class ProductSearch extends Product
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search()
     {
-        $query = Product::find();
+        $request = Yii::$app->request;
+        $params = $request->post();
+        $paramsGrid = $request->get();
 
+        $query = Product::find()
+        ->orderBy(['date_public' => SORT_DESC]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => false,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
+
+        if ($params) {
+            Yii::$app->session->set('product_search_params', $params);
+        }
+
+        $sessionParams = Yii::$app->session->get('product_search_params', []);
+        if ($sessionParams) {
+            $params = array_merge($params, $sessionParams);
+        }
+        if ($paramsGrid) {
+            $params = array_merge($params, $paramsGrid);
+        }
 
         $this->load($params);
 
@@ -66,7 +86,124 @@ class ProductSearch extends Product
             'status_id' => $this->status_id,
             'category_id' => $this->category_id,
             'label_id' => $this->label_id,
+            'brand_id' => $this->brand_id,
         ]);
+
+
+        if (isset($params['minPrice'])) {
+            $minPrice = $params['minPrice'];
+        } else {
+            $minPrice = Yii::$app->request->post('minPrice');
+        }
+        if (isset($params['maxPrice'])) {
+            $maxPrice = $params['maxPrice'];
+        } else {
+            $maxPrice = Yii::$app->request->post('maxPrice');
+        }
+
+        $query->andFilterWhere(['>=', 'price', $minPrice])
+            ->andFilterWhere(['<=', 'price', $maxPrice]);
+
+        if (isset($params['category'])) {
+            $query->andFilterWhere(['category_id' => $params['category']]);
+        }
+
+        if (isset($params['status'])) {
+            $query->andFilterWhere(['status_id' => $params['status']]);
+        }
+
+        if (isset($params['brand'])) {
+            $query->andFilterWhere(['brand_id' => $params['brand']]);
+        }
+
+        if (isset($params['labels'])) {
+            $query->andFilterWhere(['label_id' => $params['labels']]);
+        }
+
+        if (isset($params['package'])) {
+            $query->andFilterWhere(['package' => $params['package']]);
+        }
+
+        if (isset($params['date-update'])) {
+            if ($params['date-update'] == 22) {
+                $query->orderBy(['date_updated' => SORT_DESC]);
+            } else {
+                $query->orderBy(['date_updated' => SORT_ASC]);
+            }
+        }
+
+        if (isset($params['filter-search']) && $params['filter-search'] != '') {
+            $q = $params['filter-search'];
+            $productId = (new Query())
+                ->select('product_id')
+                ->from('product_properties')
+                ->where(['like', 'value', $q])
+                ->union(
+                    (new Query())
+                        ->select('product_id')
+                        ->from('product_properties_translate')
+                        ->where(['like', 'value', $q])
+                )
+                ->column();
+
+            if (!$productId) {
+                Yii::$app->session->setFlash('warning', ' Запит "' . $q . '" не дав результатів!');
+            }
+
+            $query->andFilterWhere(['id' => $productId]);
+        }
+
+        if (isset($params['seo'])) {
+            if ($params['seo'] == 'seo-title') {
+                $query->andFilterWhere(['or',
+                    ['<', 'CHAR_LENGTH(seo_title)', 50],
+                    ['>', 'CHAR_LENGTH(seo_title)', 70]
+                ]);
+            }
+
+            if ($params['seo'] == 'seo-description') {
+                $query->andFilterWhere(['or',
+                    ['<', 'CHAR_LENGTH(seo_description)', 130],
+                    ['>', 'CHAR_LENGTH(seo_description)', 180]
+                ]);
+            }
+
+            if ($params['seo'] == 'non-h1') {
+                $query->andWhere(['or',
+                    ['is', 'h1', null],    // Проверка на NULL
+                    ['=', 'h1', '']        // Проверка на пустую строку
+                ]);
+            }
+
+            if ($params['seo'] == 'non-keyword') {
+                $query->andWhere(['or',
+                    ['is', 'keywords', null],    // Проверка на NULL
+                    ['=', 'keywords', '']        // Проверка на пустую строку
+                ]);
+            }
+
+            if ($params['seo'] == 'non-brand') {
+                $query->andWhere(['or',
+                    ['is', 'brand_id', null],
+                ]);
+            }
+
+            if ($params['seo'] == 'non-h3') {
+                $query->andWhere(['not like', 'description', '<h3>']);
+            }
+
+            if ($params['seo'] == 'product-description') {
+                $query->andFilterWhere(['or',
+                    ['<', 'CHAR_LENGTH(description)', 1000],
+                ]);
+            }
+
+            if ($params['seo'] == 'product-short-description') {
+                $query->andFilterWhere(['or',
+                    ['<', 'CHAR_LENGTH(short_description)', 150],
+                ]);
+            }
+        }
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])

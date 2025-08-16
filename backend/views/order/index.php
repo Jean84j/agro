@@ -1,44 +1,44 @@
 <?php
 
-use common\models\shop\Order;
-use common\models\shop\OrderStatus;
-use kartik\grid\GridView;
 use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-
 
 /** @var yii\web\View $this */
-/** @var backend\models\search\shop\OrderSearch $searchModel */
+/** @var backend\models\search\OrderSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Замовлення';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<!-- sa-app__body -->
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
-        <div class="container">
+        <div class="container" style="max-width: 1623px">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
                     <div class="col">
                         <nav class="mb-2" aria-label="breadcrumb">
                             <ol class="breadcrumb breadcrumb-sa-simple">
-                                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                                <?php echo Breadcrumbs::widget([
+                                    'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
+                                    'homeLink' => [
+                                        'label' => Yii::t('app', 'Home'),
+                                        'url' => Yii::$app->homeUrl,
+                                    ],
+                                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                                ]);
+                                ?>
                             </ol>
                         </nav>
-                        <h1 class="h3 m-0">Orders</h1>
                     </div>
-                    <div class="col-auto d-flex"><a href="app-order.html" class="btn btn-primary">New order</a></div>
+                    <div class="col-auto d-flex"><a href="<?=Url::to(['create'])?>" class="btn btn-primary"><?=Yii::t('app', 'New order')?></a></div>
                 </div>
             </div>
             <div class="card">
                 <div class="p-4">
                     <input
                             type="text"
-                            placeholder="Start typing to search for orders"
+                            placeholder="<?=Yii::t('app', 'Start typing to search for categories')?>"
                             class="form-control form-control--search mx-auto"
                             id="table-search"
                     />
@@ -51,12 +51,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             <input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..." />
                         </th>
                         <th>№</th>
-                        <th>Дата</th>
-                        <th>Замовник</th>
-                        <th>Оплата</th>
                         <th>Статус</th>
+                        <th>Замовник</th>
+                        <th>Дата</th>
+                        <th>Оплата</th>
                         <th>К-ть</th>
                         <th>Заг. сума</th>
+                        <th>Постачальник</th>
                         <th class="w-min" data-orderable="false"></th>
                     </tr>
                     </thead>
@@ -64,25 +65,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php foreach ($dataProvider->models as $order): ?>
                     <tr>
                         <td><input type="checkbox" class="form-check-input m-0 fs-exact-16 d-block" aria-label="..." /></td>
-                        <td><a href="app-order.html" class="text-reset"><?=$order->id?></a></td>
+                        <td><a href="<?=Url::to(['order/view', 'id' => $order->id])?>" class="text-reset"><?=$order->id?></a></td>
+                        <td>
+                            <div class="d-flex fs-6"><?=$order->getExecutionStatus($order->id)?></div>
+                        </td>
+                        <td><a href="<?=Url::to(['order/view', 'id' => $order->id])?>" class="text-reset"><?=$order->fio?></a></td>
                         <td><?=Yii::$app->formatter->asDatetime($order->created_at)?></td>
-                        <td><?=$order->fio?></td>
                         <td>
-                            <div class="d-flex fs-6"><div class="badge badge-sa-success">Yes</div></div>
+                            <div class="d-flex fs-6"><?=$order->getPayMent($order->id)?></div>
                         </td>
-                        <td>
-                            <div class="d-flex fs-6"><div class="badge badge-sa-danger">
-                                    <?=$order->status->name?>
-                                </div></div>
+                        <td><?=Yii::$app->formatter->asDecimal($order->getTotalQty($order->id), 0)?>
                         </td>
-                        <td><?=count($order->orderItems)?> замовлень</td>
                         <td>
                             <div class="sa-price">
-                                <span class="sa-price__symbol">$</span>
-                                <span class="sa-price__integer">200</span>
-                                <span class="sa-price__decimal">.00</span>
+                                <?=Yii::$app->formatter->asDecimal($order->getTotalSumm($order->id), 2)?>
                             </div>
                         </td>
+                        <td><?= $order->getProvider($order->order_provider_id)?></td>
                         <td>
                             <div class="dropdown">
                                 <button
@@ -100,22 +99,38 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </svg>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="order-context-menu-0">
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                    <li><a class="dropdown-item" href="#">Duplicate</a></li>
-                                    <li><a class="dropdown-item" href="#">Add tag</a></li>
-                                    <li><a class="dropdown-item" href="#">Remove tag</a></li>
-                                    <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item text-danger" href="#">Delete</a></li>
+<!--                                    <li><a class="dropdown-item" href="#">Edit</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="#">Duplicate</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="#">Add tag</a></li>-->
+<!--                                    <li><a class="dropdown-item" href="#">Remove tag</a></li>-->
+<!--                                    <li><hr class="dropdown-divider" /></li>-->
+                                    <li>
+                                        <?= Html::a(Yii::t('app', 'View'), ['order/view', 'id' => $order->id], [
+                                            'class' => 'dropdown-item text-info',
+                                        ]) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a(Yii::t('app', 'Update'), ['order/update', 'id' => $order->id], [
+                                            'class' => 'dropdown-item text-warning',
+                                        ]) ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::a(Yii::t('app', 'Delete'), ['order/delete', 'id' => $order->id], [
+                                            'class' => 'dropdown-item text-danger',
+                                            'data' => [
+                                                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<!-- sa-app__body / end -->

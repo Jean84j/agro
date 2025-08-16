@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "contacts".
@@ -13,8 +14,12 @@ use Yii;
  * @property string|null $tel_second Телефон другий
  * @property string|null $hours_work Години роботи
  * @property string|null $coments Коментар
+ * @property string|null $comment_two Коментарій другий
+ * @property string|null $work_time_short Години праці короткі
+ * @property string|null $email Email
+ * @property string $language Мова
  */
-class Contact extends \yii\db\ActiveRecord
+class Contact extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -30,7 +35,9 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['address', 'tel_primary', 'tel_second', 'hours_work', 'coments'], 'string', 'max' => 255],
+            [['comment_two'], 'string'],
+            [['email'], 'email'],
+            [['address', 'tel_primary', 'tel_second', 'hours_work', 'coments', 'work_time_short', 'language'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,10 +49,13 @@ class Contact extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'address' => Yii::t('app', 'Address'),
-            'tel_primary' => Yii::t('app', 'The phone is the first'),
-            'tel_second' => Yii::t('app', 'Phone number two'),
-            'hours_work' => Yii::t('app', 'Hours of work'),
-            'coments' => Yii::t('app', 'Coment'),
+            'tel_primary' => Yii::t('app', 'Tel Primary'),
+            'tel_second' => Yii::t('app', 'Tel Second'),
+            'hours_work' => Yii::t('app', 'Hours Work'),
+            'coments' => Yii::t('app', 'Coments'),
+            'comment_two' => Yii::t('app', 'Comment Two'),
+            'work_time_short' => Yii::t('app', 'Work Time Short'),
+            'email' => Yii::t('app', 'Email'),
         ];
     }
 }

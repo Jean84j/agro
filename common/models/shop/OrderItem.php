@@ -2,7 +2,8 @@
 
 namespace common\models\shop;
 
-use Yii;
+use common\models\Settings;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "order_item".
@@ -10,12 +11,12 @@ use Yii;
  * @property int $id
  * @property int|null $order_id Інформація про замовлення
  * @property int|null $product_id Товар
- * @property string|null $quantity Кількість
+ * @property int|null $quantity Кількість
  * @property float|null $price Ціна
  *
  * @property Order $order
  */
-class OrderItem extends \yii\db\ActiveRecord
+class OrderItem extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -31,9 +32,9 @@ class OrderItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'product_id'], 'integer'],
+            [['order_id', 'product_id', 'quantity'], 'integer'],
             [['price'], 'number'],
-            [['quantity'], 'string', 'max' => 255],
+//            [['quantity'], 'string', 'max' => 255],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
         ];
     }
@@ -64,5 +65,21 @@ class OrderItem extends \yii\db\ActiveRecord
 
     public function getProduct(){
         return $this->hasOne(Product::class, ['id' => 'product_id']);
+    }
+
+    public function getProductName($id)
+    {
+        return Product::find()->select('name')->where(['id' => $id])->scalar();
+    }
+
+
+    public function getPrice($id)
+    {
+       $product = Product::find()->select(['price', 'currency'])->where(['id' => $id])->one();
+        if ($product->currency === 'UAH') {
+            return $product->price;
+        } else {
+            return floatval($product->price) * floatval(Settings::currencyRate($product->currency));
+        }
     }
 }

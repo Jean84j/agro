@@ -12,6 +12,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        // 'css/jquery.toast.css',
         "https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i",
         "vendor/bootstrap/css/bootstrap.ltr.css",
         "vendor/highlight.js/styles/github.css",
@@ -22,14 +23,15 @@ class AppAsset extends AssetBundle
         "vendor/datatables/css/dataTables.bootstrap5.min.css",
         "vendor/nouislider/nouislider.min.css",
         "vendor/fullcalendar/main.min.css",
-        // 'css/ajaxcrud.css',
+        'css/ajaxcrud.css',
         "css/style.css",
     ];
     public $js = [
 //        "vendor/jquery/jquery.min.js",
+        // 'js/jquery.toast.js',
         "vendor/feather-icons/feather.min.js",
         "vendor/simplebar/simplebar.min.js",
-        "vendor/bootstrap/js/bootstrap.bundle.min.js",
+        // "vendor/bootstrap/js/bootstrap.bundle.min.js",
         "vendor/highlight.js/highlight.pack.js",
         "vendor/quill/quill.min.js",
         "vendor/air-datepicker/js/datepicker.min.js",
@@ -44,9 +46,9 @@ class AppAsset extends AssetBundle
         "js/stroyka.js",
         "js/custom.js",
 //        "js/calendar.js",
-        "js/demo.js",
+        // "js/demo.js",
         "js/my-demo.js",
-        "js/demo-chart-js.js",
+        // "js/demo-chart-js.js",
 
         'js/ModalRemote.js',
         'js/ajaxcrud.js',
@@ -54,5 +56,6 @@ class AppAsset extends AssetBundle
     public $depends = [
          'yii\web\YiiAsset',
          'yii\bootstrap5\BootstrapAsset',
+         'yii\bootstrap5\BootstrapPluginAsset', // ✅ обязательно!
     ];
 }

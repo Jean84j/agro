@@ -1,7 +1,8 @@
 <?php
 
+use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
-use yii\widgets\Breadcrumbs;
+
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
@@ -21,11 +22,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col">
                     <nav class="mb-2" aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-sa-simple">
-
+                            <?php
+                            echo Breadcrumbs::widget([
+                                'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
+                                'homeLink' => [
+                                    'label' => 'Главная ',
+                                    'url' => Yii::$app->homeUrl,
+                                ],
+                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                            ]);
+                            ?>
                         </ol>
                     </nav>
                 </div>
-
                 <div class="col-auto d-flex">
                     <?php if(!$model->isNewRecord): ?>
                         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -37,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'method' => 'post',
                             ],
                         ]) ?>
-                        <!--                            <a href="#" class="btn btn-secondary me-3">--><?php ////Yii::t('app', 'Duplicate')?><!--</a>-->
+
                         <?php // Html::a(Yii::t('app', 'List'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>
                         <?php // Html::a(Yii::t('app', 'Create more'), Url::to(['create']), ['class' => 'btn btn-success me-3']) ?>
                     <?php endif; ?>
@@ -46,7 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="sa-hero-header">
             <div class="sa-hero-header__title"><h1><?= Html::encode($this->title) ?></h1></div>
-<!--            <div class="sa-hero-header__subtitle">This Agreement was last modified on 26 June 2021</div>-->
         </div>
     </div>
     <div class="container container--max--lg pb-6">

@@ -7,6 +7,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ErrorAction;
 use yii\web\Response;
 
 /**
@@ -32,6 +33,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['dashboard-tab-content'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [
@@ -50,7 +56,7 @@ class SiteController extends Controller
     {
         return [
             'error' => [
-                'class' => \yii\web\ErrorAction::class,
+                'class' => ErrorAction::class,
             ],
         ];
     }
@@ -62,6 +68,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
         return $this->render('index');
     }
 
@@ -100,5 +107,42 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+    
+     public function actionDashboardTabContent()
+    {
+
+        $id = Yii::$app->request->post('id');
+
+        switch ($id) {
+            case 'order-tab':
+                $content = $this->renderPartial('_order-tab-content');
+                break;
+            case 'review-tab':
+                $content = $this->renderPartial('_review-tab-content');
+                break;
+            case 'views-tab':
+                $content = $this->renderPartial('_views-tab-content');
+                break;
+            case 'top-review-tab':
+                $content = $this->renderPartial('_top-review-tab-content');
+                break;
+            case 'sub-top-review-tab':
+                $content = $this->renderPartial('_sub-top-review-tab-content');
+                break;
+            case 'top-bay-tab':
+                $content = $this->renderPartial('_top-bay-tab-content');
+                break;
+            default:
+                return [
+                    'success' => false,
+                    'error' => 'Unknown tab ID'
+                ];
+        }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'success' => true,
+            'content' => $content
+        ];
     }
 }

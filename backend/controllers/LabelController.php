@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\shop\Label;
 use backend\models\search\LabelSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -94,7 +95,7 @@ class LabelController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['update', 'id' => $model->id]);
         }
 
         return $this->render('update', [

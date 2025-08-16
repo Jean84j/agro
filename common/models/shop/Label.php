@@ -3,14 +3,16 @@
 namespace common\models\shop;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "label".
  *
  * @property int $id
  * @property string|null $name
+ * @property string|null $color
  */
-class Label extends \yii\db\ActiveRecord
+class Label extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -27,6 +29,7 @@ class Label extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 255],
+            [['color'], 'string', 'max' => 50],
         ];
     }
 
@@ -38,6 +41,13 @@ class Label extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'color' => Yii::t('app', 'Color'),
         ];
+    }
+
+    public function getProductLabel($id)
+    {
+        return Product::find()->where(['label_id' => $id])->count();
+
     }
 }

@@ -3,6 +3,7 @@
 namespace common\models\shop;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "product_tag".
@@ -13,7 +14,7 @@ use Yii;
  * @property Product $product
  * @property Tag $tag
  */
-class ProductTag extends \yii\db\ActiveRecord
+class ProductTag extends ActiveRecord
 {
     /**
      * {@inheritdoc}

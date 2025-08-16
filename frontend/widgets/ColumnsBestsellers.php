@@ -1,13 +1,12 @@
 <?php
 
-
 namespace frontend\widgets;
 
+use app\widgets\BaseWidgetFronted;
+use Yii;
+use yii\helpers\Url;
 
-use common\models\shop\Product;
-use yii\base\Widget;
-
-class ColumnsBestsellers extends Widget
+class ColumnsBestsellers extends BaseWidgetFronted  //  Інсектициди
 {
 
     public function init()
@@ -18,10 +17,22 @@ class ColumnsBestsellers extends Widget
 
     public function run()
     {
-//      $products = Product::find()->with('label')->limit(3)->all();
-        $products = Product::find()->with('label')->limit(3)->where(['category_id' => 7])->all();
-        return $this->render('columns-bestsellers', ['products' => $products]);
-    }
+        $language = Yii::$app->session->get('_language', 'uk');
+        $title = 'Інсектициди';
+        $url = Url::to(['product-list/insektitsidi']);
 
+        $grup_id = 6;
+        $limit = 3;
+
+        $products = $this->translateProductsCarousel($language, $grup_id, $limit);
+
+        return $this->render('product-columns',
+            [
+                'products' => $products,
+                'title' => $title,
+                'url' => $url,
+                'language' => $language,
+            ]);
+    }
 
 }

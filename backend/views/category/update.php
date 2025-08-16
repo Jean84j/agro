@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var common\models\shop\Category $model */
@@ -15,5 +14,6 @@ $this->params['breadcrumbs'][] = ['label' =>  Yii::t('app', 'Category') . ": " .
 
 <?= $this->render('_form', [
     'model' => $model,
+    'translateRu' => $translateRu,
 ]) ?>
 
