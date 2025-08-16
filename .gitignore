@@ -69,6 +69,7 @@ phpunit.phar
 *.iml
 *.sublime-project
 *.sublime-workspace
+*.osp
 
 /backend/config/main-local.php
 /frontend/config/main-local.php
