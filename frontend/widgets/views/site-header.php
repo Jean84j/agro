@@ -254,9 +254,3 @@ $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
         </div>
     </header>
 <?php endif; ?>
-<style>
-    .header-menu {
-        font-weight: bold;
-        font-size: 16px;
-    }
-</style>

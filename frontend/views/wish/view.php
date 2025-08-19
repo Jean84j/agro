@@ -193,9 +193,6 @@ WishListPageAsset::register($this);
         <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
     </div>
     <style>
-        .category-prefix {
-            color: #a9a8a8;
-        }
         .wishlist-not-products {
             text-align: center;
         }
