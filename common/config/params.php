@@ -1,6 +1,7 @@
 <?php
 return [
     'bsVersion' => '4.x',
+    'telegram.chat_id' => 0,
     'adminEmail' => 'admin@example.com',
     'email.from'   => 'no-reply@example.com',
     'email.admins' => ['admin@example.com'],

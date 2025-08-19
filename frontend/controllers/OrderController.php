@@ -48,8 +48,7 @@ class OrderController extends Controller
                     $order_item->product_id = $order_cart->id;
                     $order_item->price = $order_cart->getPrice();
                     $order_item->quantity = strval($order_cart->quantity);
-                    if ($order_item->save()) {
-                    }
+                    $order_item->save();
                 }
                 Yii::$app->cart->removeAll();
                 Yii::$app->session->set('order_id', $order->id);
@@ -88,7 +87,7 @@ class OrderController extends Controller
         }
 
         if (!$order->sent_message) {
-            $chat_id = 6086317334;
+            $chat_id = Yii::$app->params['telegram.chat_id'];
             $this->getSendTelegramMessage($chat_id, $order);
             $order->sent_message = true;
             $order->save();
