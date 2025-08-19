@@ -18,7 +18,7 @@ class Bestsellers extends BaseWidgetFronted
 
     public function run() {
 
-        $language =Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
         $title = 'Товари для Фермера';
 
         $products_grup = ProductGrup::find()

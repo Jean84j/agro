@@ -18,7 +18,7 @@ class FeaturedProduct extends BaseWidgetFronted
 
     public function run()
     {
-        $language =Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
 
         $title = 'Популярні товари';
 
