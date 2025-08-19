@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\shop\OrderProvider;
 use backend\models\search\OrderProviderSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,7 +23,7 @@ class OrderProviderController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],

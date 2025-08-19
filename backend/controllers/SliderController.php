@@ -111,10 +111,10 @@ class SliderController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $post_file = $_FILES['Slider']['size']['image'];
-            if($post_file <= 0 ){
+            if ($post_file <= 0) {
                 $old = $this->findModel($id);
                 $model->image = $old->image;
-            }else {
+            } else {
                 $dir = Yii::getAlias('@frontendWeb/images/slider/');
                 $file = UploadedFile::getInstance($model, 'image');
                 $imageName = uniqid();
@@ -122,21 +122,20 @@ class SliderController extends Controller
                 $model->image = $imageName . '.' . $file->extension;
             }
             $post_file_mob = $_FILES['Slider']['size']['image_mob'];
-            if($post_file_mob <= 0 ){
+            if ($post_file_mob <= 0) {
                 $old = $this->findModel($id);
                 $model->image_mob = $old->image_mob;
-            }else {
+            } else {
                 $dir = Yii::getAlias('@frontendWeb/images/slider/');
                 $file_mob = UploadedFile::getInstance($model, 'image_mob');
                 $imageName_mob = uniqid();
                 $file_mob->saveAs($dir . $imageName_mob . '.' . $file_mob->extension);
                 $model->image_mob = $imageName_mob . '.' . $file_mob->extension;
             }
-                if($model->save()) {
-                    return $this->redirect(['update', 'id' => $model->id]);
-                }else{
-                    dd($model->errors);
-                    die;
+            if ($model->save()) {
+                return $this->redirect(['update', 'id' => $model->id]);
+            } else {
+                dd($model->errors);
             }
         }
 
@@ -156,11 +155,11 @@ class SliderController extends Controller
     {
         $dir = Yii::getAlias('@frontendWeb/images');
         $model = $this->findModel($id);
-        if (file_exists($dir .'/slider/'. $model->image)) {
-            unlink($dir .'/slider/'. $model->image);
+        if (file_exists($dir . '/slider/' . $model->image)) {
+            unlink($dir . '/slider/' . $model->image);
         }
-        if (file_exists($dir .'/slider/'. $model->image_mob)) {
-            unlink($dir .'/slider/'. $model->image_mob);
+        if (file_exists($dir . '/slider/' . $model->image_mob)) {
+            unlink($dir . '/slider/' . $model->image_mob);
         }
         $model->delete();
         return $this->redirect(['index']);

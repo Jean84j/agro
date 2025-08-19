@@ -11,7 +11,7 @@ use yii\web\Response;
 
 class SearchController extends Controller
 {
-    public function actionAjaxSearch($search)
+    public function actionAjaxSearch($search): ?string
     {
         $search = trim($search);
         Yii::$app->response->format = Response::FORMAT_JSON;

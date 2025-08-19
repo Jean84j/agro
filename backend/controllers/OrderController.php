@@ -6,11 +6,9 @@ use common\models\shop\Order;
 use backend\models\search\OrderSearch;
 use common\models\shop\OrderItem;
 use Yii;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -26,7 +24,7 @@ class OrderController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -102,24 +100,6 @@ class OrderController extends Controller
             Yii::$app->session->setFlash('success', ' Інформація про замовлення оновлена!');
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-//        if ($request->isAjax) {
-//            Yii::$app->response->format = Response::FORMAT_JSON;
-//            if ($request->isGet) {
-//                return [
-//                    'title' => "Змовлення № " . $model->id,
-//                    'content' => $this->renderAjax('update', [
-//                        'model' => $model,
-//                    ]),
-////                    'footer' => Html::button('Зберегти', ['class' => 'btn btn-primary', 'type' => "submit"])
-//                ];
-//            } else if ($model->load($request->post()) && $model->save()) {
-//                return ['forceClose' => true, 'forceReload' => '#top'];
-//            }
-//        }
-//        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        }
 
         return $this->render('update', [
             'model' => $model,
