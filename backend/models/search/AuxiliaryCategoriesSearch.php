@@ -2,12 +2,13 @@
 
 namespace backend\models\search;
 
+use common\models\shop\AuxiliaryCategories;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\shop\AuxiliaryCategories;
+
 
 /**
- * AuxiliaryCategoriesSearch represents the model behind the search form of `common\models\shop\AuxiliaryCategoriesSearch`.
+ * AuxiliaryCategories represents the model behind the search form of `common\models\shop\AuxiliaryCategories`.
  */
 class AuxiliaryCategoriesSearch extends AuxiliaryCategories
 {

@@ -2,14 +2,15 @@
 
 namespace backend\models\search;
 
+use common\models\ReportReminder;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\IpBot as IpBotModel;
+
 
 /**
- * IpBot represents the model behind the search form of `common\models\IpBot`.
+ * ReportReminder represents the model behind the search form of `common\models\ReportReminder`.
  */
-class IpBot extends IpBotModel
+class ReportReminderSearch extends ReportReminder
 {
     /**
      * {@inheritdoc}
@@ -17,8 +18,8 @@ class IpBot extends IpBotModel
     public function rules()
     {
         return [
-            [['id', 'blocking'], 'integer'],
-            [['ip', 'isp', 'comment'], 'safe'],
+            [['id', 'report_id', 'date', 'status'], 'integer'],
+            [['event', 'comment'], 'safe'],
         ];
     }
 
@@ -40,14 +41,14 @@ class IpBot extends IpBotModel
      */
     public function search($params)
     {
-        $query = IpBotModel::find();
+        $query = ReportReminder::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['id' => SORT_DESC], // Сортировка по id по умолчанию
+                'defaultOrder' => ['date' => SORT_ASC],
             ],
         ]);
 
@@ -62,11 +63,12 @@ class IpBot extends IpBotModel
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'blocking' => $this->blocking,
+            'report_id' => $this->report_id,
+            'date' => $this->date,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'ip', $this->ip])
-            ->andFilterWhere(['like', 'isp', $this->isp])
+        $query->andFilterWhere(['like', 'event', $this->event])
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
