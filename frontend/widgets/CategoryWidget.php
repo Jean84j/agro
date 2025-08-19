@@ -12,7 +12,7 @@ class CategoryWidget extends Widget
 {
     public function run()
     {
-        $language = Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
         $cacheKey = 'category_cache_key';
         $dependency = new DbDependency([
             'sql' => 'SELECT MAX(date_updated) FROM category',

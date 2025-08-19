@@ -10,7 +10,7 @@ class WishController extends BaseFrontendController
 {
     public function actionView()
     {
-        $language = Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
         $session = Yii::$app->session;
         $wishList = $session->get('wishList', []);
 

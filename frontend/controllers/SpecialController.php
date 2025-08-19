@@ -12,7 +12,7 @@ class SpecialController extends BaseFrontendController
 {
     public function actionView()
     {
-        $language = Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];

@@ -81,7 +81,7 @@ class TagController extends BaseFrontendController
 
     public function actionView($slug, $category_slug = null)
     {
-        $language = Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
 
         $categoryName = '';
 

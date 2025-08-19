@@ -17,7 +17,7 @@ class BlockPosts extends Widget  // Статті на головній
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
         $cacheKey = 'posts_cache_key';
         $dependency = new DbDependency([
             'sql' => 'SELECT MAX(date_updated) FROM posts',

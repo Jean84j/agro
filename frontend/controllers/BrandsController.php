@@ -34,7 +34,7 @@ class BrandsController extends BaseFrontendController
 
     public function actionCatalog($slug)
     {
-        $language = Yii::$app->session->get('_language');
+        $language = Yii::$app->language;
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];
