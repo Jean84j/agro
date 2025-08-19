@@ -46,14 +46,14 @@ SuggestionsPageAsset::register($this);
                         <div class="products-view">
                             <div class="products-view__options">
                                 <div class="view-options view-options--offcanvas--always">
-                                    <?= $this->render('@frontend/views/layouts/products-sort.php', [
+                                    <?= $this->render('@frontend/views/_partials/products-sort', [
                                         'products' => $products,
                                         'products_all' => $products_all,
                                     ]) ?>
                                 </div>
                             </div>
-                            <?= $this->render('@frontend/views/layouts/products-list.php', ['products' => $products]) ?>
-                            <?= $this->render('@frontend/views/layouts/pagination.php', ['pages' => $pages]) ?>
+                            <?= $this->render('@frontend/views/_partials/products-list', ['products' => $products]) ?>
+                            <?= $this->render('@frontend/views/_partials/pagination', ['pages' => $pages]) ?>
                             <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
                         </div>
                     <?php else: ?>

@@ -106,7 +106,7 @@ $webp_support = ProductImage::imageWebp();
         </div>
     </div>
 </div>
-<?= $this->render('@frontend/views/layouts/pagination.php', ['pages' => $pages]) ?>
+<?= $this->render('@frontend/views/_partials/pagination', ['pages' => $pages]) ?>
 <div class="container">
     <?php echo ProductsCarousel::widget() ?>
     <div class="spec__disclaimer">
