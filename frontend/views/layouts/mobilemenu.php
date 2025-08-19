@@ -134,21 +134,6 @@ use yii\helpers\Url;
                                     </a>
                                 </div>
                             </li>
-<!--                            <li class="mobile-links__item" data-collapse-item>-->
-<!--                                <div class="mobile-links__item-title">-->
-<!--                                    <a class="mobile-links__item-link"-->
-<!--                                       href="--><?php //echo Url::to(['/' . $path, 'language' => 'en']) ?><!--">-->
-<!--                                        <div class="row">-->
-<!--                                            <div class="col-1">-->
-<!--                                                <img src="/images/languages/language-EN.png" width="20" height="16" alt="EN">-->
-<!--                                            </div>-->
-<!--                                            <div class="col-4">-->
-<!--                                                English-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </a>-->
-<!--                                </div>-->
-<!--                            </li>-->
                             <li class="mobile-links__item" data-collapse-item>
                                 <div class="mobile-links__item-title">
                                     <a class="mobile-links__item-link"

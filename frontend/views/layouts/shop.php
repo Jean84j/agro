@@ -75,23 +75,11 @@ unset($this->linkTags[$key]);
     <?= $this->render('cookie-banner') ?>
     <?= $this->render('language-banner') ?>
     <?php $this->endBody() ?>
-<script>
-window.addEventListener('load', function() {
-    var gtagScript = document.createElement('script');
-    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-RYNR0B69QV";
-    gtagScript.async = true;
-    document.body.appendChild(gtagScript);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-RYNR0B69QV', {
-        'cookie_flags': 'SameSite=None; Secure', 
-        'cookie_domain': 'agropro.org.ua'
-    });
-});
-</script>
-
+    <?php if (!YII_ENV_DEV) {
+    $this->registerJsFile(
+    '/js/google-tag-manager.js?v=' . PROJECT_VERSION,
+    );
+    } ?>
     </body>
     </html>
 <?php $this->endPage() ?>
