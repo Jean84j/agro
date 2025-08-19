@@ -2,6 +2,7 @@
 
 use common\models\shop\ActivePages;
 use frontend\assets\OrderSuccessPageAsset;
+use yii\helpers\Url;
 
 OrderSuccessPageAsset::register($this);
 ActivePages::setActiveUser();
@@ -57,7 +58,8 @@ ActivePages::setActiveUser();
                                 <tr>
                                     <td class="order-list__column-image">
                                         <div class="product-image">
-                                            <a href="" class="product-image__body">
+                                            <a href="<?= Url::to(['product/view', 'slug' => $orderItem->product->slug]) ?>"
+                                               class="product-image__body">
                                                 <img class="product-image__img"
                                                      src="<?= $orderItem->product->getImgOne($orderItem->product->getId()) ?>"
                                                      alt="<?= $orderItem->product->name ?>">
@@ -89,37 +91,46 @@ ActivePages::setActiveUser();
                                 <div class="address-card__badge address-card__badge--muted"><?= Yii::t('app', 'Адреса доставки') ?></div>
                                 <div class="address-card__name"><?= $order->fio ?></div>
                                 <div class="address-card__row">
-                                    <div class="address-card__row-title"><i class="fas fa-phone"></i> <?= Yii::t('app', 'Телефон') ?></div>
+                                    <div class="address-card__row-title"><i
+                                                class="fas fa-phone"></i> <?= Yii::t('app', 'Телефон') ?></div>
                                     <div class="address-card__row-content"><?= $order->phone ?></div>
                                 </div>
                                 <?php if ($order->area): ?>
                                     <div class="address-card__row">
-                                        <div class="address-card__row-title"><i class="fas fa-city"></i> <?= Yii::t('app', 'Область') ?></div>
+                                        <div class="address-card__row-title"><i
+                                                    class="fas fa-city"></i> <?= Yii::t('app', 'Область') ?></div>
                                         <div class="address-card__row-content"><?= $order->area ?></div>
                                     </div>
                                     <div class="address-card__row">
-                                        <div class="address-card__row-title"><i class="fas fa-building"></i> <?= Yii::t('app', 'Місто') ?></div>
+                                        <div class="address-card__row-title"><i
+                                                    class="fas fa-building"></i> <?= Yii::t('app', 'Місто') ?></div>
                                         <div class="address-card__row-content"><?= $order->city ?></div>
                                     </div>
                                     <div class="address-card__row">
-                                        <div class="address-card__row-title"><i class="fas fa-warehouse"></i> <?= Yii::t('app', 'Відділення') ?></div>
+                                        <div class="address-card__row-title"><i
+                                                    class="fas fa-warehouse"></i> <?= Yii::t('app', 'Відділення') ?>
+                                        </div>
                                         <div class="address-card__row-content"><?= $order->warehouses ?></div>
                                     </div>
                                 <?php else: ?>
                                     <?php if ($order->warehouses): ?>
                                         <div class="address-card__row">
-                                            <div class="address-card__row-title"><i class="fas fa-barcode"></i> <?= Yii::t('app', 'Індекс') ?></div>
+                                            <div class="address-card__row-title"><i
+                                                        class="fas fa-barcode"></i> <?= Yii::t('app', 'Індекс') ?></div>
                                             <div class="address-card__row-content"><?= $order->warehouses ?></div>
                                         </div>
                                         <div class="address-card__row">
-                                            <div class="address-card__row-title"><i class="fas fa-city"></i> <?= Yii::t('app', 'Місто/Село') ?></div>
+                                            <div class="address-card__row-title"><i
+                                                        class="fas fa-city"></i> <?= Yii::t('app', 'Місто/Село') ?>
+                                            </div>
                                             <div class="address-card__row-content"><?= $order->city ?></div>
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
                                 <?php if ($order->note): ?>
                                     <div class="address-card__row">
-                                        <div class="address-card__row-title"><i class="far fa-comment"></i> <?= Yii::t('app', 'Коментар') ?></div>
+                                        <div class="address-card__row-title"><i
+                                                    class="far fa-comment"></i> <?= Yii::t('app', 'Коментар') ?></div>
                                         <div class="address-card__row-content"><?= $order->note ?></div>
                                     </div>
                                 <?php endif; ?>
