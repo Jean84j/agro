@@ -206,9 +206,6 @@ ActivePages::setActiveUser();
     <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>
 <style>
-    .category-prefix {
-        color: #a9a8a8;
-    }
     .compare-not-products {
         text-align: center;
     }

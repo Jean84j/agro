@@ -76,10 +76,6 @@ use yii\helpers\Url;
     </div>
 </div>
 <style>
-    .category-prefix {
-        color: #a9a8a8;
-    }
-
     .param-item {
         overflow: hidden;
         text-overflow: ellipsis;

@@ -92,8 +92,3 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-<style>
-    .category-prefix {
-        color: #a9a8a8;
-    }
-</style>
