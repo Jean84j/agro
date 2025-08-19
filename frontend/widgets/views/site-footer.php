@@ -145,16 +145,3 @@ use yii\helpers\Url;
                 </div>
             </div>
 </footer>
-<style>
-    #success-message-footer {
-        position: absolute;
-        top: -13%;
-        left: 0;
-        width: 100%;
-    }
-
-    .footer-color {
-        background-color: rgba(251, 251, 250, 0.55);
-        border-radius: 5px;
-    }
-</style>
