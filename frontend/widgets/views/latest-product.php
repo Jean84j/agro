@@ -35,7 +35,7 @@ use yii\helpers\Url;
                         </div>
                         <div class="product-card__availability">
                                                          <span class="text-success">
-                                                 <?= $this->render('@frontend/widgets/views/status', ['product' => $product]) ?>
+                                                 <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
                                                          </span>
                         </div>
                         <?php if ($product->old_price == null) { ?>

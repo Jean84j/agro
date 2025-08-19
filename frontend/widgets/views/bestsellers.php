@@ -17,7 +17,7 @@ use yii\helpers\Url;
             <div class="block-products__featured">
                 <div class="block-products__featured-item">
                     <div class="product-card product-card--hidden-actions ">
-                        <?= $this->render('quickview-button', ['product' => $products[0]]) ?>
+                        <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $products[0]]) ?>
                         <div class="product-card__badges-list">
                             <?php if (isset($products[0]->label->name)) : ?>
                                 <div class="product-card__badges-list">
@@ -58,7 +58,7 @@ use yii\helpers\Url;
                         </div>
                         <div class="product-card__actions">
                             <div class="product-card__availability">
-                                <?= $this->render('status', ['product' => $products[0]]) ?>
+                                <?= $this->render('@frontend/views/_partials/status', ['product' => $products[0]]) ?>
                             </div>
                             <?php if ($products[0]->old_price == null) { ?>
                                 <div class="product-card__prices">
@@ -126,7 +126,7 @@ use yii\helpers\Url;
                     <?php if ($i != 0): ?>
                         <div class="block-products__list-item">
                             <div class="product-card product-card--hidden-actions ">
-                                <?= $this->render('quickview-button', ['product' => $product]) ?>
+                                <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
                                 <?php if (isset($product->label)): ?>
                                     <div class="product-card__badges-list">
                                         <div class="product-card__badge product-card__badge--new"
@@ -165,7 +165,7 @@ use yii\helpers\Url;
                                 </div>
                                 <div class="product-card__actions">
                                     <div class="product-card__availability">
-                                        <?= $this->render('status', ['product' => $product]) ?>
+                                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
                                     </div>
                                     <?php if ($product->old_price == null) { ?>
                                         <div class="product-card__prices">
@@ -177,7 +177,7 @@ use yii\helpers\Url;
                                             <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
                                         </div>
                                     <?php } ?>
-                                    <?= $this->render('add-to-cart-button', ['product' => $product]) ?>
+                                    <?= $this->render('@frontend/views/_partials/add-to-cart-button', ['product' => $product]) ?>
                                 </div>
                             </div>
                         </div>

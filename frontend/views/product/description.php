@@ -109,7 +109,7 @@ $language = Yii::$app->language;
                                                         <div class="product-card__actions">
                                                             <div class="product-card__availability">
                                                                      <span class="text-success">
-                                                                        <?= $this->render('@frontend/widgets/views/status', ['product' => $product_analog]) ?>
+                                                                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product_analog]) ?>
                                                                      </span>
                                                             </div>
                                                             <?php if ($product_analog->old_price == null) { ?>
@@ -122,7 +122,7 @@ $language = Yii::$app->language;
                                                                     <span class="widget-products__old-price"><?= Yii::$app->formatter->asCurrency($product_analog->getOldPrice()) ?></span>
                                                                 </div>
                                                             <?php } ?>
-                                                            <?= $this->render('@frontend/widgets/views/add-to-cart-button.php', ['product' => $product_analog]) ?>
+                                                            <?= $this->render('@frontend/views/_partials/add-to-cart-button', ['product' => $product_analog]) ?>
                                                         </div>
                                                     </div>
                                                 </div>

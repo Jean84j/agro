@@ -31,7 +31,7 @@ use yii\helpers\Url;
                     <div class="block-products-carousel__column">
                         <div class="block-products-carousel__cell">
                             <div class="product-card product-card--hidden-actions ">
-                                <?= $this->render('quickview-button', ['product' => $product]) ?>
+                                <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
                                 <?php if (isset($product->label)): ?>
                                     <div class="product-card__badges-list">
                                         <div class="product-card__badge product-card__badge--new"
@@ -65,7 +65,7 @@ use yii\helpers\Url;
                                 </div>
                                 <div class="product-card__actions">
                                     <div class="product-card__availability">
-                                        <?= $this->render('status', ['product' => $product]) ?>
+                                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
                                     </div>
                                     <div class="product-card__prices">
                                         <?php if ($product->old_price == null) { ?>

@@ -17,7 +17,7 @@ use yii\helpers\Url;
         <?php foreach ($products as $product): ?>
             <div class="block-product-columns__item">
                 <div class="product-card product-card--hidden-actions product-card--layout--horizontal">
-                    <?= $this->render('quickview-button', ['product' => $product]) ?>
+                    <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
                     <?php if (isset($product->label)): ?>
                         <div class="product-card__badges-list">
                             <div class="product-card__badge product-card__badge--new"
@@ -50,7 +50,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="product-card__actions">
                         <div class="product-card__availability">
-                            <?= $this->render('status', ['product' => $product]) ?>
+                            <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
                         </div>
                         <div class="product-card__prices">
                             <?php if ($product->old_price == null) { ?>
