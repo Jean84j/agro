@@ -17,7 +17,7 @@ class ColumnsTopRated extends BaseWidgetFronted   //  Гербіциди
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $title = 'Гербіциди';
         $url = Url::to(['product-list/gerbitsidi']);
 

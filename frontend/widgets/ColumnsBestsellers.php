@@ -17,7 +17,7 @@ class ColumnsBestsellers extends BaseWidgetFronted  //  Інсектициди
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $title = 'Інсектициди';
         $url = Url::to(['product-list/insektitsidi']);
 

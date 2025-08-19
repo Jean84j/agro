@@ -19,7 +19,7 @@ class TagCloud extends Widget
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $prod_id = $this->productsId;
         $query = Tag::find()
             ->alias('t')

@@ -13,7 +13,7 @@ class BlogsController extends BaseFrontendController
 {
     public function actionView($q = null)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $count = 4;
 

@@ -20,7 +20,7 @@ class ProductController extends Controller
 {
     public function actionView($slug): string
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $mobile = Yii::$app->devicedetect->isMobile();
 
@@ -31,7 +31,6 @@ class ProductController extends Controller
         if ($product === null) {
             throw new NotFoundHttpException('Product not found ' . '" ' . $slug . ' "');
         }
-
 
         $faq = Faq::find()
             ->alias('f')
@@ -46,7 +45,6 @@ class ProductController extends Controller
             ->addParams([':language' => $language])
             ->asArray()
             ->all();
-
 
         $productVariants = ProductPackaging::find()
             ->alias('pp')

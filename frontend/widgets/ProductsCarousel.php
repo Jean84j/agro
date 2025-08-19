@@ -16,7 +16,7 @@ class ProductsCarousel extends BaseWidgetFronted
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $title = 'Нові надходження';
         $grup_id = 3;

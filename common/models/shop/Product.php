@@ -567,7 +567,7 @@ class Product extends ActiveRecord implements CartPositionInterface
 
     public static function productParamsList($id)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $product_params = ProductProperties::find()
             ->alias('pp')
@@ -927,7 +927,7 @@ class Product extends ActiveRecord implements CartPositionInterface
             return '---';
         }
 
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $value = ProductProperties::find()
             ->alias('p')

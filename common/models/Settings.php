@@ -40,7 +40,7 @@ class Settings extends Model
 
     static function seoPageTranslate($slug)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $seo = SeoPages::find()
             ->alias('sp')
             ->select([

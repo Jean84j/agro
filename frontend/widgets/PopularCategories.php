@@ -17,7 +17,7 @@ class PopularCategories extends Widget  // Популярні Категорії
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $title = 'Популярні Категорії';
 

@@ -20,7 +20,7 @@ class CategoryController extends BaseFrontendController
 {
     public function actionList()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $categories = Category::find()
             ->alias('c')
             ->select([
@@ -56,7 +56,7 @@ class CategoryController extends BaseFrontendController
 
     public function actionChildren($slug)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $category = Category::find()
             ->alias('c')
@@ -115,7 +115,7 @@ class CategoryController extends BaseFrontendController
     public function actionCatalog($slug)
     {
 //       Yii::$app->session->removeAll();
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];
@@ -263,7 +263,7 @@ class CategoryController extends BaseFrontendController
 
     public function actionAuxiliaryCatalog($slug)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];
@@ -369,7 +369,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setChildrenProductSchema($category)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         if ($language !== 'uk') {
             $url = Yii::$app->request->hostInfo . '/' . $language;
@@ -423,7 +423,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setCatalogProductSchema($category, $products_all)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         if ($language !== 'uk') {
             $url = Yii::$app->request->hostInfo . '/' . $language;
@@ -466,7 +466,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setAuxiliaryCatalogProductSchema($category, $products_all, $productsId)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         if ($language !== 'uk') {
             $url = Yii::$app->request->hostInfo . '/' . $language;
@@ -510,7 +510,7 @@ class CategoryController extends BaseFrontendController
     protected function setCatalogBreadCrumbSchema($category)
     {
 
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         if ($language !== 'uk') {
             $url = Yii::$app->request->hostInfo . '/' . $language;
@@ -565,7 +565,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setAuxiliaryCatalogBreadCrumbSchema($category, $breadcrumbCategory)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         if ($language !== 'uk') {
             $url = Yii::$app->request->hostInfo . '/' . $language;

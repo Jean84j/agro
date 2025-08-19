@@ -17,7 +17,7 @@ class SearchController extends BaseFrontendController
 
     public function actionSuggestions($q = null)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $id_prod = [];
         $q = Html::encode($q);

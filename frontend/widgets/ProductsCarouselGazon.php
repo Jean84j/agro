@@ -16,7 +16,7 @@ class ProductsCarouselGazon extends BaseWidgetFronted   // Газонна Тра
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
 //        $title = 'Газонна Трава';
 //        $grup_id = 8;

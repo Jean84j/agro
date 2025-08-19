@@ -10,7 +10,7 @@ class QuickviewController extends Controller
 {
     public function actionQuickview($id)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $product = Product::find()
             ->where(['id' => $id])
             ->one();

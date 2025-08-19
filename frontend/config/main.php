@@ -90,6 +90,9 @@ return [
             'languages' => ['uk', 'en', 'ru'],
             'enableDefaultLanguageUrlCode' => false,
             'enableLanguageDetection' => false,
+
+            'enableLanguagePersistence' => false,
+
             'enableLocaleUrls' => true,
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -130,7 +133,6 @@ return [
                 'brands' => 'brands/view',
                 'brands/product-list/<slug>/page/<page:\d+>' => 'brands/catalog',
                 'brands/product-list/<slug>' => 'brands/catalog',
-
 
                 [
                     'pattern' => 'sitemap',

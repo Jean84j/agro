@@ -15,7 +15,7 @@ class TagController extends BaseFrontendController
 {
     public function actionIndex()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $categoriesTags = [];
         $categories = Category::find()

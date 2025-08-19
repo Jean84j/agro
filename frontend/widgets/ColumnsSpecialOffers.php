@@ -17,7 +17,7 @@ class ColumnsSpecialOffers extends BaseWidgetFronted  // Фунгіциди
 
     public function run()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $title = 'Фунгіциди';
         $url = Url::to(['product-list/fungitsidi']);
 

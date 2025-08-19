@@ -107,7 +107,7 @@ class Brand extends ActiveRecord
 
     public function getBrandCategories($id)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
 
         $categories_name = Category::find()
             ->alias('c')

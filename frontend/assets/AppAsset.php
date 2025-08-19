@@ -28,7 +28,7 @@ class AppAsset extends AssetBundle
 
         YII_ENV_DEV ? '/js/number.js?v=' . PROJECT_VERSION : '/js/number.min.js?v=' . PROJECT_VERSION,
         YII_ENV_DEV ? '/js/header.js?v=' . PROJECT_VERSION : '/js/header.min.js?v=' . PROJECT_VERSION,
-        YII_ENV_DEV ? '/js/main.js?v=' . PROJECT_VERSION : '/js/main.min.js?v=' . PROJECT_VERSION,
+        YII_ENV_DEV ? '/js/main.min.js?v=' . PROJECT_VERSION : '/js/main.min.js?v=' . PROJECT_VERSION,
         YII_ENV_DEV ? '/js/collapse.js?v=' . PROJECT_VERSION : '/js/collapse.min.js?v=' . PROJECT_VERSION,
 
         '/vendor/bootstrap/js/bootstrap.bundle.min.js?v=' . PROJECT_VERSION,

@@ -17,7 +17,7 @@ $rating = 3;
 
 $arrow = '<span></span><span></span><span></span>';
 
-$language = Yii::$app->session->get('_language', 'uk');
+$language = Yii::$app->language;
 
 ?>
 <div class="product-tabs  product-tabs--sticky">

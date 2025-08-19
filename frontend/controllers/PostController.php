@@ -15,7 +15,7 @@ class PostController extends Controller
 {
     public function actionView($slug)
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $model_review = new PostsReview();
         $blogs = Posts::find()
             ->alias('p')

@@ -11,7 +11,7 @@ class CompareController extends BaseFrontendController
 {
     public function actionView()
     {
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $compareList = Yii::$app->session->get('compareList', []);
 
         $categories_id = [];
@@ -109,7 +109,7 @@ class CompareController extends BaseFrontendController
     public function actionDeleteFromCompare()
     {
         $id = Yii::$app->request->post('id');
-        $language = Yii::$app->session->get('_language', 'uk');
+        $language = Yii::$app->language;
         $session = Yii::$app->session;
         $compareList = $session->get('compareList', []);
 
