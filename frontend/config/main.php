@@ -74,10 +74,11 @@ return [
 //                        '_SESSION',
 //                        '_SERVER'
                     ],
+
                     'message' => [
-                        'from' => ['jean1524@s10.uahosting.com.ua'],
-                        'to' => ['mikitane@ymail.com'],
-                        'subject' => 'Ошибка приложения',
+                        'from' => $params['email.from'],
+                        'to'   => $params['email.admins'],
+                        'subject' =>  YII_ENV_DEV ? 'Ошибка приложения LOCAL' : 'Ошибка приложения',
                     ],
                 ],
             ],

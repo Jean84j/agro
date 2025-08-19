@@ -2,6 +2,8 @@
 return [
     'bsVersion' => '4.x',
     'adminEmail' => 'admin@example.com',
+    'email.from'   => 'no-reply@example.com',
+    'email.admins' => ['admin@example.com'],
     'supportEmail' => 'support@example.com',
     'senderEmail' => 'noreply@example.com',
     'senderName' => 'Example.com mailer',
