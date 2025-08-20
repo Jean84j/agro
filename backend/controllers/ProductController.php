@@ -20,7 +20,7 @@ use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
 use yii\filters\VerbFilter;
 use common\models\Settings;
-use common\models\UploadForm;
+use backend\models\UploadForm;
 use common\models\shop\Product;
 use yii\web\NotFoundHttpException;
 use common\models\shop\ProductGrup;

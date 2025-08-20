@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-use common\models\IpBot;
+use backend\models\IpBot;
 use common\models\shop\ActivePages;
 use yii\console\Controller;
 use common\models\NpCity;

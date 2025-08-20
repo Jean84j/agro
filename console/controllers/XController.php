@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-use common\models\IpBot;
+use backend\models\IpBot;
 use backend\models\ReportItem;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\Product;

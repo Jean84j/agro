@@ -3,7 +3,7 @@
 namespace common\models\shop;
 
 use common\models\Bots;
-use common\models\IpBot;
+use backend\models\IpBot;
 use common\models\Posts;
 use Yii;
 use yii\db\ActiveRecord;

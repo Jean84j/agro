@@ -4,7 +4,7 @@ namespace backend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\IpBot;
+use backend\models\IpBot;
 
 /**
  * IpBotSearch represents the model behind the search form of `common\models\IpBotSearch`.

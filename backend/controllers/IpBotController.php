@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\IpBot;
+use backend\models\IpBot;
 use backend\models\search\IpBotSearch;
 use Yii;
 use yii\web\Controller;

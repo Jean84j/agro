@@ -1,6 +1,6 @@
 <?php
 
-use common\models\IpBot;
+use backend\models\IpBot;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\bootstrap5\LinkPager;
