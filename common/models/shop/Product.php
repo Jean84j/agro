@@ -35,7 +35,6 @@ use yz\shoppingcart\CartPositionTrait;
  * @property string|null $date_updated Дата редактирования
  * @property string|null $keywords
  * @property string|null $h1
- *
  * @property ProductTag[] $productTags
  * @property Tag[] $tags
  */
@@ -503,68 +502,6 @@ class Product extends ActiveRecord implements CartPositionInterface
         return $img;
     }
 
-    public
-    static function productImage($slug)
-    {
-        $product = Product::find()->where(['slug' => $slug])->one();
-        if ($product !== null) {
-            $product_image = ProductImage::find()->where(['product_id' => $product->id])->orderBy('priority')->one();
-
-            if ($product_image !== null && isset($product_image->extra_small)) {
-                return $product_image->extra_small;
-            } else {
-                return 'no-image.png';
-            }
-        } else {
-            return 'no-image.png';
-        }
-    }
-
-    public
-    static function productName($slug)
-    {
-        $product = Product::find()->select('name')->where(['slug' => $slug])->one();
-        if ($product) {
-            return $product->name;
-        } else {
-            return '';
-        }
-    }
-
-    public
-    static function productId($slug)
-    {
-        $product = Product::find()->select('id')->where(['slug' => $slug])->one();
-        if ($product) {
-            return $product->id;
-        } else {
-            return '';
-        }
-    }
-
-    public
-    static function productStatusId($slug)
-    {
-        $product = Product::find()->select('status_id')->where(['slug' => $slug])->one();
-        if ($product) {
-            return $product->status_id;
-        } else {
-            return '';
-        }
-    }
-
-    public
-    static function productStatusName($slug)
-    {
-        $product = Product::find()->select('status_id')->where(['slug' => $slug])->one();
-        if ($product) {
-            $status = Status::find()->select('name')->where(['id' => $product->status_id])->one();
-            return $status->name;
-        } else {
-            return '';
-        }
-    }
-
     public static function productParamsList($id)
     {
         $language = Yii::$app->language;
@@ -612,7 +549,6 @@ class Product extends ActiveRecord implements CartPositionInterface
         return $title_param;
     }
 
-
     public
     function getRatingCount($id)
     {
@@ -629,193 +565,6 @@ class Product extends ActiveRecord implements CartPositionInterface
         }
         return $res;
     }
-    
-    public
-    function getProductView($slug)
-    {
-        return ActivePages::find()
-            ->select('url_page')
-            ->where(['like', 'url_page', $slug])
-            ->count();
-    }
-
-    // Особое внимание к продуктам
-    public
-    function getNonParametr($id)
-    {
-        $parametrs = ProductProperties::find()->select('value')->where(['product_id' => $id])->all();
-
-        if ($parametrs == null) {
-            return '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Незаповнені характеристики"><svg width="18" height="18" style="display: unset;" fill="red">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-
-        } else {
-
-            foreach ($parametrs as $parametr) {
-                if ($parametr->value === null or $parametr->value === '') {
-                    return '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Незаповнені характеристики"><svg width="18" height="18" style="display: unset;" fill="red">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-                }
-            }
-        }
-        return null;
-    }
-
-    public
-    function getNonBrand($id)
-    {
-        $product = Product::find()->select('brand_id')->where(['id' => $id])->one();
-        if ($product->brand_id == null) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Невказаний бренд"><svg width="18" height="18" style="display: unset;" fill="#ffcc00">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-
-    public
-    function getNonShortDescr($id)
-    {
-        $productShortDescription = Product::find()
-            ->select('short_description')
-            ->where(['id' => $id])
-            ->andWhere(['<=', 'CHAR_LENGTH(short_description)', 150])
-            ->scalar();
-
-        if ($productShortDescription !== false) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Короткий опис < 150 знаків"><svg width="18" height="18" style="display: unset;" fill="#40ff00">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-
-    public
-    function getNonDescription($id)
-    {
-        $product = Product::find()
-            ->select('description')
-            ->where(['id' => $id])
-            ->andWhere('CHAR_LENGTH(description) < 1000')
-            ->one();
-        if ($product != null) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Опис < 1000 знаків"><svg width="18" height="18" style="display: unset;" fill="#02ade1">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-
-    public
-    function getNonSeoTitle($id)
-    {
-        $product = Product::find()
-            ->select('seo_title')
-            ->where(['id' => $id])
-            ->andWhere('CHAR_LENGTH(seo_title) < 50 OR CHAR_LENGTH(seo_title) > 70')
-            ->one();
-
-        if ($product != null) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="SEO Тайтл < 50 или > 70"><svg width="18" height="18" style="display: unset;" fill="#9607f5">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-
-    public
-    function getNonSeoDescr($id)
-    {
-        $product = Product::find()
-            ->select('seo_description')
-            ->where(['id' => $id])
-            ->andWhere('CHAR_LENGTH(seo_description) < 130 OR CHAR_LENGTH(seo_description) > 180')
-            ->one();
-        if ($product != null) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="SEO Дескрип < 130 или > 180"><svg width="18" height="18" style="display: unset;" fill="#e1029e">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-
-    public
-    function getNonH3Descr($id)
-    {
-        $product = Product::find()
-            ->select('description')
-            ->where(['id' => $id])
-            ->andWhere(['LIKE', 'description', '<h3>'])
-            ->one();
-        if ($product === null) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Нет <Н3> в описании"><svg width="18" height="18" style="display: unset;" fill="#dc79b7">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-
-    public
-    function getNonKeywords($id)
-    {
-        $product = Product::find()->select('keywords')->where(['id' => $id])->one();
-        if ($product->keywords == null) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Нема ключових слів"><svg width="18" height="18" style="display: unset;" fill="#ed490a">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-    
-    public
-    function getNonH1($id)
-    {
-        $product = Product::find()->select('h1')->where(['id' => $id])->one();
-        if ($product->h1 == null) {
-            $res = '<a data-bs-toggle="tooltip"
-                               data-bs-placement="top"
-                               title="Нема Н1 заголовку"><svg width="18" height="18" style="display: unset;" fill="#0be5dd">
-                                                 <use xlink:href="/admin/images/sprite.svg#warning"/>
-                                                </svg> </a>';
-            return $res;
-        }
-        return null;
-    }
-
-//     End Особое внимание к продуктам
-
-    public function getProductsAnalog($id)
-    {
-        return AnalogProducts::find()->where(['product_id' => $id])->count() ?: null;
-    }
-
 
     public
     function getRating($id, $w = 18, $h = 17)

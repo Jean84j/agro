@@ -1,5 +1,6 @@
 <?php
 
+use backend\helpers\ProductWarnings;
 use backend\models\ProductsBackend;
 use kartik\grid\GridView;
 use yii\helpers\Html;
@@ -126,15 +127,14 @@ $btnMob = false;
                                     $html .= "<a href=\"{$url}\" class=\"text-reset\" style=\"font-weight: bold;\">{$model->name}";
 
                                     if ($seoErrors === 'yes') {
-                                        $html .= $model->getNonSeoTitle($model->id);
-                                        $html .= $model->getNonDescription($model->id);
-                                        $html .= $model->getNonShortDescr($model->id);
-                                        $html .= $model->getNonH1($model->id);
-                                        $html .= $model->getNonH3Descr($model->id);
-                                        $html .= $model->getNonParametr($model->id);
-                                        $html .= $model->getNonBrand($model->id);
-                                        $html .= $model->getNonSeoDescr($model->id);
-                                        $html .= $model->getNonKeywords($model->id);
+                                        foreach (ProductWarnings::getList() as $method => [$title, $fill]) {
+                                            if ($model->$method()) {
+                                                $html .= $this->render('@backend/views/_partials/warning-product', [
+                                                    'title' => $title,
+                                                    'fill'  => $fill,
+                                                ]);
+                                            }
+                                        }
                                     }
 
                                     $html .= '</a>';
