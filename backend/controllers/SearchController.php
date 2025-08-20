@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Report;
 use common\models\shop\Category;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -29,7 +29,7 @@ class SearchController extends Controller
         };
 
         $categories = $searchQuery(Category::class, 'name', 5);
-        $products = $searchQuery(Product::class, 'name', 10);
+        $products = $searchQuery(ProductsBackend::class, 'name', 10);
         $reports = Report::find()
             ->where(['like', 'fio', $search])
             ->orWhere(['like', 'tel_number', $search])

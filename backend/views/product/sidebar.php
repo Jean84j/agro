@@ -4,7 +4,7 @@ use common\models\shop\Brand;
 use common\models\shop\Category;
 use common\models\shop\Grup;
 use common\models\shop\Label;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use common\models\shop\Status;
 use common\models\shop\Tag;
 use kartik\select2\Select2;
@@ -418,7 +418,7 @@ use yii\bootstrap5\Modal;
                         </div>
                         <div class="card card-body ">
                             <?php
-                            $data = ArrayHelper::map(Product::find()->orderBy('id')->asArray()->all(), 'id', 'name');
+                            $data = ArrayHelper::map(ProductsBackend::find()->orderBy('id')->asArray()->all(), 'id', 'name');
                             echo $form->field($model, 'analogs')->widget(Select2::class, [
                                 'data' => $data,
                                 'theme' => Select2::THEME_DEFAULT,

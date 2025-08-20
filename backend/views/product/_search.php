@@ -3,7 +3,7 @@
 use common\models\shop\Brand;
 use common\models\shop\Category;
 use common\models\shop\Label;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use common\models\shop\Status;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
@@ -265,8 +265,8 @@ $clearFilterBtn = Html::a(
                          style="max-height"
                     >
                         <?php
-                        $minPrice = round(Product::find()->min('price'), 2);
-                        $maxPrice = round(Product::find()->max('price'), 2);
+                        $minPrice = round(ProductsBackend::find()->min('price'), 2);
+                        $maxPrice = round(ProductsBackend::find()->max('price'), 2);
 
                         $submittedMinPrice = $filterParam['minPrice'] ?? $minPrice;
                         $submittedMaxPrice = $filterParam['maxPrice'] ?? $maxPrice;

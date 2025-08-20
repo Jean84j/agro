@@ -3,7 +3,7 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use yii\helpers\ArrayHelper;
 
 class RecentActivity extends BaseWidgetBackend
@@ -24,7 +24,7 @@ class RecentActivity extends BaseWidgetBackend
         $results = array_slice($uniqueUrls, 0, 10);
 
         foreach ($results as &$result) {
-            $productData = Product::find()
+            $productData = ProductsBackend::find()
                 ->alias('p')
                 ->select([
                     'p.name',

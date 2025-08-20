@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -74,7 +74,7 @@ use yii\helpers\ArrayHelper;
             </div>
             <div class="mb-4">
                 <?php
-                $data = ArrayHelper::map(Product::find()->orderBy('id')->asArray()->all(), 'id', 'name');
+                $data = ArrayHelper::map(ProductsBackend::find()->orderBy('id')->asArray()->all(), 'id', 'name');
                 echo $form->field($model, 'products')->widget(Select2::class, [
                     'data' => $data,
                     'theme' => Select2::THEME_DEFAULT,

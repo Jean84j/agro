@@ -3,7 +3,7 @@
 namespace backend\widgets;
 
 use common\models\shop\ActivePages;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 
@@ -21,7 +21,7 @@ class SubTopProducts extends Widget
         // 1. Получаем все товары (slug => id)
         $monthsAgoTimestamp = strtotime('-5 months');
         
-        $allProducts = Product::find()
+        $allProducts = ProductsBackend::find()
             ->select(['id', 'slug', 'name'])
             ->where(['status_id' => 1])
             ->andWhere(['<', 'date_public', $monthsAgoTimestamp])
@@ -90,7 +90,7 @@ class SubTopProducts extends Widget
 
         // 6. Добавляем картинки
         foreach ($results as &$result) {
-            $productData = Product::find()
+            $productData = ProductsBackend::find()
                 ->alias('p')
                 ->select([
                     'p.name',

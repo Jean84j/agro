@@ -5,13 +5,13 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use yii\db\Query;
 
 /**
  * ProductSearch represents the model behind the search form of `common\models\shop\Product`.
  */
-class ProductSearch extends Product
+class ProductSearch extends ProductsBackend
 {
     /**
      * {@inheritdoc}
@@ -47,7 +47,7 @@ class ProductSearch extends Product
         $params = $request->post();
         $paramsGrid = $request->get();
 
-        $query = Product::find()
+        $query = ProductsBackend::find()
         ->orderBy(['date_public' => SORT_DESC]);
         // add conditions that should always apply here
 

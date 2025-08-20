@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -228,8 +228,8 @@ $btnMob = false;
                                 },
                             ],
                             [
-                                'class' => ActionColumn::className(),
-                                'urlCreator' => function ($action, Product $model, $key, $index, $column) {
+                                'class' => ActionColumn::class,
+                                'urlCreator' => function ($action, ProductsBackend $model, $key, $index, $column) {
                                     return Url::toRoute([$action, 'id' => $model->id, 'selection' => $model->id]);
                                 }
                             ],

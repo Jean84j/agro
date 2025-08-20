@@ -4,7 +4,7 @@ namespace backend\widgets;
 
 use common\models\Posts;
 use common\models\shop\Brand;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use common\models\shop\Tag;
 use kartik\base\Widget;
 use Yii;
@@ -34,7 +34,7 @@ class TasksAdmin extends Widget
     protected function countProducts()
     {
         $addCountProducts = 1000;
-        $countsProduct = Product::find()->count();
+        $countsProduct = ProductsBackend::find()->count();
         $addProducts = [
             'svg' => 'products',
             'title' => 'Добавить товар ' . $addCountProducts . ' шт.',

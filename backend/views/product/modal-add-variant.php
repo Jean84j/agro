@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use common\models\shop\ProductPackaging;
 
 $firstWord = explode(' ', $model->name)[0];
@@ -17,7 +17,7 @@ $productVariant = ProductPackaging::find()
     ->asArray()
     ->column();
 
-$productsVariantCategory = Product::find()
+$productsVariantCategory = ProductsBackend::find()
     ->select(['id', 'name'])
     ->where(['category_id' => $model->category_id])
     ->andWhere(['<>', 'id', $model->id])

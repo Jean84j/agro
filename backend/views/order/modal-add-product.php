@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use yii\helpers\Url;
 
 ?>
@@ -25,7 +25,7 @@ use yii\helpers\Url;
                                name="productName" list="product-list" autocomplete="off" required>
                         <datalist id="product-list">
                             <?php
-                            $products = Product::find()->all();
+                            $products = ProductsBackend::find()->all();
                             foreach ($products as $product) {
                                 echo '<option value="' . $product->name . '" data-id="' . $product->id . '">';
                             }

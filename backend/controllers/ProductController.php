@@ -21,7 +21,7 @@ use yii\helpers\FileHelper;
 use yii\filters\VerbFilter;
 use common\models\Settings;
 use backend\models\UploadForm;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use yii\web\NotFoundHttpException;
 use common\models\shop\ProductGrup;
 use common\models\shop\ProductTag;
@@ -102,7 +102,7 @@ class ProductController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new ProductsBackend();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -724,13 +724,13 @@ class ProductController extends Controller
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Product the loaded model
+     * @return ProductsBackend the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected
     function findModel($id)
     {
-        if (($model = Product::findOne(['id' => $id])) !== null) {
+        if (($model = ProductsBackend::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
@@ -742,7 +742,7 @@ class ProductController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $request = Yii::$app->request;
-        $model = Product::find()->where(['id' => $id])->one();
+        $model = ProductsBackend::find()->where(['id' => $id])->one();
         $imageModel = new ProductImage();
         $imageModel->product_id = $id;
 
@@ -767,7 +767,7 @@ class ProductController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $stock = Product::findOne($id);
+        $stock = ProductsBackend::findOne($id);
         if (!$stock) {
             return ['error' => 'Product not found.'];
         }
@@ -877,7 +877,7 @@ class ProductController extends Controller
     public
     function actionExportToExcel()
     {
-        $products = Product::find()->all();
+        $products = ProductsBackend::find()->all();
 
         $spreadsheet = new Spreadsheet();
 
@@ -987,7 +987,7 @@ class ProductController extends Controller
                 }
                 foreach ($resultArray as $item) {
                     if ($item['Цена'] != null && is_numeric($item['Цена'])) {
-                        $product = Product::find()
+                        $product = ProductsBackend::find()
                             ->select(['id', 'name', 'price'])
                             ->where(['id' => $item['ID']])
                             ->one();

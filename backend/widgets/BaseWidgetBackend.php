@@ -5,7 +5,7 @@ namespace app\widgets;
 use common\models\shop\ActivePages;
 use common\models\shop\Order;
 use common\models\shop\OrderItem;
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use yii\base\Widget;
 use DateInterval;
 use DateTime;
@@ -99,7 +99,7 @@ class BaseWidgetBackend extends Widget
             ->where(['order_pay_ment_id' => 3])
             ->column();
 
-        $productsId = Product::find()
+        $productsId = ProductsBackend::find()
             ->select('id')
             ->where(['package' => $package])
             ->column();
@@ -123,7 +123,7 @@ class BaseWidgetBackend extends Widget
         $results = array_slice($productTotals, 0, 10, true);
 
         $productIds = array_keys($results);
-        $productsData = Product::find()
+        $productsData = ProductsBackend::find()
             ->alias('p')
             ->select(['p.id', 'p.name', 'p.slug', 'pi.extra_small'])
             ->leftJoin('product_image pi', 'pi.product_id = p.id')

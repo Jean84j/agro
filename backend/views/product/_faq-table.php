@@ -1,12 +1,12 @@
 <?php
 
-use common\models\shop\Product;
+use backend\models\ProductsBackend;
 use yii\helpers\Url;
 
 ?>
 <tbody id="faq-table">
 <?php if (isset($faq)): ?>
-<?php  $model = Product::findOne($id); ?>
+<?php  $model = ProductsBackend::findOne($id); ?>
 
     <?php foreach ($faq as $question): ?>
         <tr>
