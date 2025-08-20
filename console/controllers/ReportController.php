@@ -2,8 +2,8 @@
 
 namespace console\controllers;
 
-use common\models\Report;
-use common\models\ReportItem;
+use backend\models\Report;
+use backend\models\ReportItem;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yii;
 use yii\console\Controller;

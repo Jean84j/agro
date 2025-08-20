@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\Report;
+use backend\models\Report;
 use common\models\shop\Category;
 use common\models\shop\Product;
 use Yii;

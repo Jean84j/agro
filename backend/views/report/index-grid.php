@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\bootstrap5\LinkPager;
-use common\models\Report;
+use backend\models\Report;
 
 /** @var yii\web\View $this */
 /** @var backend\models\search\ActivePagesSearch $searchModel */

@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\ReportReminder;
+use backend\models\ReportReminder;
 use backend\models\search\ReportReminderSearch;
 use Yii;
 use yii\web\Controller;

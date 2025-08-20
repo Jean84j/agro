@@ -3,18 +3,13 @@
 namespace console\controllers;
 
 use common\models\IpBot;
-use common\models\ReportItem;
-use common\models\shop\Brand;
+use backend\models\ReportItem;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductPropertiesTranslate;
-use common\models\shop\ProductsTranslate;
 use common\models\shop\ProductTag;
-use common\models\shop\PropertiesName;
 use common\models\shop\PropertiesNameTranslate;
-use Stichoza\GoogleTranslate\GoogleTranslate;
-use Yii;
 use yii\console\Controller;
 
 class XController extends Controller

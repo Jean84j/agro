@@ -3,8 +3,8 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\Report;
-use common\models\ReportItem;
+use backend\models\Report;
+use backend\models\ReportItem;
 use DateInterval;
 use DateTime;
 

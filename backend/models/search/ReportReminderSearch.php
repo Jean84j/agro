@@ -2,7 +2,7 @@
 
 namespace backend\models\search;
 
-use common\models\ReportReminder;
+use backend\models\ReportReminder;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 

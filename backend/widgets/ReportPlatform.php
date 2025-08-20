@@ -2,7 +2,7 @@
 
 namespace backend\widgets;
 
-use common\models\Report;
+use backend\models\Report;
 use DateInterval;
 use DateTime;
 use yii\base\Widget;

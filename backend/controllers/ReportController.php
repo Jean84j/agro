@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
-use common\models\Report;
+use backend\models\Report;
 use backend\models\search\ReportSearch;
-use common\models\ReportItem;
-use common\models\ReportReminder;
+use backend\models\ReportItem;
+use backend\models\ReportReminder;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Yii;

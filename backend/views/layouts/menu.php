@@ -2,7 +2,7 @@
 
 use common\models\Messages;
 use common\models\PostsReview;
-use common\models\ReportReminder;
+use backend\models\ReportReminder;
 use common\models\shop\Order;
 use common\models\shop\Review;
 use yii\helpers\Url;

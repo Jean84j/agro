@@ -1,6 +1,6 @@
 <?php
 
-use common\models\ReportReminder;
+use backend\models\ReportReminder;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\grid\ActionColumn;

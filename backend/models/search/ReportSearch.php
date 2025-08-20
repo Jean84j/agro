@@ -4,7 +4,7 @@ namespace backend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Report;
+use backend\models\Report;
 use yii\db\Expression;
 
 /**

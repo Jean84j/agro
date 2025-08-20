@@ -1,6 +1,6 @@
 <?php
 
-use common\models\Report;
+use backend\models\Report;
 use yii\bootstrap5\Breadcrumbs;
 
 $this->title = Yii::t('app', 'Асистент');

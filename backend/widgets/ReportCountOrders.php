@@ -3,7 +3,7 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\Report;
+use backend\models\Report;
 
 class ReportCountOrders extends BaseWidgetBackend
 {
