@@ -86,14 +86,16 @@ $ipAddress = Yii::$app->request->getUserIP();
                             'attribute' => 'url_page',
                             'format' => 'raw',
                             'value' => function ($model) {
-                                $productUrl = $model->getClearUrl($model->url_page); // ссылка на карточку товара
-
+                                $productUrl = $model->getClearUrl($model->url_page);
                                 $imageUrl = $model->getImage($productUrl);
 
                                 return Html::img(Yii::$app->request->hostInfo . $imageUrl, [
                                         'style' => 'max-width:42px; max-height:42px; margin-right:5px;',
-
                                     ]) .
+                                    '<span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-user" 
+                                           style="margin-right: 5px;">
+                                            ' . ActivePages::productCountViews($productUrl) . '
+                                     </span>' .
                                     Html::encode($productUrl);
                             },
                         ],
@@ -174,12 +176,14 @@ $ipAddress = Yii::$app->request->getUserIP();
         font-weight: bold;
         color: #00050b;
     }
+
     .google-gradient-icon {
         font-size: 30px;
         background: linear-gradient(to top, #f9e503 50%, #00aaff 50%);
         -webkit-text-fill-color: transparent;
         display: inline-block;
     }
+
     .google-multicolor-icon {
         font-size: 30px;
         background: linear-gradient(
@@ -194,6 +198,7 @@ $ipAddress = Yii::$app->request->getUserIP();
         -webkit-text-fill-color: transparent;
         display: inline-block;
     }
+
     .google-apple-multicolor-icon {
         font-size: 40px;
         background: linear-gradient(
@@ -208,6 +213,7 @@ $ipAddress = Yii::$app->request->getUserIP();
         -webkit-text-fill-color: transparent;
         display: inline-block;
     }
+
     .microsoft-multicolor-icon {
         font-size: 33px;
         background: linear-gradient(
