@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use common\models\ReportReminder;
-use backend\models\search\ReportReminder as ReportReminderSearch;
+use backend\models\search\ReportReminderSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

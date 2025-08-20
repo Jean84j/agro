@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 use yii\web\View;
 
 /** @var yii\web\View $this */
-/** @var backend\models\search\ReportReminder $searchModel */
+/** @var backend\models\search\ReportReminderSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Report Reminders';
