@@ -14,14 +14,7 @@ use yii\helpers\Url;
             <div class="products-list__item">
                 <div class="product-card product-card--hidden-actions ">
                     <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
-                    <?php if (isset($product->label)): ?>
-                        <div class="product-card__badges-list">
-                            <div class="product-card__badge product-card__badge--new"
-                                 style="background: <?= Html::encode($product->label->color) ?>;">
-                                <?= $product->label->name ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
+                    <?= $this->render('@frontend/views/_partials/badges-list', ['product' => $product]) ?>
                     <div class="product-card__image product-image">
                         <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                            class="product-image__body">

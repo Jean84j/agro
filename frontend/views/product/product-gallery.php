@@ -1,6 +1,10 @@
 <?php
 
-use yii\helpers\Html;
+/** @var frontend\controllers\ProductController $products_analog_count */
+/** @var frontend\controllers\ProductController $webp_support */
+/** @var frontend\controllers\ProductController $images */
+/** @var frontend\controllers\ProductController $language */
+/** @var frontend\controllers\ProductController $mobile */
 
 ?>
 <div class="product__gallery">
@@ -8,10 +12,10 @@ use yii\helpers\Html;
         <?php if (!empty($product->images)) : ?>
             <div class="product-gallery__featured">
                 <div>
-                    <div class="skeleton-loader"  style="padding: 20px;">
-                            <img src="<?= '/product/' . $product->images[0]->extra_extra_large ?>"
-                                 width="336" height="336"
-                                 alt="<?= $product->name ?>">
+                    <div class="skeleton-loader" style="padding: 20px;">
+                        <img src="<?= '/product/' . $product->images[0]->extra_extra_large ?>"
+                             width="336" height="336"
+                             alt="<?= $product->name ?>">
                     </div>
                 </div>
                 <button class="product-gallery__zoom" aria-label="Збільшити">
@@ -23,19 +27,10 @@ use yii\helpers\Html;
                     <?php foreach ($images as $image) : ?>
                         <?php if ($webp_support == true && isset($image->webp_extra_extra_large)) { ?>
                             <div class="product-image product-image--location--gallery">
-                                <div class="product-card__badges-list">
-                                    <?php if (isset($product->label->name)) : ?>
-                                        <div class="product-card__badge product-card__badge--sale"
-                                             style="background: <?= Html::encode($product->label->color) ?>">
-                                            <?= $product->label->name ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if ($products_analog_count > 0) : ?>
-                                        <div class="product-card__badge product-card__badge--analog">
-                                            <?= Yii::t('app', 'Є аналоги') . ' ' . $products_analog_count ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
+                                <?= $this->render('@frontend/views/_partials/badges-list', [
+                                    'product' => $product,
+                                    'products_analog_count' => $products_analog_count
+                                ]) ?>
                                 <a href="<?= '/product/' . $image->webp_name ?>" data-width="700"
                                    data-height="700" class="product-image__body" target="_blank">
                                     <img class="product-image__img"
@@ -46,13 +41,10 @@ use yii\helpers\Html;
                             </div>
                         <?php } else { ?>
                             <div class="product-image product-image--location--gallery">
-                                <div class="product-card__badges-list">
-                                    <?php if (isset($product->label->name)) : ?>
-                                        <div class="product-card__badge product-card__badge--new">
-                                            <?= $product->label->name ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
+                                <?= $this->render('@frontend/views/_partials/badges-list', [
+                                    'product' => $product,
+                                    'products_analog_count' => $products_analog_count
+                                ]) ?>
                                 <a href="<?= '/product/' . $image->name ?>" data-width="700"
                                    data-height="700" class="product-image__body" target="_blank">
                                     <img class="product-image__img"
@@ -68,13 +60,14 @@ use yii\helpers\Html;
             <div class="product-gallery__carousel">
                 <div class="owl-carousel" id="product-carousel">
                     <?php foreach ($images as $image) : ?>
-                    <a href="<?= '/product/' . $image->name ?>" class="product-image product-gallery__carousel-item">
-                        <div class="product-image__body">
-                            <img class="product-image__img product-gallery__carousel-image" 
-                            src="<?= '/product/' . $image->name ?>" 
-                            alt="<?= $product->name ?>">
-                        </div>
-                    </a>
+                        <a href="<?= '/product/' . $image->name ?>"
+                           class="product-image product-gallery__carousel-item">
+                            <div class="product-image__body">
+                                <img class="product-image__img product-gallery__carousel-image"
+                                     src="<?= '/product/' . $image->name ?>"
+                                     alt="<?= $product->name ?>">
+                            </div>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </div>
