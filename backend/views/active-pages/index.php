@@ -83,6 +83,17 @@ $ipAddress = Yii::$app->request->getUserIP();
                             'contentOptions' => ['style' => 'width: 200px'],
                         ],
                         [
+                            'label' => 'count',
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                $productUrl = $model->getClearUrl($model->url_page);
+
+                                return '<span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-user">
+                                            ' . ActivePages::productCountViews($productUrl) . '
+                                        </span>';
+                            },
+                        ],
+                        [
                             'attribute' => 'url_page',
                             'format' => 'raw',
                             'value' => function ($model) {
@@ -92,10 +103,6 @@ $ipAddress = Yii::$app->request->getUserIP();
                                 return Html::img(Yii::$app->request->hostInfo . $imageUrl, [
                                         'style' => 'max-width:42px; max-height:42px; margin-right:5px;',
                                     ]) .
-                                    '<span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-user" 
-                                           style="margin-right: 5px;">
-                                            ' . ActivePages::productCountViews($productUrl) . '
-                                     </span>' .
                                     Html::encode($productUrl);
                             },
                         ],
