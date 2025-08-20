@@ -24,7 +24,9 @@ class ProductsBackend extends Product
             ->count();
     }
 
-    // Особое внимание к продуктам
+    /**
+     * Особое внимание к продуктам
+     */
     public function hasEmptyParameters(): bool
     {
         $parameters = ProductProperties::find()
@@ -86,6 +88,5 @@ class ProductsBackend extends Product
     {
         return empty($this->h1);
     }
-//     End Особое внимание к продуктам
 
 }
