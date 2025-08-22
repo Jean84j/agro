@@ -20,7 +20,7 @@ class SiteHeader extends Widget
     public function run()
     {
         $session = Yii::$app->session;
-        $language = $session->get('_language');
+        $language = Yii::$app->language;
         $compareList = $session->get('compareList', []);
         $compareList = count($compareList);
         $wishList = $session->get('wishList', []);
