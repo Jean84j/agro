@@ -75,3 +75,6 @@ phpunit.phar
 /frontend/config/main-local.php
 .env
 .htaccess
+/GeoIP/
+error_log
+geoipblock.php

@@ -45,7 +45,8 @@
         "aki/yii2-bot-telegram": "*",
         "lis-dev/nova-poshta-api-2": "^0.1.6",
         "kartik-v/yii2-widgets": "^3.4",
-        "stichoza/google-translate-php": "^5.1"
+        "stichoza/google-translate-php": "^5.1",
+        "geoip2/geoip2": "^3.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "^2.1",
