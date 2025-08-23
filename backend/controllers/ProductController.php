@@ -434,7 +434,7 @@ class ProductController extends Controller
             $postPropertiesTranslate = $this->request->post('PropertiesTranslate', []);
             $postProperties = $this->request->post('ProductProperties', []);
             $post_priority = $this->request->post('priority');
-            $post_product = $this->request->post('Product', []);
+            $post_product = $this->request->post('ProductsBackend', []);
 
             $this->updateTranslate($model->id, 'ru', $postTranslates['ru'] ?? null);
 
@@ -647,7 +647,6 @@ class ProductController extends Controller
             }
         }
     }
-
 
     /**
      * Deletes an existing Product model.
