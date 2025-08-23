@@ -33,7 +33,7 @@ $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
                     <div class="search search--location--mobile-header mobile-header__search">
                         <div class="search__body">
                             <form class="search__form"
-                                  data-url="<?= Yii::$app->urlManager->createUrl(['search/suggestions']) ?>"
+                                  data-url="<?= Yii::$app->urlManager->createUrl(['search/suggestions-ajax']) ?>"
                                   action="<?= Yii::$app->urlManager->createUrl(['search/suggestions']) ?>">
                                 <input class="search__input" name="q" placeholder="Пошук товарів"
                                        aria-label="Site search" type="text" autocomplete="off">
