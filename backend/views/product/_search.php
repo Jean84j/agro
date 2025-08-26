@@ -447,7 +447,7 @@ $clearFilterBtn = Html::a(
     }
 
     [data-sa-collapse-filter-content].collapsed {
-        max-height: 500px; /* Можно увеличить, если контент больше */
+        max-height: 1100px; /* Можно увеличить, если контент больше */
     }
 
 </style>
