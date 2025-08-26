@@ -80,39 +80,42 @@ use vova07\imperavi\Widget;
                             <?php endif; ?>
                         </div>
                         <div class="mb-4">
-                            <?= $form->field($model, 'short_description')->widget(Widget::class, [
-                                'options' => ['id' => 'uk-short_description'],
-                                'defaultSettings' => [
-                                    'style' => 'position: unset;'
-                                ],
-                                'settings' => [
-                                    'lang' => 'uk',
-                                    'minHeight' => 100,
-                                    'plugins' => [
-                                        'table',
-                                        'fontcolor',
-                                        'fullscreen',
+                            <div class="card card-body">
+                                <?= $form->field($model, 'short_description')->widget(Widget::class, [
+                                    'options' => ['id' => 'uk-short_description'],
+                                    'defaultSettings' => [
+                                        'style' => 'position: unset;'
                                     ],
-                                ],
-                            ]); ?>
+                                    'settings' => [
+                                        'lang' => 'uk',
+                                        'minHeight' => 100,
+                                        'plugins' => [
+                                            'table',
+                                            'fontcolor',
+                                            'fullscreen',
+                                        ],
+                                    ],
+                                ]); ?>
+                            </div>
                         </div>
                         <div class="mb-4">
-                            <?= $form->field($model, 'description')->widget(Widget::class, [
-                                'options' => ['id' => 'uk-description'],
-                                'defaultSettings' => [
-                                    'style' => 'position: unset;'
-                                ],
-                                'settings' => [
-                                    'lang' => 'uk',
-                                    'minHeight' => 100,
-                                    'plugins' => [
-                                        'table',
-                                        'fontcolor',
-                                        'clips',
-                                        'fullscreen',
+                            <div class="card card-body">
+                                <?= $form->field($model, 'description')->widget(Widget::class, [
+                                    'options' => ['id' => 'uk-description'],
+                                    'defaultSettings' => [
+                                        'style' => 'position: unset;'
                                     ],
-                                    'clips' => [
-                                        ['All h3 Descr...', '
+                                    'settings' => [
+                                        'lang' => 'uk',
+                                        'minHeight' => 100,
+                                        'plugins' => [
+                                            'table',
+                                            'fontcolor',
+                                            'clips',
+                                            'fullscreen',
+                                        ],
+                                        'clips' => [
+                                            ['All h3 Descr...', '
                                                         <h3>Переваги використання</h3>
                                                         <p>-------------------</p>
                                                         <h3>Механізм дії</h3>
@@ -124,28 +127,31 @@ use vova07\imperavi\Widget;
                                                         <h3>Рекомендації по застосуванню</h3>
                                                         <p>-------------------</p>
                                                         '
-                                        ],
-                                    ],
-                                ],
-                            ]); ?>
-                        </div>
-                        <?php if (!$model->isNewRecord): ?>
-                            <div class="mb-4">
-                                <?= $form->field($model, 'footer_description')->widget(Widget::class, [
-                                    'options' => ['id' => 'uk-footer_description'],
-                                    'defaultSettings' => [
-                                        'style' => 'position: unset;'
-                                    ],
-                                    'settings' => [
-                                        'lang' => 'uk',
-                                        'minHeight' => 100,
-                                        'plugins' => [
-                                            'fullscreen',
-                                            'table',
-                                            'clips',
+                                            ],
                                         ],
                                     ],
                                 ]); ?>
+                            </div>
+                        </div>
+                        <?php if (!$model->isNewRecord): ?>
+                            <div class="mb-4">
+                                <div class="card card-body">
+                                    <?= $form->field($model, 'footer_description')->widget(Widget::class, [
+                                        'options' => ['id' => 'uk-footer_description'],
+                                        'defaultSettings' => [
+                                            'style' => 'position: unset;'
+                                        ],
+                                        'settings' => [
+                                            'lang' => 'uk',
+                                            'minHeight' => 100,
+                                            'plugins' => [
+                                                'fullscreen',
+                                                'table',
+                                                'clips',
+                                            ],
+                                        ],
+                                    ]); ?>
+                                </div>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -187,39 +193,42 @@ use vova07\imperavi\Widget;
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <?= $form->field($translateRu, 'short_description')->widget(Widget::class, [
-                                    'options' => ['id' => 'ru-short_description', 'name' => 'ProductsTranslate[ru][short_description]'],
-                                    'defaultSettings' => [
-                                        'style' => 'position: unset;'
-                                    ],
-                                    'settings' => [
-                                        'lang' => 'uk',
-                                        'minHeight' => 100,
-                                        'plugins' => [
-                                            'table',
-                                            'fontcolor',
-                                            'fullscreen',
+                                <div class="card card-body">
+                                    <?= $form->field($translateRu, 'short_description')->widget(Widget::class, [
+                                        'options' => ['id' => 'ru-short_description', 'name' => 'ProductsTranslate[ru][short_description]'],
+                                        'defaultSettings' => [
+                                            'style' => 'position: unset;'
                                         ],
-                                    ],
-                                ]); ?>
+                                        'settings' => [
+                                            'lang' => 'uk',
+                                            'minHeight' => 100,
+                                            'plugins' => [
+                                                'table',
+                                                'fontcolor',
+                                                'fullscreen',
+                                            ],
+                                        ],
+                                    ]); ?>
+                                </div>
                             </div>
                             <div class="mb-4">
-                                <?= $form->field($translateRu, 'description')->widget(Widget::class, [
-                                    'options' => ['id' => 'ru-description', 'name' => 'ProductsTranslate[ru][description]'],
-                                    'defaultSettings' => [
-                                        'style' => 'position: unset;'
-                                    ],
-                                    'settings' => [
-                                        'lang' => 'uk',
-                                        'minHeight' => 100,
-                                        'plugins' => [
-                                            'table',
-                                            'fontcolor',
-                                            'clips',
-                                            'fullscreen',
+                                <div class="card card-body">
+                                    <?= $form->field($translateRu, 'description')->widget(Widget::class, [
+                                        'options' => ['id' => 'ru-description', 'name' => 'ProductsTranslate[ru][description]'],
+                                        'defaultSettings' => [
+                                            'style' => 'position: unset;'
                                         ],
-                                        'clips' => [
-                                            ['All h3 Descr...', '
+                                        'settings' => [
+                                            'lang' => 'uk',
+                                            'minHeight' => 100,
+                                            'plugins' => [
+                                                'table',
+                                                'fontcolor',
+                                                'clips',
+                                                'fullscreen',
+                                            ],
+                                            'clips' => [
+                                                ['All h3 Descr...', '
                                                         <h3>Переваги використання</h3>
                                                         <p>-------------------</p>
                                                         <h3>Механізм дії</h3>
@@ -231,28 +240,31 @@ use vova07\imperavi\Widget;
                                                         <h3>Рекомендації по застосуванню</h3>
                                                         <p>-------------------</p>
                                                         '
-                                            ],
-                                        ],
-                                    ],
-                                ]); ?>
-                            </div>
-                            <?php if (!$model->isNewRecord): ?>
-                                <div class="mb-4">
-                                    <?= $form->field($translateRu, 'footer_description')->widget(Widget::class, [
-                                        'options' => ['id' => 'ru-footer_description', 'name' => 'ProductsTranslate[ru][footer_description]'],
-                                        'defaultSettings' => [
-                                            'style' => 'position: unset;'
-                                        ],
-                                        'settings' => [
-                                            'lang' => 'uk',
-                                            'minHeight' => 100,
-                                            'plugins' => [
-                                                'fullscreen',
-                                                'table',
-                                                'clips',
+                                                ],
                                             ],
                                         ],
                                     ]); ?>
+                                </div>
+                            </div>
+                            <?php if (!$model->isNewRecord): ?>
+                                <div class="mb-4">
+                                    <div class="card card-body">
+                                        <?= $form->field($translateRu, 'footer_description')->widget(Widget::class, [
+                                            'options' => ['id' => 'ru-footer_description', 'name' => 'ProductsTranslate[ru][footer_description]'],
+                                            'defaultSettings' => [
+                                                'style' => 'position: unset;'
+                                            ],
+                                            'settings' => [
+                                                'lang' => 'uk',
+                                                'minHeight' => 100,
+                                                'plugins' => [
+                                                    'fullscreen',
+                                                    'table',
+                                                    'clips',
+                                                ],
+                                            ],
+                                        ]); ?>
+                                    </div>
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>
