@@ -52,6 +52,35 @@ class ProductsBackend extends Product
     }
 
     /**
+     * Вкладки Tab основная информация
+     */
+    public function getSidebarTabs(): array
+    {
+        $tabs = [
+            [
+                'id' => 'home',
+                'label' => 'Основні',
+                'active' => true,
+            ],
+        ];
+
+        if (!$this->isNewRecord) {
+            $tabs = array_merge($tabs, [
+                [
+                    'id' => 'profile',
+                    'label' => 'Допоміжні',
+                ],
+                [
+                    'id' => 'image',
+                    'label' => 'Зображення',
+                ],
+            ]);
+        }
+
+        return $tabs;
+    }
+
+    /**
      * Особое внимание к продуктам
      */
     public function hasEmptyParameters(): bool
