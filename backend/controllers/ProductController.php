@@ -181,9 +181,9 @@ class ProductController extends Controller
             }
 
             $translation->short_description = $tr->translate($model->short_description);
-            $translation->seo_title = $tr->translate($model->seo_title);
-            $translation->seo_description = $tr->translate($model->seo_description);
-            $translation->h1 = $tr->translate($model->h1);
+            $translation->seo_title = $tr->translate((string) $model->seo_title);
+            $translation->seo_description = $tr->translate((string) $model->seo_description);
+            $translation->h1 = $tr->translate((string) $model->h1);
 
             $categoryProductLayout = CategoriesTranslate::find()
                 ->select([
