@@ -114,7 +114,7 @@ $tabs = $model->getTabs();
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <?php echo $this->render('sidebar', $params); ?>
+                    <?php echo $this->render('sidebar/sidebar', $params); ?>
                 </div>
             </div>
         </div>
