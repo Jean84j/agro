@@ -25,6 +25,33 @@ class ProductsBackend extends Product
     }
 
     /**
+     * Вкладки Tab основная информация
+     */
+    public function getTabs(): array
+    {
+        $tabs = [
+            [
+                'id' => 'description',
+                'icon' => 'fas fa-info-circle',
+                'label' => 'Основна інформація',
+                'active' => true,
+                'view' => 'basic-information',
+            ],
+        ];
+
+        if (!$this->isNewRecord) {
+            $tabs = array_merge($tabs, [
+                ['id' => 'seo', 'icon' => 'fas fa-search-dollar', 'label' => 'Просунення в пошуку', 'view' => 'seo-information'],
+                ['id' => 'properties', 'icon' => 'fas fa-list', 'label' => 'Характеристики', 'view' => 'properties-information'],
+                ['id' => 'keyword', 'icon' => 'fas fa-key', 'label' => 'Ключові слова', 'view' => 'keywords'],
+                ['id' => 'faq', 'icon' => 'far fa-question-circle', 'label' => 'Запитання', 'view' => 'faq'],
+            ]);
+        }
+
+        return $tabs;
+    }
+
+    /**
      * Особое внимание к продуктам
      */
     public function hasEmptyParameters(): bool

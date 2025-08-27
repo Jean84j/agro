@@ -2,7 +2,6 @@
 
 use kartik\form\ActiveForm;
 use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -43,6 +42,8 @@ if (isset($faq)) {
     $params['faq'] = $faq;
 }
 
+$tabs = $model->getTabs();
+
 ?>
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
@@ -79,140 +80,38 @@ if (isset($faq)) {
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button
-                                        class="nav-link active"
-                                        id="description-tab-1"
-                                        data-bs-toggle="tab"
-                                        data-bs-target="#description-tab-content-1"
-                                        type="button"
-                                        role="tab"
-                                        aria-controls="description-tab-content-1"
-                                        aria-selected="true"
-                                >
-                                    <span class="text-center-info">
-                                        <i class="fas fa-info-circle color-info"></i>
-                                        <span>Основна інформація</span>
-                                    </span>
-                                    <span class="nav-link-sa-indicator"></span>
-                                </button>
-                            </li>
-                            <?php if (!$model->isNewRecord): ?>
+                            <?php foreach ($tabs as $tab): ?>
                                 <li class="nav-item" role="presentation">
                                     <button
-                                            class="nav-link"
-                                            id="seo-tab-1"
+                                            class="nav-link <?= !empty($tab['active']) ? 'active' : '' ?>"
+                                            id="<?= $tab['id'] ?>-tab-1"
                                             data-bs-toggle="tab"
-                                            data-bs-target="#seo-tab-content-1"
+                                            data-bs-target="#<?= $tab['id'] ?>-tab-content-1"
                                             type="button"
                                             role="tab"
-                                            aria-controls="seo-tab-content-1"
-                                            aria-selected="true"
+                                            aria-controls="<?= $tab['id'] ?>-tab-content-1"
+                                            aria-selected="<?= !empty($tab['active']) ? 'true' : 'false' ?>"
                                     >
-                                    <span class="text-center-info">
-                                        <i class="fas fa-search-dollar color-info"></i>
-                                        <span>Просунення в пошуку</span>
-                                    </span>
+                                            <span class="text-center-info">
+                                                <i class="<?= $tab['icon'] ?> color-info"></i>
+                                                <span><?= $tab['label'] ?></span>
+                                            </span>
                                         <span class="nav-link-sa-indicator"></span>
                                     </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button
-                                            class="nav-link"
-                                            id="properties-tab-1"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#properties-tab-content-1"
-                                            type="button"
-                                            role="tab"
-                                            aria-controls="properties-tab-content-1"
-                                            aria-selected="true"
-                                    >
-                                    <span class="text-center-info">
-                                        <i class="fas fa-list color-info"></i>
-                                        <span>Характеристики</span>
-                                    </span>
-                                        <span class="nav-link-sa-indicator"></span>
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button
-                                            class="nav-link"
-                                            id="keyword-tab-1"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#keyword-tab-content-1"
-                                            type="button"
-                                            role="tab"
-                                            aria-controls="keyword-tab-content-1"
-                                            aria-selected="true"
-                                    >
-                                    <span class="text-center-info">
-                                        <i class="fas fa-key color-info"></i>
-                                        <span>Ключові слова</span>
-                                    </span>
-                                        <span class="nav-link-sa-indicator"></span>
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button
-                                            class="nav-link"
-                                            id="faq-tab-1"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#faq-tab-content-1"
-                                            type="button"
-                                            role="tab"
-                                            aria-controls="faq-tab-content-1"
-                                            aria-selected="true"
-                                    >
-                                    <span class="text-center-info">
-                                        <i class="far fa-question-circle color-info"></i>
-                                        <span>Запитання</span>
-                                    </span>
-                                        <span class="nav-link-sa-indicator"></span>
-                                    </button>
-                                </li>
-                            <?php endif; ?>
+                            <?php endforeach; ?>
                         </ul>
                         <div class="tab-content mt-4">
-                            <div
-                                    class="tab-pane fade show active"
-                                    id="description-tab-content-1"
-                                    role="tabpanel"
-                                    aria-labelledby="description-tab-1"
-                            >
-                                <?php echo $this->render('basic-information', $params); ?>
-                            </div>
-                            <div
-                                    class="tab-pane fade"
-                                    id="seo-tab-content-1"
-                                    role="tabpanel"
-                                    aria-labelledby="seo-tab-1"
-                            >
-                                <?php echo $this->render('seo-information', $params); ?>
-                            </div>
-                            <div
-                                    class="tab-pane fade"
-                                    id="properties-tab-content-1"
-                                    role="tabpanel"
-                                    aria-labelledby="properties-tab-1"
-                            >
-                                <?php echo $this->render('properties-information', $params); ?>
-                            </div>
-                            <div
-                                    class="tab-pane fade"
-                                    id="keyword-tab-content-1"
-                                    role="tabpanel"
-                                    aria-labelledby="keyword-tab-1"
-                            >
-                                <?php echo $this->render('keywords', $params); ?>
-                            </div>
-                            <div
-                                    class="tab-pane fade"
-                                    id="faq-tab-content-1"
-                                    role="tabpanel"
-                                    aria-labelledby="faq-tab-1"
-                            >
-                                <?php echo $this->render('faq', $params); ?>
-                            </div>
+                            <?php foreach ($tabs as $tab): ?>
+                                <div
+                                        class="tab-pane fade <?= !empty($tab['active']) ? 'show active' : '' ?>"
+                                        id="<?= $tab['id'] ?>-tab-content-1"
+                                        role="tabpanel"
+                                        aria-labelledby="<?= $tab['id'] ?>-tab-1"
+                                >
+                                    <?= $this->render($tab['view'], $params) ?>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                     <?php echo $this->render('sidebar', $params); ?>
