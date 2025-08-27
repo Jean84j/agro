@@ -61,6 +61,7 @@ class ProductsBackend extends Product
                 'id' => 'home',
                 'label' => 'Основні',
                 'active' => true,
+                'view' => '@backend/views/product/sidebar/home-content',
             ],
         ];
 
@@ -69,10 +70,12 @@ class ProductsBackend extends Product
                 [
                     'id' => 'profile',
                     'label' => 'Допоміжні',
+                    'view' => '@backend/views/product/sidebar/profile-content',
                 ],
                 [
                     'id' => 'image',
                     'label' => 'Зображення',
+                    'view' => '@backend/views/product/sidebar/images-content',
                 ],
             ]);
         }

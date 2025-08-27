@@ -28,38 +28,19 @@ $tabs = $model->getSidebarTabs();
         <?php endforeach; ?>
     </ul>
     <div class="tab-content mt-4">
-        <div
-                class="tab-pane fade show active"
-                id="home-tab-content-1"
-                role="tabpanel"
-                aria-labelledby="home-tab-1"
-        >
-            <?= $this->render('@backend/views/product/sidebar/home-content', [
-                'model' => $model, 'form' => $form
-            ]) ?>
-        </div>
-        <?php if (!$model->isNewRecord): ?>
+        <?php foreach ($tabs as $tab): ?>
             <div
-                    class="tab-pane fade"
-                    id="profile-tab-content-1"
+                    class="tab-pane fade <?= !empty($tab['active']) ? 'show active' : '' ?>"
+                    id="<?= $tab['id'] ?>-tab-content-1"
                     role="tabpanel"
-                    aria-labelledby="profile-tab-1"
+                    aria-labelledby="<?= $tab['id'] ?>-tab-1"
             >
-                <?= $this->render('@backend/views/product/sidebar/profile-content', [
-                    'model' => $model, 'form' => $form
+                <?= $this->render($tab['view'], [
+                    'model' => $model,
+                    'form' => $form,
                 ]) ?>
             </div>
-        <?php endif; ?>
-        <div
-                class="tab-pane fade"
-                id="image-tab-content-1"
-                role="tabpanel"
-                aria-labelledby="image-tab-1"
-        >
-            <?= $this->render('@backend/views/product/sidebar/images-content', [
-                'model' => $model, 'form' => $form
-            ]) ?>
-        </div>
+        <?php endforeach; ?>
     </div>
 </div>
 <?= $this->render('@backend/views/product/sidebar/modal-image-view') ?>
