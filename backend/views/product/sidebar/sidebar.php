@@ -46,6 +46,7 @@ $tabs = $model->getSidebarTabs();
     </div>
 </div>
 <?= $this->render('@backend/views/product/sidebar/modal-image-view') ?>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const submitButton = document.getElementById('submitVariantBtn');
@@ -87,6 +88,60 @@ $tabs = $model->getSidebarTabs();
                         document.getElementById('volume').value = '';
 
                         document.getElementById('variant-table').innerHTML = data.variants;
+
+                    } else {
+                        alert('Помилка: ' + data.error);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Помилка:', error);
+                    alert('Сталася помилка при відправці даних.');
+                });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const submitButton = document.getElementById('submitWordsBtn');
+        submitButton.addEventListener('click', function () {
+            // Собираем данные из модального окна
+            const productId = document.querySelector('input[name="productId"]').value;
+            const categoryId = document.querySelector('input[name="categoryId"]').value;
+            const wordUk = document.querySelector('input[name="wordUk"]').value;
+            const wordRu = document.querySelector('input[name="wordRu"]').value;
+
+            if (!wordUk || !wordRu) {
+                return; // Останавливаем выполнение, если поля не заполнены
+            }
+            // Отправляем данные на сервер
+            fetch('/admin/uk/product/add-words', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': yii.getCsrfToken(), // Убедись, что CSRF токен подключён
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    categoryId: categoryId,
+                    wordUk: wordUk,
+                    wordRu: wordRu,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        const closeButton = document.querySelector('.btn-close');
+                        // Проверяем, что кнопка существует
+                        if (closeButton) {
+                            // Симулируем клик по кнопке
+                            closeButton.click();
+                        }
+                        // Очищаем поля формы
+                        document.getElementById('wordUk').value = '';
+                        document.getElementById('wordRu').value = '';
+
+                        document.getElementById('words-table').innerHTML = data.words;
 
                     } else {
                         alert('Помилка: ' + data.error);

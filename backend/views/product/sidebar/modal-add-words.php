@@ -21,7 +21,6 @@
                            id="wordUk"
                            name="wordUk"
                            value=""
-                           required
                     >
                 </div>
 
@@ -31,7 +30,6 @@
                            id="wordRu"
                            name="wordRu"
                            value=""
-                           required
                     >
                 </div>
 
