@@ -42,8 +42,11 @@ if (isset($faq)) {
     $params['faq'] = $faq;
 }
 
-$tabs = $model->getTabs();
+if (isset($words)) {
+    $params['words'] = $words;
+}
 
+$tabs = $model->getTabs();
 ?>
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">

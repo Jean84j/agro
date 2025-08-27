@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\SeoWords;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\CategoriesTranslate;
 use common\models\shop\Category;
@@ -379,6 +380,9 @@ class ProductController extends Controller
             ->asArray()
             ->all();
 
+        $words = SeoWords::find()->where(['product_id' => $id])
+            ->asArray()
+            ->all();
 
         $model = $this->findModel($id);
 
@@ -458,6 +462,7 @@ class ProductController extends Controller
             'translateRu' => $translateRu,
             'variants' => $variants,
             'faq' => $faq,
+            'words' => $words,
         ]);
     }
 
@@ -841,7 +846,6 @@ class ProductController extends Controller
         return ['success' => true];
     }
 
-
     public
     function actionRemoveImage($id)
     {
@@ -1116,7 +1120,7 @@ class ProductController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return [
                     'success' => true,
-                    'variants' => $this->renderPartial('_variant-table', ['variants' => $variants, 'id' => $productId]), // Рендерим частичную таблицу
+                    'variants' => $this->renderPartial('sidebar/_variant-table', ['variants' => $variants, 'id' => $productId]), // Рендерим частичную таблицу
                 ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -1124,6 +1128,16 @@ class ProductController extends Controller
             }
         }
         throw new BadRequestHttpException('Некоректний запит.');
+    }
+
+    function actionRemoveVariant($id)
+    {
+        $word = ProductPackaging::find()->where(['id' => $id])->one();
+        {
+            if ($word->delete()) {
+                return true;
+            }
+        }
     }
 
     public
@@ -1189,7 +1203,6 @@ class ProductController extends Controller
         throw new BadRequestHttpException('Некоректний запит.');
     }
 
-
     public
     function actionEditProductFaq()
     {
@@ -1248,7 +1261,6 @@ class ProductController extends Controller
         }
         throw new BadRequestHttpException('Некоректний запит.');
     }
-
 
     public function actionDeleteProductFaq()
     {
@@ -1336,6 +1348,59 @@ class ProductController extends Controller
             'newState' => $state,
             'faq' => $this->renderPartial('_faq-table', ['faq' => $faq, 'id' => $productId]),
         ];
+    }
+
+    public
+    function actionAddWords()
+    {
+        if (Yii::$app->request->isPost) {
+            $data = Yii::$app->request->getRawBody();  // Получаем сырые данные
+
+            // Декодируем JSON
+            $data = json_decode($data, true);
+
+            // Проверяем наличие данных
+            if (isset($data['productId'], $data['categoryId'], $data['wordUk'], $data['wordRu'])) {
+
+
+                $model = new SeoWords();
+                $model->product_id = $data['productId'];
+                $model->category_id = $data['categoryId'];
+                $model->uk_word = $data['wordUk'];
+                $model->ru_word = $data['wordRu'];
+//                $model->visible = 0;
+                $model->save();
+
+
+
+                $words = SeoWords::find()
+                    ->where(['product_id' => $data['productId']])
+                    ->asArray()
+                    ->all();
+
+
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return [
+                    'success' => true,
+                    'words' => $this->renderPartial('sidebar/_words-table', ['words' => $words, 'id' => $data['productId']]), // Рендерим частичную таблицу
+                ];
+            } else {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['success' => false, 'error' => 'Не всі дані передані контроллер.'];
+            }
+
+        }
+        throw new BadRequestHttpException('Некоректний запит.');
+    }
+
+    function actionRemoveWord($id)
+    {
+        $word = SeoWords::find()->where(['id' => $id])->one();
+        {
+            if ($word->delete()) {
+                return true;
+            }
+        }
     }
 
 }

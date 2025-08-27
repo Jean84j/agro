@@ -59,7 +59,7 @@ class ProductsBackend extends Product
         $tabs = [
             [
                 'id' => 'home',
-                'label' => 'Основні',
+                'label' => '<i class="fas fa-warehouse"></i>',
                 'active' => true,
                 'view' => '@backend/views/product/sidebar/home-content',
             ],
@@ -69,13 +69,18 @@ class ProductsBackend extends Product
             $tabs = array_merge($tabs, [
                 [
                     'id' => 'profile',
-                    'label' => 'Допоміжні',
+                    'label' => '<i class="fas fa-sitemap"></i>',
                     'view' => '@backend/views/product/sidebar/profile-content',
                 ],
                 [
                     'id' => 'image',
-                    'label' => 'Зображення',
+                    'label' => '<i class="fas fa-images"></i>',
                     'view' => '@backend/views/product/sidebar/images-content',
+                ],
+                [
+                    'id' => 'words',
+                    'label' => '<i class="fas fa-spell-check"></i>',
+                    'view' => '@backend/views/product/sidebar/words-used-content',
                 ],
             ]);
         }

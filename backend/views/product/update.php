@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $model->name;
     'translateRu' => $translateRu,
     'faq' => $faq,
     'variants' => $variants,
+    'words' => $words,
 
 ]) ?>
 

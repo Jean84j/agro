@@ -5,16 +5,40 @@ function removeImageStock(id, land) {
         url: "/admin/"+ land +"/product/remove-image",
         data: {id: id},
         success: function (data) {
-            // console.log(data);
             $("#images-table").load(window.location.href + ' #images-table > *');
-            // $.pjax.reload({ container: '#images' });
-            // setTimeout(function () {
-            //     window.location.reload();
-            // }, 500);
         },
         error: function (data) {
             console.log('Error!', data);
-            // alert('Error!');
+        }
+    })
+}
+
+//Удаление
+function removeWordStock(id, land) {
+    $.ajax({
+        type: "get",
+        url: "/admin/"+ land +"/product/remove-word",
+        data: {id: id},
+        success: function (data) {
+            $("#words-table").load(window.location.href + ' #words-table > *');
+        },
+        error: function (data) {
+            console.log('Error!', data);
+        }
+    })
+}
+
+//Удаление
+function removeVariantStock(id, land) {
+    $.ajax({
+        type: "get",
+        url: "/admin/"+ land +"/product/remove-variant",
+        data: {id: id},
+        success: function (data) {
+            $("#variant-table").load(window.location.href + ' #variant-table > *');
+        },
+        error: function (data) {
+            console.log('Error!', data);
         }
     })
 }

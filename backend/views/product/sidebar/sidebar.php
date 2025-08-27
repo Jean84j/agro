@@ -22,7 +22,7 @@ $tabs = $model->getSidebarTabs();
                         aria-controls="<?= $tab['id'] ?>-tab-content-1"
                         aria-selected="<?= !empty($tab['active']) ? 'true' : 'false' ?>"
                 >
-                    <?= $tab['label'] ?><span class="nav-link-sa-indicator"></span>
+                    <span style="font-size: 20px; color: #70b53e"><?= $tab['label'] ?></span><span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
         <?php endforeach; ?>
@@ -38,6 +38,8 @@ $tabs = $model->getSidebarTabs();
                 <?= $this->render($tab['view'], [
                     'model' => $model,
                     'form' => $form,
+                    'variants' => $variants ?? null,
+                    'words' => $words ?? null,
                 ]) ?>
             </div>
         <?php endforeach; ?>
