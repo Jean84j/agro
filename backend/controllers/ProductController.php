@@ -1378,11 +1378,16 @@ class ProductController extends Controller
                     ->asArray()
                     ->all();
 
+                $model = ProductsBackend::findOne($data['productId']);
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return [
                     'success' => true,
-                    'words' => $this->renderPartial('sidebar/_words-table', ['words' => $words, 'id' => $data['productId']]), // Рендерим частичную таблицу
+                    'words' => $this->renderPartial('sidebar/_words-table', [
+                        'words' => $words,
+                        'id' => $data['productId'],
+                        'model' => $model,
+                    ]),
                 ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;

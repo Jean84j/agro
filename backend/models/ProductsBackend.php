@@ -88,6 +88,24 @@ class ProductsBackend extends Product
         return $tabs;
     }
 
+    public function getCountUseWords($word)
+    {
+        if (empty($word)) {
+            return 0;
+        }
+
+        $text = implode(' ', [
+            $this->short_description ?? '',
+            $this->description ?? '',
+            $this->footer_description ?? '',
+            $this->seo_title ?? '',
+            $this->h1 ?? '',
+        ]);
+
+        return substr_count(mb_strtolower($text), mb_strtolower($word));
+    }
+
+
     /**
      * Особое внимание к продуктам
      */

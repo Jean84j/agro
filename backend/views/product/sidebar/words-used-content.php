@@ -17,6 +17,7 @@
                 <thead>
                 <tr>
                     <th class="min-w-5x">UK</th>
+                    <th class="w-min">Count</th>
                     <th class="w-min"></th>
                 </tr>
                 </thead>
@@ -31,6 +32,11 @@
                                 <input type="text" name="word[<?= $word['id'] ?>]"
                                        class="form-control form-control-sm"
                                        value="<?= $word['uk_word'] ?>" readonly/>
+                            </td>
+                            <td>
+                                <input type="text" name="count[<?= $word['id'] ?>]"
+                                       class="form-control form-control-sm"
+                                       value="<?= $model->getCountUseWords($word['uk_word']) ?>" readonly/>
                             </td>
                             <td>
                                 <a href="#"
