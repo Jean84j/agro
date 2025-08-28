@@ -39,7 +39,6 @@
         "alexandernst/yii2-device-detect": "0.0.12",
         "kartik-v/yii2-ipinfo": "dev-master",
         "kartik-v/yii2-popover-x": "dev-master",
-        "yii2mod/yii2-sweet-alert": "*",
         "skeeks/yii2-assets-auto-compress": "*",
         "phpoffice/phpspreadsheet": "^2.1",
         "aki/yii2-bot-telegram": "*",

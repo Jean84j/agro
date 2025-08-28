@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "261ecf9333e570712f0f6abdaa8b9804",
+    "content-hash": "4deb5f51ece5070b6aa3ec2f0a2d8999",
     "packages": [
         {
             "name": "aki/yii2-bot-telegram",
@@ -261,21 +261,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/mathiasbynens/punycode.js/zipball/0fbadd6e81f3a0ce06c38998040d6db6bdfbc5c9",
                 "reference": "0fbadd6e81f3a0ce06c38998040d6db6bdfbc5c9"
-            },
-            "type": "bower-asset"
-        },
-        {
-            "name": "bower-asset/sweetalert",
-            "version": "2.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/t4t5/sweetalert.git",
-                "reference": "4176d1ebba85e45f8d7faf909841bed0582c25cd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/t4t5/sweetalert/zipball/4176d1ebba85e45f8d7faf909841bed0582c25cd",
-                "reference": "4176d1ebba85e45f8d7faf909841bed0582c25cd"
             },
             "type": "bower-asset"
         },
@@ -5838,51 +5823,6 @@
                 "source": "https://github.com/vova07/yii2-imperavi-widget"
             },
             "time": "2019-03-26T11:39:06+00:00"
-        },
-        {
-            "name": "yii2mod/yii2-sweet-alert",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yii2mod/yii2-sweet-alert.git",
-                "reference": "b14fe7a0a9a1845f3115e3f846fbe91fb96b4231"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yii2mod/yii2-sweet-alert/zipball/b14fe7a0a9a1845f3115e3f846fbe91fb96b4231",
-                "reference": "b14fe7a0a9a1845f3115e3f846fbe91fb96b4231",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/sweetalert": "*",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "yii2mod\\alert\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Igor Chepurnoy",
-                    "email": "igorzfort@gmail.com"
-                }
-            ],
-            "description": "Alert widget based on SweetAlert extension {@link http://tristanedwards.me/sweetalert)",
-            "keywords": [
-                "module",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/yii2mod/yii2-sweet-alert/issues",
-                "source": "https://github.com/yii2mod/yii2-sweet-alert/tree/master"
-            },
-            "time": "2016-06-01T10:40:21+00:00"
         },
         {
             "name": "yiisoft/yii2",
