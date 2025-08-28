@@ -22,7 +22,8 @@ $tabs = $model->getSidebarTabs();
                         aria-controls="<?= $tab['id'] ?>-tab-content-1"
                         aria-selected="<?= !empty($tab['active']) ? 'true' : 'false' ?>"
                 >
-                    <span style="font-size: 20px; color: #70b53e"><?= $tab['label'] ?></span><span class="nav-link-sa-indicator"></span>
+                    <span style="font-size: 20px; color: #70b53e"><?= $tab['label'] ?></span><span
+                            class="nav-link-sa-indicator"></span>
                 </button>
             </li>
         <?php endforeach; ?>
@@ -141,6 +142,47 @@ $tabs = $model->getSidebarTabs();
                         document.getElementById('wordUk').value = '';
                         document.getElementById('wordRu').value = '';
 
+                        document.getElementById('words-table').innerHTML = data.words;
+
+                    } else {
+                        alert('Помилка: ' + data.error);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Помилка:', error);
+                    alert('Сталася помилка при відправці даних.');
+                });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('btn-add-all-words').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            let productId = this.dataset.productId;
+            let categoryId = this.dataset.categoryId;
+
+            console.log(productId);
+            console.log(categoryId);
+
+            fetch('/admin/uk/product/add-all-words', {
+                method: 'POST',
+                body: JSON.stringify({
+                    productId: productId,
+                    categoryId: categoryId
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': yii.getCsrfToken(), // Убедись, что CSRF токен подключён
+                },
+            })
+                .then(r => r.json())
+                .then((data) => {
+                    if (data.success) {
+                        console.log(data.success);
+                        console.log(data.words);
                         document.getElementById('words-table').innerHTML = data.words;
 
                     } else {

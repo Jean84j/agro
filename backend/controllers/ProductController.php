@@ -181,9 +181,9 @@ class ProductController extends Controller
             }
 
             $translation->short_description = $tr->translate($model->short_description);
-            $translation->seo_title = $tr->translate((string) $model->seo_title);
-            $translation->seo_description = $tr->translate((string) $model->seo_description);
-            $translation->h1 = $tr->translate((string) $model->h1);
+            $translation->seo_title = $tr->translate((string)$model->seo_title);
+            $translation->seo_description = $tr->translate((string)$model->seo_description);
+            $translation->h1 = $tr->translate((string)$model->h1);
 
             $categoryProductLayout = CategoriesTranslate::find()
                 ->select([
@@ -1372,6 +1372,75 @@ class ProductController extends Controller
                 $model->save();
 
 
+                $words = SeoWords::find()
+                    ->where(['product_id' => $data['productId']])
+                    ->asArray()
+                    ->all();
+
+                $model = ProductsBackend::findOne($data['productId']);
+
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return [
+                    'success' => true,
+                    'words' => $this->renderPartial('sidebar/_words-table', [
+                        'words' => $words,
+                        'id' => $data['productId'],
+                        'model' => $model,
+                    ]),
+                ];
+            } else {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['success' => false, 'error' => 'Не всі дані передані контроллер.'];
+            }
+
+        }
+        throw new BadRequestHttpException('Некоректний запит.');
+    }
+
+    public
+    function actionAddAllWords()
+    {
+        if (Yii::$app->request->isPost) {
+            $data = Yii::$app->request->getRawBody();  // Получаем сырые данные
+
+            // Декодируем JSON
+            $data = json_decode($data, true);
+
+            if (isset($data['productId'], $data['categoryId'])) {
+
+                $categoryWords = SeoWords::find()
+                    ->where(['category_id' => $data['categoryId']])
+                    ->asArray()
+                    ->all();
+                $unique = [];
+                foreach ($categoryWords as $word) {
+                    $key = $word['uk_word'];
+                    if (!isset($unique[$key])) {
+                        $unique[$key] = $word;
+                    }
+                }
+                $categoryWordsUnique = array_values($unique);
+
+                $productWords = SeoWords::find()
+                    ->where(['product_id' => $data['productId']])
+                    ->asArray()
+                    ->all();
+
+                $categoryWordsFiltered = array_udiff($categoryWordsUnique, $productWords, function($a, $b) {
+                    return $a['uk_word'] <=> $b['uk_word'];
+                });
+
+                if ($categoryWordsFiltered) {
+                    foreach ($categoryWordsFiltered as $word) {
+                        $model = new SeoWords();
+                        $model->product_id = $data['productId'];
+                        $model->category_id = $data['categoryId'];
+                        $model->uk_word = $word['uk_word'];
+                        $model->ru_word = $word['ru_word'];
+//                $model->visible = 0;
+                        $model->save();
+                    }
+                }
 
                 $words = SeoWords::find()
                     ->where(['product_id' => $data['productId']])

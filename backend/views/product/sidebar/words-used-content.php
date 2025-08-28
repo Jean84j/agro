@@ -5,8 +5,16 @@
                 <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
                             class="mb-0 fs-exact-18"><?= Yii::t('app', 'Words') ?></h2></span>
             <a href="#" data-bs-toggle="modal"
-               data-bs-target="#addWordsModal">
-                <i class="fas fa-plus"></i>
+               data-bs-target="#addWordsModal"
+            style="margin-right: 20px; margin-left: 10px"
+            >
+                <i class="fas fa-plus"></i> Нове
+            </a>
+            <a href="#" id="btn-add-all-words"
+            data-product-id="<?= $model->id ?>"
+            data-category-id="<?= $model->category_id ?>"
+            >
+                <i class="fas fa-plus"></i> Из категорії
             </a>
         </div>
     </div>
