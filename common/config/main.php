@@ -1,4 +1,7 @@
 <?php
+
+use yii\caching\FileCache;
+
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -8,7 +11,7 @@ return [
     // 'bootstrap' => ['assetsAutoCompress'],
     'components' => [
         'cache' => [
-            'class' => \yii\caching\FileCache::class,
+            'class' => FileCache::class,
         ],
         'cart' => [
             'class' => 'yz\shoppingcart\ShoppingCart',
