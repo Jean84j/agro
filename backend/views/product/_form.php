@@ -170,7 +170,7 @@ $tabs = $model->getTabs();
 </script>
 
 <script>
-    const words = <?= json_encode($words, JSON_UNESCAPED_UNICODE) ?>;
+    const words = <?= json_encode($words ?? [], JSON_UNESCAPED_UNICODE) ?>;
 
     function highlightWords(selector, words) {
         const element = document.querySelector(selector);
