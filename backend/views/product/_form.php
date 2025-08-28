@@ -148,7 +148,7 @@ $tabs = $model->getTabs();
     }
 
     .highlight {
-        background-color: #ffff0026;
+        background-color: rgba(255, 255, 0, 0.68);
         font-weight: bold;
     }
 </style>
