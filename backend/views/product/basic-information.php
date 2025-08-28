@@ -79,7 +79,7 @@ use vova07\imperavi\Widget;
                                 </div>
                             <?php endif; ?>
                         </div>
-                        <div class="mb-4">
+                        <div id="doc-short_description" class="mb-4">
                             <div class="card card-body">
                                 <?= $form->field($model, 'short_description')->widget(Widget::class, [
                                     'options' => ['id' => 'uk-short_description'],
@@ -98,7 +98,7 @@ use vova07\imperavi\Widget;
                                 ]); ?>
                             </div>
                         </div>
-                        <div class="mb-4">
+                        <div id="doc-description" class="mb-4">
                             <div class="card card-body">
                                 <?= $form->field($model, 'description')->widget(Widget::class, [
                                     'options' => ['id' => 'uk-description'],
@@ -134,7 +134,7 @@ use vova07\imperavi\Widget;
                             </div>
                         </div>
                         <?php if (!$model->isNewRecord): ?>
-                            <div class="mb-4">
+                            <div id="doc-footer_description" class="mb-4">
                                 <div class="card card-body">
                                     <?= $form->field($model, 'footer_description')->widget(Widget::class, [
                                         'options' => ['id' => 'uk-footer_description'],

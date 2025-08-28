@@ -146,6 +146,11 @@ $tabs = $model->getTabs();
         align-items: center;
         gap: 5px;
     }
+
+    .highlight {
+        background-color: #ffff0026;
+        font-weight: bold;
+    }
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -164,6 +169,35 @@ $tabs = $model->getTabs();
     });
 </script>
 
+<script>
+    const words = <?= json_encode($words, JSON_UNESCAPED_UNICODE) ?>;
+
+    function highlightWords(selector, words) {
+        const element = document.querySelector(selector);
+        if (!element) return;
+
+        let html = element.innerHTML;
+
+        words.forEach(item => {
+            [item.uk_word, item.ru_word].forEach(word => {
+                if (!word) return;
+                const regex = new RegExp(`(${word})`, "gi");
+                html = html.replace(regex, '<span class="highlight">$1</span>');
+            });
+        });
+
+        element.innerHTML = html;
+    }
+    // Запускаем подсветку
+    document.addEventListener("DOMContentLoaded", function() {
+        highlightWords("#doc-short_description", words);
+        highlightWords("#doc-description", words);
+        highlightWords("#doc-footer_description", words);
+        highlightWords("#ru-short_description", words);
+        highlightWords("#ru-description", words);
+        highlightWords("#ru-footer_description", words);
+    });
+</script>
 
 
 
