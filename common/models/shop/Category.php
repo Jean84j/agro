@@ -433,4 +433,30 @@ class Category extends ActiveRecord
             return '/catalog/';
         }
     }
+
+    /**
+     * Вкладки Tab основная информация
+     */
+    public function getTabs(): array
+    {
+        $tabs = [
+            [
+                'id' => 'description',
+                'icon' => 'fas fa-info-circle',
+                'label' => 'Основна інформація',
+                'active' => true,
+                'view' => 'basic-information',
+            ],
+        ];
+
+//        if (!$this->isNewRecord) {
+            $tabs = array_merge($tabs, [
+                ['id' => 'seo', 'icon' => 'fas fa-search-dollar', 'label' => 'Просунення в пошуку', 'view' => '@backend/views/_partials/seo-information'],
+                ['id' => 'seo-product', 'icon' => 'fas fa-search-dollar', 'label' => 'SEO шаблон', 'view' => 'seo-information-product'],
+                ['id' => 'keyword', 'icon' => 'fas fa-key', 'label' => 'Ключові слова', 'view' => 'keywords'],
+            ]);
+//        }
+
+        return $tabs;
+    }
 }

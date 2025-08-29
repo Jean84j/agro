@@ -10,7 +10,18 @@ use yii\helpers\Url;
 /** @var ActiveForm $form */
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php
+$form = ActiveForm::begin();
+
+$params = [
+    'form' => $form,
+    'model' => $model,
+];
+if (isset($translateRu)) {
+    $params['translateRu'] = $translateRu;
+}
+$tabs = $model->getTabs();
+?>
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
         <div class="container container--max--xl" style="max-width: 1623px">
@@ -44,21 +55,21 @@ use yii\helpers\Url;
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-                        <?php
-                        $params = [
-                            'form' => $form,
-                            'model' => $model,
-                        ];
-                        if (isset($translateRu)) {
-                            $params['translateRu'] = $translateRu;
-                        }
-                        echo $this->render('basic-information', $params);
-                        echo $this->render('seo-information', $params);
-                        echo $this->render('keywords', $params);
-                        echo $this->render('products-keywords', $params);
-                        echo $this->render('products-footer-description', $params);
-                        echo $this->render('products-seo', $params);
-                        ?>
+
+                        <?= $this->render('@backend/views/_partials/tabs', ['tabs'  => $tabs]); ?>
+
+                        <div class="tab-content mt-4">
+                            <?php foreach ($tabs as $tab): ?>
+                                <div
+                                        class="tab-pane fade <?= !empty($tab['active']) ? 'show active' : '' ?>"
+                                        id="<?= $tab['id'] ?>-tab-content-1"
+                                        role="tabpanel"
+                                        aria-labelledby="<?= $tab['id'] ?>-tab-1"
+                                >
+                                    <?= $this->render($tab['view'], $params) ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                     <?= $this->render('sidebar', ['form' => $form, 'model' => $model]) ?>
                 </div>
