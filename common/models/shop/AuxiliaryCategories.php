@@ -173,4 +173,28 @@ class AuxiliaryCategories extends ActiveRecord
             return '-----';
         }
     }
+
+    /**
+     * Вкладки Tab основная информация
+     */
+    public function getTabs(): array
+    {
+        $tabs = [
+            [
+                'id' => 'description',
+                'icon' => 'fas fa-info-circle',
+                'label' => 'Основна інформація',
+                'active' => true,
+                'view' => 'basic-information',
+            ],
+        ];
+
+        if (!$this->isNewRecord) {
+            $tabs = array_merge($tabs, [
+                ['id' => 'seo', 'icon' => 'fas fa-search-dollar', 'label' => 'Просунення в пошуку', 'view' => '@backend/views/_partials/seo-information'],
+            ]);
+        }
+
+        return $tabs;
+    }
 }

@@ -82,28 +82,9 @@ $tabs = $model->getTabs();
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <?php foreach ($tabs as $tab): ?>
-                                <li class="nav-item" role="presentation">
-                                    <button
-                                            class="nav-link <?= !empty($tab['active']) ? 'active' : '' ?>"
-                                            id="<?= $tab['id'] ?>-tab-1"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#<?= $tab['id'] ?>-tab-content-1"
-                                            type="button"
-                                            role="tab"
-                                            aria-controls="<?= $tab['id'] ?>-tab-content-1"
-                                            aria-selected="<?= !empty($tab['active']) ? 'true' : 'false' ?>"
-                                    >
-                                            <span class="text-center-info">
-                                                <i class="<?= $tab['icon'] ?> color-info"></i>
-                                                <span><?= $tab['label'] ?></span>
-                                            </span>
-                                        <span class="nav-link-sa-indicator"></span>
-                                    </button>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+
+                        <?= $this->render('@backend/views/_partials/tabs', ['tabs'  => $tabs]); ?>
+
                         <div class="tab-content mt-4">
                             <?php foreach ($tabs as $tab): ?>
                                 <div
