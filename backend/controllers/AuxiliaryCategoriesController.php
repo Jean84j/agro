@@ -162,7 +162,7 @@ class AuxiliaryCategoriesController extends Controller
         $translateRu = AuxiliaryTranslate::findOne(['category_id' => $id, 'language' => 'ru']);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $postTranslates = Yii::$app->request->post('CategoriesTranslate', []);
+            $postTranslates = Yii::$app->request->post('SeoTranslate', []);
 
             $this->updateTranslate($model->id, 'ru', $postTranslates['ru'] ?? null);
 

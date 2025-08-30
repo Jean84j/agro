@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property string|null $description
  * @property string|null $seo_title
  * @property string|null $seo_description
+ * @property string|null $h1
  */
 class PostsTranslate extends ActiveRecord
 {
@@ -35,7 +36,7 @@ class PostsTranslate extends ActiveRecord
             [['post_id'], 'integer'],
             [['description'], 'string'],
             [['language'], 'string', 'max' => 10],
-            [['title', 'seo_title', 'seo_description'], 'string', 'max' => 255],
+            [['title', 'seo_title', 'seo_description', 'h1'], 'string', 'max' => 255],
         ];
     }
 

@@ -36,6 +36,7 @@ use yii\i18n\Formatter;
  * @property string|null $image Картинка
  * @property string|null $webp_image Картинка
  * @property string|null $slug Слаг
+ * @property string|null $h1 Слаг
  */
 class Posts extends ActiveRecord
 {
@@ -80,7 +81,7 @@ class Posts extends ActiveRecord
             [['title', 'seo_title', 'image',
                 'extra_large', 'large', 'medium',
                 'small', 'webp_image', 'webp_extra_large',
-                'webp_large', 'webp_medium', 'webp_small'], 'string', 'max' => 255],
+                'webp_large', 'webp_medium', 'webp_small', 'h1'], 'string', 'max' => 255],
         ];
     }
 

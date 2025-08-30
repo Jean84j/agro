@@ -2,7 +2,7 @@
 
 use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\form\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var common\models\Posts $model */
@@ -10,7 +10,22 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php
+$form = ActiveForm::begin();
+$commonParams = [
+    'model' => $model,
+    'form' => $form,
+    'seoTitle' => 'seo_title',
+    'seoDescription' => 'seo_description',
+    'seoH1' => 'h1',
+    'seoTitleRu' => 'seo_title',
+    'seoDescriptionRu' => 'seo_description',
+    'seoH1Ru' => 'h1',
+];
+if (isset($translateRu)) {
+    $commonParams['translateRu'] = $translateRu;
+}
+?>
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
         <div class="container container--max--xl" style="max-width: 1623px">
@@ -42,15 +57,9 @@ use yii\widgets\ActiveForm;
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-                        <?php
-                        $commonParams = ['model' => $model, 'form' => $form];
-                        if (isset($translateRu)) {
-                            $commonParams['translateRu'] = $translateRu;
-                        }
-                        ?>
 
                         <?php echo $this->render('basic-information', $commonParams); ?>
-                        <?php echo $this->render('seo-information', $commonParams); ?>
+                        <?php echo $this->render('/_partials/seo-information', $commonParams); ?>
 
                     </div>
                     <?= $this->render('sidebar', ['form' => $form, 'model' => $model, 'commonParams' => $commonParams]) ?>
