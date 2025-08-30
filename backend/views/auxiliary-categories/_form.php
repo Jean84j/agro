@@ -15,12 +15,17 @@ $form = ActiveForm::begin();
 $params = [
     'form' => $form,
     'model' => $model,
+
     'seoTitle' => 'pageTitle',
     'seoDescription' => 'metaDescription',
     'seoH1' => 'h1',
     'seoTitleRu' => 'pageTitle',
     'seoDescriptionRu' => 'metaDescription',
     'seoH1Ru' => 'h1',
+
+    'header' => 'Image 231 x 231',
+    'dir' => Yii::$app->request->hostInfo . '/images/auxiliary-categories/' . $model->image,
+    'file' => 'image',
 ];
 if (isset($translateRu)) {
     $params['translateRu'] = $translateRu;
@@ -62,7 +67,7 @@ $tabs = $model->getTabs();
                     <div class="sa-entity-layout__main">
                         <?= $this->render('@backend/views/_partials/tabs', ['tabs' => $tabs, 'params' => $params]); ?>
                     </div>
-                    <?= $this->render('sidebar', ['form' => $form, 'model' => $model]) ?>
+                    <?= $this->render('sidebar', ['form' => $form, 'model' => $model, 'params' => $params]) ?>
                 </div>
             </div>
         </div>

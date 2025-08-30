@@ -15,12 +15,17 @@ $form = ActiveForm::begin();
 $commonParams = [
     'model' => $model,
     'form' => $form,
+
     'seoTitle' => 'seo_title',
     'seoDescription' => 'seo_description',
     'seoH1' => 'h1',
     'seoTitleRu' => 'seo_title',
     'seoDescriptionRu' => 'seo_description',
     'seoH1Ru' => 'h1',
+
+    'header' => 'Image 340 x 80',
+    'dir' => Yii::$app->request->hostInfo . '/images/brand/' . $model->file,
+    'file' => 'file',
 ];
 if (isset($translateRu)) {
     $commonParams['translateRu'] = $translateRu;
@@ -62,7 +67,7 @@ if (isset($translateRu)) {
                         <?= $this->render('basic-information', $commonParams) ?>
                         <?= $this->render('/_partials/seo-information', $commonParams); ?>
                     </div>
-                    <?= $this->render('sidebar', ['form' => $form, 'model' => $model]) ?>
+                    <?= $this->render('sidebar', ['form' => $form, 'model' => $model, 'params' => $commonParams]) ?>
                 </div>
             </div>
         </div>
