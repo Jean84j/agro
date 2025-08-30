@@ -434,7 +434,7 @@ class ProductController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save(false)) {
 
-            $postTranslates = $this->request->post('ProductsTranslate', []);
+            $postTranslates = $this->request->post('Translate', []);
             $postPropertiesTranslate = $this->request->post('PropertiesTranslate', []);
             $postProperties = $this->request->post('ProductProperties', []);
             $post_priority = $this->request->post('priority');

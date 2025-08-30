@@ -123,7 +123,7 @@ $clips = [[
                                         'maxlength' => true,
                                         'class' => 'form-control',
                                         'id' => 'translateRu-name',
-                                        'name' => 'ProductsTranslate[ru][name]',
+                                        'name' => 'Translate[ru][name]',
                                     ]) ?>
                                 </div>
 
@@ -131,7 +131,7 @@ $clips = [[
                                     <div class="col-md-3 mb-4">
                                         <?= $form->field($translateRu, $field)->textInput([
                                             'id' => "translateRu-$field",
-                                            'name' => "ProductsTranslate[ru][$field]",
+                                            'name' => "Translate[ru][$field]",
                                             'maxlength' => true,
                                             'class' => 'form-control',
                                             'value' => Yii::$app->formatter->asDatetime($model->$field),
@@ -142,16 +142,16 @@ $clips = [[
                             </div>
 
                             <div class="mb-4 card card-body">
-                                <?= renderEditor($form, $translateRu, 'short_description', 'ru-short_description', 'ProductsTranslate[ru][short_description]') ?>
+                                <?= renderEditor($form, $translateRu, 'short_description', 'ru-short_description', 'Translate[ru][short_description]') ?>
                             </div>
 
                             <div class="mb-4 card card-body">
-                                <?= renderEditor($form, $translateRu, 'description', 'ru-description', 'ProductsTranslate[ru][description]', $clips) ?>
+                                <?= renderEditor($form, $translateRu, 'description', 'ru-description', 'Translate[ru][description]', $clips) ?>
                             </div>
 
                             <?php if (!$model->isNewRecord): ?>
                                 <div class="mb-4 card card-body">
-                                    <?= renderEditor($form, $translateRu, 'footer_description', 'ru-footer_description', 'ProductsTranslate[ru][footer_description]') ?>
+                                    <?= renderEditor($form, $translateRu, 'footer_description', 'ru-footer_description', 'Translate[ru][footer_description]') ?>
                                 </div>
                             <?php endif; ?>
                         </div>

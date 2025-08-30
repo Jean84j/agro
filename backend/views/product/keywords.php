@@ -37,7 +37,7 @@
                     'rows' => '4',
                     'class' => "form-control",
                     'id' => 'keywords_id_ru',
-                    'name' => 'ProductsTranslate[ru][keywords]',
+                    'name' => 'Translate[ru][keywords]',
                 ])->label('Keywords') ?>
             </div>
         </div>

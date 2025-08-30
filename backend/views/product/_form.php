@@ -26,6 +26,13 @@ $saveButton = Html::submitButton(
 $params = [
     'form' => $form,
     'model' => $model,
+
+    'seoTitle' => 'seo_title',
+    'seoDescription' => 'seo_description',
+    'seoH1' => 'h1',
+    'seoTitleRu' => 'seo_title',
+    'seoDescriptionRu' => 'seo_description',
+    'seoH1Ru' => 'h1',
 ];
 if (isset($translateRu)) {
     $params['translateRu'] = $translateRu;

@@ -45,7 +45,7 @@ class ProductsBackend extends Product
                     'id' => 'seo',
                     'icon' => 'fas fa-search-dollar',
                     'label' => 'Просунення в пошуку',
-                    'view' => '/product/seo-information'],
+                    'view' => '/_partials/seo-information'],
                 [
                     'id' => 'properties',
                     'icon' => 'fas fa-list',
