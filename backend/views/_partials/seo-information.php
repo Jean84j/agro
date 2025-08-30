@@ -102,13 +102,13 @@
 // Вспомогательная функция для бейджа
 function badgeLabel($id, $title)
 {
-    return "<label 
+    return "<span 
                 class='sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart'
                 style='background: #63bdf57d'
                 id='{$id}'
                 data-bs-toggle='tooltip'
                 data-bs-placement='right'
-                title='{$title}'>0</label>";
+                title='{$title}'>0</span>";
 }
 ?>
 
