@@ -15,12 +15,17 @@ $form = ActiveForm::begin();
 $commonParams = [
     'model' => $model,
     'form' => $form,
+
     'seoTitle' => 'seo_title',
     'seoDescription' => 'seo_description',
     'seoH1' => 'h1',
     'seoTitleRu' => 'seo_title',
     'seoDescriptionRu' => 'seo_description',
     'seoH1Ru' => 'h1',
+
+    'header' => 'Image 231 x 231',
+    'dir' => Yii::$app->request->hostInfo . '/posts/' . $model->image,
+    'file' => 'image',
 ];
 if (isset($translateRu)) {
     $commonParams['translateRu'] = $translateRu;
@@ -57,10 +62,8 @@ if (isset($translateRu)) {
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-
                         <?php echo $this->render('basic-information', $commonParams); ?>
                         <?php echo $this->render('/_partials/seo-information', $commonParams); ?>
-
                     </div>
                     <?= $this->render('sidebar', ['form' => $form, 'model' => $model, 'commonParams' => $commonParams]) ?>
                 </div>

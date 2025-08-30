@@ -23,7 +23,7 @@ $params = [
     'seoDescriptionRu' => 'metaDescription',
     'seoH1Ru' => 'h1',
 
-    'header' => 'Image 231 x 231',
+    'header' => 'Image 730 x 490',
     'dir' => Yii::$app->request->hostInfo . '/images/auxiliary-categories/' . $model->image,
     'file' => 'image',
 ];
