@@ -76,19 +76,19 @@
                             <?= $form->field($translateRu, $seoTitleRu)->textInput([
                                 'maxlength' => true,
                                 'id' => 'seo_title_ru',
-                                'name' => "SeoTranslate[ru][{$seoTitleRu}]"
+                                'name' => "Translate[ru][{$seoTitleRu}]"
                             ])->label('SEO Тайтл → ' . badgeLabel('charCountTitle_ru', '50 > 55 < 60')) ?>
 
                             <?= $form->field($translateRu, $seoDescriptionRu)->textarea([
                                 'rows' => 4,
                                 'id' => 'seo_description_ru',
-                                'name' => "SeoTranslate[ru][{$seoDescriptionRu}]"
+                                'name' => "Translate[ru][{$seoDescriptionRu}]"
                             ])->label('SEO Опис → ' . badgeLabel('charCountDescription_ru', '130 > 155 < 180')) ?>
 
                             <?= $form->field($translateRu, $seoH1Ru)->textInput([
                                 'maxlength' => true,
                                 'id' => 'seo_h1_ru',
-                                'name' => "SeoTranslate[ru][{$seoH1Ru}]"
+                                'name' => "Translate[ru][{$seoH1Ru}]"
                             ])->label('H1 → ' . badgeLabel('charCountH1_ru', '50 > 60 < 70')) ?>
                         </div>
                     </div>

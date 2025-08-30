@@ -237,9 +237,7 @@ class PostsController extends Controller
 
             $model->date_public = strtotime($model->date_public);
 
-            $postsTranslates = Yii::$app->request->post('SeoTranslate', []);
-
-//            dd($postsTranslates);
+            $postsTranslates = Yii::$app->request->post('Translate', []);
 
             $this->updateTranslate($model->id, 'ru', $postsTranslates['ru'] ?? null);
 

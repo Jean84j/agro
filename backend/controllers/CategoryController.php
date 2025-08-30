@@ -175,7 +175,7 @@ class CategoryController extends Controller
 
             $this->updateCategoryProperties($model, $properties ?? null);
 
-            $postTranslates = Yii::$app->request->post('SeoTranslate', []);
+            $postTranslates = Yii::$app->request->post('Translate', []);
 
             $this->updateTranslate($model->id, 'ru', $postTranslates['ru'] ?? null);
 

@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property string $seo_title
  * @property string $seo_description
  * @property boolean $visibility
+ * @property boolean $h1
  */
 class Tag extends ActiveRecord
 {
@@ -61,6 +62,7 @@ class Tag extends ActiveRecord
     {
         return [
             [['name', 'slug'], 'string', 'max' => 50],
+            [['h1'], 'string', 'max' => 150],
             [['description', 'seo_title', 'seo_description'], 'string'],
             [['date_public', 'date_updated'], 'integer'],
             [['visibility'], 'boolean'],
