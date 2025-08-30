@@ -101,12 +101,12 @@ use vova07\imperavi\Widget;
                         <div class="card-body p-5">
                             <div class="row">
                                 <div class="col-4 mb-4">
-                                    <?= $form->field($translateRu, 'name')->textInput(['maxlength' => true, 'id' => 'translateRu-name', 'name' => 'CategoriesTranslate[ru][name]'])->label(Yii::t('app', 'name')) ?>
+                                    <?= $form->field($translateRu, 'name')->textInput(['maxlength' => true, 'id' => 'translateRu-name', 'name' => 'Translate[ru][name]'])->label(Yii::t('app', 'name')) ?>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <?= $form->field($translateRu, 'description')->widget(Widget::class, [
-                                    'options' => ['id' => 'translateRu-description', 'name' => 'CategoriesTranslate[ru][description]'],
+                                    'options' => ['id' => 'translateRu-description', 'name' => 'Translate[ru][description]'],
                                     'defaultSettings' => [
                                         'style' => 'position: unset;'
                                     ],

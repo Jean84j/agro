@@ -78,7 +78,7 @@
                             <div class="row g-4">
                                 <?= $form->field($translateRu, 'keywords')->textInput([
                                     'maxlength' => true,
-                                    'name' => 'CategoriesTranslate[ru][keywords]',
+                                    'name' => 'Translate[ru][keywords]',
                                 ])->label('Keywords') ?>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                             <div class="row g-4">
                                 <?= $form->field($translateRu, 'product_keywords')->textInput([
                                     'maxlength' => true,
-                                    'name' => 'CategoriesTranslate[ru][product_keywords]',
+                                    'name' => 'Translate[ru][product_keywords]',
                                 ])->label('Keywords') ?>
                             </div>
                         </div>

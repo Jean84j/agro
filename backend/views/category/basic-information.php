@@ -101,10 +101,10 @@ use vova07\imperavi\Widget;
                         <div class="card-body p-5">
                             <div class="row">
                                 <div class="col-4 mb-4">
-                                    <?= $form->field($translateRu, 'name')->textInput(['maxlength' => true, 'id' => 'translateRu-name', 'name' => 'CategoriesTranslate[ru][name]'])->label(Yii::t('app', 'name')) ?>
+                                    <?= $form->field($translateRu, 'name')->textInput(['maxlength' => true, 'id' => 'translateRu-name', 'name' => 'Translate[ru][name]'])->label(Yii::t('app', 'name')) ?>
                                 </div>
                                 <div class="col-4 mb-4">
-                                    <?= $form->field($translateRu, 'prefix')->textInput(['maxlength' => true, 'id' => 'translateRu-prefix', 'name' => 'CategoriesTranslate[ru][prefix]'])->label(Yii::t('app', 'prefix')) ?>
+                                    <?= $form->field($translateRu, 'prefix')->textInput(['maxlength' => true, 'id' => 'translateRu-prefix', 'name' => 'Translate[ru][prefix]'])->label(Yii::t('app', 'prefix')) ?>
                                 </div>
                                 <?php if (!$model->isNewRecord) { ?>
                                     <div class="col-4 mb-4">
@@ -119,7 +119,7 @@ use vova07\imperavi\Widget;
                             </div>
                             <div class="mb-4">
                                 <?= $form->field($translateRu, 'description')->widget(Widget::class, [
-                                    'options' => ['id' => 'translateRu-description', 'name' => 'CategoriesTranslate[ru][description]'],
+                                    'options' => ['id' => 'translateRu-description', 'name' => 'Translate[ru][description]'],
                                     'defaultSettings' => [
                                         'style' => 'position: unset;'
                                     ],
@@ -253,7 +253,7 @@ use vova07\imperavi\Widget;
                             </div>
                             <div class="mb-4">
                                 <?= $form->field($translateRu, 'product_footer_description')->widget(Widget::class, [
-                                    'options' => ['id' => 'ru-footer_description', 'name' => 'CategoriesTranslate[ru][product_footer_description]'],
+                                    'options' => ['id' => 'ru-footer_description', 'name' => 'Translate[ru][product_footer_description]'],
                                     'defaultSettings' => [
                                         'style' => 'position: unset;'
                                     ],

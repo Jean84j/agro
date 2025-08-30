@@ -99,7 +99,7 @@
                     <?php if (isset($translateRu)): ?>
                         <div class="card-body p-5">
                             <div class="mb-4">
-                                <?= $form->field($translateRu, 'product_title')->textInput(['maxlength' => true, 'id' => 'product_seo_layout_title_ru_id', 'name' => 'CategoriesTranslate[ru][product_title]'])->label('product-seo-layout Тайтл' . ' ' . '->' . ' ' . '<label class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart" style="background: #63bdf57d" id="charCountTitle_ru" data-bs-toggle="tooltip"
+                                <?= $form->field($translateRu, 'product_title')->textInput(['maxlength' => true, 'id' => 'product_seo_layout_title_ru_id', 'name' => 'Translate[ru][product_title]'])->label('product-seo-layout Тайтл' . ' ' . '->' . ' ' . '<label class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart" style="background: #63bdf57d" id="charCountTitle_ru" data-bs-toggle="tooltip"
                                data-bs-placement="right"
                                title="50 > 55 < 60"> 0</label>') ?>
                                 <script>
@@ -117,7 +117,7 @@
                                         }
                                     });
                                 </script>
-                                <?= $form->field($translateRu, 'product_description')->textarea(['rows' => '4', 'class' => "form-control", 'id' => 'product_seo_layout_description_ru_id', 'name' => 'CategoriesTranslate[ru][product_description]'])->label('product-seo-layout Опис' . ' ' . '->' . ' ' . '<label class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart" style="background: #63bdf57d" id="charCountDescription_ru" data-bs-toggle="tooltip"
+                                <?= $form->field($translateRu, 'product_description')->textarea(['rows' => '4', 'class' => "form-control", 'id' => 'product_seo_layout_description_ru_id', 'name' => 'Translate[ru][product_description]'])->label('product-seo-layout Опис' . ' ' . '->' . ' ' . '<label class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart" style="background: #63bdf57d" id="charCountDescription_ru" data-bs-toggle="tooltip"
                                data-bs-placement="right"
                                title="130 > 155 < 180"> 0</label>') ?>
                                 <script>
