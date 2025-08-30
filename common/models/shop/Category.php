@@ -439,24 +439,29 @@ class Category extends ActiveRecord
      */
     public function getTabs(): array
     {
-        $tabs = [
+        return [
             [
                 'id' => 'description',
                 'icon' => 'fas fa-info-circle',
                 'label' => 'Основна інформація',
                 'active' => true,
-                'view' => 'basic-information',
+                'view' => '/category/basic-information',
             ],
+            [
+                'id' => 'seo',
+                'icon' => 'fas fa-search-dollar',
+                'label' => 'Просунення в пошуку',
+                'view' => '/_partials/seo-information'],
+            [
+                'id' => 'seo-product',
+                'icon' => 'fas fa-search-dollar',
+                'label' => 'SEO шаблон',
+                'view' => '/category/seo-information-product'],
+            [
+                'id' => 'keyword',
+                'icon' => 'fas fa-key',
+                'label' => 'Ключові слова',
+                'view' => '/category/keywords'],
         ];
-
-//        if (!$this->isNewRecord) {
-            $tabs = array_merge($tabs, [
-                ['id' => 'seo', 'icon' => 'fas fa-search-dollar', 'label' => 'Просунення в пошуку', 'view' => '@backend/views/_partials/seo-information'],
-                ['id' => 'seo-product', 'icon' => 'fas fa-search-dollar', 'label' => 'SEO шаблон', 'view' => 'seo-information-product'],
-                ['id' => 'keyword', 'icon' => 'fas fa-key', 'label' => 'Ключові слова', 'view' => 'keywords'],
-            ]);
-//        }
-
-        return $tabs;
     }
 }

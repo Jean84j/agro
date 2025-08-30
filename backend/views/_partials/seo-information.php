@@ -1,4 +1,5 @@
 <?php
+
 ?>
 <div class="card mt-5">
     <div class="card-header">
@@ -49,17 +50,17 @@
             <div class="tab-pane fade show active" id="uk-seo-content-2" role="tabpanel" aria-labelledby="uk-seo-2">
                 <div class="card">
                     <div class="card-body p-5">
-                        <?= $form->field($model, 'pageTitle')->textInput([
+                        <?= $form->field($model, $seoTitle)->textInput([
                             'maxlength' => true,
-                            'id' => 'seo_title_id'
+                            'id' => 'seo_title'
                         ])->label('SEO Тайтл → ' . badgeLabel('charCountTitle', '50 > 55 < 60')) ?>
 
-                        <?= $form->field($model, 'metaDescription')->textarea([
+                        <?= $form->field($model, $seoDescription)->textarea([
                             'rows' => 4,
-                            'id' => 'seo_description_id'
+                            'id' => 'seo_description'
                         ])->label('SEO Опис → ' . badgeLabel('charCountDescription', '130 > 155 < 180')) ?>
 
-                        <?= $form->field($model, 'h1')->textInput([
+                        <?= $form->field($model, $seoH1)->textInput([
                             'maxlength' => true,
                             'id' => 'seo_h1'
                         ])->label('H1 → ' . badgeLabel('charCountH1', '50 > 60 < 70')) ?>
@@ -72,19 +73,19 @@
                 <div class="tab-pane fade" id="ru-seo-content-2" role="tabpanel" aria-labelledby="ru-seo-2">
                     <div class="card">
                         <div class="card-body p-5">
-                            <?= $form->field($translateRu, 'pageTitle')->textInput([
+                            <?= $form->field($translateRu, $seoTitleRu)->textInput([
                                 'maxlength' => true,
-                                'id' => 'seo_title_ru_id',
+                                'id' => 'seo_title_ru',
                                 'name' => 'CategoriesTranslate[ru][pageTitle]'
                             ])->label('SEO Тайтл → ' . badgeLabel('charCountTitle_ru', '50 > 55 < 60')) ?>
 
-                            <?= $form->field($translateRu, 'metaDescription')->textarea([
+                            <?= $form->field($translateRu, $seoDescriptionRu)->textarea([
                                 'rows' => 4,
-                                'id' => 'seo_description_ru_id',
+                                'id' => 'seo_description_ru',
                                 'name' => 'CategoriesTranslate[ru][metaDescription]'
                             ])->label('SEO Опис → ' . badgeLabel('charCountDescription_ru', '130 > 155 < 180')) ?>
 
-                            <?= $form->field($translateRu, 'h1')->textInput([
+                            <?= $form->field($translateRu, $seoH1Ru)->textInput([
                                 'maxlength' => true,
                                 'id' => 'seo_h1_ru',
                                 'name' => 'CategoriesTranslate[ru][h1]'
@@ -93,7 +94,6 @@
                     </div>
                 </div>
             <?php endif; ?>
-
         </div>
     </div>
 </div>
@@ -142,13 +142,13 @@ function badgeLabel($id, $title)
         }
 
         // UK
-        updateCharCount('seo_title_id', 'charCountTitle', 50, 55, 70);
-        updateCharCount('seo_description_id', 'charCountDescription', 130, 155, 180);
+        updateCharCount('seo_title', 'charCountTitle', 50, 55, 70);
+        updateCharCount('seo_description', 'charCountDescription', 130, 155, 180);
         updateCharCount('seo_h1', 'charCountH1', 50, 60, 70);
 
         // RU
-        updateCharCount('seo_title_ru_id', 'charCountTitle_ru', 50, 55, 70);
-        updateCharCount('seo_description_ru_id', 'charCountDescription_ru', 130, 155, 180);
+        updateCharCount('seo_title_ru', 'charCountTitle_ru', 50, 55, 70);
+        updateCharCount('seo_description_ru', 'charCountDescription_ru', 130, 155, 180);
         updateCharCount('seo_h1_ru', 'charCountH1_ru', 50, 60, 70);
     });
 </script>

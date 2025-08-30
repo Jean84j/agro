@@ -16,6 +16,12 @@ $form = ActiveForm::begin();
 $params = [
     'form' => $form,
     'model' => $model,
+    'seoTitle' => 'pageTitle',
+    'seoDescription' => 'metaDescription',
+    'seoH1' => 'h1',
+    'seoTitleRu' => 'pageTitle',
+    'seoDescriptionRu' => 'metaDescription',
+    'seoH1Ru' => 'h1',
 ];
 if (isset($translateRu)) {
     $params['translateRu'] = $translateRu;
@@ -55,21 +61,7 @@ $tabs = $model->getTabs();
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-
-                        <?= $this->render('@backend/views/_partials/tabs', ['tabs'  => $tabs]); ?>
-
-                        <div class="tab-content mt-4">
-                            <?php foreach ($tabs as $tab): ?>
-                                <div
-                                        class="tab-pane fade <?= !empty($tab['active']) ? 'show active' : '' ?>"
-                                        id="<?= $tab['id'] ?>-tab-content-1"
-                                        role="tabpanel"
-                                        aria-labelledby="<?= $tab['id'] ?>-tab-1"
-                                >
-                                    <?= $this->render($tab['view'], $params) ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                        <?= $this->render('@backend/views/_partials/tabs', ['tabs' => $tabs, 'params' => $params]); ?>
                     </div>
                     <?= $this->render('sidebar', ['form' => $form, 'model' => $model]) ?>
                 </div>

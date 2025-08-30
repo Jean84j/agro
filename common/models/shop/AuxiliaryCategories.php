@@ -179,22 +179,20 @@ class AuxiliaryCategories extends ActiveRecord
      */
     public function getTabs(): array
     {
-        $tabs = [
+        return [
             [
                 'id' => 'description',
                 'icon' => 'fas fa-info-circle',
                 'label' => 'Основна інформація',
                 'active' => true,
-                'view' => 'basic-information',
+                'view' => '/auxiliary-categories/basic-information',
+            ],
+            [
+                'id' => 'seo',
+                'icon' => 'fas fa-search-dollar',
+                'label' => 'Просунення в пошуку',
+                'view' => '/_partials/seo-information'
             ],
         ];
-
-        if (!$this->isNewRecord) {
-            $tabs = array_merge($tabs, [
-                ['id' => 'seo', 'icon' => 'fas fa-search-dollar', 'label' => 'Просунення в пошуку', 'view' => '@backend/views/_partials/seo-information'],
-            ]);
-        }
-
-        return $tabs;
     }
 }
