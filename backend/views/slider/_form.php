@@ -1,6 +1,5 @@
 <?php
 
-use kartik\file\FileInput;
 use vova07\imperavi\Widget;
 use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
@@ -11,7 +10,27 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 
 ?>
-<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+<?php
+$form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
+
+$params = [
+    'form' => $form,
+    'model' => $model,
+
+    'header' => 'Image 840 x 395',
+    'dir' => Yii::$app->request->hostInfo . '/images/slider/' . $model->image,
+    'file' => 'image',
+];
+
+$mobParams = [
+    'form' => $form,
+    'model' => $model,
+
+    'header' => 'Image 510 x 395',
+    'dir' => Yii::$app->request->hostInfo . '/images/slider/' . $model->image_mob,
+    'file' => 'image_mob',
+];
+?>
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
         <div class="container container--max--xl">
@@ -83,108 +102,10 @@ use yii\widgets\ActiveForm;
                         <div class="card mt-5">
                             <div class="row card-body p-5">
                                 <div class="col-6">
-                                    <div class="mb-5">
-                                        <h2 class="mb-0 fs-exact-18"><?= Yii::t('app', 'Image 840x395') ?></h2>
-                                    </div>
-                                    <div class="mb-4">
-                                        <?php if ($model->isNewRecord): ?>
-                                            <?= $form->field($model, 'image')->widget(FileInput::class, [
-                                                'options' => ['accept' => 'image/*'],
-                                                'language' => 'uk',
-                                                'pluginOptions' => [
-                                                    'showCaption' => true,
-                                                    'showRemove' => true,
-                                                    'showUpload' => false,
-
-                                                    'uploadLabel' => '',
-                                                    'browseLabel' => '',
-                                                    'removeLabel' => '',
-
-                                                    'browseClass' => 'btn btn-success',
-                                                    'uploadClass' => 'btn btn-info',
-                                                    'removeClass' => 'btn btn-danger',
-                                                    'removeIcon' => '<i class="fas fa-trash"></i> '
-                                                ]
-                                            ]); ?>
-                                        <?php else: ?>
-                                            <?php
-
-                                            echo $form->field($model, 'image')->widget(FileInput::class, [
-                                                'options' => ['accept' => 'image/*'],
-                                                'language' => 'uk',
-                                                'pluginOptions' => [
-                                                    'showCaption' => true,
-                                                    'showRemove' => true,
-                                                    'showUpload' => false,
-
-                                                    'uploadLabel' => '',
-                                                    'browseLabel' => '',
-                                                    'removeLabel' => '',
-
-                                                    'browseClass' => 'btn btn-success',
-                                                    'uploadClass' => 'btn btn-info',
-                                                    'removeClass' => 'btn btn-danger',
-                                                    'removeIcon' => '<i class="fas fa-trash"></i> ',
-                                                    'initialPreview' => [
-                                                        Yii::$app->request->hostInfo . '/images/slider/' . $model->image
-                                                    ],
-                                                    'initialPreviewAsData' => true,
-                                                ]
-                                            ]); ?>
-                                        <?php endif; ?>
-                                    </div>
+                                    <?= $this->render('/_partials/image-upload', $params) ?>
                                 </div>
                                 <div class="col-6">
-                                    <div class="mb-5">
-                                        <h2 class="mb-0 fs-exact-18"><?= Yii::t('app', 'Image 510x395') ?></h2>
-                                    </div>
-                                    <div class="mb-4">
-                                        <?php if ($model->isNewRecord): ?>
-                                            <?= $form->field($model, 'image_mob')->widget(FileInput::class, [
-                                                'options' => ['accept' => 'image/*'],
-                                                'language' => 'uk',
-                                                'pluginOptions' => [
-                                                    'showCaption' => true,
-                                                    'showRemove' => true,
-                                                    'showUpload' => false,
-
-                                                    'uploadLabel' => '',
-                                                    'browseLabel' => '',
-                                                    'removeLabel' => '',
-
-                                                    'browseClass' => 'btn btn-success',
-                                                    'uploadClass' => 'btn btn-info',
-                                                    'removeClass' => 'btn btn-danger',
-                                                    'removeIcon' => '<i class="fas fa-trash"></i> '
-                                                ]
-                                            ]); ?>
-                                        <?php else: ?>
-                                            <?php
-
-                                            echo $form->field($model, 'image_mob')->widget(FileInput::class, [
-                                                'options' => ['accept' => 'image/*'],
-                                                'language' => 'uk',
-                                                'pluginOptions' => [
-                                                    'showCaption' => true,
-                                                    'showRemove' => true,
-                                                    'showUpload' => false,
-
-                                                    'uploadLabel' => '',
-                                                    'browseLabel' => '',
-                                                    'removeLabel' => '',
-
-                                                    'browseClass' => 'btn btn-success',
-                                                    'uploadClass' => 'btn btn-info',
-                                                    'removeClass' => 'btn btn-danger',
-                                                    'removeIcon' => '<i class="fas fa-trash"></i> ',
-                                                    'initialPreview' => [
-                                                        Yii::$app->request->hostInfo . '/images/slider/' . $model->image_mob
-                                                    ],
-                                                    'initialPreviewAsData' => true,
-                                                ]
-                                            ]); ?>
-                                        <?php endif; ?>
-                                    </div>
+                                    <?= $this->render('/_partials/image-upload', $mobParams) ?>
                                 </div>
                             </div>
                         </div>
