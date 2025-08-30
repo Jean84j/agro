@@ -8532,3 +8532,23 @@ input:checked + .sa-color-checkbox__box {
 /*
 // Custom
 */
+.select2-container .select2-selection--single {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  height: 35px;
+  user-select: none;
+  -webkit-user-select: none;
+  /* width: max-content; */
+}
+
+.color-info {
+  color: #ef0f0f6b;
+  font-size: 25px;
+}
+
+.text-center-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

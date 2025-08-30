@@ -35,16 +35,34 @@ class ProductsBackend extends Product
                 'icon' => 'fas fa-info-circle',
                 'label' => 'Основна інформація',
                 'active' => true,
-                'view' => 'basic-information',
+                'view' => '/product/basic-information',
             ],
         ];
 
         if (!$this->isNewRecord) {
             $tabs = array_merge($tabs, [
-                ['id' => 'seo', 'icon' => 'fas fa-search-dollar', 'label' => 'Просунення в пошуку', 'view' => 'seo-information'],
-                ['id' => 'properties', 'icon' => 'fas fa-list', 'label' => 'Характеристики', 'view' => 'properties-information'],
-                ['id' => 'keyword', 'icon' => 'fas fa-key', 'label' => 'Ключові слова', 'view' => 'keywords'],
-                ['id' => 'faq', 'icon' => 'far fa-question-circle', 'label' => 'Запитання', 'view' => 'faq'],
+                [
+                    'id' => 'seo',
+                    'icon' => 'fas fa-search-dollar',
+                    'label' => 'Просунення в пошуку',
+                    'view' => '/product/seo-information'],
+                [
+                    'id' => 'properties',
+                    'icon' => 'fas fa-list',
+                    'label' => 'Характеристики',
+                    'view' => '/product/properties-information'
+                ],
+                [
+                    'id' => 'keyword',
+                    'icon' => 'fas fa-key',
+                    'label' => 'Ключові слова',
+                    'view' => '/product/keywords'],
+                [
+                    'id' => 'faq',
+                    'icon' => 'far fa-question-circle',
+                    'label' => 'Запитання',
+                    'view' => '/product/faq'
+                ],
             ]);
         }
 

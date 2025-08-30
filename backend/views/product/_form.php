@@ -82,52 +82,15 @@ $tabs = $model->getTabs();
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-
-                        <?= $this->render('@backend/views/_partials/tabs', ['tabs'  => $tabs]); ?>
-
-                        <div class="tab-content mt-4">
-                            <?php foreach ($tabs as $tab): ?>
-                                <div
-                                        class="tab-pane fade <?= !empty($tab['active']) ? 'show active' : '' ?>"
-                                        id="<?= $tab['id'] ?>-tab-content-1"
-                                        role="tabpanel"
-                                        aria-labelledby="<?= $tab['id'] ?>-tab-1"
-                                >
-                                    <?= $this->render($tab['view'], $params) ?>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                        <?= $this->render('/_partials/tabs', ['tabs' => $tabs, 'params' => $params]); ?>
                     </div>
-                    <?php echo $this->render('sidebar/sidebar', $params); ?>
+                    <?php echo $this->render('/product/sidebar/sidebar', $params); ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
-
-<style>
-    .select2-container .select2-selection--single {
-        box-sizing: border-box;
-        cursor: pointer;
-        display: block;
-        height: 35px;
-        user-select: none;
-        -webkit-user-select: none;
-        /* width: max-content; */
-    }
-
-    .color-info {
-        color: #ef0f0f6b;
-        font-size: 25px;
-    }
-
-    .text-center-info {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-</style>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let form = document.getElementById("product-form");
