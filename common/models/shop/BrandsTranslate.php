@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property string|null $seo_title
  * @property string|null $seo_description
  * @property string|null $keywords
+ * @property string|null $h1
  */
 class BrandsTranslate extends ActiveRecord
 {
@@ -36,7 +37,7 @@ class BrandsTranslate extends ActiveRecord
             [['brand_id'], 'integer'],
             [['description'], 'string'],
             [['language'], 'string', 'max' => 3],
-            [['name', 'seo_title', 'seo_description', 'keywords'], 'string', 'max' => 255],
+            [['name', 'seo_title', 'seo_description', 'keywords', 'h1'], 'string', 'max' => 255],
         ];
     }
 

@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property string|null $seo_description
  * @property string|null $description
  * @property string|null $keywords
+ * @property string|null $h1
  */
 class Brand extends ActiveRecord
 {
@@ -35,7 +36,7 @@ class Brand extends ActiveRecord
     public function rules()
     {
         return [
-            [['slug', 'name', 'file', 'keywords', 'seo_description', 'seo_title'], 'string', 'max' => 255],
+            [['slug', 'h1', 'name', 'file', 'keywords', 'seo_description', 'seo_title'], 'string', 'max' => 255],
             [['description'], 'string'],
             [['slug', 'name'], 'unique'],
             [['name'], 'required'],
