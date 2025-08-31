@@ -77,12 +77,19 @@ class OrderController extends Controller
     public function actionOrderSuccess()
     {
         $order_id = Yii::$app->session->get('order_id');
-        $order = Order::find()->with('orderItems')->where(['id' => $order_id])->one();
+        if (!$order_id) {
+            return $this->redirect(['/']);
+        }
 
-        if (strpos($order->fio, '*') !== false) {
+        $order = Order::find()->with('orderItems')->where(['id' => $order_id])->one();
+        if (!$order) {
+            return $this->redirect(['/']);
+        }
+
+        if (str_contains($order->fio, '*')) {
             $order->fio = str_replace('*', 'x', $order->fio);
         }
-        if (strpos($order->note, '*') !== false) {
+        if (str_contains($order->note, '*')) {
             $order->note = str_replace('*', 'x', $order->note);
         }
 
