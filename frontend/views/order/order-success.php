@@ -2,6 +2,7 @@
 
 use common\models\shop\ActivePages;
 use frontend\assets\OrderSuccessPageAsset;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 OrderSuccessPageAsset::register($this);
@@ -89,7 +90,7 @@ ActivePages::setActiveUser();
                         <div class="card address-card">
                             <div class="address-card__body">
                                 <div class="address-card__badge address-card__badge--muted"><?= Yii::t('app', 'Адреса доставки') ?></div>
-                                <div class="address-card__name"><?= $order->fio ?></div>
+                                <div class="address-card__name"><?= Html::encode($order->fio) ?></div>
                                 <div class="address-card__row">
                                     <div class="address-card__row-title"><i
                                                 class="fas fa-phone"></i> <?= Yii::t('app', 'Телефон') ?></div>
@@ -123,7 +124,7 @@ ActivePages::setActiveUser();
                                             <div class="address-card__row-title"><i
                                                         class="fas fa-city"></i> <?= Yii::t('app', 'Місто/Село') ?>
                                             </div>
-                                            <div class="address-card__row-content"><?= $order->city ?></div>
+                                            <div class="address-card__row-content"><?= Html::encode($order->city) ?></div>
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
@@ -131,7 +132,7 @@ ActivePages::setActiveUser();
                                     <div class="address-card__row">
                                         <div class="address-card__row-title"><i
                                                     class="far fa-comment"></i> <?= Yii::t('app', 'Коментар') ?></div>
-                                        <div class="address-card__row-content"><?= $order->note ?></div>
+                                        <div class="address-card__row-content"><?= Html::encode($order->note) ?></div>
                                     </div>
                                 <?php endif; ?>
                             </div>

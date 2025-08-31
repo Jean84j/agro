@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'label' => Yii::t('app', 'Home'),
                                         'url' => Yii::$app->homeUrl,
                                     ],
-                                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                                    'links' => $this->params['breadcrumbs'] ?? [],
                                 ]);
                                 ?>
                             </ol>
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td>
                             <div class="d-flex fs-6"><?=$order->getExecutionStatus($order->id)?></div>
                         </td>
-                        <td><a href="<?=Url::to(['order/view', 'id' => $order->id])?>" class="text-reset"><?=$order->fio?></a></td>
+                        <td><a href="<?=Url::to(['order/view', 'id' => $order->id])?>" class="text-reset"><?=Html::encode($order->fio)?></a></td>
                         <td><?=Yii::$app->formatter->asDatetime($order->created_at)?></td>
                         <td>
                             <div class="d-flex fs-6"><?=$order->getPayMent($order->id)?></div>

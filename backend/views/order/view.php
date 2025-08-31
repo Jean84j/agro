@@ -165,7 +165,7 @@ YiiAsset::register($this);
                             <div class="card-body pt-4 fs-exact-14">
                                 <div></div>
                                 <div class="text-muted mt-1">п.і.б.</div>
-                                <div class="mt-1"><?= $model->fio ?></div>
+                                <div class="mt-1"><?= Html::encode($model->fio) ?></div>
                                 <div class="text-muted mt-1">телефон</div>
                                 <div class="mt-1"><?= $model->phone ?></div>
                                 <?php if ($model->area): ?>
@@ -179,7 +179,7 @@ YiiAsset::register($this);
                                     <div class="text-muted mt-1">індекс</div>
                                     <div class="mt-1"><?= $model->warehouses ?></div>
                                     <div class="text-muted mt-1">місто</div>
-                                    <div class="mt-1"><?= $model->city ?></div>
+                                    <div class="mt-1"><?= Html::encode($model->city) ?></div>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -197,7 +197,7 @@ YiiAsset::register($this);
                                 <a href="#" class="fs-exact-14"></a>
                             </div>
                             <div class="card-body pt-4 fs-exact-14">
-                                <div><?= $model->note ?? '' ?></div>
+                                <div><?= Html::encode($model->note) ?? '' ?></div>
                             </div>
                         </div>
                         <div class="card mt-5">
