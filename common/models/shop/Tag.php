@@ -226,4 +226,26 @@ class Tag extends ActiveRecord
         return $categoryNames ? implode(', ', $categoryNames) : 'Нет продуктов';
     }
 
+    /**
+     * Вкладки Tab основная информация
+     */
+    public function getTabs(): array
+    {
+        return [
+            [
+                'id' => 'description',
+                'icon' => 'fas fa-info-circle',
+                'label' => 'Основна інформація',
+                'active' => true,
+                'view' => '/tag/basic-information',
+            ],
+            [
+                'id' => 'seo',
+                'icon' => 'fas fa-search-dollar',
+                'label' => 'Просунення в пошуку',
+                'view' => '/_partials/seo-information'
+            ],
+        ];
+    }
+
 }

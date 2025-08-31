@@ -15,7 +15,8 @@ use yii\db\ActiveRecord;
  * @property string|null $page_description
  * @property integer|null $date_public Дата публикации
  * @property integer|null $date_updated Дата редактирования
- * @property integer|null $keywords
+ * @property string|null $keywords
+ * @property string|null $h1
  */
 class SeoPages extends ActiveRecord
 {
@@ -77,5 +78,27 @@ class SeoPages extends ActiveRecord
     public function getTranslation($language)
     {
         return $this->hasOne(SeoPageTranslate::class, ['page_id' => 'id'])->where(['language' => $language]);
+    }
+
+    /**
+     * Вкладки Tab основная информация
+     */
+    public function getTabs(): array
+    {
+        return [
+            [
+                'id' => 'description',
+                'icon' => 'fas fa-info-circle',
+                'label' => 'Основна інформація',
+                'active' => true,
+                'view' => '/seo-pages/basic-information',
+            ],
+            [
+                'id' => 'seo',
+                'icon' => 'fas fa-search-dollar',
+                'label' => 'Просунення в пошуку',
+                'view' => '/_partials/seo-information'
+            ],
+        ];
     }
 }

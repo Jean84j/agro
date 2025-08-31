@@ -7,19 +7,19 @@ use vova07\imperavi\Widget;
     <div class="card-header">
         <div class="mb-5">
                                     <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2></span>
+                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2></span>
         </div>
         <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button
-                    class="nav-link active"
-                    id="home-tab-2"
-                    data-bs-toggle="tab"
-                    data-bs-target="#home-tab-content-2"
-                    type="button"
-                    role="tab"
-                    aria-controls="home-tab-content-2"
-                    aria-selected="true"
+                        class="nav-link active"
+                        id="home-tab-2"
+                        data-bs-toggle="tab"
+                        data-bs-target="#home-tab-content-2"
+                        type="button"
+                        role="tab"
+                        aria-controls="home-tab-content-2"
+                        aria-selected="true"
                 >
                     UK<span class="nav-link-sa-indicator"></span>
                 </button>
@@ -27,14 +27,14 @@ use vova07\imperavi\Widget;
             <?php if (isset($translateRu)): ?>
                 <li class="nav-item" role="presentation">
                     <button
-                        class="nav-link"
-                        id="profile-tab-2"
-                        data-bs-toggle="tab"
-                        data-bs-target="#profile-tab-content-2"
-                        type="button"
-                        role="tab"
-                        aria-controls="profile-tab-content-2"
-                        aria-selected="true"
+                            class="nav-link"
+                            id="profile-tab-2"
+                            data-bs-toggle="tab"
+                            data-bs-target="#profile-tab-content-2"
+                            type="button"
+                            role="tab"
+                            aria-controls="profile-tab-content-2"
+                            aria-selected="true"
                     >
                         RU<span class="nav-link-sa-indicator"></span>
                     </button>
@@ -45,10 +45,10 @@ use vova07\imperavi\Widget;
     <div class="card-body">
         <div class="tab-content">
             <div
-                class="tab-pane fade show active"
-                id="home-tab-content-2"
-                role="tabpanel"
-                aria-labelledby="home-tab-2"
+                    class="tab-pane fade show active"
+                    id="home-tab-content-2"
+                    role="tabpanel"
+                    aria-labelledby="home-tab-2"
             >
                 <div class="card">
                     <div class="card-body p-5">
@@ -91,10 +91,10 @@ use vova07\imperavi\Widget;
                 </div>
             </div>
             <div
-                class="tab-pane fade"
-                id="profile-tab-content-2"
-                role="tabpanel"
-                aria-labelledby="profile-tab-2"
+                    class="tab-pane fade"
+                    id="profile-tab-content-2"
+                    role="tabpanel"
+                    aria-labelledby="profile-tab-2"
             >
                 <div class="card">
                     <?php if (isset($translateRu)): ?>

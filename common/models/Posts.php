@@ -176,6 +176,28 @@ class Posts extends ActiveRecord
             ->scalar();
     }
 
+    /**
+     * Вкладки Tab основная информация
+     */
+    public function getTabs(): array
+    {
+        return [
+            [
+                'id' => 'description',
+                'icon' => 'fas fa-info-circle',
+                'label' => 'Основна інформація',
+                'active' => true,
+                'view' => '/posts/basic-information',
+            ],
+            [
+                'id' => 'seo',
+                'icon' => 'fas fa-search-dollar',
+                'label' => 'Просунення в пошуку',
+                'view' => '/_partials/seo-information'
+            ],
+        ];
+    }
+
     public function getSchemaPost()
     {
         $formatter = new Formatter();

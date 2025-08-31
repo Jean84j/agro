@@ -14,6 +14,8 @@ use yii\db\ActiveRecord;
  * @property string|null $title
  * @property string|null $description
  * @property string|null $page_description
+ * @property string|null $h1
+ * @property string|null $keywords
  */
 class SeoPageTranslate extends ActiveRecord
 {

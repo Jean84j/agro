@@ -24,6 +24,8 @@ $commonParams = [
 if (isset($translateRu)) {
     $commonParams['translateRu'] = $translateRu;
 }
+
+$tabs = $model->getTabs();
 ?>
 <div class="tag-form">
     <div id="top" class="sa-app__body">
@@ -40,8 +42,7 @@ if (isset($translateRu)) {
                      data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                     <div class="sa-entity-layout__body">
                         <div class="sa-entity-layout__main">
-                            <?= $this->render('basic-information', $commonParams) ?>
-                            <?php echo $this->render('/_partials/seo-information', $commonParams); ?>
+                            <?= $this->render('/_partials/tabs', ['tabs' => $tabs, 'params' => $commonParams]); ?>
                         </div>
                     </div>
                 </div>
