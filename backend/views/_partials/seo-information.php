@@ -11,8 +11,7 @@
             </span>
         </div>
         <div class="card">
-            <div class="card-header">
-
+            <div class="card-header card-background_color">
                 <ul class="nav nav-tabs card-header-tabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active"
@@ -42,7 +41,7 @@
                     <?php endif; ?>
                 </ul>
             </div>
-            <div class="card-body">
+            <div class="card-body card-background_color">
                 <div class="tab-content">
                     <!-- UK TAB -->
                     <div class="tab-pane fade show active" id="uk-seo-content-2" role="tabpanel"
@@ -130,7 +129,6 @@ function badgeLabel($id, $title)
                 data-bs-placement='right'
                 title='{$title}'>0</span>";
 }
-
 ?>
 <script>
     document.addEventListener('DOMContentLoaded', () => {

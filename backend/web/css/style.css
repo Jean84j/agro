@@ -8552,3 +8552,7 @@ input:checked + .sa-color-checkbox__box {
   align-items: center;
   gap: 5px;
 }
+
+.card-background_color {
+  background-color: rgba(190, 245, 204, 0.5)
+}
