@@ -20,6 +20,7 @@ $clearFilterBtn = Html::a(
     ['clear-search-params'],
     ['class' => $classButton, 'id' => 'clear-filters-btn']
 );
+$seoRules = Yii::$app->params['seoRules'];
 ?>
 <div class="product-search">
     <?php $form = ActiveForm::begin([
@@ -304,7 +305,7 @@ $clearFilterBtn = Html::a(
                                             value="seo-title"
                                         <?= isset($filterParam['seo']) && $filterParam['seo'] == 'seo-title' ? 'checked' : '' ?>
                                     />
-                                    Сео Тайтл 50 <> 70
+                                    <?= 'Сео Тайтл ' . $seoRules['seo_title']['min'] . ' <> ' . $seoRules['seo_title']['max'] ?>
                                 </label>
                             </li>
                             <li>
@@ -316,7 +317,19 @@ $clearFilterBtn = Html::a(
                                             value="seo-description"
                                         <?= isset($filterParam['seo']) && $filterParam['seo'] == 'seo-description' ? 'checked' : '' ?>
                                     />
-                                    Сео Опис 130 <> 180
+                                    <?= 'Сео Опис ' . $seoRules['seo_description']['min'] . ' <> ' . $seoRules['seo_description']['max'] ?>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="d-flex align-items-center pt-2">
+                                    <input
+                                            type="radio"
+                                            class="form-check-input m-0 me-3 fs-exact-16"
+                                            name="seo"
+                                            value="seo-h1"
+                                        <?= isset($filterParam['seo']) && $filterParam['seo'] == 'seo-h1' ? 'checked' : '' ?>
+                                    />
+                                    <?= 'Сео H1 ' . $seoRules['seo_h1']['min'] . ' <> ' . $seoRules['seo_h1']['max'] ?>
                                 </label>
                             </li>
                             <li>

@@ -1,5 +1,7 @@
 <?php
 
+$seoRules = Yii::$app->params['seoRules'];
+
 ?>
 <div class="card mt-5">
     <div class="card-body p-5">
@@ -51,19 +53,19 @@
                                 <?= $form->field($model, $seoTitle)->textInput([
                                     'maxlength' => true,
                                     'id' => 'seo_title'
-                                ])->label('SEO Тайтл → ' . badgeLabel('charCountTitle', '50 > 55 < 60')) ?>
+                                ])->label('SEO Тайтл') ?><?= charProgress('seo_title', $seoRules['seo_title']) ?>
                             </div>
                             <div class="card card-body mb-5">
                                 <?= $form->field($model, $seoDescription)->textarea([
                                     'rows' => 4,
                                     'id' => 'seo_description'
-                                ])->label('SEO Опис → ' . badgeLabel('charCountDescription', '130 > 155 < 180')) ?>
+                                ])->label('SEO Опис') ?><?= charProgress('seo_description', $seoRules['seo_description']) ?>
                             </div>
                             <div class="card card-body mb-5">
                                 <?= $form->field($model, $seoH1)->textInput([
                                     'maxlength' => true,
                                     'id' => 'seo_h1'
-                                ])->label('H1 → ' . badgeLabel('charCountH1', '50 > 60 < 70')) ?>
+                                ])->label('H1') ?><?= charProgress('seo_h1', $seoRules['seo_h1']) ?>
                             </div>
                             <div class="card card-body">
                                 <?= $form->field($model, 'keywords')->textarea([
@@ -84,21 +86,21 @@
                                         'maxlength' => true,
                                         'id' => 'seo_title_ru',
                                         'name' => "Translate[ru][{$seoTitleRu}]"
-                                    ])->label('SEO Тайтл → ' . badgeLabel('charCountTitle_ru', '50 > 55 < 60')) ?>
+                                    ])->label('SEO Тайтл') ?><?= charProgress('seo_title_ru', $seoRules['seo_title']) ?>
                                 </div>
                                 <div class="card card-body mb-5">
                                     <?= $form->field($translateRu, $seoDescriptionRu)->textarea([
                                         'rows' => 4,
                                         'id' => 'seo_description_ru',
                                         'name' => "Translate[ru][{$seoDescriptionRu}]"
-                                    ])->label('SEO Опис → ' . badgeLabel('charCountDescription_ru', '130 > 155 < 180')) ?>
+                                    ])->label('SEO Опис') ?><?= charProgress('seo_description_ru', $seoRules['seo_description']) ?>
                                 </div>
                                 <div class="card card-body mb-5">
                                     <?= $form->field($translateRu, $seoH1Ru)->textInput([
                                         'maxlength' => true,
                                         'id' => 'seo_h1_ru',
                                         'name' => "Translate[ru][{$seoH1Ru}]"
-                                    ])->label('H1 → ' . badgeLabel('charCountH1_ru', '50 > 60 < 70')) ?>
+                                    ])->label('H1') ?><?= charProgress('seo_h1_ru', $seoRules['seo_h1']) ?>
                                 </div>
                                 <div class="card card-body">
                                     <?= $form->field($translateRu, 'keywords')->textarea([
@@ -118,55 +120,65 @@
     </div>
 </div>
 <?php
-// Вспомогательная функция для бейджа
-function badgeLabel($id, $title)
-{
-    return "<span 
-                class='sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart'
-                style='background: #63bdf57d'
-                id='{$id}'
-                data-bs-toggle='tooltip'
-                data-bs-placement='right'
-                title='{$title}'>0</span>";
+function charProgress($id, $rules) {
+    $min = $rules['min'];
+    $optimal = $rules['optimal'];
+    $max = $rules['max'];
+
+    return "
+        <div class='char-counter mt-2'
+             data-id='{$id}'
+             data-min='{$min}'
+             data-optimal='{$optimal}'
+             data-max='{$max}'>
+            <div class='d-flex justify-content-between'>
+                <small>Рекомендовано: {$min}-{$max} символов (идеал ~{$optimal})</small>
+                <small id='{$id}_count'>0</small>
+            </div>
+            <div class='progress' style='height: 6px;'>
+                <div id='{$id}_bar' 
+                     class='progress-bar bg-danger' 
+                     role='progressbar' 
+                     style='width: 0%; transition: width 0.3s ease, background-color 0.3s ease'>
+                </div>
+            </div>
+        </div>
+    ";
 }
 ?>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        function updateCharCount(inputId, labelId, minOptimal, optimal, maxOptimal) {
-            const input = document.getElementById(inputId);
-            const label = document.getElementById(labelId);
-            if (!input || !label) return;
+        document.querySelectorAll('.char-counter').forEach(wrapper => {
+            const id = wrapper.dataset.id;
+            const minOptimal = parseInt(wrapper.dataset.min);
+            const optimal = parseInt(wrapper.dataset.optimal);
+            const maxOptimal = parseInt(wrapper.dataset.max);
+
+            const input = document.getElementById(id);
+            const counter = document.getElementById(id + '_count');
+            const bar = document.getElementById(id + '_bar');
+            if (!input || !counter || !bar) return;
 
             const update = () => {
                 const length = input.value.length;
-                label.textContent = length;
+                counter.textContent = length;
 
-                let bgColor = '#e53b3b9c'; // Красный (плохо)
+                let percent = Math.min((length / maxOptimal) * 100, 100);
+                bar.style.width = percent + "%";
 
-                if (length === optimal) {
-                    bgColor = '#13bf3d87'; // Зеленый (идеально)
-                } else if (
-                    (length >= minOptimal && length < optimal) ||
-                    (length > optimal && length <= maxOptimal)
-                ) {
-                    bgColor = '#eded248c'; // Желтый (норм)
+                if (length >= minOptimal && length <= maxOptimal) {
+                    if (length === optimal) {
+                        bar.className = "progress-bar bg-success"; // идеально
+                    } else {
+                        bar.className = "progress-bar bg-warning"; // нормально
+                    }
+                } else {
+                    bar.className = "progress-bar bg-danger"; // плохо
                 }
-
-                label.style.backgroundColor = bgColor;
             };
 
             input.addEventListener('input', update);
             update();
-        }
-
-        // UK
-        updateCharCount('seo_title', 'charCountTitle', 50, 55, 70);
-        updateCharCount('seo_description', 'charCountDescription', 130, 155, 180);
-        updateCharCount('seo_h1', 'charCountH1', 50, 60, 70);
-
-        // RU
-        updateCharCount('seo_title_ru', 'charCountTitle_ru', 50, 55, 70);
-        updateCharCount('seo_description_ru', 'charCountDescription_ru', 130, 155, 180);
-        updateCharCount('seo_h1_ru', 'charCountH1_ru', 50, 60, 70);
+        });
     });
 </script>

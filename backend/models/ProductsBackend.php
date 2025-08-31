@@ -6,6 +6,7 @@ use common\models\shop\ActivePages;
 use common\models\shop\AnalogProducts;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
+use Yii;
 
 class ProductsBackend extends Product
 {
@@ -159,14 +160,23 @@ class ProductsBackend extends Product
 
     public function seoTitleInvalid(): bool
     {
+        $seoRules = Yii::$app->params['seoRules'];
         $len = mb_strlen((string)$this->seo_title);
-        return $len < 50 || $len > 70;
+        return $len < $seoRules['seo_title']['min'] || $len > $seoRules['seo_title']['max'];
     }
 
     public function seoDescriptionInvalid(): bool
     {
+        $seoRules = Yii::$app->params['seoRules'];
         $len = mb_strlen((string)$this->seo_description);
-        return $len < 130 || $len > 180;
+        return $len < $seoRules['seo_description']['min'] || $len > $seoRules['seo_description']['max'];
+    }
+
+    public function seoH1Invalid(): bool
+    {
+        $seoRules = Yii::$app->params['seoRules'];
+        $len = mb_strlen((string)$this->seo_description);
+        return $len < $seoRules['seo_h1']['min'] || $len > $seoRules['seo_h1']['max'];
     }
 
     public function missingH3(): bool

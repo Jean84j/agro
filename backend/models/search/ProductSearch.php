@@ -46,6 +46,7 @@ class ProductSearch extends ProductsBackend
         $request = Yii::$app->request;
         $params = $request->post();
         $paramsGrid = $request->get();
+        $seoRules = Yii::$app->params['seoRules'];
 
         $query = ProductsBackend::find()
         ->orderBy(['date_public' => SORT_DESC]);
@@ -156,15 +157,22 @@ class ProductSearch extends ProductsBackend
         if (isset($params['seo'])) {
             if ($params['seo'] == 'seo-title') {
                 $query->andFilterWhere(['or',
-                    ['<', 'CHAR_LENGTH(seo_title)', 50],
-                    ['>', 'CHAR_LENGTH(seo_title)', 70]
+                    ['<', 'CHAR_LENGTH(seo_title)', $seoRules['seo_title']['min']],
+                    ['>', 'CHAR_LENGTH(seo_title)', $seoRules['seo_title']['max']]
                 ]);
             }
 
             if ($params['seo'] == 'seo-description') {
                 $query->andFilterWhere(['or',
-                    ['<', 'CHAR_LENGTH(seo_description)', 130],
-                    ['>', 'CHAR_LENGTH(seo_description)', 180]
+                    ['<', 'CHAR_LENGTH(seo_description)', $seoRules['seo_description']['min']],
+                    ['>', 'CHAR_LENGTH(seo_description)', $seoRules['seo_description']['max']]
+                ]);
+            }
+
+            if ($params['seo'] == 'seo-h1') {
+                $query->andFilterWhere(['or',
+                    ['<', 'CHAR_LENGTH(h1)', $seoRules['seo_h1']['min']],
+                    ['>', 'CHAR_LENGTH(h1)', $seoRules['seo_h1']['max']]
                 ]);
             }
 
