@@ -11,7 +11,6 @@ use common\models\shop\FaqTranslate;
 use common\models\shop\ProductPackaging;
 use common\models\shop\ProductPropertiesTranslate;
 use common\models\shop\ProductsTranslate;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\Response;
@@ -110,7 +109,7 @@ class ProductController extends Controller
                 $post_product = $this->request->post('Product');
                 $model->sku = 'PRO-100' . $model->id;
 
-                $this->getCreateTranslate($model);
+                $this->getDeeplTranslate($model);
 
                 $this->createProductTags($model, $post_product ?? null);
                 $this->createProductAnalogs($model, $post_product ?? null);
@@ -132,58 +131,29 @@ class ProductController extends Controller
         ]);
     }
 
-    protected function getCreateTranslate($model)
+    protected function getDeeplTranslate($model)
     {
-        $targetLanguages = ['ru']; // Языки перевода
+        $sourceLanguage = 'UK'; // DeepL ждет большие буквы
+        $targetLanguages = ['RU'];
 
-        $tr = new GoogleTranslate();
+        $tr = Yii::$app->deepl; // берем наш компонент
 
         foreach ($targetLanguages as $language) {
-            $translation = $model->getTranslation($language)->one();
+            $translation = $model->getTranslation(strtolower($language))->one();
             if (!$translation) {
                 $translation = new ProductsTranslate();
                 $translation->product_id = $model->id;
-                $translation->language = $language;
+                $translation->language = strtolower($language);
             }
 
-            $tr->setSource();
-            $tr->setOptions([
-                'model' => 'nmt',
-            ]);
-            $tr->setTarget($language);
+            $translation->name = $tr->translate($model->name ?? '', $language, $sourceLanguage);
 
-            $translation->name = $tr->translate($model->name);
+            $translation->description = $tr->translate($model->description ?? '', $language, $sourceLanguage);
 
-            if (strlen($model->description) < 5000) {
-                $translation->description = $tr->translate($model->description);
-            } else {
-                $description = $model->description;
-                $translatedDescription = '';
-                $partSize = 5000;
-                $parts = [];
-
-                // Разбиваем текст на части по 5000 символов, не нарушая структуру тегов
-                while (strlen($description) > $partSize) {
-                    $part = substr($description, 0, $partSize);
-                    $lastSpace = strrpos($part, ' ');
-                    $parts[] = substr($description, 0, $lastSpace);
-                    $description = substr($description, $lastSpace);
-                }
-                $parts[] = $description;
-
-                // Переводим каждую часть отдельно
-                foreach ($parts as $part) {
-                    $translatedDescription .= $tr->translate($part);
-                }
-
-                // Сохраняем переведенное описание
-                $translation->description = $translatedDescription;
-            }
-
-            $translation->short_description = $tr->translate($model->short_description);
-            $translation->seo_title = $tr->translate((string)$model->seo_title);
-            $translation->seo_description = $tr->translate((string)$model->seo_description);
-            $translation->h1 = $tr->translate((string)$model->h1);
+            $translation->short_description = $tr->translate($model->short_description ?? '', $language, $sourceLanguage);
+            $translation->seo_title = $tr->translate((string)$model->seo_title ?? '', $language, $sourceLanguage);
+            $translation->seo_description = $tr->translate((string)$model->seo_description ?? '', $language, $sourceLanguage);
+            $translation->h1 = $tr->translate((string)$model->h1 ?? '', $language, $sourceLanguage);
 
             $categoryProductLayout = CategoriesTranslate::find()
                 ->select([
@@ -1057,17 +1027,14 @@ class ProductController extends Controller
     private
     function translateToRussian($text)
     {
-        $language = 'ru'; // Языки перевода
+        $sourceLanguage = 'UK'; // DeepL ждет большие буквы
+        $targetLanguage = 'RU';
 
-        $tr = new GoogleTranslate();
-        $tr->setSource();
-        $tr->setOptions([
-            'model' => 'nmt', // 'nmt' (нейросеть) или 'base' (обычный перевод)
-        ]);
-        $tr->setTarget($language);
+        $tr = Yii::$app->deepl; // берем наш компонент
 
-        return $tr->translate($text);
+        return $tr->translate($text ?? '', $targetLanguage, $sourceLanguage);
     }
+
 
     public
     function actionAddProductVariants()

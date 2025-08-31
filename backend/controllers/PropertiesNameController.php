@@ -6,7 +6,6 @@ use common\models\shop\CategoriesProperties;
 use common\models\shop\PropertiesName;
 use backend\models\search\PropertiesNameSearch;
 use common\models\shop\PropertiesNameTranslate;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -76,7 +75,7 @@ class PropertiesNameController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
 
-                $this->getCreateTranslate($model);
+                $this->getDeeplTranslate($model);
 
                 return $this->redirect(['update', 'id' => $model->id]);
             }
@@ -89,22 +88,19 @@ class PropertiesNameController extends Controller
         ]);
     }
 
-    protected function getCreateTranslate($model)
+    protected function getDeeplTranslate($model)
     {
-        $sourceLanguage = 'uk'; // Исходный язык
-        $targetLanguages = ['ru']; // Языки перевода
+        $sourceLanguage = 'UK'; // DeepL ждет большие буквы
+        $targetLanguages = ['RU'];
 
-        $tr = new GoogleTranslate();
+        $tr = Yii::$app->deepl; // берем наш компонент
 
         foreach ($targetLanguages as $language) {
             $translation = new PropertiesNameTranslate();
             $translation->name_id = $model->id;
-            $translation->language = $language;
+            $translation->language = strtolower($language);
 
-            $tr->setSource($sourceLanguage);
-            $tr->setTarget($language);
-
-            $translation->name = $tr->translate($model->name ?? '');
+            $translation->name = $tr->translate($model->name ?? '', $language, $sourceLanguage);
 
             $translation->save();
         }

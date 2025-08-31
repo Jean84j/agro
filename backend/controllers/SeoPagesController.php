@@ -5,7 +5,6 @@ namespace backend\controllers;
 use common\models\SeoPages;
 use backend\models\search\SeoPagesSearch;
 use common\models\SeoPageTranslate;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -74,7 +73,7 @@ class SeoPagesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                $this->getCreateTranslate($model);
+                $this->getDeeplTranslate($model);
                 return $this->redirect(['update', 'id' => $model->id]);
 //                return $this->redirect('index');
             }
@@ -87,52 +86,26 @@ class SeoPagesController extends Controller
         ]);
     }
 
-    protected function getCreateTranslate($model)
+    protected function getDeeplTranslate($model)
     {
-        $sourceLanguage = 'uk'; // Исходный язык
-        $targetLanguages = ['ru']; // Языки перевода
+        $sourceLanguage = 'UK'; // DeepL ждет большие буквы
+        $targetLanguages = ['RU'];
 
-        $tr = new GoogleTranslate();
+        $tr = Yii::$app->deepl; // берем наш компонент
+
 
         foreach ($targetLanguages as $language) {
-            $translation = $model->getTranslation($language)->one();
+            $translation = $model->getTranslation(strtolower($language))->one();
             if (!$translation) {
                 $translation = new SeoPageTranslate();
                 $translation->page_id = $model->id;
-                $translation->language = $language;
+                $translation->language = strtolower($language);
             }
 
-            $tr->setSource($sourceLanguage);
-            $tr->setTarget($language);
+            $translation->title = $tr->translate($model->title ?? '', $language, $sourceLanguage);
+            $translation->description = $tr->translate($model->description ?? '', $language, $sourceLanguage);
 
-            $translation->title = $tr->translate($model->title ?? '');
-            $translation->description = $tr->translate($model->description ?? '');
-
-            if (strlen($model->page_description) < 5000) {
-                $translation->page_description = $tr->translate($model->page_description);
-            } else {
-                $page_description = $model->page_description;
-                $translatedDescription = '';
-                $partSize = 5000;
-                $parts = [];
-
-                // Разбиваем текст на части по 5000 символов, не нарушая структуру тегов
-                while (strlen($page_description) > $partSize) {
-                    $part = substr($page_description, 0, $partSize);
-                    $lastSpace = strrpos($part, ' ');
-                    $parts[] = substr($page_description, 0, $lastSpace);
-                    $page_description = substr($page_description, $lastSpace);
-                }
-                $parts[] = $page_description;
-
-                // Переводим каждую часть отдельно
-                foreach ($parts as $part) {
-                    $translatedDescription .= $tr->translate($part);
-                }
-
-                // Сохраняем переведенное описание
-                $translation->page_description = $translatedDescription;
-            }
+            $translation->page_description = $tr->translate($model->page_description ?? '', $language, $sourceLanguage);
 
             $translation->save();
         }

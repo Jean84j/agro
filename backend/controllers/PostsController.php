@@ -6,9 +6,7 @@ use common\models\PostProducts;
 use common\models\Posts;
 use backend\models\search\PostsSearch;
 use common\models\PostsTranslate;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use yii\helpers\FileHelper;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -18,7 +16,7 @@ use yii\imagine\Image;
 /**
  * PostsController implements the CRUD actions for Posts model.
  */
-class PostsController extends Controller
+class PostsController extends BaseBackendController
 {
     /**
      * @inheritDoc
@@ -85,7 +83,7 @@ class PostsController extends Controller
 
                 if ($model->save()) {
 
-                    $this->getCreateTranslate($model);
+                    $this->getDeeplTranslate($model);
                     $this->createPostProduct($model);
 
                     return $this->redirect(['index']);
@@ -165,54 +163,29 @@ class PostsController extends Controller
         $model->webp_small = $catalog . '/' . 'webp_small-' . $imageName . '.' . 'webp';
     }
 
-    protected function getCreateTranslate($model)
+    protected function getDeeplTranslate($model)
     {
-        $sourceLanguage = 'uk'; // Исходный язык
-        $targetLanguages = ['ru']; // Языки перевода
+        $sourceLanguage = 'UK'; // DeepL ждет большие буквы
+        $targetLanguages = ['RU'];
 
-        $tr = new GoogleTranslate();
+        $tr = Yii::$app->deepl; // берем наш компонент
 
         foreach ($targetLanguages as $language) {
-            $translation = $model->getTranslation($language)->one();
+            $translation = $model->getTranslation(strtolower($language))->one();
             if (!$translation) {
                 $translation = new PostsTranslate();
                 $translation->post_id = $model->id;
-                $translation->language = $language;
+                $translation->language = strtolower($language);
             }
 
-            $tr->setSource($sourceLanguage);
-            $tr->setTarget($language);
+            $translation->title = $tr->translate($model->title ?? '', $language, $sourceLanguage);
 
-            $translation->title = $tr->translate($model->title ?? '');
+            $translation->description = $tr->translate($model->description ?? '', $language, $sourceLanguage);
 
-            if (strlen($model->description) < 5000) {
-                $translation->description = $tr->translate($model->description);
-            } else {
-                $description = $model->description;
-                $translatedDescription = '';
-                $partSize = 5000;
-                $parts = [];
-
-                // Разбиваем текст на части по 5000 символов, не нарушая структуру тегов
-                while (strlen($description) > $partSize) {
-                    $part = substr($description, 0, $partSize);
-                    $lastSpace = strrpos($part, ' ');
-                    $parts[] = substr($description, 0, $lastSpace);
-                    $description = substr($description, $lastSpace);
-                }
-                $parts[] = $description;
-
-                // Переводим каждую часть отдельно
-                foreach ($parts as $part) {
-                    $translatedDescription .= $tr->translate($part);
-                }
-
-                // Сохраняем переведенное описание
-                $translation->description = $translatedDescription;
-            }
-
-            $translation->seo_title = $tr->translate($model->seo_title ?? '');
-            $translation->seo_description = $tr->translate($model->seo_description ?? '');
+            $translation->seo_title = $tr->translate($model->seo_title ?? '', $language, $sourceLanguage);
+            $translation->seo_description = $tr->translate($model->seo_description ?? '', $language, $sourceLanguage);
+            $translation->h1 = $tr->translate($model->h1 ?? '', $language, $sourceLanguage);
+            $translation->keywords = $tr->translate($model->keywords ?? '', $language, $sourceLanguage);
 
             $translation->save();
         }

@@ -6,7 +6,6 @@ use common\models\shop\CategoriesProperties;
 use common\models\shop\CategoriesTranslate;
 use common\models\shop\Category;
 use backend\models\search\CategorySearch;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use Yii;
 use yii\helpers\Inflector;
 use yii\web\Controller;
@@ -83,7 +82,7 @@ class CategoryController extends Controller
 
                 if ($model->save()) {
 
-                    $this->getCreateTranslate($model);
+                    $this->getDeeplTranslate($model);
 
                     return $this->redirect(['update', 'id' => $model->id]);
                 }
@@ -97,60 +96,34 @@ class CategoryController extends Controller
         ]);
     }
 
-    protected function getCreateTranslate($model)
+    protected function getDeeplTranslate($model)
     {
-        $sourceLanguage = 'uk'; // Исходный язык
-        $targetLanguages = ['ru']; // Языки перевода
+        $sourceLanguage = 'UK'; // DeepL ждет большие буквы
+        $targetLanguages = ['RU'];
 
-        $tr = new GoogleTranslate();
+        $tr = Yii::$app->deepl; // берем наш компонент
 
         foreach ($targetLanguages as $language) {
-            $translation = $model->getTranslation($language)->one();
+            $translation = $model->getTranslation(strtolower($language))->one();
             if (!$translation) {
                 $translation = new CategoriesTranslate();
                 $translation->category_id = $model->id;
-                $translation->language = $language;
+                $translation->language = strtolower($language);
             }
 
-            $tr->setSource($sourceLanguage);
-            $tr->setTarget($language);
+            $translation->name = $tr->translate($model->name ?? '', $language, $sourceLanguage);
 
-            $translation->name = $tr->translate($model->name ?? '');
+            $translation->description = $tr->translate($model->description ?? '', $language, $sourceLanguage);
 
-                if (strlen($model->description) < 5000) {
-                    $translation->description = $tr->translate($model->description);
-                } else {
-                    $description = $model->description;
-                    $translatedDescription = '';
-                    $partSize = 5000;
-                    $parts = [];
-
-                    // Разбиваем текст на части по 5000 символов, не нарушая структуру тегов
-                    while (strlen($description) > $partSize) {
-                        $part = substr($description, 0, $partSize);
-                        $lastSpace = strrpos($part, ' ');
-                        $parts[] = substr($description, 0, $lastSpace);
-                        $description = substr($description, $lastSpace);
-                    }
-                    $parts[] = $description;
-
-                    // Переводим каждую часть отдельно
-                    foreach ($parts as $part) {
-                        $translatedDescription .= $tr->translate($part);
-                    }
-
-                    // Сохраняем переведенное описание
-                    $translation->description = $translatedDescription;
-                }
-
-            $translation->pageTitle = $tr->translate($model->pageTitle ?? '');
-            $translation->metaDescription = $tr->translate($model->metaDescription ?? '');
-            $translation->prefix = $tr->translate($model->prefix ?? '');
-            $translation->keywords = $tr->translate($model->keywords ?? '');
-            $translation->product_keywords = $tr->translate($model->product_keywords ?? '');
-            $translation->product_footer_description = $tr->translate($model->product_footer_description ?? '');
-            $translation->product_title = $tr->translate($model->product_title ?? '');
-            $translation->product_description = $tr->translate($model->product_description ?? '');
+            $translation->pageTitle = $tr->translate($model->pageTitle ?? '', $language, $sourceLanguage);
+            $translation->metaDescription = $tr->translate($model->metaDescription ?? '', $language, $sourceLanguage);
+            $translation->prefix = $tr->translate($model->prefix ?? '', $language, $sourceLanguage);
+            $translation->h1 = $tr->translate($model->h1 ?? '', $language, $sourceLanguage);
+            $translation->keywords = $tr->translate($model->keywords ?? '', $language, $sourceLanguage);
+            $translation->product_keywords = $tr->translate($model->product_keywords ?? '', $language, $sourceLanguage);
+            $translation->product_footer_description = $tr->translate($model->product_footer_description ?? '', $language, $sourceLanguage);
+            $translation->product_title = $tr->translate($model->product_title ?? '', $language, $sourceLanguage);
+            $translation->product_description = $tr->translate($model->product_description ?? '', $language, $sourceLanguage);
             $translation->save();
         }
     }
@@ -216,7 +189,7 @@ class CategoryController extends Controller
         $file = UploadedFile::getInstance($model, 'file');
         if (empty($model->slug)) {
             $imageName = Inflector::slug($model->name);
-        }else{
+        } else {
             $imageName = $model->slug;
         }
         $file->saveAs($dir . $imageName . '.' . $file->extension);
@@ -295,15 +268,15 @@ class CategoryController extends Controller
         $id = Yii::$app->request->post('id');
         $value = Yii::$app->request->post('value');
 
-         $model = Category::findOne($id);
-         $model->visibility = $value;
-         if ($model->save()){
-             $message = ' Збережено Нове Значення ! ! ! ';
-             $background = 'bg-success';
-         }else{
-             $message = ' Сталася Помилка ! ! ! ';
-             $background = 'bg-danger';
-         }
+        $model = Category::findOne($id);
+        $model->visibility = $value;
+        if ($model->save()) {
+            $message = ' Збережено Нове Значення ! ! ! ';
+            $background = 'bg-success';
+        } else {
+            $message = ' Сталася Помилка ! ! ! ';
+            $background = 'bg-danger';
+        }
 
         return [
             'status' => 'ok',

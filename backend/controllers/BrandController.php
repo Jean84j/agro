@@ -5,7 +5,6 @@ namespace backend\controllers;
 use common\models\shop\Brand;
 use backend\models\search\BrandSearch;
 use common\models\shop\BrandsTranslate;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 use Yii;
 use yii\helpers\Inflector;
 use yii\web\Controller;
@@ -81,7 +80,7 @@ class BrandController extends Controller
 
                 if ($model->save()) {
 
-                    $this->getCreateTranslate($model);
+                    $this->getDeeplTranslate($model);
 
                     return $this->redirect(['update', 'id' => $model->id]);
                 }
@@ -95,54 +94,28 @@ class BrandController extends Controller
         ]);
     }
 
-    protected function getCreateTranslate($model)
+    protected function getDeeplTranslate($model)
     {
-        $sourceLanguage = 'uk'; // Исходный язык
-        $targetLanguages = ['ru']; // Языки перевода
+        $sourceLanguage = 'UK'; // DeepL ждет большие буквы
+        $targetLanguages = ['RU'];
 
-        $tr = new GoogleTranslate();
+        $tr = Yii::$app->deepl; // берем наш компонент
 
         foreach ($targetLanguages as $language) {
-            $translation = $model->getTranslation($language)->one();
+            $translation = $model->getTranslation(strtolower($language))->one();
             if (!$translation) {
                 $translation = new BrandsTranslate();
                 $translation->brand_id = $model->id;
-                $translation->language = $language;
+                $translation->language = strtolower($language);
             }
 
-            $tr->setSource($sourceLanguage);
-            $tr->setTarget($language);
-
-            if (strlen($model->description) < 5000) {
-                $translation->description = $tr->translate($model->description);
-            } else {
-                $description = $model->description;
-                $translatedDescription = '';
-                $partSize = 5000;
-                $parts = [];
-
-                // Разбиваем текст на части по 5000 символов, не нарушая структуру тегов
-                while (strlen($description) > $partSize) {
-                    $part = substr($description, 0, $partSize);
-                    $lastSpace = strrpos($part, ' ');
-                    $parts[] = substr($description, 0, $lastSpace);
-                    $description = substr($description, $lastSpace);
-                }
-                $parts[] = $description;
-
-                // Переводим каждую часть отдельно
-                foreach ($parts as $part) {
-                    $translatedDescription .= $tr->translate($part);
-                }
-
-                // Сохраняем переведенное описание
-                $translation->description = $translatedDescription;
-            }
+            $translation->description = $tr->translate($model->description ?? '', $language, $sourceLanguage);
 
             $translation->name = $model->name ?? '';
-            $translation->seo_title = $tr->translate($model->seo_title ?? '');
-            $translation->seo_description = $tr->translate($model->seo_description ?? '');
-            $translation->keywords = $tr->translate($model->keywords ?? '');
+            $translation->seo_title = $tr->translate($model->seo_title ?? '', $language, $sourceLanguage);
+            $translation->seo_description = $tr->translate($model->seo_description ?? '', $language, $sourceLanguage);
+            $translation->h1 = $tr->translate($model->h1 ?? '', $language, $sourceLanguage);
+            $translation->keywords = $tr->translate($model->keywords ?? '', $language, $sourceLanguage);
 
             $translation->save();
         }
