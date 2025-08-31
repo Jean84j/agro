@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property string|null $seo_title
  * @property string|null $seo_description
  * @property string|null $h1
+ * @property string|null $keywords
  */
 class TagTranslate extends ActiveRecord
 {
@@ -37,7 +38,7 @@ class TagTranslate extends ActiveRecord
             [['language'], 'string', 'max' => 3],
             [['name'], 'string', 'max' => 50],
             [['h1'], 'string', 'max' => 150],
-            [['description', 'seo_title', 'seo_description'], 'string'],
+            [['description', 'seo_title', 'seo_description', 'keywords'], 'string'],
         ];
     }
 

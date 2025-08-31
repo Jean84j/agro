@@ -42,6 +42,7 @@ use yii\helpers\Html;
                                 RU<span class="nav-link-sa-indicator"></span>
                             </button>
                         </li>
+                    </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content">

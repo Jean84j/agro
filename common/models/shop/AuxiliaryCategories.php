@@ -23,6 +23,7 @@ use yii\db\ActiveRecord;
  * @property string $date_public Дата публикации
  * @property string $date_updated Дата редактирования
  * @property string $h1
+ * @property string $keywords
  */
 class AuxiliaryCategories extends ActiveRecord
 {
@@ -67,7 +68,8 @@ class AuxiliaryCategories extends ActiveRecord
         return [
             [['parentId'], 'integer'],
             [['description', 'h1'], 'string'],
-            [['name', 'pageTitle', 'slug', 'image', 'visibility', 'metaDescription', 'svg', 'prefix', 'object', 'date_public', 'date_updated'], 'string', 'max' => 255],
+            [['name', 'pageTitle', 'slug', 'image', 'visibility', 'metaDescription', 'svg', 'prefix',
+                'object', 'date_public', 'date_updated', 'keywords'], 'string', 'max' => 255],
         ];
     }
 

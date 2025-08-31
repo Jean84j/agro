@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property string|null $page_description
  * @property integer|null $date_public Дата публикации
  * @property integer|null $date_updated Дата редактирования
+ * @property integer|null $keywords
  */
 class SeoPages extends ActiveRecord
 {
@@ -47,7 +48,7 @@ class SeoPages extends ActiveRecord
         return [
             [['description', 'page_description'], 'string'],
             [['date_public', 'date_updated'], 'integer'],
-            [['name', 'slug', 'title'], 'string', 'max' => 255],
+            [['name', 'slug', 'title', 'keywords'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['description', 'slug', 'title'], 'required'],
         ];

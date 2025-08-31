@@ -53,11 +53,6 @@ class ProductsBackend extends Product
                     'view' => '/product/properties-information'
                 ],
                 [
-                    'id' => 'keyword',
-                    'icon' => 'fas fa-key',
-                    'label' => 'Ключові слова',
-                    'view' => '/product/keywords'],
-                [
                     'id' => 'faq',
                     'icon' => 'far fa-question-circle',
                     'label' => 'Запитання',

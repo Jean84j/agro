@@ -33,7 +33,7 @@ class SeoPageTranslate extends ActiveRecord
         return [
             [['page_id'], 'integer'],
             [['language'], 'string', 'max' => 3],
-            [['title', 'description'], 'string', 'max' => 255],
+            [['title', 'description', 'keywords'], 'string', 'max' => 255],
             [['page_description'], 'string'],
         ];
     }

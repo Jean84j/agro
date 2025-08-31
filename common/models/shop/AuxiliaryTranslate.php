@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property string|null $pageTitle
  * @property string|null $metaDescription
  * @property string $h1
+ * @property string $keywords
  */
 class AuxiliaryTranslate extends ActiveRecord
 {
@@ -37,7 +38,7 @@ class AuxiliaryTranslate extends ActiveRecord
             [['language'], 'string', 'max' => 10],
             [['name'], 'string', 'max' => 50],
             [['description', 'h1'], 'string'],
-            [['pageTitle', 'metaDescription'], 'string', 'max' => 255],
+            [['pageTitle', 'metaDescription', 'keywords'], 'string', 'max' => 255],
         ];
     }
 
