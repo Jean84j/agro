@@ -71,6 +71,12 @@ unset($this->linkTags[$key]);
 <?= Yii::$app->params['breadcrumb'] ?? '' ?>
     </head>
     <body>
+    <?php if (!YII_ENV_DEV) : ?>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGHXW4J8"
+                          height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    <?php endif; ?>
     <?php $this->beginBody() ?>
     <div class="site">
         <?php echo SiteHeader::widget() ?>
@@ -84,12 +90,6 @@ unset($this->linkTags[$key]);
     <?= $this->render('cookie-banner') ?>
     <?= $this->render('language-banner') ?>
     <?php $this->endBody() ?>
-    <?php if (!YII_ENV_DEV) : ?>
-        <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGHXW4J8"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-    <?php endif; ?>
     </body>
     </html>
 <?php $this->endPage() ?>
