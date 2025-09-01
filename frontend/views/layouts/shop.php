@@ -24,6 +24,15 @@ AppAsset::register($this);
 <?php $this->registerCsrfMetaTags() ?>
 <title><?= Html::encode($this->title) ?></title>
 <?php $this->head() ?>
+    <?php if (!YII_ENV_DEV) : ?>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PGHXW4J8');</script>
+    <!-- End Google Tag Manager -->
+        <?php endif; ?>
 <?php
 $page = Yii::$app->request->get('page');
 $hasNoIndex = false;
@@ -75,11 +84,12 @@ unset($this->linkTags[$key]);
     <?= $this->render('cookie-banner') ?>
     <?= $this->render('language-banner') ?>
     <?php $this->endBody() ?>
-    <?php if (!YII_ENV_DEV) {
-    $this->registerJsFile(
-    '/js/google-tag-manager.js?v=' . PROJECT_VERSION,
-    );
-    } ?>
+    <?php if (!YII_ENV_DEV) : ?>
+        <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGHXW4J8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <?php endif; ?>
     </body>
     </html>
 <?php $this->endPage() ?>
