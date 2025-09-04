@@ -48,7 +48,6 @@ class SiteMapController extends Controller
         return $xml_array;
     }
 
-
     public function actionSitemapProducts(): string
     {
         $arr = array();
@@ -226,11 +225,12 @@ class SiteMapController extends Controller
     //Продукты сайта. Выводит в виде XML файла.
     public function actionSiteProductsMerchant(): string
     {
+        $merchant = Yii::$app->params['google_merchant'];
         $products = Product::find()
             ->with('images', 'brand', 'category')
             ->all();
 
-        $xml_array = $this->renderPartial('site-products-merchant-qlt5vh8de0rhf', [
+        $xml_array = $this->renderPartial('site-products-merchant', [
             'products' => $products
         ]);
 

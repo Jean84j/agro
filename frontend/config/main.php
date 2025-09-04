@@ -166,7 +166,7 @@ return [
                     'suffix' => '.xml'
                 ],
                 [
-                    'pattern' => 'site-products-merchant-qlt5vh8de0rhf',
+                    'pattern' => 'site-products-merchant',
                     'route' => 'site-map/site-products-merchant',
                     'suffix' => '.xml'
                 ],
