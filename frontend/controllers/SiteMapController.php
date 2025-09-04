@@ -225,7 +225,6 @@ class SiteMapController extends Controller
     //Продукты сайта. Выводит в виде XML файла.
     public function actionSiteProductsMerchant(): string
     {
-        $merchant = Yii::$app->params['google_merchant'];
         $products = Product::find()
             ->with('images', 'brand', 'category')
             ->all();
