@@ -2,10 +2,12 @@
 
 $urlOpen = Yii::$app->urlManager->createUrl(['quickview/quickview']);
 
+$number = mt_rand(10, 99);
+
 ?>
 <button class="product-card__quickview"
         type="button"
-        id="add-to-cart"
+        id="quickview-<?= $product->id . $number ?>"
         data-product-id="<?= $product->id ?>"
         data-url-quickview="<?= $urlOpen ?>"
         aria-label="Швидкий перегляд"
