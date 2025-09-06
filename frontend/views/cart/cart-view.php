@@ -89,8 +89,8 @@ $urlRemove = Yii::$app->urlManager->createUrl(['cart/remove']);
                                 </td>
                                 <td class="cart-table__column cart-table__column--remove"
                                     onclick="removeProduct(<?= $order->id ?>, '<?= $urlRemove ?>', '<?= $urlQty ?>')">
-                                    <button type="button" class="btn btn-light btn-sm btn-svg-icon">
-                                        <svg width="12px" height="12px">
+                                    <button type="button" class="btn btn-light btn-sm btn-svg-icon gtm-remove-cart">
+                                        <svg class="gtm-remove-cart" width="12px" height="12px">
                                             <use xlink:href="/images/sprite.svg#cross-12"></use>
                                         </svg>
                                     </button>
