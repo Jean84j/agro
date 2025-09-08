@@ -8543,7 +8543,7 @@ input:checked + .sa-color-checkbox__box {
 }
 
 .color-info {
-  color: #ef0f0f6b;
+  color: #ff5757;
   font-size: 25px;
 }
 
@@ -8555,4 +8555,17 @@ input:checked + .sa-color-checkbox__box {
 
 .card-background_color {
   background-color: rgba(190, 245, 204, 0.5)
+}
+
+.badge-name_card {
+  background-color: #ffe371;
+  box-sizing: border-box;
+  display: inline-block;
+  color: #382f0a;
+  border-radius: 3rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: .05rem .8rem .1rem;
+  line-height: inherit;
 }
