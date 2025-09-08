@@ -1,4 +1,5 @@
 <?php
+
 use vova07\imperavi\Widget;
 
 /**
@@ -42,15 +43,13 @@ $clips = [[
 
 <div class="card">
     <div class="card-body p-5">
-
         <div class="mb-5">
             <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart">
                 <h2 class="mb-0 fs-exact-18">Основна інформація</h2>
             </span>
         </div>
-
         <div class="card">
-            <div class="card-header">
+            <div class="card-header card-background_color-basic">
                 <ul class="nav nav-tabs card-header-tabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="uk-tab-2" data-bs-toggle="tab"
@@ -71,32 +70,35 @@ $clips = [[
                 </ul>
             </div>
 
-            <div class="card-body">
+            <div class="card-body card-background_color-basic">
                 <div class="tab-content">
 
                     <!-- UK -->
-                    <div class="tab-pane fade show active" id="uk-tab-content-2" role="tabpanel" aria-labelledby="uk-tab-2">
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
-                            </div>
-
-                            <?php if (!$model->isNewRecord): ?>
-                                <?php foreach (['date_public', 'date_updated'] as $field): ?>
-                                    <div class="col-md-3 mb-4">
-                                        <?= $form->field($model, $field)->textInput([
-                                            'maxlength' => true,
-                                            'class' => 'form-control',
-                                            'value' => Yii::$app->formatter->asDatetime($model->$field),
-                                            'readonly' => true,
-                                        ]) ?>
-                                    </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
+                    <div class="tab-pane fade show active" id="uk-tab-content-2" role="tabpanel"
+                         aria-labelledby="uk-tab-2">
+                        <div class="mb-4 card card-body">
+                            <div class="row">
                                 <div class="col-md-6 mb-4">
-                                    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
+                                    <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
                                 </div>
-                            <?php endif; ?>
+
+                                <?php if (!$model->isNewRecord): ?>
+                                    <?php foreach (['date_public', 'date_updated'] as $field): ?>
+                                        <div class="col-md-3 mb-4">
+                                            <?= $form->field($model, $field)->textInput([
+                                                'maxlength' => true,
+                                                'class' => 'form-control',
+                                                'value' => Yii::$app->formatter->asDatetime($model->$field),
+                                                'readonly' => true,
+                                            ]) ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <div class="col-md-6 mb-4">
+                                        <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                         <div class="mb-4 card card-body">
@@ -117,28 +119,30 @@ $clips = [[
                     <!-- RU -->
                     <?php if (isset($translateRu)): ?>
                         <div class="tab-pane fade" id="ru-tab-content-2" role="tabpanel" aria-labelledby="ru-tab-2">
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <?= $form->field($translateRu, 'name')->textInput([
-                                        'maxlength' => true,
-                                        'class' => 'form-control',
-                                        'id' => 'translateRu-name',
-                                        'name' => 'Translate[ru][name]',
-                                    ]) ?>
-                                </div>
-
-                                <?php foreach (['date_public', 'date_updated'] as $field): ?>
-                                    <div class="col-md-3 mb-4">
-                                        <?= $form->field($translateRu, $field)->textInput([
-                                            'id' => "translateRu-$field",
-                                            'name' => "Translate[ru][$field]",
+                            <div class="mb-4 card card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <?= $form->field($translateRu, 'name')->textInput([
                                             'maxlength' => true,
                                             'class' => 'form-control',
-                                            'value' => Yii::$app->formatter->asDatetime($model->$field),
-                                            'readonly' => true,
+                                            'id' => 'translateRu-name',
+                                            'name' => 'Translate[ru][name]',
                                         ]) ?>
                                     </div>
-                                <?php endforeach; ?>
+
+                                    <?php foreach (['date_public', 'date_updated'] as $field): ?>
+                                        <div class="col-md-3 mb-4">
+                                            <?= $form->field($translateRu, $field)->textInput([
+                                                'id' => "translateRu-$field",
+                                                'name' => "Translate[ru][$field]",
+                                                'maxlength' => true,
+                                                'class' => 'form-control',
+                                                'value' => Yii::$app->formatter->asDatetime($model->$field),
+                                                'readonly' => true,
+                                            ]) ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
 
                             <div class="mb-4 card card-body">
@@ -161,3 +165,8 @@ $clips = [[
         </div>
     </div>
 </div>
+<style>
+    .card-background_color-basic {
+        background-color: #ff008417;
+    }
+</style>

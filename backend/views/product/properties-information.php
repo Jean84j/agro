@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 ?>
 <?php if (!$model->isNewRecord): ?>
-    <div class="card mt-5">
+    <div class="card">
         <div class="card-body p-5">
             <div class="mb-5">
                 <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart">
@@ -12,7 +12,7 @@ use yii\helpers\Html;
                 </span>
             </div>
             <div class="card">
-                <div class="card-header">
+                <div class="card-header card-background_color-properties">
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button
@@ -44,7 +44,7 @@ use yii\helpers\Html;
                         </li>
                     </ul>
                 </div>
-                <div class="card-body">
+                <div class="card-body card-background_color-properties">
                     <div class="tab-content">
                         <div
                                 class="tab-pane fade show active"
@@ -52,26 +52,29 @@ use yii\helpers\Html;
                                 role="tabpanel"
                                 aria-labelledby="uk-properties-tab-2"
                         >
-                            <div id="properties-container">
-                                <?php $index = 0;
-                                foreach ($data as $productProperty): ?>
-                                    <div class="row g-4">
-                                        <div class="col-3">
-                                            <?= $form->field($productProperty, "[$index]property_name")->textInput(['readonly' => true])->label(false) ?>
+                            <div class="mb-4 card card-body">
+                                <div id="properties-container">
+                                    <?php $index = 0;
+                                    foreach ($data as $productProperty): ?>
+                                        <div class="row g-4">
+                                            <div class="col-3">
+                                                <?= $form->field($productProperty, "[$index]property_name")->textInput(['readonly' => true])->label(false) ?>
+                                            </div>
+                                            <div class="col-9">
+                                                <?= $form->field($productProperty, "[$index]value")->textInput()->label(false) ?>
+                                            </div>
                                         </div>
-                                        <div class="col-9">
-                                            <?= $form->field($productProperty, "[$index]value")->textInput()->label(false) ?>
-                                        </div>
+                                        <?= $form->field($productProperty, "[$index]property_id")->hiddenInput()->label(false) ?>
+                                        <?= $form->field($productProperty, "[$index]id")->hiddenInput()->label(false) ?>
+                                        <?php $index++; ?>
+                                    <?php endforeach; ?>
+                                    <div style="color: #898787 ">
+                                        <span>' ' - не заповнене поле не показуеться на сайті</span><br>
+                                        <span>'*' - поле в товарі не використовуеться</span>
                                     </div>
-                                    <?= $form->field($productProperty, "[$index]property_id")->hiddenInput()->label(false) ?>
-                                    <?= $form->field($productProperty, "[$index]id")->hiddenInput()->label(false) ?>
-                                    <?php $index++; ?>
-                                <?php endforeach; ?>
-                                <div style="color: #898787 ">
-                                    <span>' ' - не заповнене поле не показуеться на сайті</span><br>
-                                    <span>'*' - поле в товарі не використовуеться</span>
                                 </div>
                             </div>
+
                             <div class="col-auto d-flex mt-3">
                                 <button type="button" id="translate-button" class="btn btn-outline-info">
                                     Перевести
@@ -84,25 +87,27 @@ use yii\helpers\Html;
                                 role="tabpanel"
                                 aria-labelledby="ru-properties-tab-2"
                         >
-                            <div id="properties-container-ru">
-                                <?php $index = 0;
-                                foreach ($dataRu as $productProperty): ?>
-                                    <div class="row g-4">
-                                        <div class="col-3">
-                                            <?= $form->field($productProperty, "[$index]property_name")->textInput(['readonly' => true, 'name' => "PropertiesTranslate[ru][$index][properties]"])->label(false) ?>
+                            <div class="mb-4 card card-body">
+                                <div id="properties-container-ru">
+                                    <?php $index = 0;
+                                    foreach ($dataRu as $productProperty): ?>
+                                        <div class="row g-4">
+                                            <div class="col-3">
+                                                <?= $form->field($productProperty, "[$index]property_name")->textInput(['readonly' => true, 'name' => "PropertiesTranslate[ru][$index][properties]"])->label(false) ?>
+                                            </div>
+                                            <div class="col-9">
+                                                <?= $form->field($productProperty, "[$index]value")->textInput(['name' => "PropertiesTranslate[ru][$index][value]"])->label(false) ?>
+                                            </div>
                                         </div>
-                                        <div class="col-9">
-                                            <?= $form->field($productProperty, "[$index]value")->textInput(['name' => "PropertiesTranslate[ru][$index][value]"])->label(false) ?>
-                                        </div>
+                                        <?= $form->field($productProperty, "[$index]id")->hiddenInput([
+                                            'name' => "PropertiesTranslate[ru][$index][id]"
+                                        ])->label(false) ?>
+                                        <?php $index++; ?>
+                                    <?php endforeach; ?>
+                                    <div style="color: #898787 ">
+                                        <span>' ' - не заповнене поле не показуеться на сайті</span><br>
+                                        <span>'*' - поле в товарі не використовуеться</span>
                                     </div>
-                                    <?= $form->field($productProperty, "[$index]id")->hiddenInput([
-                                        'name' => "PropertiesTranslate[ru][$index][id]"
-                                    ])->label(false) ?>
-                                    <?php $index++; ?>
-                                <?php endforeach; ?>
-                                <div style="color: #898787 ">
-                                    <span>' ' - не заповнене поле не показуеться на сайті</span><br>
-                                    <span>'*' - поле в товарі не використовуеться</span>
                                 </div>
                             </div>
                             <div class="mt-3">
@@ -114,6 +119,11 @@ use yii\helpers\Html;
             </div>
         </div>
     </div>
+    <style>
+        .card-background_color-properties {
+            background-color: #ff7f0017;
+        }
+    </style>
     <?php
     $js = <<<JS
 

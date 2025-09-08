@@ -3,7 +3,7 @@
 $seoRules = Yii::$app->params['seoRules'];
 
 ?>
-<div class="card mt-5">
+<div class="card">
     <div class="card-body p-5">
         <div class="mb-5">
             <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart">
@@ -48,69 +48,65 @@ $seoRules = Yii::$app->params['seoRules'];
                     <!-- UK TAB -->
                     <div class="tab-pane fade show active" id="uk-seo-content-2" role="tabpanel"
                          aria-labelledby="uk-seo-2">
-                        <div class="card-body p-5">
-                            <div class="card card-body mb-5">
-                                <?= $form->field($model, $seoTitle)->textInput([
-                                    'maxlength' => true,
-                                    'id' => 'seo_title'
-                                ])->label('SEO Тайтл') ?><?= charProgress('seo_title', $seoRules['seo_title']) ?>
-                            </div>
-                            <div class="card card-body mb-5">
-                                <?= $form->field($model, $seoDescription)->textarea([
-                                    'rows' => 4,
-                                    'id' => 'seo_description'
-                                ])->label('SEO Опис') ?><?= charProgress('seo_description', $seoRules['seo_description']) ?>
-                            </div>
-                            <div class="card card-body mb-5">
-                                <?= $form->field($model, $seoH1)->textInput([
-                                    'maxlength' => true,
-                                    'id' => 'seo_h1'
-                                ])->label('H1') ?><?= charProgress('seo_h1', $seoRules['seo_h1']) ?>
-                            </div>
-                            <div class="card card-body">
-                                <?= $form->field($model, 'keywords')->textarea([
-                                    'maxlength' => true,
-                                    'rows' => '4',
-                                    'class' => "form-control",
-                                    'id' => 'keywords',
-                                ])->label('Keywords') ?>
-                            </div>
+                        <div class="card card-body mb-4">
+                            <?= $form->field($model, $seoTitle)->textInput([
+                                'maxlength' => true,
+                                'id' => 'seo_title'
+                            ])->label('SEO Тайтл') ?><?= charProgress('seo_title', $seoRules['seo_title']) ?>
+                        </div>
+                        <div class="card card-body mb-4">
+                            <?= $form->field($model, $seoDescription)->textarea([
+                                'rows' => 4,
+                                'id' => 'seo_description'
+                            ])->label('SEO Опис') ?><?= charProgress('seo_description', $seoRules['seo_description']) ?>
+                        </div>
+                        <div class="card card-body mb-4">
+                            <?= $form->field($model, $seoH1)->textInput([
+                                'maxlength' => true,
+                                'id' => 'seo_h1'
+                            ])->label('H1') ?><?= charProgress('seo_h1', $seoRules['seo_h1']) ?>
+                        </div>
+                        <div class="card card-body">
+                            <?= $form->field($model, 'keywords')->textarea([
+                                'maxlength' => true,
+                                'rows' => '4',
+                                'class' => "form-control",
+                                'id' => 'keywords',
+                            ])->label('Keywords') ?>
                         </div>
                     </div>
                     <!-- RU TAB -->
                     <?php if (isset($translateRu)): ?>
                         <div class="tab-pane fade" id="ru-seo-content-2" role="tabpanel" aria-labelledby="ru-seo-2">
-                            <div class="card-body p-5">
-                                <div class="card card-body mb-5">
-                                    <?= $form->field($translateRu, $seoTitleRu)->textInput([
-                                        'maxlength' => true,
-                                        'id' => 'seo_title_ru',
-                                        'name' => "Translate[ru][{$seoTitleRu}]"
-                                    ])->label('SEO Тайтл') ?><?= charProgress('seo_title_ru', $seoRules['seo_title']) ?>
-                                </div>
-                                <div class="card card-body mb-5">
-                                    <?= $form->field($translateRu, $seoDescriptionRu)->textarea([
-                                        'rows' => 4,
-                                        'id' => 'seo_description_ru',
-                                        'name' => "Translate[ru][{$seoDescriptionRu}]"
-                                    ])->label('SEO Опис') ?><?= charProgress('seo_description_ru', $seoRules['seo_description']) ?>
-                                </div>
-                                <div class="card card-body mb-5">
-                                    <?= $form->field($translateRu, $seoH1Ru)->textInput([
-                                        'maxlength' => true,
-                                        'id' => 'seo_h1_ru',
-                                        'name' => "Translate[ru][{$seoH1Ru}]"
-                                    ])->label('H1') ?><?= charProgress('seo_h1_ru', $seoRules['seo_h1']) ?>
-                                </div>
-                                <div class="card card-body">
-                                    <?= $form->field($translateRu, 'keywords')->textarea([
-                                        'maxlength' => true,
-                                        'rows' => '4',
-                                        'class' => "form-control",
-                                        'id' => 'keywords_ru',
-                                        'name' => 'Translate[ru][keywords]',
-                                    ])->label('Keywords') ?>
-                                </div>
+                            <div class="card card-body mb-4">
+                                <?= $form->field($translateRu, $seoTitleRu)->textInput([
+                                    'maxlength' => true,
+                                    'id' => 'seo_title_ru',
+                                    'name' => "Translate[ru][{$seoTitleRu}]"
+                                ])->label('SEO Тайтл') ?><?= charProgress('seo_title_ru', $seoRules['seo_title']) ?>
+                            </div>
+                            <div class="card card-body mb-4">
+                                <?= $form->field($translateRu, $seoDescriptionRu)->textarea([
+                                    'rows' => 4,
+                                    'id' => 'seo_description_ru',
+                                    'name' => "Translate[ru][{$seoDescriptionRu}]"
+                                ])->label('SEO Опис') ?><?= charProgress('seo_description_ru', $seoRules['seo_description']) ?>
+                            </div>
+                            <div class="card card-body mb-4">
+                                <?= $form->field($translateRu, $seoH1Ru)->textInput([
+                                    'maxlength' => true,
+                                    'id' => 'seo_h1_ru',
+                                    'name' => "Translate[ru][{$seoH1Ru}]"
+                                ])->label('H1') ?><?= charProgress('seo_h1_ru', $seoRules['seo_h1']) ?>
+                            </div>
+                            <div class="card card-body">
+                                <?= $form->field($translateRu, 'keywords')->textarea([
+                                    'maxlength' => true,
+                                    'rows' => '4',
+                                    'class' => "form-control",
+                                    'id' => 'keywords_ru',
+                                    'name' => 'Translate[ru][keywords]',
+                                ])->label('Keywords') ?>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -120,7 +116,8 @@ $seoRules = Yii::$app->params['seoRules'];
     </div>
 </div>
 <?php
-function charProgress($id, $rules) {
+function charProgress($id, $rules)
+{
     $min = $rules['min'];
     $optimal = $rules['optimal'];
     $max = $rules['max'];
@@ -145,6 +142,7 @@ function charProgress($id, $rules) {
         </div>
     ";
 }
+
 ?>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
