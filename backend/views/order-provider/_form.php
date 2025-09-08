@@ -10,11 +10,8 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
+<?php $form = ActiveForm::begin(); ?>
 <div class="order-provider-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <!-- sa-app__body -->
     <div id="top" class="sa-app__body">
         <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
             <div class="container container--max--xl">
@@ -29,7 +26,7 @@ use yii\widgets\ActiveForm;
                                             'label' => Yii::t('app', 'Home'),
                                             'url' => Yii::$app->homeUrl,
                                         ],
-                                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                                        'links' => $this->params['breadcrumbs'] ?? [],
                                     ]);
                                     ?>
                                 </ol>
@@ -41,7 +38,7 @@ use yii\widgets\ActiveForm;
                                 <?= Html::a(Yii::t('app', 'List'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>
                                 <?= Html::a(Yii::t('app', 'Create more'), Url::to(['create']), ['class' => 'btn btn-success me-3']) ?>
                             <?php endif; ?>
-                            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Save') : Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-primary']) ?>
+                            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
                         </div>
                     </div>
                 </div>
@@ -51,9 +48,7 @@ use yii\widgets\ActiveForm;
                         <div class="sa-entity-layout__main">
                             <div class="card">
                                 <div class="card-body p-5">
-                                    <div class="mb-5"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2>
-                                    </div>
+                                    <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
                                     <div class="mb-4">
                                         <!--                                        <label for="form-category/name" class="form-label">Name</label>-->
                                         <!--                                        <input type="text" class="form-control" id="form-category/name" value="Hand Tools" />-->
@@ -67,8 +62,5 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
     </div>
-    <!-- sa-app__body / end -->
-
-    <?php ActiveForm::end(); ?>
-
 </div>
+<?php ActiveForm::end(); ?>

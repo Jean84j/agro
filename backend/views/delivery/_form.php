@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
                         </nav>
                     </div>
                     <div class="col-auto d-flex">
-                        <?= Html::submitButton( Yii::t('app', 'Save'), ['class' =>  'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
             </div>
@@ -43,9 +43,7 @@ use yii\widgets\ActiveForm;
                     <div class="sa-entity-layout__main">
                         <div class="card">
                             <div class="card-body p-5">
-                                <div class="mb-5">
-                                    <h2 class="mb-0 fs-exact-18">Основна інформація</h2>
-                                </div>
+                                <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
                                 <div class="row">
                                     <div class="col-6 mb-4">
                                         <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
@@ -83,5 +81,5 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
 </div>
+<?php ActiveForm::end(); ?>

@@ -58,9 +58,7 @@ $tabs = $model->getTabs();
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-
                         <?= $this->render('/_partials/tabs', ['tabs' => $tabs, 'params' => $commonParams]); ?>
-
                     </div>
                 </div>
             </div>

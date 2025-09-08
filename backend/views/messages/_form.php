@@ -8,7 +8,6 @@ use yii\widgets\ActiveForm;
 /** @var common\models\Messages $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
 <?php $form = ActiveForm::begin(); ?>
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
@@ -24,7 +23,7 @@ use yii\widgets\ActiveForm;
                                         'label' => Yii::t('app', 'Home'),
                                         'url' => Yii::$app->homeUrl,
                                     ],
-                                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                                    'links' => $this->params['breadcrumbs'] ?? [],
                                 ]);
                                 ?>
                             </ol>
@@ -41,9 +40,7 @@ use yii\widgets\ActiveForm;
                     <div class="sa-entity-layout__main">
                         <div class="card">
                             <div class="card-body p-5">
-                                <div class="mb-5"><h2
-                                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2></div>
-
+                                <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
                                 <div class="row">
                                     <div class="col-5 mb-4">
                                         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -57,7 +54,7 @@ use yii\widgets\ActiveForm;
                                                 1 => 'Так',
                                                 0 => 'Ні'
                                             ]
-                                        )?>
+                                        ) ?>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -78,5 +75,4 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
     </div>
-
     <?php ActiveForm::end(); ?>

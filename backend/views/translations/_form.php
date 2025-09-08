@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
             <div class="py-5">
                 <div class="row g-4 align-items-center">
                     <div class="col-auto d-flex">
-                        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Save') : Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,7 @@ use yii\widgets\ActiveForm;
                     <div class="sa-entity-layout__main">
                         <div class="card">
                             <div class="card-body p-5">
-                                <div class="mb-5"><h2
-                                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2>
-                                </div>
+                                <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
                                 <div class="row">
                                     <div class="col-4 mb-4">
                                         <?= $form->field($model, 'category')->textInput(['maxlength' => true]) ?>

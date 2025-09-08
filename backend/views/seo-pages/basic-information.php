@@ -5,9 +5,7 @@ use vova07\imperavi\Widget;
 ?>
 <div class="card">
     <div class="card-body p-5">
-        <div class="mb-5">
-            <h2 class="mb-0 fs-exact-18">Основна інформація</h2>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
         <div class="row">
             <div class="mb-4 col-6">
                 <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>

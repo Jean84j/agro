@@ -10,9 +10,8 @@ use kartik\color\ColorInput;
 /** @var common\models\shop\Label $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
+<?php $form = ActiveForm::begin(); ?>
 <div class="label-form">
-    <?php $form = ActiveForm::begin(); ?>
     <div id="top" class="sa-app__body">
         <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
             <div class="container container--max--xl">
@@ -48,9 +47,7 @@ use kartik\color\ColorInput;
                         <div class="sa-entity-layout__main">
                             <div class="card">
                                 <div class="card-body p-5">
-                                    <div class="mb-5"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2>
-                                    </div>
+                                    <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
                                     <div class="row">
                                         <div class="col-4 mb-4">
                                             <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label(Yii::t('app', 'name')) ?>
@@ -78,8 +75,8 @@ use kartik\color\ColorInput;
             </div>
         </div>
     </div>
-    <?php ActiveForm::end(); ?>
 </div>
+<?php ActiveForm::end(); ?>
 <style>
     .product-card__badges-list {
         position: absolute;

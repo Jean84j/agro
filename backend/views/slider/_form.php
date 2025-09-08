@@ -62,9 +62,7 @@ $mobParams = [
                     <div class="sa-entity-layout__main">
                         <div class="card">
                             <div class="card-body p-5">
-                                <div class="mb-5"><h2
-                                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2>
-                                </div>
+                                <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
                                 <div class="row">
                                     <div class="col-5 mb-4">
                                         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
