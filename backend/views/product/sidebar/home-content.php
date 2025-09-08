@@ -10,10 +10,7 @@ use yii\widgets\Pjax;
 ?>
 <div class="card w-100">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Category') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Category']); ?>
         <div class="card card-body">
             <?php
             Pjax::begin(['id' => "category"]);
@@ -43,10 +40,7 @@ use yii\widgets\Pjax;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Status') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Status']); ?>
         <div class="card card-body mb-4">
             <?= $form->field($model, 'status_id')
                 ->radioList(
@@ -67,10 +61,7 @@ use yii\widgets\Pjax;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Package') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Package']); ?>
         <div class="card card-body mb-4">
             <?= $form->field($model, 'package')
                 ->radioList(
@@ -94,10 +85,7 @@ use yii\widgets\Pjax;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body">
-        <div>
-                        <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                    class="mb-0 fs-exact-18"><?= Yii::t('app', 'Prices') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Prices']); ?>
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -158,10 +146,7 @@ use yii\widgets\Pjax;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Brand') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Brand']); ?>
         <div class="card card-body ">
             <?php
             $data = ArrayHelper::map(Brand::find()->orderBy('name')->asArray()->all(), 'id', 'name');

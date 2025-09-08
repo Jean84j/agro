@@ -8,10 +8,7 @@ use vova07\imperavi\Widget;
 ?>
 <div class="card">
     <div class="card-header">
-        <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
         <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button

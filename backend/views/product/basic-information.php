@@ -39,15 +39,12 @@ $clips = [[
         <h3>Рекомендації по застосуванню</h3><p>-------------------</p>
     '
 ]];
+
 ?>
 
 <div class="card">
     <div class="card-body p-5">
-        <div class="mb-5">
-            <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart">
-                <h2 class="mb-0 fs-exact-18">Основна інформація</h2>
-            </span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
         <div class="card">
             <div class="card-header card-background_color-basic">
                 <ul class="nav nav-tabs card-header-tabs" role="tablist">

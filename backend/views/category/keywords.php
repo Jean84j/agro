@@ -1,14 +1,9 @@
 <?php
 
-
 ?>
 <div class="card mt-5">
     <div class="card-header">
-        <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Keywords') ?></h2></span>
-
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Keywords']); ?>
         <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button
@@ -51,10 +46,7 @@
                     aria-labelledby="uk-keywords-2">
                 <div class="card">
                     <div class="card-body p-5">
-                        <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Keywords') ?> UK</h2></span>
-                        </div>
+                        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Keywords']); ?>
                         <div class="row g-4">
                             <?= $form->field($model, 'keywords')->textInput([
                                 'maxlength' => true,
@@ -71,10 +63,7 @@
                 <div class="card">
                     <?php if (isset($translateRu)): ?>
                         <div class="card-body p-5">
-                            <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Keywords') ?> RU</h2></span>
-                            </div>
+                            <?= $this->render('/_partials/card-name-label', ['cardName' => 'Keywords']); ?>
                             <div class="row g-4">
                                 <?= $form->field($translateRu, 'keywords')->textInput([
                                     'maxlength' => true,
@@ -91,11 +80,7 @@
 
 <div class="card mt-5">
     <div class="card-header">
-        <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Products Keywords') ?></h2></span>
-
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Products Keywords']); ?>
         <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button
@@ -138,10 +123,7 @@
                     aria-labelledby="uk-products_keywords-2">
                 <div class="card">
                     <div class="card-body p-5">
-                        <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Keywords') ?> UK</h2></span>
-                        </div>
+                        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Keywords']); ?>
                         <div class="row g-4">
                             <?= $form->field($model, 'product_keywords')->textInput([
                                 'maxlength' => true,
@@ -158,10 +140,7 @@
                 <div class="card">
                     <?php if (isset($translateRu)): ?>
                         <div class="card-body p-5">
-                            <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'products_keywords') ?> RU</h2></span>
-                            </div>
+                            <?= $this->render('/_partials/card-name-label', ['cardName' => 'products_keywords']); ?>
                             <div class="row g-4">
                                 <?= $form->field($translateRu, 'product_keywords')->textInput([
                                     'maxlength' => true,

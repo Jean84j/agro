@@ -11,10 +11,7 @@ use yii\widgets\Pjax;
     <div class="sa-entity-layout__sidebar">
         <div class="card w-100">
             <div class="card-body p-5">
-                <div class="mb-5 category-visibility">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'visibility') ?></h2></span>
-                </div>
+                <?= $this->render('/_partials/card-name-label', ['cardName' => 'visibility']); ?>
                 <div class="mb-4">
                     <?php Pjax::begin(['id' => 'visibility-pjax']); ?>
                     <?= $form->field($model, 'visibility')
@@ -40,10 +37,7 @@ use yii\widgets\Pjax;
         </div>
         <div class="card w-100 mt-5">
             <div class="card-body p-5">
-                <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Parent category') ?></h2></span>
-                </div>
+                <?= $this->render('/_partials/card-name-label', ['cardName' => 'Parent category']); ?>
                 <?php
                 $data = ArrayHelper::map(Category::find()
                     ->where(['parentId' => null])->orderBy('id')
@@ -71,10 +65,7 @@ use yii\widgets\Pjax;
 
         <div class="card w-100 mt-5">
             <div class="card-body p-5">
-                <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'SVG for menu') ?></h2></span>
-                </div>
+                <?= $this->render('/_partials/card-name-label', ['cardName' => 'SVG for menu']); ?>
                 <div class="mb-4">
                     <?= $form->field($model, 'svg')->textInput(['maxlength' => true])->label(Yii::t('app', 'SVG')) ?>
                 </div>
@@ -82,10 +73,7 @@ use yii\widgets\Pjax;
         </div>
         <div class="card w-100 mt-5">
             <div class="card-body p-5">
-                <div class="mb-5">
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                                                class="mb-0 fs-exact-18"><?= Yii::t('app', 'Properties') ?></h2></span>
-                </div>
+                <?= $this->render('/_partials/card-name-label', ['cardName' => 'Properties']); ?>
                 <div class="mb-4">
                     <?php
                     $data = ArrayHelper::map(PropertiesName::find()->orderBy('id')->asArray()->all(), 'id', 'name');

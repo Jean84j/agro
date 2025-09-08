@@ -6,11 +6,7 @@ use yii\helpers\Html;
 <?php if (!$model->isNewRecord): ?>
     <div class="card">
         <div class="card-body p-5">
-            <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart">
-                    <h2 class="mb-0 fs-exact-18"><?= Yii::t('app', 'Properties') ?></h2>
-                </span>
-            </div>
+            <?= $this->render('/_partials/card-name-label', ['cardName' => 'Properties']); ?>
             <div class="card">
                 <div class="card-header card-background_color-properties">
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">

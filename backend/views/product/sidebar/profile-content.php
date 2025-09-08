@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
     <div class="card-body p-5">
         <div class="mb-3">
                 <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"><h2
-                        class="mb-0 fs-exact-18"><?= Yii::t('app', 'Variants') ?></h2></span>
+                            class="mb-0 fs-exact-18"><?= Yii::t('app', 'Variants') ?></h2></span>
             <a href="#" data-bs-toggle="modal"
                data-bs-target="#addVariantModal">
                 <i class="fas fa-plus"></i>
@@ -71,10 +71,7 @@ use yii\helpers\ArrayHelper;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                        class="mb-0 fs-exact-18"><?= Yii::t('app', 'Tag') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Tag']); ?>
         <div class="card card-body">
             <?php
             $data = ArrayHelper::map(Tag::find()->orderBy('id')->asArray()->all(), 'id', 'name');
@@ -109,10 +106,7 @@ use yii\helpers\ArrayHelper;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                        class="mb-0 fs-exact-18"><?= Yii::t('app', 'Group') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Group']); ?>
         <div class="card card-body">
             <?php
             $data = ArrayHelper::map(Grup::find()->orderBy('id')->asArray()->all(), 'id', 'name');
@@ -147,10 +141,7 @@ use yii\helpers\ArrayHelper;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                        class="mb-0 fs-exact-18"><?= Yii::t('app', 'Label') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Label']); ?>
         <div class="card card-body ">
             <?php
             $data = ArrayHelper::map(Label::find()
@@ -173,10 +164,7 @@ use yii\helpers\ArrayHelper;
 </div>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-                <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart"> <h2
-                        class="mb-0 fs-exact-18"><?= Yii::t('app', 'Analog') ?></h2></span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => 'Analog']); ?>
         <div class="card card-body ">
             <?php
             $data = ArrayHelper::map(ProductsBackend::find()->orderBy('id')->asArray()->all(), 'id', 'name');
