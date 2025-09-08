@@ -56,7 +56,7 @@ $seoRules = Yii::$app->params['seoRules'];
                         </div>
                         <div class="card card-body mb-4">
                             <?= $form->field($model, $seoDescription)->textarea([
-                                'rows' => 4,
+                                'rows' => 2,
                                 'id' => 'seo_description'
                             ])->label('SEO Опис') ?><?= charProgress('seo_description', $seoRules['seo_description']) ?>
                         </div>
@@ -69,7 +69,7 @@ $seoRules = Yii::$app->params['seoRules'];
                         <div class="card card-body">
                             <?= $form->field($model, 'keywords')->textarea([
                                 'maxlength' => true,
-                                'rows' => '4',
+                                'rows' => 2,
                                 'class' => "form-control",
                                 'id' => 'keywords',
                             ])->label('Keywords') ?>
@@ -87,7 +87,7 @@ $seoRules = Yii::$app->params['seoRules'];
                             </div>
                             <div class="card card-body mb-4">
                                 <?= $form->field($translateRu, $seoDescriptionRu)->textarea([
-                                    'rows' => 4,
+                                    'rows' => 2,
                                     'id' => 'seo_description_ru',
                                     'name' => "Translate[ru][{$seoDescriptionRu}]"
                                 ])->label('SEO Опис') ?><?= charProgress('seo_description_ru', $seoRules['seo_description']) ?>
@@ -102,7 +102,7 @@ $seoRules = Yii::$app->params['seoRules'];
                             <div class="card card-body">
                                 <?= $form->field($translateRu, 'keywords')->textarea([
                                     'maxlength' => true,
-                                    'rows' => '4',
+                                    'rows' => 2,
                                     'class' => "form-control",
                                     'id' => 'keywords_ru',
                                     'name' => 'Translate[ru][keywords]',
