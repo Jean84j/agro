@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 
 ?>
     <div class="sa-entity-layout__sidebar">
-        <div class="card w-100">
+        <div class="card w-100 mt-5">
             <div class="card-body p-5">
                 <?= $this->render('/_partials/card-name-label', ['cardName' => 'visibility']); ?>
                 <div class="mb-4">
@@ -107,7 +107,6 @@ use yii\widgets\Pjax;
             </div>
         </div>
     </div>
-
     <style>
         #flash-message {
             font-size: x-large;
@@ -121,7 +120,6 @@ use yii\widgets\Pjax;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для лучшего вида */
         }
     </style>
-
 <?php
 $js = <<<JS
 

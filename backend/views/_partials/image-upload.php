@@ -5,11 +5,7 @@ use kartik\file\FileInput;
 ?>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">
-        <div class="mb-5">
-            <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart">
-                <h2 class="mb-0 fs-exact-18"><?= Yii::t('app', $header) ?></h2>
-            </span>
-        </div>
+        <?= $this->render('/_partials/card-name-label', ['cardName' => $header]); ?>
         <div class="p-4 d-flex justify-content-center">
             <div class="max-w-20x">
                 <?php
