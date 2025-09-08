@@ -69,10 +69,8 @@ $clips = [[
                     <?php endif; ?>
                 </ul>
             </div>
-
             <div class="card-body card-background_color-basic">
                 <div class="tab-content">
-
                     <!-- UK -->
                     <div class="tab-pane fade show active" id="uk-tab-content-2" role="tabpanel"
                          aria-labelledby="uk-tab-2">
@@ -81,7 +79,6 @@ $clips = [[
                                 <div class="col-md-6 mb-4">
                                     <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'class' => 'form-control']) ?>
                                 </div>
-
                                 <?php if (!$model->isNewRecord): ?>
                                     <?php foreach (['date_public', 'date_updated'] as $field): ?>
                                         <div class="col-md-3 mb-4">
@@ -100,22 +97,18 @@ $clips = [[
                                 <?php endif; ?>
                             </div>
                         </div>
-
                         <div class="mb-4 card card-body">
                             <?= renderEditor($form, $model, 'short_description', 'uk-short_description') ?>
                         </div>
-
                         <div class="mb-4 card card-body">
                             <?= renderEditor($form, $model, 'description', 'uk-description', null, $clips) ?>
                         </div>
-
                         <?php if (!$model->isNewRecord): ?>
                             <div class="mb-4 card card-body">
                                 <?= renderEditor($form, $model, 'footer_description', 'uk-footer_description') ?>
                             </div>
                         <?php endif; ?>
                     </div>
-
                     <!-- RU -->
                     <?php if (isset($translateRu)): ?>
                         <div class="tab-pane fade" id="ru-tab-content-2" role="tabpanel" aria-labelledby="ru-tab-2">
@@ -129,7 +122,6 @@ $clips = [[
                                             'name' => 'Translate[ru][name]',
                                         ]) ?>
                                     </div>
-
                                     <?php foreach (['date_public', 'date_updated'] as $field): ?>
                                         <div class="col-md-3 mb-4">
                                             <?= $form->field($translateRu, $field)->textInput([
@@ -144,15 +136,12 @@ $clips = [[
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-
                             <div class="mb-4 card card-body">
                                 <?= renderEditor($form, $translateRu, 'short_description', 'ru-short_description', 'Translate[ru][short_description]') ?>
                             </div>
-
                             <div class="mb-4 card card-body">
                                 <?= renderEditor($form, $translateRu, 'description', 'ru-description', 'Translate[ru][description]', $clips) ?>
                             </div>
-
                             <?php if (!$model->isNewRecord): ?>
                                 <div class="mb-4 card card-body">
                                     <?= renderEditor($form, $translateRu, 'footer_description', 'ru-footer_description', 'Translate[ru][footer_description]') ?>
@@ -168,5 +157,11 @@ $clips = [[
 <style>
     .card-background_color-basic {
         background-color: #ff008417;
+    }
+    .redactor-editor{
+       background-color: #ffec5542;
+    }
+    .redactor-toolbar {
+        background-color: #ffe95bab;
     }
 </style>

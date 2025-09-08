@@ -58,7 +58,7 @@ $tabs = $model->getTabs();
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
         <div class="container" style="max-width: 1623px">
-            <div class="py-5">
+            <div class="pt-3">
                 <div class="row g-4 align-items-center">
                     <div class="col">
                         <nav class="mb-2" aria-label="breadcrumb">
