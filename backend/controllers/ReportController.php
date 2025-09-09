@@ -53,7 +53,7 @@ class ReportController extends Controller
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index-grid', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
