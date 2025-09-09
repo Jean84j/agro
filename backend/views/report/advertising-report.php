@@ -15,6 +15,7 @@
 /** @var backend\models\Report $periodStart */
 /** @var backend\models\Report $periodEnd */
 /** @var backend\models\Report $bigQty */
+
 /** @var backend\models\Report $smallQty */
 
 use yii\bootstrap5\Breadcrumbs;
@@ -43,6 +44,15 @@ if ($bigQty + $smallQty == 0) {
     $clientPrice = $budget / ($bigQty + $smallQty);
 }
 
+$commonParams =
+    [
+        'action' => 'advertising-report',
+        'periodStart' => $periodStart,
+        'periodEnd' => $periodEnd
+    ];
+if (isset($budget)) {
+    $commonParams['budget'] = $budget;
+}
 ?>
 <div id="top" class="sa-app__body">
     <div class="sa-invoice">
@@ -75,32 +85,7 @@ if ($bigQty + $smallQty == 0) {
                 <div class="sa-invoice__meta">
                     <div class="sa-invoice__title title-report mb-5">Звіт по Рекламі</div>
                     <div class="sa-invoice__meta-items">
-                        <form action="advertising-report" method="get">
-                            <span style="margin-right: 8px;">Початок:</span>
-                            <label for="periodStart"></label>
-                            <input type="date" id="periodStart" name="periodStart"
-                                   value="<?= htmlspecialchars($periodStart) ?>"
-                                   max="<?= htmlspecialchars($periodEnd) ?>"
-                                   required>
-                            <br/>
-                            <br/>
-                            <span style="margin-right: 20px;">Кінець:  </span>
-                            <label for="periodEnd"></label>
-                            <input type="date" id="periodEnd" name="periodEnd"
-                                   value="<?= htmlspecialchars($periodEnd) ?>"
-                                   min="<?= htmlspecialchars($periodStart) ?>"
-                                   required>
-                            <br/>
-                            <br/>
-                            <span style="margin-right: 11px;">Бютжет:  </span>
-                            <label for="budget"></label>
-                            <input type="number" id="budget" name="budget"
-                                   value="<?php echo htmlspecialchars($budget); ?>" step="0.01" style="width: 137px;" required>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <input type="submit" value="Отправить">
-                        </form>
+                        <?= $this->render('/_partials/report/input-date', $commonParams); ?>
                     </div>
                 </div>
                 <div class="sa-invoice__logo">

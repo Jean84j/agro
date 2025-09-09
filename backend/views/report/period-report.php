@@ -45,8 +45,13 @@ $smallProfit = $smallSum
     - $smallDelivery
     - $smallPlatform;
 
+$commonParams =
+    [
+        'action' => 'period-report',
+        'periodStart' => $periodStart,
+        'periodEnd' => $periodEnd
+    ];
 ?>
-
 <div id="top" class="sa-app__body">
     <div class="sa-invoice">
         <div class="py-5">
@@ -78,26 +83,7 @@ $smallProfit = $smallSum
                 <div class="sa-invoice__meta">
                     <div class="sa-invoice__title title-report mb-5">Звіт за Період</div>
                     <div class="sa-invoice__meta-items">
-                        <form id="period-report-form" action="period-report" method="get">
-                            <span style="margin-right: 8px;">Початок:</span>
-                            <label for="periodStart"></label>
-                            <input type="date" id="periodStart" name="periodStart"
-                                   value="<?= htmlspecialchars($periodStart) ?>"
-                                   max="<?= htmlspecialchars($periodEnd) ?>"
-                                   required>
-                            <br/><br/>
-
-                            <span style="margin-right: 20px;">Кінець:  </span>
-                            <label for="periodEnd"></label>
-                            <input type="date" id="periodEnd" name="periodEnd"
-                                   value="<?= htmlspecialchars($periodEnd) ?>"
-                                   min="<?= htmlspecialchars($periodStart) ?>"
-                                   required>
-                            <br/><br/><br/>
-
-                            <button type="submit" class="btn btn-warning">Отправить</button>
-                        </form>
-
+                        <?= $this->render('/_partials/report/input-date', $commonParams); ?>
                     </div>
                 </div>
                 <div class="sa-invoice__logo">
@@ -438,9 +424,7 @@ $smallProfit = $smallSum
                         <mo>%</mo>
                     </mrow>
                 </math>
-
             </div>
-
         </div>
     </div>
 </div>
