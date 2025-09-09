@@ -1,6 +1,5 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\form\ActiveForm;
@@ -37,21 +36,7 @@ $tabs = $model->getTabs();
         <div class="container container--max--xl" style="max-width: 1623px">
             <div class="pt-3">
                 <div class="row g-4 align-items-center">
-                    <div class="col">
-                        <nav class="mb-2" aria-label="breadcrumb">
-                            <ol class="breadcrumb breadcrumb-sa-simple">
-                                <?php echo Breadcrumbs::widget([
-                                    'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
-                                    'homeLink' => [
-                                        'label' => Yii::t('app', 'Home'),
-                                        'url' => Yii::$app->homeUrl,
-                                    ],
-                                    'links' => $this->params['breadcrumbs'] ?? [],
-                                ]);
-                                ?>
-                            </ol>
-                        </nav>
-                    </div>
+                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
                     <div class="col-auto d-flex">
                         <?php if (!$model->isNewRecord): ?>
                             <?= Html::a(Yii::t('app', 'List category'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>

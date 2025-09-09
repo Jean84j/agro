@@ -1,40 +1,22 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\MaskedInput;
 use kartik\form\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\Report $model */
+/** @var backend\models\Report $model */
 /** @var yii\widgets\ActiveForm $form */
 
-
 ?>
-
 <?php $form = ActiveForm::begin(); ?>
-<!-- sa-app__body -->
 <div id="top" class="sa-app__body" style="padding-top: 0">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
         <div class="container">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
-                    <div class="col">
-                        <nav class="mb-2" aria-label="breadcrumb">
-                            <ol class="breadcrumb breadcrumb-sa-simple">
-                                <?php echo Breadcrumbs::widget([
-                                    'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
-                                    'homeLink' => [
-                                        'label' => Yii::t('app', 'Home'),
-                                        'url' => Yii::$app->homeUrl,
-                                    ],
-                                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                                ]);
-                                ?>
-                            </ol>
-                        </nav>
-                    </div>
+                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
                     <div class="col-auto d-flex">
                         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
                     </div>
@@ -233,9 +215,7 @@ use kartik\form\ActiveForm;
         </div>
     </div>
 </div>
-<!-- sa-app__body / end -->
 <?php ActiveForm::end(); ?>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var paymentDropdown = document.getElementById('order-payment-status-dropdown');

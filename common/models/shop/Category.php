@@ -457,11 +457,6 @@ class Category extends ActiveRecord
                 'icon' => 'fas fa-search-dollar',
                 'label' => 'SEO шаблон',
                 'view' => '/category/seo-information-product'],
-            [
-                'id' => 'keyword',
-                'icon' => 'fas fa-key',
-                'label' => 'Ключові слова',
-                'view' => '/category/keywords'],
         ];
     }
 }
