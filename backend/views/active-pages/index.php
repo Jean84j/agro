@@ -63,7 +63,6 @@ $ipAddress = Yii::$app->request->getUserIP();
                         [
                             'attribute' => 'ip_user',
                             'format' => 'raw',
-                            'visible' => true,
                             'value' => function ($model) {
                                 try {
                                     return IpInfo::widget([
@@ -72,12 +71,13 @@ $ipAddress = Yii::$app->request->getUserIP();
                                         'template' => ['inlineContent' => '{flag} {city} {ip}'],
                                     ]);
                                 } catch (\Throwable $e) {
-                                    // Если виджет упал — вернем IP как текст
+                                    Yii::error("IpInfo error for IP {$model->ip_user}: " . $e->getMessage(), __METHOD__);
                                     return Html::encode($model->ip_user ?: '—');
                                 }
                             },
                             'contentOptions' => ['style' => 'width: 150px'],
                         ],
+
 
                         [
                             'attribute' => 'date_visit',
