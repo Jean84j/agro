@@ -1,29 +1,29 @@
 <?php
 
-/** @var common\models\Report $model */
-/** @var common\models\Report $bigAllSum */
-/** @var common\models\Report $bigSum */
-/** @var common\models\Report $bigIncomingPriceSum */
-/** @var common\models\Report $bigDiscount */
-/** @var common\models\Report $bigDelivery */
-/** @var common\models\Report $bigPlatform */
-/** @var common\models\Report $smallAllSum */
-/** @var common\models\Report $smallSum */
-/** @var common\models\Report $smallIncomingPriceSum */
-/** @var common\models\Report $smallDiscount */
-/** @var common\models\Report $smallDelivery */
-/** @var common\models\Report $smallPlatform */
-/** @var common\models\Report $periodStart */
-/** @var common\models\Report $periodEnd */
-/** @var common\models\Report $bigAllQty */
-/** @var common\models\Report $bigAllReturnQty */
-/** @var common\models\Report $bigQty */
-/** @var common\models\Report $smallAllQty */
-/** @var common\models\Report $smallAllReturnQty */
-/** @var common\models\Report $smallQty */
-/** @var common\models\Report $bigAllDelivery */
+/** @var backend\models\Report $model */
+/** @var backend\models\Report $bigAllSum */
+/** @var backend\models\Report $bigSum */
+/** @var backend\models\Report $bigIncomingPriceSum */
+/** @var backend\models\Report $bigDiscount */
+/** @var backend\models\Report $bigDelivery */
+/** @var backend\models\Report $bigPlatform */
+/** @var backend\models\Report $smallAllSum */
+/** @var backend\models\Report $smallSum */
+/** @var backend\models\Report $smallIncomingPriceSum */
+/** @var backend\models\Report $smallDiscount */
+/** @var backend\models\Report $smallDelivery */
+/** @var backend\models\Report $smallPlatform */
+/** @var backend\models\Report $periodStart */
+/** @var backend\models\Report $periodEnd */
+/** @var backend\models\Report $bigAllQty */
+/** @var backend\models\Report $bigAllReturnQty */
+/** @var backend\models\Report $bigQty */
+/** @var backend\models\Report $smallAllQty */
+/** @var backend\models\Report $smallAllReturnQty */
+/** @var backend\models\Report $smallQty */
+/** @var backend\models\Report $bigAllDelivery */
 
-/** @var common\models\Report $smallAllDelivery */
+/** @var backend\models\Report $smallAllDelivery */
 
 use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
@@ -60,7 +60,7 @@ $smallProfit = $smallSum
                                     'label' => Yii::t('app', 'Home'),
                                     'url' => Yii::$app->homeUrl,
                                 ],
-                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                                'links' => $this->params['breadcrumbs'] ?? [],
                             ]);
                             ?>
                         </ol>
@@ -82,18 +82,22 @@ $smallProfit = $smallSum
                             <span style="margin-right: 8px;">Початок:</span>
                             <label for="periodStart"></label>
                             <input type="date" id="periodStart" name="periodStart"
-                                   value="<?php echo htmlspecialchars($periodStart); ?>" required>
-                            <br/>
-                            <br/>
+                                   value="<?= htmlspecialchars($periodStart) ?>"
+                                   max="<?= htmlspecialchars($periodEnd) ?>"
+                                   required>
+                            <br/><br/>
+
                             <span style="margin-right: 20px;">Кінець:  </span>
                             <label for="periodEnd"></label>
                             <input type="date" id="periodEnd" name="periodEnd"
-                                   value="<?php echo htmlspecialchars($periodEnd); ?>" required>
-                            <br/>
-                            <br/>
-                            <br/>
+                                   value="<?= htmlspecialchars($periodEnd) ?>"
+                                   min="<?= htmlspecialchars($periodStart) ?>"
+                                   required>
+                            <br/><br/><br/>
+
                             <button type="submit" class="btn btn-warning">Отправить</button>
                         </form>
+
                     </div>
                 </div>
                 <div class="sa-invoice__logo">
@@ -266,10 +270,18 @@ $smallProfit = $smallSum
                             <span
                                     class="sa-price__symbol"></span></td>
 
-                        <td class="sa-invoice__table-column--type--total"><?= Yii::$app->formatter->asDecimal(($bigSum / $bigIncomingPriceSum - 1) * 100, 0) . ' %' ?>
+                        <td class="sa-invoice__table-column--type--total">
+                            <?= $bigIncomingPriceSum > 0
+                                ? Yii::$app->formatter->asDecimal(($bigSum / $bigIncomingPriceSum - 1) * 100, 0) . ' %'
+                                : '—'
+                            ?>
                             <span
                                     class="sa-price__symbol"></span></td>
-                        <td class="sa-invoice__table-column--type--total"><?= Yii::$app->formatter->asDecimal((($bigSum - $bigIncomingPriceSum) / $bigSum) * 100, 0) . ' %' ?>
+                        <td class="sa-invoice__table-column--type--total">
+                            <?= $bigSum > 0
+                                ? Yii::$app->formatter->asDecimal((($bigSum - $bigIncomingPriceSum) / $bigSum) * 100, 0) . ' %'
+                                : '—'
+                            ?>
                             <span
                                     class="sa-price__symbol"></span></td>
                     </tr>
@@ -297,10 +309,18 @@ $smallProfit = $smallSum
                             <span
                                     class="sa-price__symbol"></span></td>
 
-                        <td class="sa-invoice__table-column--type--total"><?= Yii::$app->formatter->asDecimal(($smallSum / $smallIncomingPriceSum - 1) * 100, 0) . ' %' ?>
+                        <td class="sa-invoice__table-column--type--total">
+                            <?= $smallIncomingPriceSum > 0
+                                ? Yii::$app->formatter->asDecimal(($smallSum / $smallIncomingPriceSum - 1) * 100, 0) . ' %'
+                                : '—'
+                            ?>
                             <span
                                     class="sa-price__symbol"></span></td>
-                        <td class="sa-invoice__table-column--type--total"><?= Yii::$app->formatter->asDecimal((($smallSum - $smallIncomingPriceSum) / $smallSum) * 100, 0) . ' %' ?>
+                        <td class="sa-invoice__table-column--type--total">
+                            <?= $smallSum > 0
+                                ? Yii::$app->formatter->asDecimal((($smallSum - $smallIncomingPriceSum) / $smallSum) * 100, 0) . ' %'
+                                : '—'
+                            ?>
                             <span
                                     class="sa-price__symbol"></span></td>
                     </tr>
@@ -325,14 +345,21 @@ $smallProfit = $smallSum
                     </tr>
                     <tr>
                         <th class="sa-invoice__table-column--type--header" colspan="6">Коефіцієнт</th>
-                        <td class="sa-invoice__table-column--type--total"><?= Yii::$app->formatter->asDecimal((($bigSum + $smallSum) / ($bigIncomingPriceSum + $smallIncomingPriceSum) - 1) * 100, 0) ?>
+                        <td class="sa-invoice__table-column--type--total">
+                            <?= ($bigIncomingPriceSum + $smallIncomingPriceSum) > 0
+                                ? Yii::$app->formatter->asDecimal((($bigSum + $smallSum) / ($bigIncomingPriceSum + $smallIncomingPriceSum) - 1) * 100, 0) . ' %'
+                                : '—'
+                            ?>
                             <span
                                     class="sa-price__symbol"> %</span></td>
                     </tr>
                     <tr>
                         <th class="sa-invoice__table-column--type--header" colspan="6">Маржа</th>
-                        <td class="sa-invoice__table-column--type--total"><?= Yii::$app->formatter->asDecimal((($bigSum + $smallSum - $bigIncomingPriceSum - $smallIncomingPriceSum) / ($bigSum + $smallSum)) * 100, 0) ?>
-
+                        <td class="sa-invoice__table-column--type--total">
+                            <?= ($bigSum + $smallSum) > 0
+                                ? Yii::$app->formatter->asDecimal((($bigSum + $smallSum - $bigIncomingPriceSum - $smallIncomingPriceSum) / ($bigSum + $smallSum)) * 100, 0) . ' %'
+                                : '—'
+                            ?>
                             <span
                                     class="sa-price__symbol"> %</span></td>
                     </tr>
@@ -368,21 +395,25 @@ $smallProfit = $smallSum
             </div>
             <div class="sa-invoice__disclaimer">
                 <p>Цей варіант розрахунку називається коефіцієнт націнки (markup coefficient)
-                або коефіцієнт рентабельності продажів. Він показує, у скільки разів ціна продажу
-                перевищує собівартість.</p>
+                    або коефіцієнт рентабельності продажів. Він показує, у скільки разів ціна продажу
+                    перевищує собівартість.</p>
                 <p>Формула:</p>
-           
+
                 <math xmlns="http://www.w3.org/1998/Math/MathML">
                     <mrow>
-                        <mi>Коефіцієнт націнки</mi> <mo>=</mo>
+                        <mi>Коефіцієнт націнки</mi>
+                        <mo>=</mo>
                         <mo>(</mo>
                         <mfrac>
                             <mi>Дохід</mi>
                             <mi>Собівартість</mi>
                         </mfrac>
-                        <mo>-</mo> <mn>1</mn>
+                        <mo>-</mo>
+                        <mn>1</mn>
                         <mo>)</mo>
-                        <mo>×</mo> <mn>100</mn> <mo>%</mo>
+                        <mo>×</mo>
+                        <mn>100</mn>
+                        <mo>%</mo>
                     </mrow>
                 </math>
             </div>
@@ -395,12 +426,16 @@ $smallProfit = $smallSum
                         <mfrac>
                             <mrow>
                                 <mo>(</mo>
-                                <mi>Дохід</mi> <mo>-</mo> <mi>Собівартість</mi>
+                                <mi>Дохід</mi>
+                                <mo>-</mo>
+                                <mi>Собівартість</mi>
                                 <mo>)</mo>
                             </mrow>
                             <mi>Дохід</mi>
                         </mfrac>
-                        <mo>×</mo> <mn>100</mn> <mo>%</mo>
+                        <mo>×</mo>
+                        <mn>100</mn>
+                        <mo>%</mo>
                     </mrow>
                 </math>
 
