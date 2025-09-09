@@ -65,15 +65,20 @@ $ipAddress = Yii::$app->request->getUserIP();
                             'format' => 'raw',
                             'visible' => true,
                             'value' => function ($model) {
-
-                                return IpInfo::widget([
-                                    'ip' => $model->ip_user,
-                                    'showPopover' => false,
-                                    'template' => ['inlineContent' => '{flag} {city} {ip}'],
-                                ]);
+                                try {
+                                    return IpInfo::widget([
+                                        'ip' => $model->ip_user,
+                                        'showPopover' => false,
+                                        'template' => ['inlineContent' => '{flag} {city} {ip}'],
+                                    ]);
+                                } catch (\Throwable $e) {
+                                    // Если виджет упал — вернем IP как текст
+                                    return Html::encode($model->ip_user ?: '—');
+                                }
                             },
                             'contentOptions' => ['style' => 'width: 150px'],
                         ],
+
                         [
                             'attribute' => 'date_visit',
                             'filter' => false,
