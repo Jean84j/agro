@@ -60,23 +60,23 @@ $ipAddress = Yii::$app->request->getUserIP();
                             },
                         ],
                         ['class' => 'yii\grid\SerialColumn'],
-                        [
-                            'attribute' => 'ip_user',
-                            'format' => 'raw',
-                            'value' => function ($model) {
-                                try {
-                                    return IpInfo::widget([
-                                        'ip' => $model->ip_user,
-                                        'showPopover' => false,
-                                        'template' => ['inlineContent' => '{flag} {city} {ip}'],
-                                    ]);
-                                } catch (\Throwable $e) {
-                                    Yii::error("IpInfo error for IP {$model->ip_user}: " . $e->getMessage(), __METHOD__);
-                                    return Html::encode($model->ip_user ?: '—');
-                                }
-                            },
-                            'contentOptions' => ['style' => 'width: 150px'],
-                        ],
+//                        [
+//                            'attribute' => 'ip_user',
+//                            'format' => 'raw',
+//                            'value' => function ($model) {
+//                                try {
+//                                    return IpInfo::widget([
+//                                        'ip' => $model->ip_user,
+//                                        'showPopover' => false,
+//                                        'template' => ['inlineContent' => '{flag} {city} {ip}'],
+//                                    ]);
+//                                } catch (\Throwable $e) {
+//                                    Yii::error("IpInfo error for IP {$model->ip_user}: " . $e->getMessage(), __METHOD__);
+//                                    return Html::encode($model->ip_user ?: '—');
+//                                }
+//                            },
+//                            'contentOptions' => ['style' => 'width: 150px'],
+//                        ],
 
 
                         [
