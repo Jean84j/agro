@@ -6,6 +6,7 @@ use backend\models\Report;
 use backend\models\search\ReportSearch;
 use backend\models\ReportItem;
 use backend\models\ReportReminder;
+use DateTime;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Yii;
@@ -230,8 +231,10 @@ class ReportController extends Controller
 
     public function actionPeriodReport()
     {
-        $periodStart = Report::find()->min('date_order');
         $periodEnd = Report::find()->max('date_order');
+        $periodStart = (new DateTime($periodEnd))
+            ->modify('-30 days')
+            ->format('Y-m-d');
 
         if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['periodStart'])) {
             $periodStart = $_GET['periodStart'];
@@ -407,8 +410,10 @@ class ReportController extends Controller
 
     public function actionPromReport()
     {
-        $periodStart = Report::find()->min('date_order');
         $periodEnd = Report::find()->max('date_order');
+        $periodStart = (new DateTime($periodEnd))
+            ->modify('-30 days')
+            ->format('Y-m-d');
 
         if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['periodStart'])) {
             $periodStart = $_GET['periodStart'];
@@ -511,8 +516,10 @@ class ReportController extends Controller
 
     public function actionAdvertisingReport()
     {
-        $periodStart = Report::find()->min('date_order');
         $periodEnd = Report::find()->max('date_order');
+        $periodStart = (new DateTime($periodEnd))
+            ->modify('-30 days')
+            ->format('Y-m-d');
 
         $budget = 0;
 
@@ -1017,11 +1024,11 @@ class ReportController extends Controller
             $sheet->setCellValue('T' . $row, $model->address);
             $sheet->setCellValue('U' . $row, $model->ttn);
 
-            if ($package === null){
+            if ($package === null) {
                 $products = ReportItem::find()
                     ->where(['order_id' => $model->id])
                     ->all();
-            }else{
+            } else {
                 $products = ReportItem::find()
                     ->where(['order_id' => $model->id])
                     ->andWhere(['package' => $package])
