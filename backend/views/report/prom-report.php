@@ -1,20 +1,20 @@
 <?php
 
-/** @var common\models\Report $model */
-/** @var common\models\Report $bigSum */
-/** @var common\models\Report $bigIncomingPriceSum */
-/** @var common\models\Report $bigDiscount */
-/** @var common\models\Report $bigDelivery */
-/** @var common\models\Report $bigPlatform */
-/** @var common\models\Report $smallSum */
-/** @var common\models\Report $smallIncomingPriceSum */
-/** @var common\models\Report $smallDiscount */
-/** @var common\models\Report $smallDelivery */
-/** @var common\models\Report $smallPlatform */
-/** @var common\models\Report $periodStart */
-/** @var common\models\Report $periodEnd */
-/** @var common\models\Report $bigQty */
-/** @var common\models\Report $smallQty */
+/** @var backend\models\Report $model */
+/** @var backend\models\Report $bigSum */
+/** @var backend\models\Report $bigIncomingPriceSum */
+/** @var backend\models\Report $bigDiscount */
+/** @var backend\models\Report $bigDelivery */
+/** @var backend\models\Report $bigPlatform */
+/** @var backend\models\Report $smallSum */
+/** @var backend\models\Report $smallIncomingPriceSum */
+/** @var backend\models\Report $smallDiscount */
+/** @var backend\models\Report $smallDelivery */
+/** @var backend\models\Report $smallPlatform */
+/** @var backend\models\Report $periodStart */
+/** @var backend\models\Report $periodEnd */
+/** @var backend\models\Report $bigQty */
+/** @var backend\models\Report $smallQty */
 
 use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
@@ -37,7 +37,6 @@ $smallProfit = $smallSum
     - $smallPlatform;
 
 ?>
-
 <div id="top" class="sa-app__body">
     <div class="sa-invoice">
         <div class="py-5">
@@ -51,7 +50,7 @@ $smallProfit = $smallSum
                                     'label' => Yii::t('app', 'Home'),
                                     'url' => Yii::$app->homeUrl,
                                 ],
-                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                                'links' => $this->params['breadcrumbs'] ?? [],
                             ]);
                             ?>
                         </ol>
@@ -73,13 +72,17 @@ $smallProfit = $smallSum
                             <span style="margin-right: 8px;">Початок:</span>
                             <label for="periodStart"></label>
                             <input type="date" id="periodStart" name="periodStart"
-                                   value="<?php echo htmlspecialchars($periodStart); ?>" required>
+                                   value="<?= htmlspecialchars($periodStart) ?>"
+                                   max="<?= htmlspecialchars($periodEnd) ?>"
+                                   required>
                             <br/>
                             <br/>
                             <span style="margin-right: 20px;">Кінець:  </span>
                             <label for="periodEnd"></label>
                             <input type="date" id="periodEnd" name="periodEnd"
-                                   value="<?php echo htmlspecialchars($periodEnd); ?>" required>
+                                   value="<?= htmlspecialchars($periodEnd) ?>"
+                                   min="<?= htmlspecialchars($periodStart) ?>"
+                                   required>
                             <br/>
                             <br/>
                             <br/>
