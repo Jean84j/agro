@@ -1,9 +1,6 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
-
-use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var common\models\About $model */
@@ -13,28 +10,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Abouts'), 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-
-<!-- sa-app__body -->
 <div id="top" class="sa-app__body">
     <div class="py-5 py-md-6 my-2 px-5">
         <div class="py-5">
             <div class="row g-4 align-items-center">
-                <div class="col">
-                    <nav class="mb-2" aria-label="breadcrumb">
-                        <ol class="breadcrumb breadcrumb-sa-simple">
-                            <?php
-                            echo Breadcrumbs::widget([
-                                'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
-                                'homeLink' => [
-                                    'label' => 'Главная ',
-                                    'url' => Yii::$app->homeUrl,
-                                ],
-                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                            ]);
-                            ?>
-                        </ol>
-                    </nav>
-                </div>
+                <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
                 <div class="col-auto d-flex">
                     <?php if(!$model->isNewRecord): ?>
                         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

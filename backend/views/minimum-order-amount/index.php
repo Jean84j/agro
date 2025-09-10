@@ -1,7 +1,6 @@
 <?php
 
 use common\models\shop\MinimumOrderAmount;
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -18,20 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="container">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
-                    <div class="col">
-                        <nav class="mb-2" aria-label="breadcrumb">
-                            <ol class="breadcrumb breadcrumb-sa-simple">
-                                <?php echo Breadcrumbs::widget([
-                                    'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
-                                    'homeLink' => [
-                                        'label' => Yii::t('app', 'Home'),
-                                        'url' => Yii::$app->homeUrl,
-                                    ],
-                                    'links' => $this->params['breadcrumbs'] ?? [],
-                                ]); ?>
-                            </ol>
-                        </nav>
-                    </div>
+                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
                     <?php if (!MinimumOrderAmount::find()->exists()): ?>
                         <div class="col-auto d-flex">
                             <a href="<?= Url::to(['create']) ?>" class="btn btn-primary">
