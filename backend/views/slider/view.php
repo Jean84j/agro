@@ -1,6 +1,5 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -19,21 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="container container--max--xl">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
-                    <div class="col">
-                        <nav class="mb-2" aria-label="breadcrumb">
-                            <ol class="breadcrumb breadcrumb-sa-simple">
-                                <?php echo Breadcrumbs::widget([
-                                    'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
-                                    'homeLink' => [
-                                        'label' => Yii::t('app', 'Home'),
-                                        'url' => Yii::$app->homeUrl,
-                                    ],
-                                    'links' => $this->params['breadcrumbs'] ?? [],
-                                ]);
-                                ?>
-                            </ol>
-                        </nav>
-                    </div>
+                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
                     <div class="col-auto d-flex">
                         <?= Html::a(Yii::t('app', 'List posts'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>
                         <?= Html::a(Yii::t('app', 'Create more'), Url::to(['create']), ['class' => 'btn btn-success me-3']) ?>

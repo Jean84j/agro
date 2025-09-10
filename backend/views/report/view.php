@@ -1,13 +1,12 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use common\models\Settings;
 use yii\helpers\Html;
 use yii\web\YiiAsset;
 use yii\helpers\Url;
 
 /** @var yii\web\View $this */
-/** @var common\models\Report $model */
+/** @var backend\models\Report $model */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Reports'), 'url' => ['index']];
@@ -45,21 +44,7 @@ if ($model->order_status_id == 'Повернення' || $model->order_pay_ment_
                 <div class="container container--max--xl" style="max-width: 1623px">
                     <div class="py-4">
                         <div class="row g-4 align-items-center">
-                            <div class="col">
-                                <nav class="mb-2" aria-label="breadcrumb">
-                                    <ol class="breadcrumb breadcrumb-sa-simple">
-                                        <?php echo Breadcrumbs::widget([
-                                            'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
-                                            'homeLink' => [
-                                                'label' => Yii::t('app', 'Home'),
-                                                'url' => Yii::$app->homeUrl,
-                                            ],
-                                            'links' => $this->params['breadcrumbs'] ?? [],
-                                        ]);
-                                        ?>
-                                    </ol>
-                                </nav>
-                            </div>
+                            <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
                             <div class="col-auto d-flex">
 
                             </div>
