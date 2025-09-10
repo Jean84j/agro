@@ -1,9 +1,9 @@
 <?php
 
+use backend\widgets\IpInfoCustom;
 use common\models\shop\ActivePages;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
-use kartik\ipinfo\IpInfo;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap5\LinkPager;
@@ -63,18 +63,16 @@ $ipAddress = Yii::$app->request->getUserIP();
                         [
                             'attribute' => 'ip_user',
                             'format' => 'raw',
-//                            'value' => function ($model) {
-//                                try {
-//                                    return IpInfo::widget([
-//                                        'ip' => $model->ip_user,
-//                                        'showPopover' => false,
-//                                        'template' => ['inlineContent' => '{flag} {city} {ip}'],
-//                                    ]);
-//                                } catch (\Throwable $e) {
-//                                    Yii::error("IpInfo error for IP {$model->ip_user}: " . $e->getMessage(), __METHOD__);
-//                                    return Html::encode($model->ip_user ?: '—');
-//                                }
-//                            },
+                            'value' => function ($model) {
+                                try {
+                                    return IpInfoCustom::widget([
+                                        'ip' => $model->ip_user,
+                                    ]);
+                                } catch (\Throwable $e) {
+                                    Yii::error("IpInfo error for IP {$model->ip_user}: " . $e->getMessage(), __METHOD__);
+                                    return Html::encode($model->ip_user ?: '—');
+                                }
+                            },
                             'contentOptions' => ['style' => 'width: 150px'],
                         ],
 

@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         "vendor/datatables/css/dataTables.bootstrap5.min.css",
         "vendor/nouislider/nouislider.min.css",
         "vendor/fullcalendar/main.min.css",
+        "vendor/flag-icon-css/css/flag-icon.min.css",
         'css/ajaxcrud.css',
         "css/style.css",
     ];
