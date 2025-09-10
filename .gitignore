@@ -78,4 +78,4 @@ phpunit.phar
 /GeoIP/
 error_log
 geoipblock.php
-geoip_check.log
+geoip_check.logcomposer.lock
