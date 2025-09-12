@@ -1,7 +1,6 @@
 <?php
 
-use kartik\ipinfo\IpInfo;
-use kartik\popover\PopoverX;
+use backend\widgets\IpInfoCustom;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
@@ -14,7 +13,6 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Active Pages'), 'url
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
         <div class="container container--max--xl">
@@ -36,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="sa-entity-layout"
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
-
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
@@ -45,18 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'ip_user',
                                 'format' => 'raw',
                                 'visible' => true,
-                                'value' => function($model){
-                                    return IpInfo::widget([
-                                        'ip' => $model->ip_user,
-                                        'popoverOptions' => [
-                                            'options' => [
-                                                'style' => 'display:none'
-                                            ],
-                                            'toggleButton' => ['class' => 'btn btn-secondary btn-default btn-lg'],
-                                            'placement' => PopoverX::ALIGN_AUTO_BOTTOM,
-                                        ]
-                                    ]);
-                                }
+                                'value' => function ($model) {
+                                    try {
+                                        return IpInfoCustom::widget([
+                                            'ip' => $model->ip_user,
+                                            'view' => 'view-ipinfo'
+                                        ]);
+                                    } catch (\Throwable $e) {
+                                        Yii::error("IpInfo error for IP {$model->ip_user}: " . $e->getMessage(), __METHOD__);
+                                        return Html::encode($model->ip_user ?: '—');
+                                    }
+                                },
                             ],
                             'url_page',
                             'user_agent',
