@@ -14,7 +14,7 @@ class IpInfoCustom extends BaseWidgetBackend
     public $ip;
 
     /** @var string Шаблон вывода */
-    public $view = 'ipinfo';
+    public $view = 'index-ipinfo';
 
     public function run()
     {
