@@ -7,11 +7,12 @@ if (!$data) {
 $countryCode = strtolower($data['country'] ?? '');
 ?>
 <?php if ($countryCode): ?>
-    <span class="flag-icon flag-icon-<?= $countryCode ?>"></span>
     <table class="table table-hover table-bordered shadow-sm rounded-3" style="max-width: 500px;">
         <thead class="table-light">
         <tr>
-            <th colspan="2" class="text-center fs-5">Информация об IP</th>
+            <th colspan="2" class="text-center fs-5">
+                <span class="flag-icon flag-icon-<?= $countryCode ?>"></span> Информация об IP
+            </th>
         </tr>
         </thead>
         <tbody>
