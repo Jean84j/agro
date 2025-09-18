@@ -99,7 +99,7 @@ class CategoryController extends BaseFrontendController
         $type = 'website';
         $title = $category->pageTitle;
         $description = $category->metaDescription;
-        $image = '/category/' . $category->file;
+        $image = '/images/category/' . $category->file;
         $keywords = '';
         Settings::setMetamaster($type, $title, $description, $image, $keywords);
 
@@ -244,7 +244,7 @@ class CategoryController extends BaseFrontendController
         $type = 'product.group';
         $title = $category->pageTitle;
         $description = $category->metaDescription;
-        $image = '/category/' . $category->file;
+        $image = '/images/category/' . $category->file;
         $keywords = '';
         $url = Url::canonical();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
