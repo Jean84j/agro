@@ -5,7 +5,6 @@ use common\models\shop\Category;
 use common\models\shop\Status;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
-use yii\widgets\Pjax;
 
 ?>
 <div class="card w-100">
@@ -13,7 +12,6 @@ use yii\widgets\Pjax;
         <?= $this->render('/_partials/card-name-label', ['cardName' => 'Category']); ?>
         <div class="card card-body">
             <?php
-            Pjax::begin(['id' => "category"]);
             $data = ArrayHelper::map(Category::find()
                 ->where(['visibility' => true])
                 ->orderBy('name')
@@ -33,7 +31,6 @@ use yii\widgets\Pjax;
                     'width' => '273px',
                 ],
             ])->label(false);
-            Pjax::end();
             ?>
         </div>
     </div>
@@ -42,20 +39,33 @@ use yii\widgets\Pjax;
     <div class="card-body p-5">
         <?= $this->render('/_partials/card-name-label', ['cardName' => 'Status']); ?>
         <div class="card card-body mb-4">
-            <?= $form->field($model, 'status_id')
-                ->radioList(
-                    ArrayHelper::map(Status::find()->orderBy('id')->asArray()->all(), 'id', 'name'),
-                    [
-                        'item' => function ($index, $label, $name, $checked, $value) {
-                            $return = '<label class="form-check">';
-                            $return .= '<input class="form-check-input" type="radio" name="' . $name . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '>';
-                            $return .= ucwords($label);
-                            $return .= '</label>';
-                            return $return;
-                        },
+            <?= $form->field($model, 'status_id')->dropDownList(
+                ArrayHelper::map(Status::find()->orderBy('id')->asArray()->all(), 'id', 'name'),
+                ['id' => 'status-dropdown']
+            )->label(false) ?>
 
-                    ],
-                )->label(false); ?>
+            <?php
+            $this->registerJs("
+        function updateStatusStyle() {
+            const styles = {
+                1: '#28a745', // зеленый
+                2: '#ff0000', // красный
+                3: '#ff8300', // оранжевый
+                4: '#0331fc'  // синий
+            };
+            const selectedValue = $('#status-dropdown').val();
+            const color = styles[selectedValue] || '#000'; // по умолчанию черный
+            $('#status-dropdown').css({
+                color: color,
+                'font-weight': 'bold',
+                'font-size': '16px'
+            });
+        }
+
+        $(document).ready(updateStatusStyle);
+        $('#status-dropdown').on('change', updateStatusStyle);
+    ");
+            ?>
         </div>
     </div>
 </div>
@@ -77,7 +87,6 @@ use yii\widgets\Pjax;
                             $return .= '</label>';
                             return $return;
                         },
-
                     ],
                 )->label(false); ?>
         </div>
