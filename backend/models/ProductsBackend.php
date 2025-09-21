@@ -175,7 +175,7 @@ class ProductsBackend extends Product
     public function seoH1Invalid(): bool
     {
         $seoRules = Yii::$app->params['seoRules'];
-        $len = mb_strlen((string)$this->seo_description);
+        $len = mb_strlen((string)$this->h1);
         return $len < $seoRules['seo_h1']['min'] || $len > $seoRules['seo_h1']['max'];
     }
 
