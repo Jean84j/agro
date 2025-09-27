@@ -31,7 +31,7 @@ AppAsset::register($this);
                     <a class="sa-sidebar__logo" href="/" target="_blank">
                         <div class="sa-sidebar-logo">
                             <img style="display: block;margin: -1px -7px 1px -14px; width: 153px; "
-                                 src="/backend/web/images/logoagro-admin.png" alt="">
+                                 src="/admin/images/logoagro-admin.png" alt="">
                             <div class="sa-sidebar-logo__caption">На сайт</div>
                         </div>
                     </a>
