@@ -22,7 +22,7 @@ $commonParams = [
     'seoDescriptionRu' => 'seo_description',
     'seoH1Ru' => 'h1',
 
-    'header' => 'Image 231 x 231',
+    'header' => 'Image 730 x 490',
     'dir' => Yii::$app->request->hostInfo . '/posts/' . $model->image,
     'file' => 'image',
 ];

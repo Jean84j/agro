@@ -100,12 +100,12 @@ use vova07\imperavi\Widget;
                         <div class="card-body p-5">
                             <div class="row">
                                 <div class="col-8 mb-4">
-                                    <?= $form->field($translateRu, 'title')->textInput(['maxlength' => true, 'id' => 'translateRu-title', 'name' => 'PostsTranslate[ru][title]']) ?>
+                                    <?= $form->field($translateRu, 'title')->textInput(['maxlength' => true, 'id' => 'translateRu-title', 'name' => 'Translate[ru][title]']) ?>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <?= $form->field($translateRu, 'description')->widget(Widget::class, [
-                                    'options' => ['id' => 'translateRu-description', 'name' => 'PostsTranslate[ru][description]'],
+                                    'options' => ['id' => 'translateRu-description', 'name' => 'Translate[ru][description]'],
                                     'defaultSettings' => [
                                         'style' => 'position: unset;'
                                     ],
