@@ -244,14 +244,14 @@ class ReportController extends Controller
         Yii::$app->session->set('periodStart', $periodStart);
         Yii::$app->session->set('periodEnd', $periodEnd);
 
-        $bigQty = $bigSum = $bigAllQty = $bigAllSum = $bigDiscount = $bigDelivery = $bigAllDelivery = $bigPlatform = [];
-        $smallQty = $smallSum = $smallAllQty = $smallAllSum = $smallDiscount = $smallDelivery = $smallAllDelivery = $smallPlatform = [];
+        $bigQty = $bigSum = $bigAllQty = $bigAllSum = $bigDiscount = $bigDelivery = $bigAllDelivery = $bigPlatform = $bigNovaPay = [];
+        $smallQty = $smallSum = $smallAllQty = $smallAllSum = $smallDiscount = $smallDelivery = $smallAllDelivery = $smallPlatform = $smallNovaPay = [];
         $bigAllReturnQty = $smallAllReturnQty = $bigIncomingPriceSum = $smallIncomingPriceSum = [];
         $noPackage = [];
         $i = 0;
 
         $models = Report::find()
-            ->select(['id', 'platform', 'date_delivery', 'price_delivery', 'order_status_id', 'order_pay_ment_id'])
+            ->select(['id', 'platform', 'date_delivery', 'price_delivery', 'order_status_id', 'order_pay_ment_id', 'nova_pay'])
             ->where(['between', 'date_order', $periodStart, $periodEnd])
             ->andWhere(['<>', 'order_status_id', 'Відміна'])
             ->all();
@@ -266,6 +266,7 @@ class ReportController extends Controller
             $discount = $model->getItemsDiscount($model->id);
             $platformPrice = $model->getItemsPlatformPrice($model->id);
             $priceDelivery = $model->price_delivery;
+            $novaPay = $model->nova_pay;
 
             if ($isPaid || $isReturn) {
                 switch ($package) {
@@ -277,6 +278,7 @@ class ReportController extends Controller
                             $bigDiscount[] = $discount;
                             $bigPlatform[] = $platformPrice;
                             $bigDelivery[] = $priceDelivery;
+                            $bigNovaPay[] = $novaPay;
                         } else {
                             $bigAllReturnQty[] = 'BIG';
                             $bigDelivery[] = $priceDelivery;
@@ -290,6 +292,7 @@ class ReportController extends Controller
                             $smallDiscount[] = $discount;
                             $smallPlatform[] = $platformPrice;
                             $smallDelivery[] = $priceDelivery;
+                            $smallNovaPay[] = $novaPay;
                         } else {
                             $smallAllReturnQty[] = 'SMALL';
                             $smallDelivery[] = $priceDelivery;
@@ -360,51 +363,32 @@ class ReportController extends Controller
             }
         }
 
-        $bigAllDelivery = array_sum($bigAllDelivery);
-        $smallAllDelivery = array_sum($smallAllDelivery);
-        $bigQtyCount = count($bigQty);
-        $bigSumTotal = array_sum($bigSum);
-        $smallQtyCount = count($smallQty);
-        $smallSumTotal = array_sum($smallSum);
-        $bigAllQtyCount = count($bigAllQty);
-        $bigAllSumTotal = array_sum($bigAllSum);
-        $smallAllQtyCount = count($smallAllQty);
-        $smallAllSumTotal = array_sum($smallAllSum);
-        $bigDiscountTotal = array_sum($bigDiscount);
-        $bigDeliveryTotal = array_sum($bigDelivery);
-        $bigPlatformTotal = array_sum($bigPlatform);
-        $smallDiscountTotal = array_sum($smallDiscount);
-        $smallDeliveryTotal = array_sum($smallDelivery);
-        $smallPlatformTotal = array_sum($smallPlatform);
-        $bigAllReturnQtyCount = count($bigAllReturnQty);
-        $smallAllReturnQtyCount = count($smallAllReturnQty);
-        $bigIncomingPriceSumTotal = array_sum($bigIncomingPriceSum);
-        $smallIncomingPriceSumTotal = array_sum($smallIncomingPriceSum);
-
         return $this->render('period-report', [
             'model' => $models,
-            'bigAllDelivery' => $bigAllDelivery,
-            'smallAllDelivery' => $smallAllDelivery,
-            'bigQty' => $bigQtyCount,
-            'bigSum' => $bigSumTotal,
-            'smallQty' => $smallQtyCount,
-            'smallSum' => $smallSumTotal,
-            'periodEnd' => $periodEnd,
-            'bigAllQty' => $bigAllQtyCount,
-            'bigAllSum' => $bigAllSumTotal,
             'periodStart' => $periodStart,
-            'smallAllQty' => $smallAllQtyCount,
-            'smallAllSum' => $smallAllSumTotal,
-            'bigDiscount' => $bigDiscountTotal,
-            'bigDelivery' => $bigDeliveryTotal,
-            'bigPlatform' => $bigPlatformTotal,
-            'smallDiscount' => $smallDiscountTotal,
-            'smallDelivery' => $smallDeliveryTotal,
-            'smallPlatform' => $smallPlatformTotal,
-            'bigAllReturnQty' => $bigAllReturnQtyCount,
-            'smallAllReturnQty' => $smallAllReturnQtyCount,
-            'bigIncomingPriceSum' => $bigIncomingPriceSumTotal,
-            'smallIncomingPriceSum' => $smallIncomingPriceSumTotal,
+            'periodEnd' => $periodEnd,
+            'bigAllDelivery' => array_sum($bigAllDelivery),
+            'smallAllDelivery' => array_sum($smallAllDelivery),
+            'bigQty' => count($bigQty),
+            'bigSum' => array_sum($bigSum),
+            'smallQty' => count($smallQty),
+            'smallSum' => array_sum($smallSum),
+            'bigAllQty' => count($bigAllQty),
+            'bigAllSum' => array_sum($bigAllSum),
+            'smallAllQty' => count($smallAllQty),
+            'smallAllSum' => array_sum($smallAllSum),
+            'bigDiscount' => array_sum($bigDiscount),
+            'bigDelivery' => array_sum($bigDelivery),
+            'bigPlatform' => array_sum($bigPlatform),
+            'smallDiscount' => array_sum($smallDiscount),
+            'smallDelivery' => array_sum($smallDelivery),
+            'smallPlatform' => array_sum($smallPlatform),
+            'bigAllReturnQty' => count($bigAllReturnQty),
+            'smallAllReturnQty' => count($smallAllReturnQty),
+            'bigIncomingPriceSum' => array_sum($bigIncomingPriceSum),
+            'smallIncomingPriceSum' => array_sum($smallIncomingPriceSum),
+            'bigNovaPaySum' => array_sum($bigNovaPay),
+            'smallNovaPaySum' => array_sum($smallNovaPay),
         ]);
     }
 
