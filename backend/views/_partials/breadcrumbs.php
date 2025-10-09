@@ -1,6 +1,6 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
+use yii\bootstrap4\Breadcrumbs;
 
 ?>
 <div class="col">
@@ -9,10 +9,11 @@ use yii\bootstrap5\Breadcrumbs;
             <?php echo Breadcrumbs::widget([
                 'itemTemplate' => '<li class="breadcrumb-item">{link}</li>',
                 'homeLink' => [
-                    'label' => Yii::t('app', 'Home'),
+                    'label' => '<i class="fas fa-home"></i> ' . Yii::t('app', 'Home'),
                     'url' => Yii::$app->homeUrl,
                 ],
                 'links' => $this->params['breadcrumbs'] ?? [],
+                'encodeLabels' => false,
             ]);
             ?>
         </ol>
