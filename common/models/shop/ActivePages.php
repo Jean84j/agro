@@ -177,6 +177,7 @@ class ActivePages extends ActiveRecord
      public function getImage(string $url): string
     {
     $path = parse_url($url, PHP_URL_PATH);
+    $path = $path ?? '';
     $segments = explode('/', trim($path, '/'));
 
     if (!empty($segments) && $segments[0] === 'ru') {
