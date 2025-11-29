@@ -217,7 +217,10 @@ class PostsController extends BaseBackendController
             $this->updatePostImage($model);
 
             if ($model->save(false)) {
-                return $this->redirect(['index']);
+                return $this->render('update', [
+                    'model' => $model,
+                    'translateRu' => $translateRu,
+                ]);
             } else {
                 dd($model->errors, $model->image);
             }
