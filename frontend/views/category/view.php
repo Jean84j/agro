@@ -12,6 +12,8 @@ ActivePages::setActiveUser();
 /** @var Product $products */
 /** @var Product $pages */
 /** @var Product $products_all */
+/** @var $breadcrumbCategory */
+/** @var $category */
 
 ?>
 <div class="site__body">

@@ -2,6 +2,7 @@
 
 use frontend\assets\SpecialPageAsset;
 use common\models\shop\ActivePages;
+use frontend\widgets\BlockImages;
 use frontend\widgets\ViewProduct;
 use common\models\shop\Product;
 use yii\helpers\Html;
@@ -18,6 +19,7 @@ ActivePages::setActiveUser();
 ?>
 <div class="site__body">
     <div class="page-header">
+        <?php echo BlockImages::widget() ?>
         <div class="page-header__container container">
             <div class="page-header__breadcrumb">
                 <nav aria-label="breadcrumb">
