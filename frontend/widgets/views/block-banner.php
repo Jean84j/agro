@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 
 ?>
-<div class="block block-banner" style="margin: 0px 0px 0px 0px;">
+<div class="block block-banner" style="margin: 0px 0px 20px 0px;">
     <div class="container">
         <a href="<?= Url::to(['catalog/zasobi-zahistu-roslin']) ?>" class="block-banner__body">
             <div class="block-banner__image block-banner__image--desktop" style="margin: 0px 0px 0px 0px; background-image: url('images/banners/banner-1.jpg')"></div>

@@ -1,16 +1,16 @@
 <?php
 
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var common\models\shop\Product $products */
+/** @var $title */
 
 ?>
 <div class="block block-products-carousel" data-layout="horizontal" data-mobile-grid-columns="2">
     <div class="container">
         <div class="block-header">
-            <h3 class="block-header__title"><?= Yii::t('app', $title) ?></h3>
-            <div class="block-header__divider"></div>
+            <h3 class="block-header__title highlight-carousel"><?= Yii::t('app', $title) ?></h3>
+            <div class="block-header__divider line-color-carousel"></div>
             <div class="block-header__arrows-list">
                 <button class="block-header__arrow block-header__arrow--left" type="button" aria-label="Left">
                     <svg width="7px" height="11px">
@@ -117,3 +117,15 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+<style>
+    .highlight-carousel {
+        background-color: rgba(47, 211, 252, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid rgba(19, 96, 112, 0.8);
+        display: inline-block;
+    }
+    .line-color-carousel {
+        background-color: rgba(47, 211, 252, 0.8);
+    }
+</style>

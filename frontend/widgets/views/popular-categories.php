@@ -1,6 +1,7 @@
 <?php
 
 /** @var \common\models\shop\Category $categories */
+/** @var $title */
 
 use yii\helpers\Url;
 
@@ -8,8 +9,8 @@ use yii\helpers\Url;
 <div class="block block--highlighted block-categories block-categories--layout--classic">
     <div class="container">
         <div class="block-header">
-            <h3 class="block-header__title"><?= Yii::t('app', $title) ?></h3>
-            <div class="block-header__divider"></div>
+            <h3 class="block-header__title highlight-category"><?= Yii::t('app', $title) ?></h3>
+            <div class="block-header__divider line-color-category"></div>
         </div>
         <div class="block-categories__list">
             <?php foreach ($categories as $category): ?>
@@ -44,3 +45,15 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+<style>
+    .highlight-category {
+        background-color: rgba(47, 252, 112, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid rgba(19, 112, 40, 0.8);
+        display: inline-block;
+    }
+    .line-color-category {
+        background-color: rgba(47, 252, 112, 0.8);
+    }
+</style>

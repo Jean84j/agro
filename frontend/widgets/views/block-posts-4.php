@@ -11,8 +11,8 @@ $webp_support = ProductImage::imageWebp();
 <div class="block block-posts" data-layout="grid-4" data-mobile-columns="2">
     <div class="container">
         <div class="block-header">
-            <h3 class="block-header__title"><?= Yii::t('app', 'Статті') ?></h3>
-            <div class="block-header__divider"></div>
+            <h3 class="block-header__title highlight-posts"><?= Yii::t('app', 'Статті') ?></h3>
+            <div class="block-header__divider line-color-posts"></div>
             <div class="block-header__arrows-list">
                 <button class="block-header__arrow block-header__arrow--left" type="button" aria-label="Left">
                     <svg width="7px" height="11px">
@@ -74,3 +74,15 @@ $webp_support = ProductImage::imageWebp();
         </div>
     </div>
 </div>
+<style>
+    .highlight-posts {
+        background-color: rgba(251, 121, 51, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid rgba(151, 86, 14, 0.8);
+        display: inline-block;
+    }
+    .line-color-posts {
+        background-color: rgba(251, 121, 51, 0.8);
+    }
+</style>

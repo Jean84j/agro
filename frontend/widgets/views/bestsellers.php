@@ -5,13 +5,14 @@ use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var \common\models\shop\Product $products */
+/** @var $title */
 
 ?>
 <div class="block block-products block-products--layout--large-first" data-mobile-grid-columns="2">
     <div class="container">
         <div class="block-header">
-            <h3 class="block-header__title"><?= Yii::t('app', $title) ?></h3>
-            <div class="block-header__divider"></div>
+            <h3 class="block-header__title highlight-bestsellers"><?= Yii::t('app', $title) ?></h3>
+            <div class="block-header__divider line-color-bestsellers"></div>
         </div>
         <div class="block-products__body">
             <div class="block-products__featured">
@@ -181,3 +182,15 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+<style>
+    .highlight-bestsellers {
+        background-color: rgba(252, 252, 47, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid rgba(245, 150, 46, 0.8);
+        display: inline-block;
+    }
+    .line-color-bestsellers {
+        background-color: rgba(252, 252, 47, 0.8);
+    }
+</style>

@@ -3,13 +3,27 @@
 use frontend\widgets\CategoryWidget;
 use yii\helpers\Url;
 
+/** @var $isMobile */
+/** @var $categories */
+/** @var $contacts */
+/** @var $path */
+/** @var $lang */
+/** @var $compareList */
+/** @var $wishList */
+
 $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
 
 ?>
 
 <?php if ($isMobile): ?>
     <?= $this->render('@frontend/views/layouts/mobile-site-header.php') ?>
-    <?= $this->render('@frontend/views/layouts/mobilemenu.php', ['categories' => $categories, 'contacts' => $contacts, 'path' => $path, 'lang' => $lang]) ?>
+    <?= $this->render('@frontend/views/layouts/mobilemenu.php',
+        [
+            'categories' => $categories,
+            'contacts' => $contacts,
+            'path' => $path,
+            'lang' => $lang
+        ]) ?>
 <?php else: ?>
     <header class="site__header d-lg-block d-none">
         <div class="site-header">
