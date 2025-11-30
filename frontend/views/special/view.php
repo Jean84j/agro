@@ -15,11 +15,12 @@ ActivePages::setActiveUser();
 /** @var Product $pages */
 /** @var Product $products_all */
 /** @var Product $page_description */
+/** @var  $files */
 
 ?>
 <div class="site__body">
     <div class="page-header">
-        <?php echo BlockImages::widget() ?>
+        <?php echo BlockImages::widget(['files' => $files,]) ?>
         <div class="page-header__container container">
             <div class="page-header__breadcrumb">
                 <nav aria-label="breadcrumb">

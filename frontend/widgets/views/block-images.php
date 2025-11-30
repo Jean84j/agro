@@ -1,15 +1,15 @@
 <?php
 
-/** @var  $links */
+/** @var  $files */
 
 ?>
     <div class="block-images">
         <div class="container">
             <div class="block-images__slider">
                 <div class="owl-carousel">
-                    <?php foreach ($links as $link): ?>
+                    <?php foreach ($files as $file): ?>
                         <div class="block-images__item">
-                            <img src="<?= $link ?>" width="300" height="150" alt="1"
+                            <img src="<?= $file ?>" width="300" height="150" alt="1"
                                  loading="lazy">
                         </div>
                     <?php endforeach; ?>
@@ -17,7 +17,6 @@
             </div>
         </div>
     </div>
-
     <style>
         .block-images__slider {
             border: 2px solid #f0f0f0;

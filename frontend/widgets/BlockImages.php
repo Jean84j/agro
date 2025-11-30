@@ -10,19 +10,15 @@ class BlockImages extends Widget
     public function init()
     {
         parent::init();
-
     }
+
+    public $files;
 
     public function run()
     {
-        $links = [
-           '/images/special/news.png',
-           '/images/special/stock.jpg',
-           '/images/special/discounts.jpg',
-           '/images/special/sales.jpg',
 
-        ];
+        $files = $this->files;
 
-        return $this->render('block-images', ['links' => $links]);
+        return $this->render('block-images', ['files' => $files]);
     }
 }

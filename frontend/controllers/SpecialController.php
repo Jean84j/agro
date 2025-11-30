@@ -6,6 +6,7 @@ use common\models\Settings;
 use common\models\shop\Product;
 use Yii;
 use yii\db\Expression;
+use yii\helpers\FileHelper;
 use yii\helpers\Url;
 
 class SpecialController extends BaseFrontendController
@@ -44,7 +45,35 @@ class SpecialController extends BaseFrontendController
 
         $page_description = $seo->page_description;
 
-        return $this->render('view', compact(['products', 'products_all', 'pages', 'language', 'page_description']));
+        $files = $this->getRelativeFiles('@webroot/images/special');
+
+        return $this->render('view', compact([
+            'products',
+            'products_all',
+            'pages',
+            'language',
+            'page_description',
+            'files'
+        ]));
+    }
+
+    private function getRelativeFiles(string $aliasPath, bool $recursive = false): array
+    {
+        $path = Yii::getAlias($aliasPath);
+        $webroot = str_replace('\\', '/', Yii::getAlias('@webroot'));
+
+        $files = FileHelper::findFiles($path, [
+            'recursive' => $recursive,
+        ]);
+
+        $relative = array_map(function ($file) use ($webroot) {
+            $file = str_replace('\\', '/', $file);
+            return str_replace($webroot, '', $file);
+        }, $files);
+
+        sort($relative);
+
+        return $relative;
     }
 
 }
