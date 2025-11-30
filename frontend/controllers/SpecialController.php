@@ -57,24 +57,5 @@ class SpecialController extends BaseFrontendController
         ]));
     }
 
-    private function getRelativeFiles(string $aliasPath, bool $recursive = false): array
-    {
-        $path = Yii::getAlias($aliasPath);
-        $webroot = str_replace('\\', '/', Yii::getAlias('@webroot'));
-
-        $files = FileHelper::findFiles($path, [
-            'recursive' => $recursive,
-        ]);
-
-        $relative = array_map(function ($file) use ($webroot) {
-            $file = str_replace('\\', '/', $file);
-            return str_replace($webroot, '', $file);
-        }, $files);
-
-        sort($relative);
-
-        return $relative;
-    }
-
 }
 

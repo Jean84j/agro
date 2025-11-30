@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\data\Pagination;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\db\Expression;
 
@@ -125,5 +126,28 @@ class BaseFrontendController extends Controller
             'forcePageParam' => false, 'pageSizeParam' => false
         ]);
 
+    }
+
+    /**
+     *
+     *
+     */
+    protected function getRelativeFiles(string $aliasPath, bool $recursive = false): array
+    {
+        $path = Yii::getAlias($aliasPath);
+        $webroot = str_replace('\\', '/', Yii::getAlias('@webroot'));
+
+        $files = FileHelper::findFiles($path, [
+            'recursive' => $recursive,
+        ]);
+
+        $relative = array_map(function ($file) use ($webroot) {
+            $file = str_replace('\\', '/', $file);
+            return str_replace($webroot, '', $file);
+        }, $files);
+
+        sort($relative);
+
+        return $relative;
     }
 }

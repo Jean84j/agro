@@ -1,5 +1,6 @@
 <?php
 
+use frontend\widgets\BlockImages;
 use frontend\widgets\ProductsCarousel;
 use common\models\shop\ProductImage;
 use common\models\shop\ActivePages;
@@ -14,12 +15,14 @@ ActivePages::setActiveUser();
 /** @var Posts $pages */
 /** @var Posts $blogs */
 /** @var Posts $page_description */
+/** @var  $files */
 
 $webp_support = ProductImage::imageWebp();
 
 ?>
 <div class="site__body">
     <div class="page-header">
+        <?php echo BlockImages::widget(['files' => $files,]) ?>
         <div class="page-header__container container">
             <div class="page-header__breadcrumb">
                 <nav aria-label="breadcrumb">

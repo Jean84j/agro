@@ -57,11 +57,14 @@ class BlogsController extends BaseFrontendController
         $url = Url::canonical();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
+        $files = $this->getRelativeFiles('@webroot/images/blogs');
+
         return $this->render('view',
             [
                 'blogs' => $blogs,
                 'pages' => $pages,
                 'page_description' => $seo->page_description,
+                'files' => $files,
             ]);
     }
 

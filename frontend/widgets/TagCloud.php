@@ -36,7 +36,7 @@ class TagCloud extends Widget
             $query->innerJoin(ProductTag::tableName() . ' pt', 'pt.tag_id = t.id')
                 ->where(['pt.product_id' => $prod_id]);
         } else {
-            $query->limit(65);
+            $query->limit(55);
         }
 
         $tags = $query->all();
