@@ -25,5 +25,4 @@ class BlockImages extends Widget
 
         return $this->render('block-images', ['links' => $links]);
     }
-
 }
