@@ -110,7 +110,7 @@ class Tag extends ActiveRecord
                     ->select('name')
                     ->where(['tag_id' => $tag->id, 'language' => 'ru'])
                     ->one();
-                $name = $translation ? $translation->name : $tag->name;
+                $name = $translation ? $symbol . $translation->name : $symbol . $tag->name;
                 break;
 
             case 'en':

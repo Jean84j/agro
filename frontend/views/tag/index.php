@@ -11,6 +11,8 @@ ActivePages::setActiveUser();
 /** @var frontend\controllers\TagController $categories */
 /** @var frontend\controllers\TagController $page_description */
 
+$symbol = '<span style="color: #de820b; font-size: 18px"># </span>';
+
 ?>
 <div class="site__body">
     <div class="page-header">
@@ -47,7 +49,7 @@ ActivePages::setActiveUser();
                             <?php foreach ($category['tags'] as $tag): ?>
                                 <a style="margin: 7px;"
                                    href="<?= Url::to(['tag/view', 'slug' => $tag->slug, 'category_slug' => $category['category']->slug]) ?>">
-                                    <?= $tag->name ?>
+                                    <?= $symbol . $tag->name ?>
                                 </a>
                             <?php endforeach; ?>
                         </div>
