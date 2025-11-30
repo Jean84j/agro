@@ -46,11 +46,14 @@ class CategoryController extends BaseFrontendController
         $keywords = '';
         Settings::setMetamaster($type, $title, $description, $image, $keywords);
 
+        $files = $this->getRelativeFiles('@webroot/images/catalog-categories');
+
         return $this->render('list',
             [
                 'categories' => $categories,
                 'language' => $language,
                 'page_description' => $seo->page_description,
+                'files' => $files,
             ]);
     }
 
@@ -114,7 +117,6 @@ class CategoryController extends BaseFrontendController
 
     public function actionCatalog($slug)
     {
-//       Yii::$app->session->removeAll();
         $language = Yii::$app->language;
 
         $params = $this->setSortAndCount();

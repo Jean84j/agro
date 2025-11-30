@@ -2,10 +2,12 @@
 
 use common\models\shop\ActivePages;
 use frontend\assets\CategoryListPageAsset;
+use frontend\widgets\BlockImages;
 use yii\helpers\Url;
 
 /** @var \common\models\shop\Product $categories */
 /** @var \frontend\controllers\CategoryController $page_description */
+/** @var  $files */
 
 CategoryListPageAsset::register($this);
 ActivePages::setActiveUser();
@@ -13,6 +15,7 @@ ActivePages::setActiveUser();
 ?>
 <div class="site__body">
     <div class="page-header">
+        <?php echo BlockImages::widget(['files' => $files,]) ?>
         <div class="page-header__container container">
             <div class="page-header__breadcrumb">
                 <nav aria-label="breadcrumb">
