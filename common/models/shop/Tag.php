@@ -102,6 +102,8 @@ class Tag extends ActiveRecord
 
     public function getTagTranslate($tag, $language)
     {
+        $symbol = '<span style="color: #de820b; font-size: 18px"># </span>';
+
         switch ($language) {
             case 'ru':
                 $translation = TagTranslate::find()
@@ -120,7 +122,7 @@ class Tag extends ActiveRecord
                 break;
 
             default:
-                $name = $tag->name;
+                $name = $symbol . $tag->name;
                 break;
         }
 
