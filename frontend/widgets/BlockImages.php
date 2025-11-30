@@ -16,9 +16,10 @@ class BlockImages extends Widget
     public function run()
     {
         $links = [
-           '/images/special/sales.jpg',
+           '/images/special/news.png',
            '/images/special/stock.jpg',
            '/images/special/discounts.jpg',
+           '/images/special/sales.jpg',
 
         ];
 
