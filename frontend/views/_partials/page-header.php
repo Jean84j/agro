@@ -1,0 +1,37 @@
+<?php
+
+use frontend\widgets\BlockImages;
+
+/** @var  $files */
+/** @var  $h1 */
+/** @var  $breadcrumbItemActive */
+
+?>
+<div class="page-header">
+    <?php if (isset($files)): ?>
+        <?php echo BlockImages::widget(['files' => $files,]) ?>
+    <?php endif; ?>
+    <div class="page-header__container container">
+        <div class="page-header__breadcrumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/"> <i class="fas fa-home"></i> <?= Yii::t('app', 'Головна') ?></a>
+                        <svg class="breadcrumb-arrow" width="6px" height="9px">
+                            <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
+                        </svg>
+                    </li>
+                    <?php if (isset($breadcrumbItems)): ?>
+                        <?php foreach ($breadcrumbItems as $breadcrumbItem): ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <li class="breadcrumb-item active"
+                        aria-current="page"><?= Yii::t('app', $breadcrumbItemActive) ?></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="page-header__title">
+            <h1><?= Yii::t('app', $h1) ?></h1>
+        </div>
+    </div>
+</div>

@@ -17,31 +17,19 @@ ActivePages::setActiveUser();
 /** @var Posts $page_description */
 /** @var  $files */
 
+$h1 = 'Статті та поради';
+$breadcrumbItemActive = 'Статті';
+
 $webp_support = ProductImage::imageWebp();
 
 ?>
 <div class="site__body">
-    <div class="page-header">
-        <?php echo BlockImages::widget(['files' => $files,]) ?>
-        <div class="page-header__container container">
-            <div class="page-header__breadcrumb">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/"> <i class="fas fa-home"></i> <?=Yii::t('app','Головна')?></a>
-                            <svg class="breadcrumb-arrow" width="6px" height="9px">
-                                <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
-                            </svg>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page"><?=Yii::t('app','Статті')?></li>
-                    </ol>
-                </nav>
-            </div>
-            <div class="page-header__title">
-                <h1><?=Yii::t('app','Статті та поради')?></h1>
-            </div>
-        </div>
-    </div>
+    <?= $this->render('/_partials/page-header',
+        [
+            'files' => $files,
+            'h1' => $h1,
+            'breadcrumbItemActive' => $breadcrumbItemActive,
+        ]) ?>
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -77,7 +65,7 @@ $webp_support = ProductImage::imageWebp();
                                                 </div>
                                                 <div class="post-card__read-more">
                                                     <a href="<?= Url::to(['post/view', 'slug' => $post->slug]) ?>"
-                                                       class="btn btn-secondary btn-sm"><?=Yii::t('app','Докладніше...')?></a>
+                                                       class="btn btn-secondary btn-sm"><?= Yii::t('app', 'Докладніше...') ?></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +81,8 @@ $webp_support = ProductImage::imageWebp();
                     <div class="block-sidebar__item">
                         <div class="widget-search">
                             <form class="widget-search__body" action="/blogs/view">
-                                <input class="widget-search__input" name="q" placeholder="<?=Yii::t('app','Пошук статтів...')?>" type="text"
+                                <input class="widget-search__input" name="q"
+                                       placeholder="<?= Yii::t('app', 'Пошук статтів...') ?>" type="text"
                                        autocomplete="off" spellcheck="false">
                                 <button class="search__button widget-search__button" type="submit">
                                     <svg width="20px" height="20px">

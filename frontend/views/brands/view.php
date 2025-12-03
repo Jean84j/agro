@@ -10,30 +10,16 @@ use yii\helpers\Url;
 CategoryChildrenPageAsset::register($this);
 ActivePages::setActiveUser();
 
+$h1 = 'Бренди';
+$breadcrumbItemActive = 'Бренди';
+
 ?>
 <div class="site__body">
-    <div class="page-header">
-        <div class="page-header__container container">
-            <div class="page-header__breadcrumb">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/"> <i class="fas fa-home"></i> <?= Yii::t('app', 'Головна') ?></a>
-                            <svg class="breadcrumb-arrow" width="6px" height="9px">
-                                <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
-                            </svg>
-                        </li>
-                        <li class="breadcrumb-item active"
-                            aria-current="page"><?= Yii::t('app', 'Бренди') ?>
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-            <div class="page-header__title">
-                <h1><?= Yii::t('app', 'Бренди') ?></h1>
-            </div>
-        </div>
-    </div>
+    <?= $this->render('/_partials/page-header',
+        [
+            'h1' => $h1,
+            'breadcrumbItemActive' => $breadcrumbItemActive,
+        ]) ?>
     <div class="container">
         <div class="row">
             <div class="col-12">

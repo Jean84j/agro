@@ -9,28 +9,17 @@ use yii\helpers\Url;
 ActivePages::setActiveUser();
 WishListPageAsset::register($this);
 
+$h1 = 'Список бажань';
+$breadcrumbItemActive = 'Список бажань';
+
 ?>
     <div class="site__body">
-        <div class="page-header">
-            <div class="page-header__container container">
-                <div class="page-header__breadcrumb">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="/"> <i class="fas fa-home"></i> <?=Yii::t('app','Головна')?></a>
-                                <svg class="breadcrumb-arrow" width="6px" height="9px">
-                                    <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
-                                </svg>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page"><?=Yii::t('app','Список бажань')?></li>
-                        </ol>
-                    </nav>
-                </div>
-                <div class="page-header__title">
-                    <h1><?=Yii::t('app','Список бажань')?></h1>
-                </div>
-            </div>
-        </div>
+        <?= $this->render('/_partials/page-header',
+            [
+                'h1' => $h1,
+                'breadcrumbItemActive' => $breadcrumbItemActive,
+
+            ]) ?>
         <div id="wish-list">
             <?php if ($products) { ?>
                 <div class="block">
@@ -38,10 +27,10 @@ WishListPageAsset::register($this);
                         <table class="wishlist">
                             <thead class="wishlist__head">
                             <tr class="wishlist__row">
-                                <th class="wishlist__column wishlist__column--image"><?=Yii::t('app','Зображення')?></th>
-                                <th class="wishlist__column wishlist__column--product"><?=Yii::t('app','Назва')?></th>
-                                <th class="wishlist__column wishlist__column--stock"><?=Yii::t('app','Наявність')?></th>
-                                <th class="wishlist__column wishlist__column--price"><?=Yii::t('app','Ціна')?></th>
+                                <th class="wishlist__column wishlist__column--image"><?= Yii::t('app', 'Зображення') ?></th>
+                                <th class="wishlist__column wishlist__column--product"><?= Yii::t('app', 'Назва') ?></th>
+                                <th class="wishlist__column wishlist__column--stock"><?= Yii::t('app', 'Наявність') ?></th>
+                                <th class="wishlist__column wishlist__column--price"><?= Yii::t('app', 'Ціна') ?></th>
                                 <th class="wishlist__column wishlist__column--tocart"></th>
                                 <th class="wishlist__column wishlist__column--remove"></th>
                             </tr>
@@ -74,12 +63,13 @@ WishListPageAsset::register($this);
                                                 <?= $product->getRating($product->id, 13, 12) ?>
                                             </div>
                                             <div class="wishlist__product-rating-legend"><?= count($product->reviews) ?>
-                                                <?=Yii::t('app','відгуків')?>
+                                                <?= Yii::t('app', 'відгуків') ?>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="wishlist__column wishlist__column--stock">
-                                        <div class="product__availability" style="text-align: center; font-size: 1rem; font-weight: 600; letter-spacing: 0.6px;">
+                                        <div class="product__availability"
+                                             style="text-align: center; font-size: 1rem; font-weight: 600; letter-spacing: 0.6px;">
 
                                             <?php $statusIcon = '';
                                             $statusStyle = '';
@@ -134,7 +124,7 @@ WishListPageAsset::register($this);
                                                 <svg width="20px" height="20px" style="display: unset;">
                                                     <use xlink:href="/images/sprite.svg#cart-20"></use>
                                                 </svg>
-                                                <?= !$product->getIssetToCart($product->id) ? Yii::t('app','Купити') : Yii::t('app','В кошику') ?>
+                                                <?= !$product->getIssetToCart($product->id) ? Yii::t('app', 'Купити') : Yii::t('app', 'В кошику') ?>
                                             </button>
                                         <?php } else { ?>
                                             <button class="btn btn-secondary btn-sm disabled"
@@ -143,7 +133,7 @@ WishListPageAsset::register($this);
                                                 <svg width="20px" height="20px" style="display: unset;">
                                                     <use xlink:href="/images/sprite.svg#cart-20"></use>
                                                 </svg>
-                                                <?= !$product->getIssetToCart($product->id) ? Yii::t('app','Купити') : Yii::t('app','В кошику') ?>
+                                                <?= !$product->getIssetToCart($product->id) ? Yii::t('app', 'Купити') : Yii::t('app', 'В кошику') ?>
                                             </button>
                                         <?php } ?>
                                     </td>
@@ -169,17 +159,18 @@ WishListPageAsset::register($this);
                     <div class="container">
                         <div class="wishlist-not-products">
                             <div class="wishlist-not-products__content">
-                                <h2 class="wishlist-not-products__title"><?=Yii::t('app','Список бажань порожній!')?></h2>
+                                <h2 class="wishlist-not-products__title"><?= Yii::t('app', 'Список бажань порожній!') ?></h2>
                                 <p class="wishlist-not-products__text">
-                                    <?=Yii::t('app','Додайте товари до списку бажань.')?>
+                                    <?= Yii::t('app', 'Додайте товари до списку бажань.') ?>
                                     <br>
-                                    <?=Yii::t('app','Спробуйте скористатися пошуком.')?>
+                                    <?= Yii::t('app', 'Спробуйте скористатися пошуком.') ?>
                                 </p>
                                 <img src="/images/no-wish.jpg" alt="Список бажань порожній">
                                 <p class="wishlist-not-products__text">
-                                    <?=Yii::t('app','Або перейдіть на головну сторінку, щоб почати все спочатку.')?>
+                                    <?= Yii::t('app', 'Або перейдіть на головну сторінку, щоб почати все спочатку.') ?>
                                 </p>
-                                <a class="btn btn-secondary btn-sm" href="/"><?=Yii::t('app','На Головну Сторінку')?></a>
+                                <a class="btn btn-secondary btn-sm"
+                                   href="/"><?= Yii::t('app', 'На Головну Сторінку') ?></a>
                             </div>
                         </div>
                     </div>
@@ -196,15 +187,18 @@ WishListPageAsset::register($this);
         .wishlist-not-products {
             text-align: center;
         }
+
         .wishlist-not-products__content {
             width: 480px;
             max-width: 100%;
             margin: 0 auto;
         }
-        .wishlist-not-products__title{
+
+        .wishlist-not-products__title {
             margin-bottom: 30px;
         }
-        .wishlist-not-products__text{
+
+        .wishlist-not-products__text {
             margin-bottom: 20px;
         }
     </style>
