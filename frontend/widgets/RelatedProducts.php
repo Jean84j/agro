@@ -46,11 +46,17 @@ class RelatedProducts extends BaseWidgetFronted
 
         $products = $this->translateProductsItem($language, $products);
 
+        $backgroundColor = '#56e9b87d';
+        $borderColor = '#2d92b7cc';
+
         return $this->render('products-carousel-slide',
             [
                 'products' => $products,
                 'language' => $language,
                 'title' => $title,
+                'backgroundColor' => $backgroundColor,
+                'borderColor' => $borderColor,
+                'backgroundColorClass' => 'related_products',
             ]);
     }
 

@@ -40,11 +40,17 @@ class ProductsCarouselGazon extends BaseWidgetFronted   // Газонна Тра
 //            Yii::$app->cache->set($cacheKey . '_db', true, 0, $dependency); // Помечаем кэш базы данных как актуальный
 //        }
 
+        $backgroundColor = '#ffdd00a1';
+        $borderColor = '#f5962ecc';
+
         return $this->render('products-carousel',
             [
                 'products' => $products,
                 'language' => $language,
                 'title' => $title,
+                'backgroundColor' => $backgroundColor,
+                'borderColor' => $borderColor,
+                'backgroundColorClass' => 'sunflower_seeds',
             ]);
     }
 }

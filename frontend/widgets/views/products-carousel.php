@@ -5,12 +5,16 @@ use yii\helpers\Url;
 /** @var common\models\shop\Product $products */
 /** @var $title */
 
+$backgroundColorClass ?? $backgroundColorClass = '';
+$backgroundColor ?? $backgroundColor = '#a3a397a1';
+$borderColor ?? $borderColor = '#f5962ecc';
+
 ?>
 <div class="block block-products-carousel" data-layout="horizontal" data-mobile-grid-columns="2">
     <div class="container">
         <div class="block-header">
-            <h3 class="block-header__title highlight-carousel"><?= Yii::t('app', $title) ?></h3>
-            <div class="block-header__divider line-color-carousel"></div>
+            <h3 class="block-header__title highlight_<?= $backgroundColorClass ?>"><?= Yii::t('app', $title) ?></h3>
+            <div class="block-header__divider line-color_<?= $backgroundColorClass ?>"></div>
             <div class="block-header__arrows-list">
                 <button class="block-header__arrow block-header__arrow--left" type="button" aria-label="Left">
                     <svg width="7px" height="11px">
@@ -118,14 +122,14 @@ use yii\helpers\Url;
     </div>
 </div>
 <style>
-    .highlight-carousel {
-        background-color: rgba(47, 211, 252, 0.8);
+    .highlight_<?= $backgroundColorClass ?> {
+        background-color: <?= $backgroundColor ?>;
         padding: 5px;
         border-radius: 5px;
-        border: 1px solid rgba(19, 96, 112, 0.8);
+        border: 1px solid <?= $borderColor ?>;
         display: inline-block;
     }
-    .line-color-carousel {
-        background-color: rgba(47, 211, 252, 0.8);
+    .line-color_<?= $backgroundColorClass ?> {
+        background-color: <?= $backgroundColor ?>;
     }
 </style>

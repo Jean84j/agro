@@ -7,12 +7,16 @@ use yii\helpers\Url;
 /** @var \common\models\shop\Product $products */
 /** @var $title */
 
+$backgroundColorClass ?? $backgroundColorClass = '';
+$backgroundColor ?? $backgroundColor = '#a3a397a1';
+$borderColor ?? $borderColor = '#f5962ecc';
+
 ?>
 <div class="block block-products block-products--layout--large-first" data-mobile-grid-columns="2">
     <div class="container">
         <div class="block-header">
-            <h3 class="block-header__title highlight-bestsellers"><?= Yii::t('app', $title) ?></h3>
-            <div class="block-header__divider line-color-bestsellers"></div>
+            <h3 class="block-header__title highlight_<?= $backgroundColorClass ?>"><?= Yii::t('app', $title) ?></h3>
+            <div class="block-header__divider line-color_<?= $backgroundColorClass ?>"></div>
         </div>
         <div class="block-products__body">
             <div class="block-products__featured">
@@ -183,14 +187,14 @@ use yii\helpers\Url;
     </div>
 </div>
 <style>
-    .highlight-bestsellers {
-        background-color: rgba(252, 252, 47, 0.8);
+    .highlight_<?= $backgroundColorClass ?> {
+        background-color: <?= $backgroundColor ?>;
         padding: 5px;
         border-radius: 5px;
-        border: 1px solid rgba(245, 150, 46, 0.8);
+        border: 1px solid <?= $borderColor ?>;
         display: inline-block;
     }
-    .line-color-bestsellers {
-        background-color: rgba(252, 252, 47, 0.8);
+    .line-color_<?= $backgroundColorClass ?> {
+        background-color: <?= $backgroundColor ?>;
     }
 </style>

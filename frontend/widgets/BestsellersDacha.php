@@ -46,11 +46,17 @@ class BestsellersDacha extends BaseWidgetFronted
 
         $products = $this->translateProductsItem($language, $products);
 
+        $backgroundColor = '#94d944c2';
+        $borderColor = '#57ab07cc';
+
         return $this->render('bestsellers',
             [
                 'products' => $products,
                 'title' => $title,
                 'language' => $language,
+                'backgroundColor' => $backgroundColor,
+                'borderColor' => $borderColor,
+                'backgroundColorClass' => 'bestsellers_dacha',
             ]);
     }
 

@@ -58,11 +58,17 @@ class FeaturedProduct extends BaseWidgetFronted
 
         $products = $this->translateProductsItem($language, $products);
 
+        $backgroundColor = '#ff000069';
+        $borderColor = '#e70f0fcc';
+
         return $this->render('products-carousel-slide',
             [
                 'products' => $products,
                 'language' => $language,
                 'title' => $title,
+                'backgroundColor' => $backgroundColor,
+                'borderColor' => $borderColor,
+                'backgroundColorClass' => 'featured_product',
             ]);
     }
 }

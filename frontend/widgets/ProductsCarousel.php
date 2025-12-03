@@ -35,11 +35,17 @@ class ProductsCarousel extends BaseWidgetFronted
 //            Yii::$app->cache->set($cacheKey . '_db', true, 0, $dependency);
 //        }
 
+        $backgroundColor = '#2fd3fca8';
+        $borderColor = '#136070cc';
+
         return $this->render('products-carousel',
             [
                 'products' => $products,
                 'language' => $language,
                 'title' => $title,
+                'backgroundColor' => $backgroundColor,
+                'borderColor' => $borderColor,
+                'backgroundColorClass' => 'new_products',
             ]);
     }
 }

@@ -46,11 +46,17 @@ class Bestsellers extends BaseWidgetFronted
 
         $products = $this->translateProductsItem($language, $products);
 
+        $backgroundColor = '#fda20396';
+        $borderColor = '#a17e01cc';
+
         return $this->render('bestsellers',
             [
                 'products' => $products,
                 'title' => $title,
                 'language' => $language,
+                'backgroundColor' => $backgroundColor,
+                'borderColor' => $borderColor,
+                'backgroundColorClass' => 'bestsellers',
             ]);
     }
 

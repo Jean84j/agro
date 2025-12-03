@@ -53,11 +53,17 @@ class ViewProduct extends BaseWidgetFronted
 
         $viewedProductsData = $this->translateProductsItem($language, $viewedProductsData);
 
+        $backgroundColor = '#d197f882';
+        $borderColor = '#a536bacc';
+
         return $this->render('products-carousel-slide',
             [
                 'products' => $viewedProductsData,
                 'language' => $language,
                 'title' => $title,
+                'backgroundColor' => $backgroundColor,
+                'borderColor' => $borderColor,
+                'backgroundColorClass' => 'viewed_products',
             ]);
     }
 }
