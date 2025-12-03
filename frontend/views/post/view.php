@@ -18,35 +18,27 @@ use yii\helpers\Url;
 
 PostPageAsset::register($this);
 ActivePages::setActiveUser();
+
+$breadcrumbItems = [];
+
+$breadcrumbItems[] = [
+    'url' => 'blogs/view',
+    'item' => Yii::t('app', 'Статті'),
+];
+
+$breadcrumbItemActive = $postItem->title;
+
 $webp_support = ProductImage::imageWebp();
 $request = Yii::$app->request;
 $currentUrl = $request->absoluteUrl;
 
 ?>
 <div class="site__body">
-    <div class="page-header">
-        <div class="page-header__container container">
-            <div class="page-header__breadcrumb">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/"> <i class="fas fa-home"></i> <?= Yii::t('app', 'Головна') ?></a>
-                            <svg class="breadcrumb-arrow" width="6px" height="9px">
-                                <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
-                            </svg>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="<?= Url::to(['blogs/view']) ?>"><?= Yii::t('app', 'Статті') ?></a>
-                            <svg class="breadcrumb-arrow" width="6px" height="9px">
-                                <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
-                            </svg>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page"><?= $postItem->title ?></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
+    <?= $this->render('/_partials/page-header',
+        [
+            'breadcrumbItems' => $breadcrumbItems,
+            'breadcrumbItemActive' => $breadcrumbItemActive,
+        ]) ?>
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -120,7 +112,8 @@ $currentUrl = $request->absoluteUrl;
                     <div class="block-sidebar__item">
                         <div class="widget-search">
                             <form class="widget-search__body" action="/blogs/view">
-                                <input class="widget-search__input" name="q" placeholder="<?=Yii::t('app','Пошук статтів...')?>" type="text"
+                                <input class="widget-search__input" name="q"
+                                       placeholder="<?= Yii::t('app', 'Пошук статтів...') ?>" type="text"
                                        autocomplete="off" spellcheck="false">
                                 <button class="search__button widget-search__button" type="submit">
                                     <svg width="20px" height="20px">

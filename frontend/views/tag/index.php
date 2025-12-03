@@ -22,7 +22,6 @@ $breadcrumbItemActive = 'Всі теги сайту';
         [
             'h1' => $h1,
             'breadcrumbItemActive' => $breadcrumbItemActive,
-
         ]) ?>
     <div class="container">
         <div class="block">
