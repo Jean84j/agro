@@ -3,6 +3,7 @@
 use frontend\assets\CategoryAuxiliaryPageAsset;
 use common\models\shop\ActivePages;
 use common\models\shop\Product;
+use frontend\widgets\ViewProduct;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -66,4 +67,5 @@ $breadcrumbItemActive = $category->name;
         </div>
     </div>
     <?php echo Html::endForm(); ?>
+    <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>

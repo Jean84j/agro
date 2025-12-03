@@ -5,6 +5,7 @@ use common\models\shop\AuxiliaryCategories;
 use common\models\shop\ActivePages;
 use common\models\shop\Category;
 use common\models\shop\Product;
+use frontend\widgets\ViewProduct;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -100,4 +101,5 @@ $breadcrumbItemActive = $category->name;
     <?php echo Html::hiddenInput('slug', $category->slug);
     echo Html::endForm();
     ?>
+    <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>

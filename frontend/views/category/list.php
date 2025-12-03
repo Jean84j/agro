@@ -2,6 +2,7 @@
 
 use common\models\shop\ActivePages;
 use frontend\assets\CategoryListPageAsset;
+use frontend\widgets\ViewProduct;
 use yii\helpers\Url;
 
 /** @var \common\models\shop\Product $categories */
@@ -71,4 +72,5 @@ ActivePages::setActiveUser();
             </div>
         </div>
     </div>
+    <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>

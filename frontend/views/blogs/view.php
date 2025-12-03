@@ -7,6 +7,7 @@ use common\models\shop\ActivePages;
 use frontend\assets\BlogsPageAsset;
 use frontend\widgets\TagCloud;
 use common\models\Posts;
+use frontend\widgets\ViewProduct;
 use yii\helpers\Url;
 
 BlogsPageAsset::register($this);
@@ -104,5 +105,6 @@ $webp_support = ProductImage::imageWebp();
     <div class="spec__disclaimer">
         <?= $page_description ?>
     </div>
+    <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>
 
