@@ -2,6 +2,9 @@
 
 use vova07\imperavi\Widget;
 
+/** @var  $form */
+/** @var  $model */
+
 /**
  * Рендер поля с редактором
  */

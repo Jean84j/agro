@@ -18,3 +18,12 @@
         </button>
     </div>
 </div>
+<style>
+    .footer-description {
+        background-color: #05fffc42;
+        padding: 20px;
+        border-radius: 5px;
+        border: 1px solid #4DC7A0;
+        display: inline-block;
+    }
+</style>

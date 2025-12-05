@@ -2,6 +2,9 @@
 
 use vova07\imperavi\Widget;
 
+/** @var  $form */
+/** @var  $model */
+
 ?>
 <div class="card">
     <div class="card-header">
@@ -208,8 +211,6 @@ use vova07\imperavi\Widget;
                                     ],
                                     'clips' => [
                                         ['Footer Descr...', '
-                                                        <p>---------------------------
-                                                        </p>
                                                         <p><strong>Увага!!!</strong>  
                                                         Для безпечного використання препарату (*name_product*) 
                                                         та досягнення максимальної ефективності його дії, 
