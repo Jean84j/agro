@@ -44,3 +44,12 @@ use common\models\shop\Product;
         </svg>
     </button>
 </div>
+<style>
+    .product-card__compare use {
+        fill: rgba(0, 106, 255, 0.7) !important;
+    }
+
+    .product-card__wish use {
+        fill: rgba(255, 0, 72, 0.7) !important;
+    }
+</style>

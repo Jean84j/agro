@@ -12,6 +12,6 @@ $number = mt_rand(10, 99);
         data-url-quickview="<?= $urlOpen ?>"
         aria-label="Швидкий перегляд"
 >
-    <i class="fas fa-expand gtm-quickview" style="font-size: 24px"></i>
+    <i class="fas fa-expand gtm-quickview" style="font-size: 24px; color: rgba(223,159,10,0.8)"></i>
     <span class="fake-svg-icon"></span>
 </button>

@@ -52,3 +52,8 @@ use yii\helpers\Url;
         <?php endif; ?>
     </div>
 </div>
+<style>
+    .breadcrumb-arrow use {
+        fill: rgba(255, 89, 0, 0.8) !important;
+    }
+</style>

@@ -55,8 +55,10 @@ $breadcrumbItemActive = $category->name;
                             <?php if (isset($auxiliaryCategories) && $auxiliaryCategories != null): ?>
                                 <div class="tags tags--lg">
                                     <div class="tags__list">
+                                        <?php $symbol = '<i class="fas fa-spa" style="color: #f8d105"></i>' ?>
                                         <?php foreach ($auxiliaryCategories as $auxiliaryCategory): ?>
-                                            <a href="<?= Url::to(['category/auxiliary-catalog', 'slug' => $auxiliaryCategory->slug]) ?>"><?php echo $auxiliaryCategory->name ?></a>
+                                            <a href="<?= Url::to(['category/auxiliary-catalog', 'slug' => $auxiliaryCategory->slug]) ?>">
+                                                <?php echo $symbol . ' ' . $auxiliaryCategory->name ?></a>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
@@ -99,7 +101,6 @@ $breadcrumbItemActive = $category->name;
         </div>
     </div>
     <?php echo Html::hiddenInput('slug', $category->slug);
-    echo Html::endForm();
-    ?>
+    echo Html::endForm();?>
     <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>

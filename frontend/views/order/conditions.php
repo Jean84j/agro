@@ -5,25 +5,14 @@ use yii\helpers\Url;
 
 ConditionsPageAsset::register($this);
 
+$breadcrumbItemActive = Yii::t('app', 'Умови повернення та обміну');
+
 ?>
 <div class="site__body">
-    <div class="page-header">
-        <div class="page-header__container container">
-            <div class="page-header__breadcrumb">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/"><?=Yii::t('app','Головна')?></a>
-                            <svg class="breadcrumb-arrow" width="6px" height="9px">
-                                <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
-                            </svg>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page"> <?=Yii::t('app','Умови повернення та обміну')?></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
+    <?= $this->render('/_partials/page-header',
+        [
+            'breadcrumbItemActive' => $breadcrumbItemActive,
+        ]) ?>
     <div class="block">
         <div class="container">
             <div class="document">
@@ -56,7 +45,9 @@ ConditionsPageAsset::register($this);
                             </ul>
                         </li>
                     </ol>
-                    <p>Згідно із Законом «Про захист прав споживачів», компанія може відмовити споживачеві в обміні та поверненні товарів належної якості, якщо вони відносяться до категорій, що зазначені у чинному Переліку непродовольчих товарів належної якості, не підлягають поверненню та обміну.</p>
+                    <p>Згідно із Законом «Про захист прав споживачів», компанія може відмовити споживачеві в обміні та
+                        поверненні товарів належної якості, якщо вони відносяться до категорій, що зазначені у чинному
+                        Переліку непродовольчих товарів належної якості, не підлягають поверненню та обміну.</p>
 
                     <p>Щоб дізнатися, як з нами зв’язатися, відвідайте нашу <a href="<?= Url::to(['/contact/view']) ?>">сторінку
                             контакти</a>.</p>
