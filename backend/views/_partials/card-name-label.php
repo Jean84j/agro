@@ -1,5 +1,7 @@
 <?php
 
+/** @var  $cardName */
+
 ?>
 <div class="mb-4">
             <span class="badge-name_card">

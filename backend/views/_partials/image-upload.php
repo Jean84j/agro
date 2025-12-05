@@ -2,6 +2,12 @@
 
 use kartik\file\FileInput;
 
+/** @var  $model */
+/** @var  $header */
+/** @var  $dir */
+/** @var  $form */
+/** @var  $file */
+
 ?>
 <div class="card w-100 mt-5">
     <div class="card-body p-5">

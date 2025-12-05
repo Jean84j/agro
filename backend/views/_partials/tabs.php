@@ -1,5 +1,8 @@
 <?php
 
+/** @var  $tabs */
+/** @var  $params */
+
 ?>
 <ul class="nav nav-tabs" role="tablist">
     <?php foreach ($tabs as $tab): ?>

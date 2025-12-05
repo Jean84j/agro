@@ -1,5 +1,14 @@
 <?php
 
+/** @var  $model */
+/** @var  $seoTitle */
+/** @var  $form */
+/** @var  $seoDescription */
+/** @var  $seoH1 */
+/** @var  $seoTitleRu */
+/** @var  $seoDescriptionRu */
+/** @var  $seoH1Ru */
+
 $seoRules = Yii::$app->params['seoRules'];
 
 ?>
