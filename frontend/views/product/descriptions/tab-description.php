@@ -1,0 +1,20 @@
+<?php
+
+/** @var  $product */
+/** @var  $arrow */
+
+?>
+<div class="product-tabs__pane product-tabs__pane--active" id="tab-description">
+    <div class="typography" id="product-description">
+        <h2 class="spec__header"><?= Yii::t('app', 'Опис, інструкція товару') . ' ' . $product->name ?></h2>
+        <div class="short-description"><?= $product->short_description ?></div>
+        <div class="full-description" style="display: none;"><?= $product->description ?></div>
+        <div class="footer-description"
+             style="display: none;"><?= $product->getFooterDescription($product->footer_description, $product->name) ?></div>
+        <button class="btn btn-secondary arrow-right"
+                id="show-more-btn"><?= Yii::t('app', 'Розгорнути опис') . $arrow ?></button>
+        <button class="btn btn-secondary arrow-left" id="hide-description-btn" style="display: none;">
+            <?= Yii::t('app', 'Приховати опис') . $arrow ?>
+        </button>
+    </div>
+</div>

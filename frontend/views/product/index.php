@@ -19,6 +19,12 @@ use common\models\shop\Brand;
 /** @var Product $product */
 /** @var Brand $img_brand */
 /** @var Product $images */
+/** @var $language */
+/** @var $mobile */
+/** @var $webp_support */
+/** @var $productVariants */
+/** @var $faq */
+/** @var $minimumOrderAmount */
 
 ProductPageAsset::register($this);
 ActivePages::setActiveUser();
@@ -81,7 +87,7 @@ $breadcrumbItemActive = $product->name;
                         ]) ?>
                     </div>
                 </div>
-                <?= $this->render('description', [
+                <?= $this->render('descriptions/description', [
                     'product' => $product,
                     'mobile' => $mobile,
                     'faq' => $faq,
