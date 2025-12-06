@@ -20,7 +20,7 @@
 </div>
 <style>
     .footer-description {
-        background-color: #05fffc42;
+        background-color: #a2ff0542;
         padding: 20px;
         border-radius: 5px;
         border: 1px solid #4DC7A0;
