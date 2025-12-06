@@ -216,6 +216,34 @@ class XController extends Controller
 
     }
 
+    /**
+     *  Удалить строку из Footer Description
+     */
+    public function actionFooterDescriptionSub()
+    {
+//        $string = '<p>---------------------------</p>';
+        $string = '<p>--------------------------- </p>';
+
+        $products = Product::find()
+            ->select(['id', 'footer_description'])
+            ->all();
+
+        foreach ($products as $product) {
+
+                if (str_contains($product->footer_description, $string)) {
+
+                    // Удаляем строку
+                    $product->footer_description = str_replace($string, '', $product->footer_description);
+
+                    // Сохраняем без валидации
+                    $product->save(false);
+
+                    echo " Обновлён товар ID: {$product->id}\n";
+                }
+
+        }
+    }
+
     //======================================================
 
     /**
