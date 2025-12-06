@@ -8,6 +8,7 @@ use common\models\shop\CategoriesProperties;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductPropertiesTranslate;
+use common\models\shop\ProductsTranslate;
 use common\models\shop\ProductTag;
 use common\models\shop\PropertiesNameTranslate;
 use yii\console\Controller;
@@ -223,14 +224,20 @@ class XController extends Controller
     {
 
         $string = '<p>---------------------------
-                                                        </p>';
+</p>';
 
-        $products = Product::find()
+//        $products = Product::find()
+//            ->select(['id', 'footer_description'])
+//            ->all();
+
+        $products = ProductsTranslate::find()
             ->select(['id', 'footer_description'])
             ->all();
 
         foreach ($products as $product) {
 
+//            dd($product->footer_description);
+            if ($product->footer_description) {
                 if (str_contains($product->footer_description, $string)) {
 
                     // Удаляем строку
@@ -241,7 +248,7 @@ class XController extends Controller
 
                     echo " Обновлён товар ID: {$product->id}\n";
                 }
-
+            }
         }
     }
 
