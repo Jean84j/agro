@@ -221,8 +221,9 @@ class XController extends Controller
      */
     public function actionFooterDescriptionSub()
     {
-//        $string = '<p>---------------------------</p>';
-        $string = '<p>---------------------------</p>';
+
+        $string = '<p>---------------------------
+</p>';
 
         $products = Product::find()
             ->select(['id', 'footer_description'])
