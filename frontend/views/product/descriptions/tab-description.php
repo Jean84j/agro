@@ -13,7 +13,8 @@
              style="display: none;"><?= $product->getFooterDescription($product->footer_description, $product->name) ?></div>
         <button class="btn btn-secondary arrow-right"
                 id="show-more-btn"><?= Yii::t('app', 'Розгорнути опис') . $arrow ?></button>
-        <button class="btn btn-secondary arrow-left" id="hide-description-btn" style="display: none;">
+        <button class="btn btn-secondary arrow-left" id="hide-description-btn"
+                style="display: none; margin-top: 20px">
             <?= Yii::t('app', 'Приховати опис') . $arrow ?>
         </button>
     </div>
