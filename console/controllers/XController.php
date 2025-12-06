@@ -223,7 +223,7 @@ class XController extends Controller
     {
 
         $string = '<p>---------------------------
-</p>';
+                                                        </p>';
 
         $products = Product::find()
             ->select(['id', 'footer_description'])
