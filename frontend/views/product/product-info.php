@@ -2,6 +2,12 @@
 
 use yii\helpers\Url;
 
+/** @var $product */
+/** @var $productVariants */
+/** @var $mobile */
+/** @var $language */
+/** @var $product_properties */
+
 ?>
 <div class="product__info">
     <div class="product__wishlist-compare">

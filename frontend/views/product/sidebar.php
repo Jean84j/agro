@@ -8,6 +8,7 @@ use common\models\shop\Product;
 /** @var Product $product */
 /** @var Product $products_analog_count */
 /** @var Product $mobile */
+/** @var $minimumOrderAmount */
 
 
 ?>

@@ -3,6 +3,8 @@
 use common\models\shop\ProductProperties;
 
 /** @var ProductProperties $product_properties */
+/** @var $language */
+/** @var $productId */
 
 ?>
 <?php if ($this->beginCache('product_properties-product_' . $language . $productId, ['duration' => 3600])): ?>
