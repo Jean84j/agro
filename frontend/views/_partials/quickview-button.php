@@ -1,5 +1,9 @@
 <?php
 
+use common\models\shop\Product;
+
+/** @var Product $product */
+
 $urlOpen = Yii::$app->urlManager->createUrl(['quickview/quickview']);
 
 $number = mt_rand(10, 99);
