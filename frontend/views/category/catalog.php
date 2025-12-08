@@ -77,21 +77,21 @@ $breadcrumbItemActive = $category->name;
                                     </button>
                                 </div>
 
-                                <?= $this->render('@frontend/views/_partials/products-sort', [
+                                <?= $this->render('/_partials/products-sort', [
                                     'products' => $products,
                                     'products_all' => $products_all,
                                 ]) ?>
 
                             </div>
                         </div>
-                        <?= $this->render('@frontend/views/_partials/products-list', ['products' => $products]) ?>
-                        <?= $this->render('filter-sidebar',
+                        <?= $this->render('/_partials/products-list', ['products' => $products]) ?>
+                        <?= $this->render('filter/filter-sidebar',
                             [
                                 'category' => $category,
                                 'propertiesFilter' => $propertiesFilter,
                                 'auxiliaryCategories' => $auxiliaryCategories,
                             ]) ?>
-                        <?= $this->render('@frontend/views/_partials/pagination', ['pages' => $pages]) ?>
+                        <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         <div class="spec__disclaimer">
                             <?= $category->description ?>
                         </div>

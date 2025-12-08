@@ -1,0 +1,48 @@
+<?php
+
+use yii\helpers\Html;
+
+?>
+<div class="widget-filters__item">
+    <div class="filter" data-collapse-item>
+        <button type="button" class="filter__title"
+                data-collapse-trigger>
+            <?= Yii::t('app', 'Бренд') ?>
+            <svg class="filter__arrow" width="12px" height="7px">
+                <use xlink:href="/images/sprite.svg#arrow-rounded-down-12x7"></use>
+            </svg>
+        </button>
+        <div class="filter__body" data-collapse-content>
+            <div class="filter__container">
+                <div class="filter-list">
+                    <div class="filter-list__list">
+                        <?php $brandsCategory = $category->getBrandsCategoryFilter($category->id) ?>
+                        <?php foreach ($brandsCategory as $brand): ?>
+                            <label class="filter-list__item ">
+                                                                <span class="filter-list__input input-check">
+                                                                    <span class="input-check__body">
+                                                                        <input class="input-check__input"
+                                                                               type="checkbox"
+                                                                               name="brandCheck[]"
+                                                                               value="<?= Html::encode($brand->id) ?>"
+                                                                               <?= in_array($brand->id, Yii::$app->request->post('brandCheck', [])) ? 'checked' : '' ?>
+                                                                               >
+                                                                        <span class="input-check__box"></span>
+                                                                        <svg class="input-check__icon" width="9px"
+                                                                             height="7px">
+                                                                            <use xlink:href="/images/sprite.svg#check-9x7"></use>
+                                                                        </svg>
+                                                                    </span>
+                                                                </span>
+                                <span class="filter-list__title">
+                                                                 <?= $brand->name ?>
+                                                                </span>
+                                <span class="filter-list__counter"><?= $brand->getBrandProductCountFilter($brand->id, $category->id) ?></span>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
