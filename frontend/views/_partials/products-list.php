@@ -1,16 +1,20 @@
 <?php
 
 use common\models\shop\Product;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var Product $products */
+
+$imageClass = '';
 
 ?>
 <div class="products-view__list products-list" data-layout="grid-4-full"
      data-with-features="false" data-mobile-grid-columns="2">
     <div class="products-list__body">
         <?php foreach ($products as $product): ?>
+            <?php if ($product->status_id == 2): ?>
+                <?php $imageClass = 'grayscale'; ?>
+            <?php endif; ?>
             <div class="products-list__item">
                 <div class="product-card product-card--hidden-actions ">
                     <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
@@ -18,7 +22,7 @@ use yii\helpers\Url;
                     <div class="product-card__image product-image">
                         <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                            class="product-image__body">
-                            <img class="product-image__img"
+                            <img class="product-image__img <?= $imageClass ?>"
                                  src="<?= $product->getImgOne($product->getId()) ?>"
                                  width="231" height="231"
                                  alt="<?= $product->name ?>">
@@ -41,11 +45,9 @@ use yii\helpers\Url;
                                 <?= Yii::t('app', 'відгуків') ?>
                             </div>
                         </div>
-
                         <ul class="product-card__features-list">
                             <?= Product::productParamsList($product->id) ?>
                         </ul>
-
                     </div>
                     <div class="product-card__actions">
                         <div class="product-card__availability">
@@ -76,4 +78,13 @@ use yii\helpers\Url;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
     }
+
+    .grayscale {
+        filter: grayscale(100%);
+    }
+
+    .grayscale:hover {
+        filter: grayscale(0%);
+    }
+
 </style>
