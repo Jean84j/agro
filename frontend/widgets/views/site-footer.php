@@ -13,7 +13,7 @@ use yii\helpers\Url;
                 <?php else: ?>
                 <br>
                 <div class="container">
-                     <div class="site-footer__widgets bk-1" style="margin: 0 0">
+                    <div class="site-footer__widgets bk-1" style="margin: 0 0">
                         <?php endif; ?>
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-4">
@@ -27,9 +27,11 @@ use yii\helpers\Url;
                                             <i class="footer-contacts__icon far fa-envelope"></i> <?= $contacts->email ?>
                                         </li>
                                         <li><i class="footer-contacts__icon fas fa-mobile-alt"></i> <a
+                                                    style="color: #ef6e2e"
                                                     href="tel:<?= str_replace([' ', '(', ')', '-'], '', $contacts->tel_primary) ?>"><?= $contacts->tel_primary ?></a>
                                         </li>
                                         <li><i class="footer-contacts__icon fas fa-mobile-alt"></i> <a
+                                                    style="color: #ef6e2e"
                                                     href="tel:<?= str_replace([' ', '(', ')', '-'], '', $contacts->tel_second) ?>"><?= $contacts->tel_second ?></a>
                                         </li>
                                         <li>
