@@ -23,7 +23,7 @@ $imageClass = '';
                         <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                            class="product-image__body">
                             <img class="product-image__img <?= $imageClass ?>"
-                                 src="<?= $product->getImgOne($product->getId()) ?>"
+                                 src="<?= $product->getImgOneExtraLarge($product->id) ?>"
                                  width="231" height="231"
                                  alt="<?= $product->name ?>">
                         </a>
