@@ -7,6 +7,35 @@ use yii\helpers\Url;
 /** @var $path */
 /** @var $lang */
 
+$itemsMenu = [
+    [
+        'url' => 'special/view',
+        'name' => Yii::t('app', 'Спеціальні пропозиції'),
+        'icon' => '<i class="fas fa-tags"></i>',
+    ],
+    [
+        'url' => 'delivery/view',
+        'name' => Yii::t('app', 'Доставка та оплата'),
+        'icon' => '<i class="fas fa-truck"></i>',
+    ],
+    [
+        'url' => 'about/view',
+        'name' => Yii::t('app', 'Про нас'),
+        'icon' => '<i class="fas fa-address-card"></i>',
+    ],
+    [
+        'url' => 'contact/view',
+        'name' => Yii::t('app', 'Зв’язок з нами'),
+        'icon' => '<i class="fas fa-phone-square-alt"></i>',
+    ],
+    [
+        'url' => 'blogs/view',
+        'name' => Yii::t('app', 'Статті'),
+        'icon' => '<i class="fas fa-file-alt"> </i>',
+    ]
+];
+
+
 ?>
 <div class="mobilemenu">
     <div class="mobilemenu__backdrop"></div>
@@ -46,10 +75,10 @@ use yii\helpers\Url;
                                         <div class="mobile-links__item-title" style="font-weight: bold">
                                             <?php if ($category->parents): ?>
                                                 <a href="<?= Url::to(['category/children', 'slug' => $category->slug]) ?>"
-                                                   class="mobile-links__item-link"><?= $category->svg .' '. $category->name; ?></a>
+                                                   class="mobile-links__item-link"><?= $category->svg . ' ' . $category->name; ?></a>
                                             <?php else: ?>
                                                 <a href="<?= Url::to(['category/catalog', 'slug' => $category->slug]) ?>"
-                                                   class="mobile-links__item-link"><?= $category->svg .' '. $category->name; ?></a>
+                                                   class="mobile-links__item-link"><?= $category->svg . ' ' . $category->name; ?></a>
                                             <?php endif; ?>
                                             <?php if ($category->parents): ?>
                                                 <button class="mobile-links__item-toggle menu-color" type="button"
@@ -68,7 +97,7 @@ use yii\helpers\Url;
                                                             <li class="mobile-links__item" data-collapse-item>
                                                                 <div class="mobile-links__item-title">
                                                                     <a href="<?= Url::to(['category/catalog', 'slug' => $parent->slug]) ?>"
-                                                                       class="mobile-links__item-link"><?= $parent->svg .' '. $parent->name; ?></a>
+                                                                       class="mobile-links__item-link"><?= $parent->svg . ' ' . $parent->name; ?></a>
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -82,36 +111,14 @@ use yii\helpers\Url;
                         </ul>
                     </div>
                 </li>
-                <li class="mobile-links__item" data-collapse-item>
-                    <div class="mobile-links__item-title">
-                        <a href="<?= Url::to(['special/view']) ?>" class="mobile-links__item-link"> <i
-                                    class="fas fa-tags"></i> <?= Yii::t('app', 'Спеціальні пропозиції') ?></a>
-                    </div>
-                </li>
-                <li class="mobile-links__item" data-collapse-item>
-                    <div class="mobile-links__item-title">
-                        <a href="<?= Url::to(['delivery/view']) ?>" class="mobile-links__item-link"> <i
-                                    class="fas fa-truck"></i> <?= Yii::t('app', 'Доставка та оплата') ?></a>
-                    </div>
-                </li>
-                <li class="mobile-links__item" data-collapse-item>
-                    <div class="mobile-links__item-title">
-                        <a href="<?= Url::to(['about/view']) ?>" class="mobile-links__item-link"> <i
-                                    class="fas fa-address-card"></i> <?= Yii::t('app', 'Про нас') ?></a>
-                    </div>
-                </li>
-                <li class="mobile-links__item" data-collapse-item>
-                    <div class="mobile-links__item-title">
-                        <a href="<?= Url::to(['contact/view']) ?>" class="mobile-links__item-link"> <i
-                                    class="fas fa-phone-square-alt"></i> <?= Yii::t('app', 'Зв’язок з нами') ?></a>
-                    </div>
-                </li>
-                <li class="mobile-links__item" data-collapse-item>
-                    <div class="mobile-links__item-title">
-                        <a href="<?= Url::to(['blogs/view']) ?>" class="mobile-links__item-link"> <i
-                                    class="fas fa-file-alt"> </i> <?= Yii::t('app', 'Статті') ?></a>
-                    </div>
-                </li>
+                <?php foreach ($itemsMenu as $item): ?>
+                    <li class="mobile-links__item" data-collapse-item>
+                        <div class="mobile-links__item-title">
+                            <a href="<?= Url::to([$item['url']]) ?>"
+                               class="mobile-links__item-link"> <?= $item['icon'] ?>  <?= $item['name'] ?></a>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
                 <li class="mobile-links__item" data-collapse-item>
                     <div class="mobile-links__item-title">
                         <span data-collapse-trigger class="mobile-links__item-link"><i
@@ -130,7 +137,8 @@ use yii\helpers\Url;
                                        href="<?php echo Url::to(['/' . $path, 'language' => 'uk']) ?>">
                                         <div class="row">
                                             <div class="col-1">
-                                                <img src="/images/languages/language-UK.png" width="20" height="16" alt="UK">
+                                                <img src="/images/languages/language-UK.png" width="20" height="16"
+                                                     alt="UK">
                                             </div>
                                             <div class="col-4">
                                                 Українська
@@ -145,7 +153,8 @@ use yii\helpers\Url;
                                        href="<?php echo Url::to(['/' . $path, 'language' => 'ru']) ?>">
                                         <div class="row">
                                             <div class="col-1">
-                                                <img src="/images/languages/language-RU.png" width="20" height="16" alt="RU">
+                                                <img src="/images/languages/language-RU.png" width="20" height="16"
+                                                     alt="RU">
                                             </div>
                                             <div class="col-4">
                                                 Русский
@@ -164,19 +173,22 @@ use yii\helpers\Url;
                 <li class="mobile-links__item">
                     <div class="mobile-links__item-title">
                         <a href="tel:<?= str_replace([' ', '(', ')', '-'], '', $contacts->tel_primary) ?>"
-                           class="mobile-links__item-link phone-menu"> <i class="fas fa-mobile-alt"> </i> <span><?= $contacts->tel_primary ?></span></a>
+                           class="mobile-links__item-link phone-menu"> <i class="fas fa-mobile-alt"> </i>
+                            <span><?= $contacts->tel_primary ?></span></a>
                     </div>
                 </li>
                 <li class="mobile-links__item">
                     <div class="mobile-links__item-title">
                         <a href="tel:<?= str_replace([' ', '(', ')', '-'], '', $contacts->tel_second) ?>"
-                           class="mobile-links__item-link phone-menu"> <i class="fas fa-mobile-alt"> </i> <span><?= $contacts->tel_second ?></span></a>
+                           class="mobile-links__item-link phone-menu"> <i class="fas fa-mobile-alt"> </i>
+                            <span><?= $contacts->tel_second ?></span></a>
                     </div>
                 </li>
                 <li class="mobile-links__item">
                     <div class="mobile-links__item-title">
                         <span class="mobile-links__item-link"><i
-                                    class="far fa-envelope"></i> <span style="font-weight: bold">nisatatyana@gmail.com</span></span>
+                                    class="far fa-envelope"></i> <span
+                                    style="font-weight: bold">nisatatyana@gmail.com</span></span>
                     </div>
                 </li>
             </ul>
@@ -187,6 +199,7 @@ use yii\helpers\Url;
     .menu-color {
         background-color: #62c53280;
     }
+
     .phone-menu {
         font-weight: bold;
         font-size: 24px;
