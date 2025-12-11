@@ -66,7 +66,7 @@ class SiteHeader extends Widget
         $lang = strtoupper(Yii::$app->language);
         $isMobile = Yii::$app->devicedetect->isMobile();
 
-        return $this->render('site-header',
+        return $this->render('site-header/header',
             [
                 'contacts' => $contacts,
                 'compareList' => $compareList,
