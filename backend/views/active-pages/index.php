@@ -243,14 +243,13 @@ $ipAddress = Yii::$app->request->getUserIP();
     .instagram-multicolor-icon {
         font-size: 40px;
         background: linear-gradient(
-                45deg,
+                to top,
                 #F58529,
                 #FEDA77,
                 #DD2A7B,
                 #8134AF,
                 #515BD4
         );
-        -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         display: inline-block;
     }
