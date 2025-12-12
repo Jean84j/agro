@@ -171,6 +171,16 @@ class ActivePages extends ActiveRecord
 
         }
 
+        if (str_contains($url, 'fbclid')) {
+
+            $parts = explode('fbclid', $url, 2);
+
+            $url = substr($parts[0], 0, -1);
+
+            return $url;
+
+        }
+
         return $url;
     }
     
