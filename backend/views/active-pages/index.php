@@ -132,6 +132,9 @@ $ipAddress = Yii::$app->request->getUserIP();
                                     $url === 'https://l.instagram.com/' =>
                                     '<i class="fab fa-instagram instagram-multicolor-icon"></i>',
 
+                                    $url === 'https://www.facebook.com/' =>
+                                    '<i class="fab fa-facebook facebook-multicolor-icon"></i>',
+
                                     str_contains($url, 'https://www.google.com/url') =>
                                     '<i class="fab fa-apple google-apple-multicolor-icon"></i>',
 
@@ -249,6 +252,20 @@ $ipAddress = Yii::$app->request->getUserIP();
                 #DD2A7B,
                 #8134AF,
                 #515BD4
+        );
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
+
+    .facebook-multicolor-icon {
+        font-size: 36px;
+        background: linear-gradient(
+                to top,
+                #1877F2,
+                #3b5998,
+                #1d4ed8,
+                #60a5fa,
+                #93c5fd
         );
         -webkit-text-fill-color: transparent;
         display: inline-block;
