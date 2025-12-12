@@ -130,7 +130,7 @@ $ipAddress = Yii::$app->request->getUserIP();
                                     '<i class="fab fa-microsoft microsoft-multicolor-icon"></i>',
 
                                     $url === 'https://l.instagram.com/' =>
-                                    '<i class="fab fa-instagram"></i>',
+                                    '<i class="fab fa-instagram instagram-multicolor-icon"></i>',
 
                                     str_contains($url, 'https://www.google.com/url') =>
                                     '<i class="fab fa-apple google-apple-multicolor-icon"></i>',
@@ -239,6 +239,22 @@ $ipAddress = Yii::$app->request->getUserIP();
         -webkit-text-fill-color: transparent;
         display: inline-block;
     }
+
+    .instagram-multicolor-icon {
+        font-size: 40px;
+        background: linear-gradient(
+                45deg,
+                #F58529,
+                #FEDA77,
+                #DD2A7B,
+                #8134AF,
+                #515BD4
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
+
 </style>
 <script>
     const copyButton = document.getElementById("copyButton");
