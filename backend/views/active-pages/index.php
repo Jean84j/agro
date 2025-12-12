@@ -130,7 +130,7 @@ $ipAddress = Yii::$app->request->getUserIP();
                                     '<i class="fab fa-microsoft microsoft-multicolor-icon"></i>',
 
                                     $url === 'https://l.instagram.com/' =>
-                                    '<i class="fa-brands fa-instagram"></i>',
+                                    '<i class="fab fa-instagram"></i>',
 
                                     str_contains($url, 'https://www.google.com/url') =>
                                     '<i class="fab fa-apple google-apple-multicolor-icon"></i>',
