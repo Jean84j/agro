@@ -241,7 +241,7 @@ $ipAddress = Yii::$app->request->getUserIP();
     }
 
     .instagram-multicolor-icon {
-        font-size: 40px;
+        font-size: 36px;
         background: linear-gradient(
                 to top,
                 #F58529,
