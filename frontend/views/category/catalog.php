@@ -76,12 +76,10 @@ $breadcrumbItemActive = $category->name;
                                         <span class="filters-button__counter"><?= $category->getCounterFilter() ?></span>
                                     </button>
                                 </div>
-
                                 <?= $this->render('/_partials/products-sort', [
                                     'products' => $products,
                                     'products_all' => $products_all,
                                 ]) ?>
-
                             </div>
                         </div>
                         <?= $this->render('/_partials/products-list', ['products' => $products]) ?>

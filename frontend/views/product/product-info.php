@@ -53,7 +53,7 @@ use yii\helpers\Url;
     <?php if ($productVariants): ?>
         <div class="mt-3 mb-3" style="font-size: 14px; color: #a6a7a6">
             <div class="packaging">
-                <span><?=Yii::t('app','фасування')?>:</span>
+                <span><?= Yii::t('app', 'доступне фасування') ?>:</span>
             </div>
             <?php foreach ($productVariants as $variant): ?>
                 <?php
