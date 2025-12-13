@@ -3,6 +3,7 @@
 namespace common\models\shop;
 
 use common\models\Settings;
+use DateTime;
 use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\db\ActiveRecord;
@@ -656,6 +657,57 @@ class Product extends ActiveRecord implements CartPositionInterface
         } else {
             return '';
         }
+    }
+
+    public function getProductListBackground(): array
+    {
+        $now  = new DateTime('now');
+        $year = (int)$now->format('Y');
+
+        /**
+         * Формат:
+         * [
+         *   [start, end, cssClass, imageUrl]
+         * ]
+         */
+        $periods = [
+            // Новый год
+            [
+                '12-05',
+                '01-15',
+                'card-background_image',
+                '/images/background-products-list/new_year_background.png'
+            ],
+
+            // Пример на будущее
+            // ['03-01', '03-31', 'spring-background', '/images/bg/spring.png'],
+        ];
+
+        foreach ($periods as [$startMd, $endMd, $class, $imageUrl]) {
+
+            // если период НЕ пересекает год
+            if ($startMd <= $endMd) {
+                $start = new DateTime("$year-$startMd");
+                $end   = new DateTime("$year-$endMd");
+            }
+            // если период пересекает год (12 → 01)
+            else {
+                $start = new DateTime("$year-$startMd");
+                $end   = new DateTime(($year + 1) . "-$endMd");
+            }
+
+            if ($now >= $start && $now <= $end) {
+                return [
+                    'class' => $class,
+                    'image' => $imageUrl,
+                ];
+            }
+        }
+
+        return [
+            'class' => '',
+            'image' => '',
+        ];
     }
 
     public function getAvailabilityProduct($status_id)
