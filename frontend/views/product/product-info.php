@@ -56,16 +56,15 @@ use yii\helpers\Url;
                 <span><?= Yii::t('app', 'доступне фасування') ?>:</span>
             </div>
             <?php foreach ($productVariants as $variant): ?>
-            <?= var_dump($variant); ?>
                 <?php
-                $statusClass = ($variant['status_id'] === 2) ? 'btn-outline-secondary' : 'btn-outline-success';
-                $isDisabled = ($variant['status_id'] === 2) ? 'disabled' : '';
+                $statusClass = ($variant['status_id'] == 2) ? 'btn-outline-secondary' : 'btn-outline-success';
+                $isDisabled = ($variant['status_id'] == 2) ? 'disabled' : '';
                 $slugUrl = Url::to(['product/view', 'slug' => $variant['slug']]);
                 ?>
                 <button class="btn btn-sm shadow_element <?= $statusClass ?>"
                         onclick="window.location.href='<?= $slugUrl ?>'"
                     <?= $isDisabled ?>>
-            <span class="<?= $variant['status_id'] === 2 ? '' : 'font-weight-bold' ?>">
+            <span class="<?= $variant['status_id'] == 2 ? '' : 'font-weight-bold' ?>">
                 <?= $variant['volume']; ?>
             </span>
                 </button>
