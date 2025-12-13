@@ -30,14 +30,10 @@ use yii\helpers\Url;
                                 <?= $product->getRating($product->id, 13, 12) ?>
                             </div>
                             <div class="product-card__rating-legend"><?= count($product->reviews) ?>
-                                <?=Yii::t('app', 'відгуків')?>
+                                <?= Yii::t('app', 'відгуків') ?>
                             </div>
                         </div>
-                        <div class="product-card__availability">
-                                                         <span class="text-success">
-                                                 <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
-                                                         </span>
-                        </div>
+                        <?= $this->render('/_partials/status', ['product' => $product]) ?>
                         <?php if ($product->old_price == null) { ?>
                             <div class="widget-products__prices" style="font-size: 15px;">
                                 <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>

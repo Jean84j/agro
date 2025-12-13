@@ -22,7 +22,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
             <div class="block-products__featured">
                 <div class="block-products__featured-item">
                     <div class="product-card product-card--hidden-actions ">
-                        <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $products[0]]) ?>
+                        <?= $this->render('/_partials/quickview-button', ['product' => $products[0]]) ?>
                         <div class="product-card__badges-list">
                             <?php if (isset($products[0]->label->name)) : ?>
                                 <div class="product-card__badges-list">
@@ -62,9 +62,9 @@ $borderColor ?? $borderColor = '#f5962ecc';
                             </div>
                         </div>
                         <div class="product-card__actions">
-                            <div class="product-card__availability">
-                                <?= $this->render('@frontend/views/_partials/status', ['product' => $products[0]]) ?>
-                            </div>
+
+                            <?= $this->render('/_partials/status', ['product' => $products[0]]) ?>
+
                             <?php if ($products[0]->old_price == null) { ?>
                                 <div class="product-card__prices">
                                     <?= Yii::$app->formatter->asCurrency($products[0]->getPrice()) ?>
@@ -90,7 +90,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                         <svg width="20px" height="20px" style="display: unset;">
                                             <use xlink:href="/images/sprite.svg#cart-20"></use>
                                         </svg>
-                                        <?= !$products[0]->getIssetToCart($products[0]->id) ? Yii::t('app', 'Купити')  :  Yii::t('app', 'В кошику')  ?>
+                                        <?= !$products[0]->getIssetToCart($products[0]->id) ? Yii::t('app', 'Купити') : Yii::t('app', 'В кошику') ?>
                                     </button>
                                 <?php } else { ?>
                                     <button class="btn btn-secondary disabled"
@@ -99,7 +99,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                         <svg width="20px" height="20px" style="display: unset;">
                                             <use xlink:href="/images/sprite.svg#cart-20"></use>
                                         </svg>
-                                       <?= Yii::t('app', 'Купити') ?>
+                                        <?= Yii::t('app', 'Купити') ?>
                                     </button>
                                 <?php } ?>
                                 <button type="button"
@@ -131,8 +131,8 @@ $borderColor ?? $borderColor = '#f5962ecc';
                     <?php if ($i != 0): ?>
                         <div class="block-products__list-item">
                             <div class="product-card product-card--hidden-actions ">
-                                <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
-                                <?= $this->render('@frontend/views/_partials/badges-list', ['product' => $product]) ?>
+                                <?= $this->render('/_partials/quickview-button', ['product' => $product]) ?>
+                                <?= $this->render('/_partials/badges-list', ['product' => $product]) ?>
                                 <div class="product-card__image product-image">
                                     <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                                        class="product-image__body">
@@ -162,9 +162,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                     </div>
                                 </div>
                                 <div class="product-card__actions">
-                                    <div class="product-card__availability">
-                                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
-                                    </div>
+                                    <?= $this->render('/_partials/status', ['product' => $product]) ?>
                                     <?php if ($product->old_price == null) { ?>
                                         <div class="product-card__prices">
                                             <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>
@@ -175,7 +173,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                             <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
                                         </div>
                                     <?php } ?>
-                                    <?= $this->render('@frontend/views/_partials/add-to-cart-button', ['product' => $product]) ?>
+                                    <?= $this->render('/_partials/add-to-cart-button', ['product' => $product]) ?>
                                 </div>
                             </div>
                         </div>
@@ -191,9 +189,10 @@ $borderColor ?? $borderColor = '#f5962ecc';
         background-color: <?= $backgroundColor ?>;
         padding: 5px;
         border-radius: 5px;
-        border: 1px solid <?= $borderColor ?>;
+        border: 1px solid<?= $borderColor ?>;
         display: inline-block;
     }
+
     .line-color_<?= $backgroundColorClass ?> {
         background-color: <?= $backgroundColor ?>;
     }

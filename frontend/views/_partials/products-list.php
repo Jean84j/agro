@@ -51,9 +51,9 @@ $imageClass = '';
                         </ul>
                     </div>
                     <div class="product-card__actions">
-                        <div class="product-card__availability">
-                            <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
-                        </div>
+
+                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
+
                         <?php if ($product->old_price == null) { ?>
                             <div class="product-card__prices">
                                 <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>

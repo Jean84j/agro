@@ -58,11 +58,9 @@ use yii\helpers\Url;
                                                 </ul>
                                             </div>
                                             <div class="product-card__actions">
-                                                <div class="product-card__availability">
-                                                                     <span class="text-success">
-                                                                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product_analog]) ?>
-                                                                     </span>
-                                                </div>
+
+                                                <?= $this->render('@frontend/views/_partials/status', ['product' => $product_analog]) ?>
+
                                                 <?php if ($product_analog->old_price == null) { ?>
                                                     <div class="product-card__prices">
                                                         <?= Yii::$app->formatter->asCurrency($product_analog->getPrice()) ?>

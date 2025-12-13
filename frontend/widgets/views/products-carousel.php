@@ -35,8 +35,8 @@ $borderColor ?? $borderColor = '#f5962ecc';
                     <div class="block-products-carousel__column">
                         <div class="block-products-carousel__cell">
                             <div class="product-card product-card--hidden-actions ">
-                                <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
-                                <?= $this->render('@frontend/views/_partials/badges-list', ['product' => $product]) ?>
+                                <?= $this->render('/_partials/quickview-button', ['product' => $product]) ?>
+                                <?= $this->render('/_partials/badges-list', ['product' => $product]) ?>
                                 <div class="product-card__image product-image">
                                     <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                                        class="product-image__body">
@@ -61,57 +61,8 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                     </div>
                                 </div>
                                 <div class="product-card__actions">
-                                    <div class="product-card__availability">
-                                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
-                                    </div>
-                                    <div class="product-card__prices">
-                                        <?php if ($product->old_price == null) { ?>
-                                            <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>
-                                            <button type="button"
-                                                    class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wish"
-                                                    aria-label="add wish list"
-                                                    style="width: 20px; height: 20px; margin-left: 80px;"
-                                                    data-url-wish="<?= Yii::$app->urlManager->createUrl(['wish/add-to-wish']) ?>"
-                                                    data-wish-product-id="<?= $product->id ?>">
-                                                <svg width="16px" height="16px">
-                                                    <use xlink:href="/images/sprite.svg#wishlist-16"></use>
-                                                </svg>
-                                            </button>
-                                            <button type="button"
-                                                    class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__compare"
-                                                    aria-label="add compare list"
-                                                    style="width: 20px; height: 20px;"
-                                                    data-url-compare="<?= Yii::$app->urlManager->createUrl(['compare/add-to-compare']) ?>"
-                                                    data-compare-product-id="<?= $product->id ?>">
-                                                <svg width="16px" height="16px">
-                                                    <use xlink:href="/images/sprite.svg#compare-16"></use>
-                                                </svg>
-                                            </button>
-                                        <?php } else { ?>
-                                            <span class="product-card__new-price"><?= Yii::$app->formatter->asCurrency($product->getPrice()) ?></span>
-                                            <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
-                                            <button type="button"
-                                                    class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wish"
-                                                    aria-label="add wish list"
-                                                    style="width: 20px; height: 20px; margin-left: 10px;"
-                                                    data-url-wish="<?= Yii::$app->urlManager->createUrl(['wish/add-to-wish']) ?>"
-                                                    data-wish-product-id="<?= $product->id ?>">
-                                                <svg width="16px" height="16px">
-                                                    <use xlink:href="/images/sprite.svg#wishlist-16"></use>
-                                                </svg>
-                                            </button>
-                                            <button type="button"
-                                                    class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__compare"
-                                                    aria-label="add compare list"
-                                                    style="width: 20px; height: 20px;"
-                                                    data-url-compare="<?= Yii::$app->urlManager->createUrl(['compare/add-to-compare']) ?>"
-                                                    data-compare-product-id="<?= $product->id ?>">
-                                                <svg width="16px" height="16px">
-                                                    <use xlink:href="/images/sprite.svg#compare-16"></use>
-                                                </svg>
-                                            </button>
-                                        <?php } ?>
-                                    </div>
+                                    <?= $this->render('/_partials/status', ['product' => $product]) ?>
+                                    <?= $this->render('/_partials/price-columns', ['product' => $product]) ?>
                                 </div>
                             </div>
                         </div>
@@ -126,9 +77,10 @@ $borderColor ?? $borderColor = '#f5962ecc';
         background-color: <?= $backgroundColor ?>;
         padding: 5px;
         border-radius: 5px;
-        border: 1px solid <?= $borderColor ?>;
+        border: 1px solid<?= $borderColor ?>;
         display: inline-block;
     }
+
     .line-color_<?= $backgroundColorClass ?> {
         background-color: <?= $backgroundColor ?>;
     }

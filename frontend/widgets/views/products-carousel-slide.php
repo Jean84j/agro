@@ -1,6 +1,7 @@
 <?php
 
 /** @var \common\models\shop\Product $products */
+
 /** @var $title */
 
 use yii\helpers\Url;
@@ -35,8 +36,8 @@ $borderColor ?? $borderColor = '#f5962ecc';
                     <div class="block-products-carousel__column">
                         <div class="block-products-carousel__cell">
                             <div class="product-card product-card--hidden-actions ">
-                                <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
-                                <?= $this->render('@frontend/views/_partials/badges-list', ['product' => $product]) ?>
+                                <?= $this->render('/_partials/quickview-button', ['product' => $product]) ?>
+                                <?= $this->render('/_partials/badges-list', ['product' => $product]) ?>
                                 <div class="product-card__image product-image">
                                     <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                                        class="product-image__body">
@@ -66,9 +67,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                     </div>
                                 </div>
                                 <div class="product-card__actions">
-                                    <div class="product-card__availability">
-                                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
-                                    </div>
+                                    <?= $this->render('/_partials/status', ['product' => $product]) ?>
                                     <?php if ($product->old_price == null) { ?>
                                         <div class="product-card__prices">
                                             <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>
@@ -79,7 +78,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                             <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
                                         </div>
                                     <?php } ?>
-                                    <?= $this->render('@frontend/views/_partials/add-to-cart-button', ['product' => $product]) ?>
+                                    <?= $this->render('/_partials/add-to-cart-button', ['product' => $product]) ?>
                                 </div>
                             </div>
                         </div>
@@ -94,9 +93,10 @@ $borderColor ?? $borderColor = '#f5962ecc';
         background-color: <?= $backgroundColor ?>;
         padding: 5px;
         border-radius: 5px;
-        border: 1px solid <?= $borderColor ?>;
+        border: 1px solid<?= $borderColor ?>;
         display: inline-block;
     }
+
     .line-color_<?= $backgroundColorClass ?> {
         background-color: <?= $backgroundColor ?>;
     }
