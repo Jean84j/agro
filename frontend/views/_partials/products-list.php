@@ -52,16 +52,7 @@ $imageClass = '';
                     </div>
                     <div class="product-card__actions">
                         <?= $this->render('/_partials/status', ['product' => $product]) ?>
-                        <?php if ($product->old_price == null) { ?>
-                            <div class="product-card__prices">
-                                <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>
-                            </div>
-                        <?php } else { ?>
-                            <div class="product-card__prices">
-                                <span class="product-card__new-price"><?= Yii::$app->formatter->asCurrency($product->getPrice()) ?></span>
-                                <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
-                            </div>
-                        <?php } ?>
+                        <?= $this->render('/_partials/price', ['product' => $product]) ?>
                         <?= $this->render('/_partials/add-to-cart-button', ['product' => $product]) ?>
                     </div>
                 </div>

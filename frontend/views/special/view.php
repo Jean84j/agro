@@ -21,7 +21,6 @@ $breadcrumbItemActive = 'Спеціальні пропозиції';
 
 ?>
 <div class="site__body">
-
     <?= $this->render('/_partials/page-header',
         [
             'files' => $files,

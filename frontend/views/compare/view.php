@@ -92,16 +92,7 @@ $breadcrumbItemActive = 'Порівняння';
                                 <th><?=Yii::t('app','Ціна')?></th>
                                 <?php foreach ($products as $product): ?>
                                     <td>
-                                        <?php if ($product->old_price == null) { ?>
-                                            <div class="product-card__prices">
-                                                <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="product-card__prices">
-                                                <span class="product-card__new-price"><?= Yii::$app->formatter->asCurrency($product->getPrice()) ?></span>
-                                                <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
-                                            </div>
-                                        <?php } ?>
+                                        <?= $this->render('/_partials/price', ['product' => $product]) ?>
                                     </td>
                                 <?php endforeach; ?>
                             </tr>

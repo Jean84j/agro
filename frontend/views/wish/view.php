@@ -102,16 +102,7 @@ $breadcrumbItemActive = 'Список бажань';
                                         </div>
                                     </td>
                                     <td class="wishlist__column wishlist__column--price">
-                                        <?php if ($product->old_price == null) { ?>
-                                            <div class="product-card__prices">
-                                                <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="product-card__prices">
-                                                <span class="product-card__new-price"><?= Yii::$app->formatter->asCurrency($product->getPrice()) ?></span>
-                                                <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
-                                            </div>
-                                        <?php } ?>
+                                        <?= $this->render('/_partials/price', ['product' => $product]) ?>
                                     </td>
                                     <td class="wishlist__column wishlist__column--tocart">
                                         <?php if ($product->status_id != 2) { ?>

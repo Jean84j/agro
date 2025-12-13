@@ -59,16 +59,7 @@ use yii\helpers\Url;
                                             </div>
                                             <div class="product-card__actions">
                                                 <?= $this->render('/_partials/status', ['product' => $product_analog]) ?>
-                                                <?php if ($product_analog->old_price == null) { ?>
-                                                    <div class="product-card__prices">
-                                                        <?= Yii::$app->formatter->asCurrency($product_analog->getPrice()) ?>
-                                                    </div>
-                                                <?php } else { ?>
-                                                    <div class="product-card__prices">
-                                                        <span class="widget-products__new-price"><?= Yii::$app->formatter->asCurrency($product_analog->getPrice()) ?></span>
-                                                        <span class="widget-products__old-price"><?= Yii::$app->formatter->asCurrency($product_analog->getOldPrice()) ?></span>
-                                                    </div>
-                                                <?php } ?>
+                                                <?= $this->render('/_partials/price', ['product' => $product]) ?>
                                                 <?= $this->render('/_partials/add-to-cart-button', ['product' => $product_analog]) ?>
                                             </div>
                                         </div>
