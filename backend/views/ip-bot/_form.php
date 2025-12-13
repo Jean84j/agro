@@ -16,7 +16,7 @@ use kartik\form\ActiveForm;
             <div class="container container--max--xl">
                 <div class="py-5">
                     <div class="row g-4 align-items-center">
-                        <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                        <?= $this->render('/_partials/breadcrumbs'); ?>
                         <div class="col-auto d-flex">
                             <?php if (!$model->isNewRecord): ?>
                                 <?= Html::a(Yii::t('app', 'List'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>

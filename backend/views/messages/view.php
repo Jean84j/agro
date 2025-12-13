@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="container container--max--xl">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
-                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                    <?= $this->render('/_partials/breadcrumbs'); ?>
                     <div class="col-auto d-flex">
                         <?= Html::a(Yii::t('app', 'List reviews'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>
                         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary me-3']) ?>

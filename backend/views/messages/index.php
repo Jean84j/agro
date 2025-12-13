@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="container">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
-                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                    <?= $this->render('/_partials/breadcrumbs'); ?>
                 </div>
             </div>
             <div class="card">

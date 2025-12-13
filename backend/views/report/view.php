@@ -44,7 +44,7 @@ if ($model->order_status_id == 'Повернення' || $model->order_pay_ment_
                 <div class="container container--max--xl" style="max-width: 1623px">
                     <div class="py-4">
                         <div class="row g-4 align-items-center">
-                            <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                            <?= $this->render('/_partials/breadcrumbs'); ?>
                             <div class="col-auto d-flex">
 
                             </div>

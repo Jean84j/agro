@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="container" style="max-width: 1623px">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
-                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                    <?= $this->render('/_partials/breadcrumbs'); ?>
                     <div class="col-auto d-flex">
                         <a href="<?= Url::to(['create']) ?>" class="btn btn-primary">
                             <?= Yii::t('app', 'Create User') ?></a>

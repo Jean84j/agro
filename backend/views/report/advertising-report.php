@@ -58,7 +58,7 @@ if (isset($budget)) {
     <div class="sa-invoice">
         <div class="py-5">
             <div class="row g-4 align-items-center">
-                <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                <?= $this->render('/_partials/breadcrumbs'); ?>
                 <div class="col-auto d-flex">
                     <?= Html::a(Yii::t('app', 'Звіт за Період'), Url::to(['report/period-report']), ['class' => 'btn btn-secondary me-3']) ?>
                     <?= Html::a(Yii::t('app', 'Звіт по Prom'), Url::to(['report/prom-report']), ['class' => 'btn btn-prom me-3']) ?>

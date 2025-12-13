@@ -37,7 +37,7 @@ $tabs = $model->getTabs();
         <div class="container container--max--xl" style="max-width: 1623px">
             <div class="pt-3">
                 <div class="row g-4 align-items-center">
-                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                    <?= $this->render('/_partials/breadcrumbs'); ?>
                     <div class="col-auto d-flex">
                         <?php if (!$model->isNewRecord): ?>
                             <?= Html::a(Yii::t('app', 'List category'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>
@@ -51,7 +51,7 @@ $tabs = $model->getTabs();
                  data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
                 <div class="sa-entity-layout__body">
                     <div class="sa-entity-layout__main">
-                        <?= $this->render('@backend/views/_partials/tabs', ['tabs' => $tabs, 'params' => $params]); ?>
+                        <?= $this->render('/_partials/tabs', ['tabs' => $tabs, 'params' => $params]); ?>
                     </div>
                     <?= $this->render('sidebar', ['form' => $form, 'model' => $model, 'params' => $params]) ?>
                 </div>

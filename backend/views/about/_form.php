@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
         <div class="container">
             <div class="py-5">
                 <div class="row g-4 align-items-center">
-                    <?= $this->render('@backend/views/_partials/breadcrumbs'); ?>
+                    <?= $this->render('/_partials/breadcrumbs'); ?>
                     <div class="col-auto d-flex">
                         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
                     </div>
