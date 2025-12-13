@@ -56,6 +56,7 @@ use yii\helpers\Url;
                 <span><?= Yii::t('app', 'доступне фасування') ?>:</span>
             </div>
             <?php foreach ($productVariants as $variant): ?>
+            <?= var_dump($variant); ?>
                 <?php
                 $statusClass = ($variant['status_id'] === 2) ? 'btn-outline-secondary' : 'btn-outline-success';
                 $isDisabled = ($variant['status_id'] === 2) ? 'disabled' : '';
