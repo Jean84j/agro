@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
-use common\models\Settings;
-use common\models\shop\AnalogProducts;
-use common\models\shop\Faq;
 use common\models\shop\MinimumOrderAmount;
+use common\models\shop\AnalogProducts;
+use common\models\Settings;
+use common\models\shop\Faq;
 use common\models\shop\Product;
 use common\models\shop\ProductImage;
 use common\models\shop\ProductPackaging;
@@ -13,8 +13,8 @@ use common\models\shop\ProductProperties;
 use common\models\shop\Review;
 use common\models\shop\Brand;
 use yii\web\Controller;
-use Yii;
 use yii\web\NotFoundHttpException;
+use Yii;
 
 class ProductController extends Controller
 {
