@@ -37,14 +37,14 @@ $breadcrumbItemActive = 'Спеціальні пропозиції';
                     <div class="products-view">
                         <div class="products-view__options">
                             <div class="view-options view-options--offcanvas--always">
-                                <?= $this->render('@frontend/views/_partials/products-sort', [
+                                <?= $this->render('/_partials/products-sort', [
                                     'products' => $products,
                                     'products_all' => $products_all,
                                 ]) ?>
                             </div>
                         </div>
-                        <?= $this->render('@frontend/views/_partials/products-list', ['products' => $products]) ?>
-                        <?= $this->render('@frontend/views/_partials/pagination', ['pages' => $pages]) ?>
+                        <?= $this->render('/_partials/products-list', ['products' => $products]) ?>
+                        <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
                         <div class="spec__disclaimer">
                             <?= $page_description ?>

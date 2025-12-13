@@ -11,6 +11,7 @@ use common\models\shop\ProductPropertiesTranslate;
 use common\models\shop\ProductsTranslate;
 use common\models\shop\ProductTag;
 use common\models\shop\PropertiesNameTranslate;
+use Yii;
 use yii\console\Controller;
 
 class XController extends Controller
@@ -218,39 +219,26 @@ class XController extends Controller
     }
 
     /**
-     *  Удалить строку из Footer Description
+     *  Удалить Белый фон
      */
-    public function actionFooterDescriptionSub()
+    public function actionClearWebp()
     {
 
-        $string = '<p>---------------------------
-                                                        </p>';
+        $path = Yii::getAlias('@frontend') . '/web/product/113';
 
-//        $products = Product::find()
-//            ->select(['id', 'footer_description'])
-//            ->all();
+//                dd($path);
 
-        $products = ProductsTranslate::find()
-            ->select(['id', 'footer_description'])
-            ->all();
+        $files = glob($path . '/*.webp');
 
-        foreach ($products as $product) {
-
-//            dd($product->footer_description);
-            if ($product->footer_description) {
-                if (str_contains($product->footer_description, $string)) {
-
-                    // Удаляем строку
-                    $product->footer_description = str_replace($string, '', $product->footer_description);
-
-                    // Сохраняем без валидации
-                    $product->save(false);
-
-                    echo " Обновлён товар ID: {$product->id}\n";
-                }
-            }
+        foreach ($files as $file) {
+            // удаляем фон + перезаписываем файл
+            $cmd = "magick convert \"$file\" -fuzz 10% -transparent white \"$file\"";
+            exec($cmd);
         }
+
+        return "Готово. Обработано файлов: " . count($files);
     }
+
 
     //======================================================
 

@@ -18,8 +18,8 @@ $imageClass = '';
             <?php endif; ?>
             <div class="products-list__item">
                 <div class="product-card product-card--hidden-actions <?= $background['class'] ?>">
-                    <?= $this->render('@frontend/views/_partials/quickview-button', ['product' => $product]) ?>
-                    <?= $this->render('@frontend/views/_partials/badges-list', ['product' => $product]) ?>
+                    <?= $this->render('/_partials/quickview-button', ['product' => $product]) ?>
+                    <?= $this->render('/_partials/badges-list', ['product' => $product]) ?>
                     <div class="product-card__image product-image">
                         <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                            class="product-image__body">
@@ -51,9 +51,7 @@ $imageClass = '';
                         </ul>
                     </div>
                     <div class="product-card__actions">
-
-                        <?= $this->render('@frontend/views/_partials/status', ['product' => $product]) ?>
-
+                        <?= $this->render('/_partials/status', ['product' => $product]) ?>
                         <?php if ($product->old_price == null) { ?>
                             <div class="product-card__prices">
                                 <?= Yii::$app->formatter->asCurrency($product->getPrice()) ?>
@@ -64,7 +62,7 @@ $imageClass = '';
                                 <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
                             </div>
                         <?php } ?>
-                        <?= $this->render('@frontend/views/_partials/add-to-cart-button', ['product' => $product]) ?>
+                        <?= $this->render('/_partials/add-to-cart-button', ['product' => $product]) ?>
                     </div>
                 </div>
             </div>

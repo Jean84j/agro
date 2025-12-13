@@ -59,14 +59,14 @@ $breadcrumbItemActive = Yii::t('app', 'Продукти запиту');
                         <?php endif; ?>
                         <div class="products-view__options">
                             <div class="view-options view-options--offcanvas--always">
-                                <?= $this->render('@frontend/views/_partials/products-sort', [
+                                <?= $this->render('/_partials/products-sort', [
                                     'products' => $products,
                                     'products_all' => $products_all,
                                 ]) ?>
                             </div>
                         </div>
-                        <?= $this->render('@frontend/views/_partials/products-list', ['products' => $products]) ?>
-                        <?= $this->render('@frontend/views/_partials/pagination', ['pages' => $pages]) ?>
+                        <?= $this->render('/_partials/products-list', ['products' => $products]) ?>
+                        <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         <br>
                         <div class="spec__disclaimer">
                             <?= $tag_name->getDescriptionTranslate($tag_name, $language) ?>

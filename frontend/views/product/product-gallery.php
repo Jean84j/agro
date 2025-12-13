@@ -27,7 +27,7 @@
                     <?php foreach ($images as $image) : ?>
                         <?php if ($webp_support == true && isset($image->webp_extra_extra_large)) { ?>
                             <div class="product-image product-image--location--gallery">
-                                <?= $this->render('@frontend/views/_partials/badges-list', [
+                                <?= $this->render('/_partials/badges-list', [
                                     'product' => $product,
                                     'products_analog_count' => $products_analog_count
                                 ]) ?>
@@ -41,7 +41,7 @@
                             </div>
                         <?php } else { ?>
                             <div class="product-image product-image--location--gallery">
-                                <?= $this->render('@frontend/views/_partials/badges-list', [
+                                <?= $this->render('/_partials/badges-list', [
                                     'product' => $product,
                                     'products_analog_count' => $products_analog_count
                                 ]) ?>
