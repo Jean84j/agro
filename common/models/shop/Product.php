@@ -7,6 +7,7 @@ use DateTime;
 use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\FileHelper;
 use yii\helpers\Url;
 use yii\i18n\Formatter;
 use yz\shoppingcart\CartPositionInterface;
@@ -676,7 +677,7 @@ class Product extends ActiveRecord implements CartPositionInterface
                 '12-05',
                 '01-15',
                 'card-background_image',
-                '/images/background-products-list/new_year_background.png'
+                '@webroot/images/background-products-list/new_year/'
             ],
 
             // Пример на будущее
@@ -695,6 +696,20 @@ class Product extends ActiveRecord implements CartPositionInterface
                 $start = new DateTime("$year-$startMd");
                 $end   = new DateTime(($year + 1) . "-$endMd");
             }
+
+            $path = Yii::getAlias($imageUrl);
+            $webroot = str_replace('\\', '/', Yii::getAlias('@webroot'));
+
+            $files = FileHelper::findFiles($path, [
+                'recursive' => 'false',
+            ]);
+
+            $relative = array_map(function ($file) use ($webroot) {
+                $file = str_replace('\\', '/', $file);
+                return str_replace($webroot, '', $file);
+            }, $files);
+
+            $imageUrl = $relative[array_rand($relative)];
 
             if ($now >= $start && $now <= $end) {
                 return [

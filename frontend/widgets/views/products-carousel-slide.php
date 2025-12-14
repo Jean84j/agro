@@ -42,7 +42,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                     <a href="<?= Url::to(['product/view', 'slug' => $product->slug]) ?>"
                                        class="product-image__body">
                                         <img class="product-image__img"
-                                             src="<?= $product->getImgOneLarge($product->getId()) ?>"
+                                             src="<?= $product->getImgOneLarge($product->id) ?>"
                                              width="180" height="180"
                                              alt="<?= $product->name ?>"
                                              loading="lazy">

@@ -17,7 +17,7 @@ $imageClass = '';
                 <?php $imageClass = 'grayscale'; ?>
             <?php endif; ?>
             <div class="products-list__item">
-                <div class="product-card product-card--hidden-actions <?= $background['class'] ?>">
+                <div class="product-card product-card--hidden-actions <?= $background['class'] ?>" style="  background-image: url('<?= $background['image']?>');">
                     <?= $this->render('/_partials/quickview-button', ['product' => $product]) ?>
                     <?= $this->render('/_partials/badges-list', ['product' => $product]) ?>
                     <div class="product-card__image product-image">
@@ -78,7 +78,6 @@ $imageClass = '';
     }
 
     .card-background_image {
-        background-image: url('<?= $background['image']?>');
         background-repeat: no-repeat;
         background-size: cover; /* contain | cover */
         background-position: bottom;
