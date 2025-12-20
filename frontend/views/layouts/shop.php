@@ -32,7 +32,7 @@ $hasNoIndex = false;
 
 if (str_contains($host, 'mail')){
     $hasNoIndex = true;
-    print_r('232323');
+    print_r($host);
 }
 
 foreach ($this->metaTags as $tag) {
