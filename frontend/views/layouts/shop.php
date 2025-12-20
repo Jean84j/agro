@@ -25,12 +25,17 @@ AppAsset::register($this);
 <title><?= Html::encode($this->title) ?></title>
 <?php $this->head() ?>
 <?php
+
+$host = Yii::$app->request->hostInfo;
 $page = Yii::$app->request->get('page');
 $hasNoIndex = false;
 foreach ($this->metaTags as $tag) {
 if (str_contains($tag, 'name="robots"')) {
 $hasNoIndex = true;
 break;
+}
+if (str_contains($host, 'mail')){
+$hasNoIndex = true;
 }
 }
 if (!$hasNoIndex) {
