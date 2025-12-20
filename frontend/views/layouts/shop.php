@@ -29,19 +29,23 @@ AppAsset::register($this);
 $host = Yii::$app->request->hostInfo;
 $page = Yii::$app->request->get('page');
 $hasNoIndex = false;
+
+if (str_contains($host, 'mail')){
+    $hasNoIndex = true;
+}
+
 foreach ($this->metaTags as $tag) {
 if (str_contains($tag, 'name="robots"')) {
 $hasNoIndex = true;
 break;
-}
-if (str_contains($host, 'mail')){
-$hasNoIndex = true;
 }
 }
 if (!$hasNoIndex) {
 if ($page !== null && intval($page) > 1) {
 $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 } elseif (Yii::$app->language == 'en') {
+$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
+} elseif (str_contains($host, 'mail')) {
 $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 }
 }
