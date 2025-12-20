@@ -47,6 +47,7 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 } elseif (Yii::$app->language == 'en') {
 $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 } elseif (str_contains($host, 'mail')) {
+    print_r($host . '_1');
 $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 }
 }
