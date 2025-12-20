@@ -26,38 +26,38 @@ AppAsset::register($this);
 <?php $this->head() ?>
 <?php
 
-$host = Yii::$app->request->hostInfo;
-$page = Yii::$app->request->get('page');
-$hasNoIndex = false;
+$request = Yii::$app->request;
 
-if (str_contains($host, 'mail')){
-    $hasNoIndex = true;
-    print_r($host);
+$host = $request->hostInfo;
+$page = (int)$request->get('page');
+
+$isMailHost = str_contains($host, 'mail');
+$isPaged = $page > 1;
+$isEnLang = Yii::$app->language === 'en';
+
+$hasRobotsMeta = array_reduce(
+    $this->metaTags,
+    fn ($carry, $tag) => $carry || str_contains($tag, 'name="robots"'),
+    false
+);
+
+$needNoIndex = $hasRobotsMeta || $isMailHost || $isPaged || $isEnLang;
+
+if (!$hasRobotsMeta && ($isPaged || $isEnLang)) {
+    $this->registerMetaTag([
+        'name'    => 'robots',
+        'content' => 'noindex, follow'
+    ]);
 }
 
-foreach ($this->metaTags as $tag) {
-if (str_contains($tag, 'name="robots"')) {
-$hasNoIndex = true;
-break;
+if ($needNoIndex) {
+    foreach ($this->linkTags as $key => $tag) {
+        if (str_contains($tag, 'rel="canonical"')) {
+            unset($this->linkTags[$key]);
+        }
+    }
 }
-}
-if (!$hasNoIndex) {
-if ($page !== null && intval($page) > 1) {
-$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
-} elseif (Yii::$app->language == 'en') {
-$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
-} elseif (str_contains($host, 'mail')) {
-    print_r($host . '_1');
-$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
-}
-}
-if ($hasNoIndex || ($page !== null && intval($page) > 1) || Yii::$app->language == 'en') {
-foreach ($this->linkTags as $key => $tag) {
-if (str_contains($tag, 'rel="canonical"')) {
-unset($this->linkTags[$key]);
-}
-}
-}
+
 ?>
 
 <?php if (isset(Yii::$app->params['alternateUrls'])): ?>
