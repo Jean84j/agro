@@ -38,7 +38,7 @@ class SubTopProducts extends Widget
                 'p.views' => SORT_ASC,        // сначала минимальные просмотры
                 'p.date_updated' => SORT_ASC, // потом давно не обновлялись
             ])
-            ->limit(11)
+            ->limit(10)
             ->asArray()
             ->all();
 
