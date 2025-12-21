@@ -9,7 +9,8 @@ use yii\console\Controller;
 use common\models\NpCity;
 use common\models\NpWarehouses;
 use LisDev\Delivery\NovaPoshtaApi2;
-use yii\db\Expression;
+use yii\db\Query;
+
 
 class CronController extends Controller
 {
@@ -280,7 +281,7 @@ class CronController extends Controller
      */
     public function actionAddCountViewsProduct()
     {
-        $rows = (new \yii\db\Query())
+        $rows = (new Query())
             ->select([
                 'p.id',
                 'COUNT(ap.id) as views'
