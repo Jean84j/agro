@@ -199,6 +199,42 @@ $seoRules = Yii::$app->params['seoRules'];
                 <li class="sa-filters__item">
                     <div class="sa-filters__item-title label-color-filter card"
                          data-sa-collapse-filter-trigger
+                         data-filter-id="views"
+                    >
+                        <span class="filter-name"><i class="fas fa-eye filter-icon"></i>Перегляди</span>
+                    </div>
+                    <div class="sa-filters__item-body"
+                         data-sa-collapse-filter-content
+                         style="max-height"
+                    >
+                        <ul class="list-unstyled m-0 mt-n2">
+                            <?php foreach ([
+                                               '0' => 'Без перегляду',
+                                               '1-5' => 'Від 1 до 5',
+                                               '6-20' => 'Від 6 до 20',
+                                               '21-50' => 'Від 21 до 50',
+                                               '51-100' => 'Від 51 до 100',
+                                               '100+' => 'Більше 100',
+                                           ] as $value => $label): ?>
+                                <li>
+                                    <label class="d-flex align-items-center pt-2">
+                                        <input
+                                                type="radio"
+                                                class="form-check-input m-0 me-3 fs-exact-16"
+                                                name="views"
+                                                value="<?= $value ?>"
+                                            <?= isset($filterParam['views']) && $filterParam['views'] == $value ? 'checked' : '' ?>
+                                        />
+                                        <?= $label ?>
+                                    </label>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </li>
+                <li class="sa-filters__item">
+                    <div class="sa-filters__item-title label-color-filter card"
+                         data-sa-collapse-filter-trigger
                          data-filter-id="brands"
                     >
                         <span class="filter-name"><i class="far fa-copyright filter-icon"></i>Бренди</span>
@@ -282,8 +318,6 @@ $seoRules = Yii::$app->params['seoRules'];
                         </div>
                     </div>
                 </li>
-
-
                 <li class="sa-filters__item">
                     <div class="sa-filters__item-title label-color-filter card"
                          data-sa-collapse-filter-trigger

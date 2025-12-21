@@ -49,7 +49,7 @@ class ProductSearch extends ProductsBackend
         $seoRules = Yii::$app->params['seoRules'];
 
         $query = ProductsBackend::find()
-        ->orderBy(['date_public' => SORT_DESC]);
+            ->orderBy(['date_public' => SORT_DESC]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -123,6 +123,34 @@ class ProductSearch extends ProductsBackend
 
         if (isset($params['package'])) {
             $query->andFilterWhere(['package' => $params['package']]);
+        }
+
+        if (isset($params['views'])) {
+            switch ($params['views']) {
+                case '0':
+                    $query->andWhere(['views' => 0]);
+                    break;
+
+                case '1-5':
+                    $query->andWhere(['between', 'views', 1, 5]);
+                    break;
+
+                case '6-20':
+                    $query->andWhere(['between', 'views', 6, 20]);
+                    break;
+
+                case '21-50':
+                    $query->andWhere(['between', 'views', 21, 50]);
+                    break;
+
+                case '51-100':
+                    $query->andWhere(['between', 'views', 51, 100]);
+                    break;
+
+                case '100+':
+                    $query->andWhere(['>', 'views', 100]);
+                    break;
+            }
         }
 
         if (isset($params['date-update'])) {
