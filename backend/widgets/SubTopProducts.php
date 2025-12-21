@@ -16,7 +16,6 @@ class SubTopProducts extends Widget
 
     public function run()
     {
-
         $monthsAgoTimestamp = strtotime('-5 months');
         $maxViews = 10; // максимум просмотров
 

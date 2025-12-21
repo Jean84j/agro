@@ -16,7 +16,6 @@ class TopProducts extends BaseWidgetBackend
 
     public function run()
     {
-
         $productsData = ProductsBackend::find()
             ->alias('p')
             ->select([

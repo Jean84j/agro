@@ -31,9 +31,11 @@ class RecentActivity extends BaseWidgetBackend
                     'p.id',
                     'pi.extra_small',
                 ])
-                ->leftJoin('product_image pi', 'pi.product_id = p.id')
+                ->leftJoin(
+                    ['pi' => '(SELECT product_id, MIN(extra_small) AS extra_small FROM product_image GROUP BY product_id)'],
+                    'pi.product_id = p.id'
+                )
                 ->where(['p.slug' => $result['slug']])
-                ->orderBy(['pi.priority' => SORT_ASC])
                 ->asArray()
                 ->one();
 
