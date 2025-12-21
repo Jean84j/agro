@@ -30,7 +30,10 @@ class SubTopProducts extends Widget
                 'p.views AS count',
                 'pi.extra_small AS image',
             ])
-            ->leftJoin('product_image pi', 'pi.product_id = p.id')
+            ->leftJoin(
+                ['pi' => '(SELECT product_id, MIN(extra_small) AS extra_small FROM product_image GROUP BY product_id)'],
+                'pi.product_id = p.id'
+            )
             ->where(['p.status_id' => 1])
             ->andWhere(['<', 'p.date_public', $monthsAgoTimestamp])
             ->andWhere(['<=', 'p.views', $maxViews])

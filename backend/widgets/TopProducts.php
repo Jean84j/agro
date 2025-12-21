@@ -25,7 +25,10 @@ class TopProducts extends BaseWidgetBackend
                 'p.views AS count',
                 'pi.extra_small AS image',
             ])
-            ->leftJoin('product_image pi', 'pi.product_id = p.id')
+            ->leftJoin(
+                ['pi' => '(SELECT product_id, MIN(extra_small) AS extra_small FROM product_image GROUP BY product_id)'],
+                'pi.product_id = p.id'
+            )
             ->orderBy(['p.views' => SORT_DESC])
             ->limit(10)
             ->asArray()
