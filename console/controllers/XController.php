@@ -4,6 +4,7 @@ namespace console\controllers;
 
 use backend\models\IpBot;
 use backend\models\ReportItem;
+use common\models\shop\ActivePages;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
@@ -240,6 +241,30 @@ class XController extends Controller
     }
 
 
+    /**
+     *  Добвить товарам количество просмотров
+     */
+    public function actionAddCountViewsProduct()
+    {
+        $rows = (new \yii\db\Query())
+            ->select([
+                'p.id',
+                'COUNT(ap.id) as views'
+            ])
+            ->from(['p' => Product::tableName()])
+            ->leftJoin(['ap' => ActivePages::tableName()], 'ap.url_page LIKE CONCAT("%", p.slug, "%")')
+            ->groupBy('p.id')
+            ->all();
+
+        foreach ($rows as $row) {
+            Product::updateAll(
+                ['views' => $row['views']],
+                ['id' => $row['id']]
+            );
+        }
+    }
+
+
     //======================================================
 
     /**
@@ -305,5 +330,6 @@ class XController extends Controller
             }
         }
     }
+
 
 }

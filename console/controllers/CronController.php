@@ -4,6 +4,7 @@ namespace console\controllers;
 
 use backend\models\IpBot;
 use common\models\shop\ActivePages;
+use common\models\shop\Product;
 use yii\console\Controller;
 use common\models\NpCity;
 use common\models\NpWarehouses;
@@ -273,5 +274,29 @@ class CronController extends Controller
             echo "\n\t" . "|#----->> " . '' . " | *** Города не найдены *** \n";
         }
     }
+
+    /**
+     *  Добвить товарам количество просмотров
+     */
+    public function actionAddCountViewsProduct()
+    {
+        $rows = (new \yii\db\Query())
+            ->select([
+                'p.id',
+                'COUNT(ap.id) as views'
+            ])
+            ->from(['p' => Product::tableName()])
+            ->leftJoin(['ap' => ActivePages::tableName()], 'ap.url_page LIKE CONCAT("%", p.slug, "%")')
+            ->groupBy('p.id')
+            ->all();
+
+        foreach ($rows as $row) {
+            Product::updateAll(
+                ['views' => $row['views']],
+                ['id' => $row['id']]
+            );
+        }
+    }
+
 }
 

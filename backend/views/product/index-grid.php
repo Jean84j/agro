@@ -148,7 +148,7 @@ $btnMob = false;
                                     $html .= '<li class="sa-meta__item"><i class="fas fa-edit"></i>: <span class="st-copy">' . Yii::$app->formatter->asDate($model->date_updated, 'php:d.m.Y') . '</span></li>';
 
 
-                                    $countProductView = $model->getProductView($model->slug);
+                                    $countProductView = $model->views;
                                     $html .= '<li class="sa-meta__item"><i class="fas fa-eye"></i>: <span class="st-copy"><span class="badge badge-sa-theme-view">' . $countProductView . '</span></span></li>';
 
                                     $analogProducts = $model->getProductsAnalog($model->id);
