@@ -208,7 +208,6 @@ class BaseWidgetBackend extends Widget
                 $url = str_replace('/product/', '', $url);
 
                 if (isset($uniqueUrls[$url])) {
-                    $uniqueUrls[$url]['count'] += 1;
                     if ($date > $uniqueUrls[$url]['date']) {
                         $uniqueUrls[$url]['date'] = $date;
                     }
@@ -216,7 +215,6 @@ class BaseWidgetBackend extends Widget
                     $uniqueUrls[$url] = [
                         'slug' => str_replace('/product/', '', $url),
                         'date' => $date,
-                        'count' => 1,
                     ];
                 }
             }

@@ -29,6 +29,7 @@ class RecentActivity extends BaseWidgetBackend
                 ->select([
                     'p.name',
                     'p.id',
+                    'p.views AS count',
                     'pi.extra_small',
                 ])
                 ->leftJoin(
@@ -42,6 +43,7 @@ class RecentActivity extends BaseWidgetBackend
             if ($productData) {
                 $result['name'] = $productData['name'];
                 $result['image'] = $productData['extra_small'];
+                $result['count'] = $productData['count'];
             }
         }
 
