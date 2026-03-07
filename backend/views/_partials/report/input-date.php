@@ -7,9 +7,9 @@
         <div class="col-sm-7">
             <input type="date" class="form-control" id="periodStart" name="periodStart"
                    value="<?= htmlspecialchars($periodStart) ?>"
-                   max="
-<!--                   --><?//= htmlspecialchars($periodEnd) ?>
-" required>
+                   max="<?= htmlspecialchars($periodEnd) ?>"
+                   min="<?= htmlspecialchars($minDataOrder) ?>"
+                   required>
         </div>
     </div>
     <div class="row mb-3">
@@ -17,9 +17,9 @@
         <div class="col-sm-7">
             <input type="date" class="form-control" id="periodEnd" name="periodEnd"
                    value="<?= htmlspecialchars($periodEnd) ?>"
-                   min="
-<!--                   --><?//= htmlspecialchars($periodStart) ?>
-" required>
+                   min="<?= htmlspecialchars($minDataOrder) ?>"
+                   max="<?= htmlspecialchars($periodEnd) ?>"
+                   required>
         </div>
     </div>
     <?php if (isset($budget)) : ?>

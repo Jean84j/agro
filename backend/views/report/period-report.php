@@ -13,6 +13,7 @@
 /** @var backend\controllers\ReportController $smallDiscount */
 /** @var backend\controllers\ReportController $smallDelivery */
 /** @var backend\controllers\ReportController $smallPlatform */
+/** @var backend\controllers\ReportController $minDataOrder */
 /** @var backend\controllers\ReportController $periodStart */
 /** @var backend\controllers\ReportController $periodEnd */
 /** @var backend\controllers\ReportController $bigAllQty */
@@ -50,6 +51,7 @@ $smallProfit = $smallSum
 $commonParams =
     [
         'action' => 'period-report',
+        'minDataOrder' => $minDataOrder,
         'periodStart' => $periodStart,
         'periodEnd' => $periodEnd
     ];

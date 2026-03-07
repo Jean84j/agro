@@ -231,6 +231,7 @@ class ReportController extends Controller
 
     public function actionPeriodReport()
     {
+        $minDataOrder = Report::find()->min('date_order');
         $periodEnd = Report::find()->max('date_order');
         $periodStart = (new DateTime($periodEnd))
             ->modify('-30 days')
@@ -365,6 +366,7 @@ class ReportController extends Controller
 
         return $this->render('period-report', [
             'model' => $models,
+            'minDataOrder' => $minDataOrder,
             'periodStart' => $periodStart,
             'periodEnd' => $periodEnd,
             'bigAllDelivery' => array_sum($bigAllDelivery),
