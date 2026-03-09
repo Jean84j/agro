@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'word',
             'counts_query',
             [
-                'class' => ActionColumn::class(),
+                'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, SearchWords $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
