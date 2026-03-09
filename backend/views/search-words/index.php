@@ -13,13 +13,11 @@ use yii\grid\GridView;
 $this->title = 'Search Words';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="search-words-index">
+
+
+<div class="search-words-index container">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Search Words', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -33,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'word',
             'counts_query',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class(),
                 'urlCreator' => function ($action, SearchWords $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
