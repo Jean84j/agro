@@ -3,6 +3,7 @@
 namespace console\controllers;
 
 use backend\models\IpBot;
+use backend\models\SearchWords;
 use common\models\shop\ActivePages;
 use common\models\shop\Product;
 use yii\console\Controller;
@@ -145,15 +146,15 @@ class CronController extends Controller
      * @param int $countIps Количество оставшихся IP
      * @param bool $isRobot Является ли IP роботом
      */
-         private function outputIpInfo($ip, $response, $countIps, $isRobot)
+    private function outputIpInfo($ip, $response, $countIps, $isRobot)
     {
         $status = $isRobot ? "-> ROBOT <-" : "not robot";
-        
+
         $countIps = str_pad($countIps, 6, ' ', STR_PAD_LEFT);
         $ip = str_pad($ip, 20, ' ', STR_PAD_RIGHT);
         $status = str_pad($status, 20, ' ', STR_PAD_RIGHT);
 
-            echo "\t $countIps\t\t $ip\t\t $status\t\t " . ($response['isp']) . "\n";
+        echo "\t $countIps\t\t $ip\t\t $status\t\t " . ($response['isp']) . "\n";
 
     }
 
@@ -296,6 +297,51 @@ class CronController extends Controller
                 ['views' => $row['views']],
                 ['id' => $row['id']]
             );
+        }
+    }
+
+    /**
+     *  Добвить слова с поиска
+     */
+    public function actionAddSearchWord()
+    {
+        $searchUrl = ActivePages::find()
+            ->where(['like', 'url_page', '/search/'])
+            ->all();
+        if ($searchUrl) {
+            $idUrl = [];
+            $words = [];
+            foreach ($searchUrl as $item) {
+                $idUrl[] = $item->id;
+                $query = parse_url($item->url_page, PHP_URL_QUERY);
+                parse_str($query, $params);
+
+                $q = trim($params['q'] ?? '');
+
+                if (!empty($q) && mb_strlen($q) >= 3) {
+                    $words[] = $q;
+                }
+            }
+
+            if ($words) {
+                foreach ($words as $word) {
+                    $searchWords = SearchWords::find()->where(['word' => $word])->one();
+
+                    if ($searchWords) {
+                        $searchWords->counts_query = $searchWords->counts_query + 1;
+                        $searchWords->save();
+                    } else {
+                        $model = new SearchWords();
+                        $model->word = $word;
+                        $model->counts_query = 1;
+                        $model->save();
+                    }
+                }
+
+                if ($idUrl) {
+                    ActivePages::deleteAll(['id' => $idUrl]);
+                }
+            }
         }
     }
 
