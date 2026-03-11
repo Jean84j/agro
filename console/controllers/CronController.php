@@ -218,7 +218,7 @@ class CronController extends Controller
         $cities = NpCity::find()
             ->select('ref')
             ->where(['city' => true])
-            ->limit(50)
+            ->limit(5)
             ->column();
 
         if ($cities) {
@@ -247,9 +247,9 @@ class CronController extends Controller
                                     print_r($warehouses_db->errors);
                                 }
                             } else {
-//                                echo "\t" . "|- " . $n . " | " . $model->description . " Сущесвует\n";
-//                                echo "\r+--------------------------------------------------------------------------------------------------------+\n";
-//                                $n++;
+                                echo "\t" . "|- " . $n . " | " . $model->description . " Сущесвует\n";
+                                echo "\r+--------------------------------------------------------------------------------------------------------+\n";
+                                $n++;
                             }
                         }
                     }
