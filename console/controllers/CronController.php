@@ -215,9 +215,12 @@ class CronController extends Controller
             'file_get_content' // Используемый механизм запроса: curl (default) | file_get_content
         );
 
+        $begin = true;
+        $end = false;
+
         $cities = NpCity::find()
             ->select('ref')
-            ->where(['city' => false])
+            ->where(['city' => $begin])
             ->limit(50)
             ->column();
 
@@ -264,7 +267,7 @@ class CronController extends Controller
             foreach ($cities as $ref) {
                 $model = NpCity::find()->where(['ref' => $ref])->one();
                 if ($model) {
-                    $model->city = true;
+                    $model->city = $end;
                     $model->save();
                 } else {
                     echo "\t" . "|#----->> " . '' . " | *** Город не найден *** \n";
