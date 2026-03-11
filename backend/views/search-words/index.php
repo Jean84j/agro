@@ -19,20 +19,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'word',
             'counts_query',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, SearchWords $model, $key, $index, $column) {
+                'urlCreator' => function ($action, SearchWords $model) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

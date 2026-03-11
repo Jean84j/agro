@@ -74,10 +74,10 @@ use yii\helpers\Url;
                                     <use xlink:href="/admin/images/sprite.svg#tasks-admin"/>
                                 </svg>
                             </span>
-                                                <span class="sa-nav__title <?= $textReminderClass ?>">
+                            <span class="sa-nav__title <?= $textReminderClass ?>">
                                 <?= Yii::t('app', 'Reminder') ?>
                             </span>
-                                                <span class="sa-nav__menu-item-badge badge
+                            <span class="sa-nav__menu-item-badge badge
                                                 <?= $eventBandageAnimColor ?> badge-sa-pill
                                                 <?= $eventBandageBackground ?>">
                                 <?= $countEvents ?>
@@ -389,7 +389,6 @@ use yii\helpers\Url;
                                             </span>
                     </a>
                     <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
-
                         <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
                             <a href="<?= Url::to(['/search-words']) ?>" class="sa-nav__link">
                                             <span class="sa-nav__icon">
@@ -400,7 +399,6 @@ use yii\helpers\Url;
                                 <span class="sa-nav__title"><?= Yii::t('app', 'Search word') ?></span>
                             </a>
                         </li>
-
                         <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
                             <a href="<?= Url::to(['/brand']) ?>" class="sa-nav__link">
                                             <span class="sa-nav__icon">
@@ -588,6 +586,7 @@ use yii\helpers\Url;
         display: inline-block;
         transform-origin: center;
     }
+
     .text-reminder-red {
         color: #f50707 !important;
     }
