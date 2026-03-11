@@ -217,7 +217,7 @@ class CronController extends Controller
 
         $cities = NpCity::find()
             ->select('ref')
-            ->where(['city' => true])
+            ->where(['city' => false])
             ->limit(5)
             ->column();
 
@@ -264,7 +264,7 @@ class CronController extends Controller
             foreach ($cities as $ref) {
                 $model = NpCity::find()->where(['ref' => $ref])->one();
                 if ($model) {
-                    $model->city = false;
+                    $model->city = true;
                     $model->save();
                 } else {
                     echo "\t" . "|#----->> " . '' . " | *** Город не найден *** \n";
