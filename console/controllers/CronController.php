@@ -218,7 +218,7 @@ class CronController extends Controller
         $cities = NpCity::find()
             ->select('ref')
             ->where(['city' => false])
-            ->limit(5)
+            ->limit(50)
             ->column();
 
         if ($cities) {
