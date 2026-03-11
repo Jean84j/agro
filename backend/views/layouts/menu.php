@@ -389,6 +389,18 @@ use yii\helpers\Url;
                                             </span>
                     </a>
                     <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
+
+                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
+                            <a href="<?= Url::to(['/search-words']) ?>" class="sa-nav__link">
+                                            <span class="sa-nav__icon">
+                                              <svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#search"/>
+                                              </svg>
+                                            </span>
+                                <span class="sa-nav__title"><?= Yii::t('app', 'Search word') ?></span>
+                            </a>
+                        </li>
+
                         <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
                             <a href="<?= Url::to(['/brand']) ?>" class="sa-nav__link">
                                             <span class="sa-nav__icon">
