@@ -8,6 +8,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * IpBotController implements the CRUD actions for IpBotSearch model.
@@ -132,4 +133,15 @@ class IpBotController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    /**
+     * Проверка ip при вводе на уникальность.
+     */
+    public function actionCheckIp($ip)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $exists = IpBot::find()->where(['ip' => $ip])->exists();
+        return ['exists' => $exists];
+    }
+
 }

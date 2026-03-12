@@ -8,7 +8,6 @@ use kartik\form\ActiveForm;
 /** @var backend\models\IpBot $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
 <div class="ip-bot-form">
     <?php $form = ActiveForm::begin(); ?>
     <div id="top" class="sa-app__body">
@@ -36,7 +35,7 @@ use kartik\form\ActiveForm;
                                                 class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2>
                                     </div>
                                     <div class="mb-4">
-                                        <?= $form->field($model, 'ip')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($model, 'ip')->textInput(['id' => 'ip_bot','maxlength' => true]) ?>
                                     </div>
                                     <div class="mb-4">
                                         <?= $form->field($model, 'isp')->textInput(['maxlength' => true]) ?>
@@ -57,3 +56,29 @@ use kartik\form\ActiveForm;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+
+<?php
+$url = Url::to(['ip-bot/check-ip']);
+
+$js = <<<JS
+$('#ip_bot').on('input', function() {
+    var ip = $(this).val();
+    if (ip.length > 0) {
+        $.ajax({
+            url: '$url',
+            data: {ip: ip},
+            success: function(data) {
+                if (data.exists) {
+                    $('#ip_bot').css('background-color', '#e9544e5c');
+                } else {
+                    $('#ip_bot').css('background-color', '#4ee95e5c');
+                }
+            }
+        });
+    } else {
+        $('#ip_bot').css('background-color', '');
+    }
+});
+JS;
+$this->registerJs($js);
+?>
