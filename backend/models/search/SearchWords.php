@@ -48,7 +48,7 @@ class SearchWords extends SearchWordsModel
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pagesize' => false,
+                'pageSize' => 20,
             ]
         ]);
 
