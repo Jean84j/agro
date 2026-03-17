@@ -50,11 +50,12 @@ class BlogsController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('blogs');
         $type = 'website';
+        $url = $this->request->hostInfo . $this->request->url;
+        $url = strtok($url, '?');
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        $url = Url::canonical();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         $files = $this->getRelativeFiles('@webroot/images/blogs');

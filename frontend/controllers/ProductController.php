@@ -12,6 +12,7 @@ use common\models\shop\ProductPackaging;
 use common\models\shop\ProductProperties;
 use common\models\shop\Review;
 use common\models\shop\Brand;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
@@ -111,11 +112,13 @@ class ProductController extends Controller
         Yii::$app->params['product'] = $schemaProduct->toScript();
 
         $type = 'product';
+        $url = $this->request->hostInfo . $this->request->url;
+        $url = strtok($url, '?');
         $title = $product->seo_title;
         $description = $product->seo_description;
         $image = $product->getImgSeo($product->id);
         $keywords = $product->keywords;
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         $this->setAlernateUrl($slug);
 

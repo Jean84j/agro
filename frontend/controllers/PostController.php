@@ -91,11 +91,13 @@ class PostController extends Controller
         Yii::$app->params['post'] = $schemaPost->toScript();
 
         $type = 'article';
+        $url = $this->request->hostInfo . $this->request->url;
+        $url = strtok($url, '?');
         $title = $postItem->seo_title;
         $description = $postItem->seo_description;
         $image = '/posts/' . $postItem->image;
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         $this->setAlernateUrl($slug);
 

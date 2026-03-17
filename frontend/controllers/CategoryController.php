@@ -40,11 +40,13 @@ class CategoryController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('catalog');
         $type = 'website';
+        $url = $this->request->hostInfo . $this->request->url;
+        $url = strtok($url, '?');
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         $files = $this->getRelativeFiles('@webroot/images/catalog-categories');
 
@@ -100,11 +102,13 @@ class CategoryController extends BaseFrontendController
         }
 
         $type = 'website';
+        $url = $this->request->hostInfo . $this->request->url;
+        $url = strtok($url, '?');
         $title = $category->pageTitle;
         $description = $category->metaDescription;
         $image = '/images/category/' . $category->file;
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         $this->setChildrenProductSchema($category);
 
@@ -244,11 +248,12 @@ class CategoryController extends BaseFrontendController
         $this->setCatalogProductSchema($category, $products_all);
 
         $type = 'product.group';
+        $url = $this->request->hostInfo . $this->request->url;
+        $url = strtok($url, '?');
         $title = $category->pageTitle;
         $description = $category->metaDescription;
         $image = '/images/category/' . $category->file;
         $keywords = '';
-        $url = Url::canonical();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         return $this->render('catalog',
@@ -348,11 +353,12 @@ class CategoryController extends BaseFrontendController
         $this->setAuxiliaryCatalogProductSchema($category, $products_all, $productsId);
 
         $type = 'product.group';
+        $url = $this->request->hostInfo . $this->request->url;
+        $url = strtok($url, '?');
         $title = $category->pageTitle;
         $description = $category->metaDescription;
         $image = '/images/auxiliary-categories/' . $category->image;
         $keywords = '';
-        $url = Url::canonical();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         return $this->render('view',
