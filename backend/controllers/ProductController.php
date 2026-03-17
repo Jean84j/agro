@@ -1393,7 +1393,7 @@ class ProductController extends Controller
                     ->asArray()
                     ->all();
 
-                $categoryWordsFiltered = array_udiff($categoryWordsUnique, $productWords, function($a, $b) {
+                $categoryWordsFiltered = array_udiff($categoryWordsUnique, $productWords, function ($a, $b) {
                     return $a['uk_word'] <=> $b['uk_word'];
                 });
 
@@ -1442,6 +1442,37 @@ class ProductController extends Controller
                 return true;
             }
         }
+    }
+
+    /**
+     * Смена цены Ajax.
+     */
+    public function actionUpdatePriceAjax()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+        $price = Yii::$app->request->post('price');
+
+        if (!$id) {
+            return ['success' => false];
+        }
+
+        $model = ProductsBackend::findOne($id);
+
+        if (!$model) {
+            return ['success' => false];
+        }
+
+        $model->price = $price;
+        $model->old_price = null;
+        $model->date_updated = time();
+
+        if ($model->save()) {
+            return ['success' => true];
+        }
+
+        return ['success' => false];
     }
 
 }

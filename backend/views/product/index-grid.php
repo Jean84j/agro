@@ -131,7 +131,7 @@ $btnMob = false;
                                             if ($model->$method()) {
                                                 $html .= $this->render('@backend/views/_partials/warning-product', [
                                                     'title' => $title,
-                                                    'fill'  => $fill,
+                                                    'fill' => $fill,
                                                 ]);
                                             }
                                         }
@@ -142,9 +142,9 @@ $btnMob = false;
                                     $html .= '<div class="sa-meta mt-0"><ul class="sa-meta__list">';
 
                                     $html .= '<li class="sa-meta__item">ID: <span class="st-copy">' . $model->id . '</span></li>';
-                                    
+
                                     $html .= '<li class="sa-meta__item"><i class="fas fa-indent"></i>: <span class="st-copy">' . Yii::$app->formatter->asDate($model->date_public, 'php:d.m.Y') . '</span></li>';
-                                    
+
                                     $html .= '<li class="sa-meta__item"><i class="fas fa-edit"></i>: <span class="st-copy">' . Yii::$app->formatter->asDate($model->date_updated, 'php:d.m.Y') . '</span></li>';
 
 
@@ -182,6 +182,15 @@ $btnMob = false;
                                 },
                             ],
                             [
+                                'attribute' => 'category',
+                                'label' => 'Категорія',
+                                'filter' => false,
+                                'format' => 'raw',
+                                'value' => function ($model) {
+                                    return '<strong>' . $model->category->name . '</strong>';
+                                },
+                            ],
+                            [
                                 'attribute' => 'status',
                                 'label' => 'Статус',
                                 'filter' => false,
@@ -210,26 +219,23 @@ $btnMob = false;
                                 },
                             ],
                             [
-                                'attribute' => 'category',
-                                'label' => 'Категорія',
-                                'filter' => false,
-                                'format' => 'raw',
-                                'value' => function ($model) {
-                                    return '<strong>' . $model->category->name . '</strong>';
-                                },
-                            ],
-                            [
                                 'attribute' => 'price',
-                                'filter' => false,
                                 'format' => 'raw',
+                                'filter' => false,
                                 'value' => function ($model) {
-                                    $price = $model->getPrice();
-                                    return '<span style = "font-weight: bold">' . $price . '</span>';
+                                    return '<input 
+                                            type="number" 
+                                            step="0.1"
+                                            class="form-control js-price-input" 
+                                            value="' . $model->price . '" 
+                                            data-id="' . $model->id . '"
+                                            style="width:100px; font-weight:600"
+                                        >';
                                 },
                             ],
                             [
                                 'class' => ActionColumn::class,
-                                'urlCreator' => function ($action, ProductsBackend $model, $key, $index, $column) {
+                                'urlCreator' => function ($action, ProductsBackend $model) {
                                     return Url::toRoute([$action, 'id' => $model->id, 'selection' => $model->id]);
                                 }
                             ],
@@ -241,6 +247,9 @@ $btnMob = false;
         </div>
     </div>
 </div>
+
+<div id="price-url" data-url="<?= Yii::$app->urlManager->createUrl(['product/update-price-ajax']); ?>"></div>
+
 <style>
     .summary-info {
         font-size: 18px;
@@ -250,6 +259,38 @@ $btnMob = false;
 </style>
 <?php
 $script = <<< JS
+
+$(document).on('change', '.js-price-input', function () {
+    let input = $(this);
+    let url = $('#price-url').data('url');
+    let id = input.data('id');
+    let price = input.val();
+    
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            id: id,
+            price: price,
+        },
+        success: function (res) {
+            input.css('background', '#d4edda'); // зеленый
+            setTimeout(() => input.css('background', ''), 500);
+        },
+        error: function () {
+            input.css('background', '#f8d7da'); // красный
+        }
+    });
+});
+
+// Enter = сохранить
+$(document).on('keypress', '.js-price-input', function (e) {
+    if (e.which == 13) {
+        $(this).trigger('change');
+    }
+});
+
+
 
  document.getElementById('excelFileInput').addEventListener('change', function () {
 // Получите выбранный файл
