@@ -274,11 +274,11 @@ $(document).on('change', '.js-price-input', function () {
             price: price,
         },
         success: function (res) {
-            input.css('background', '#d4edda'); // зеленый
+            input.css('background', '#50e373'); // зеленый
             setTimeout(() => input.css('background', ''), 500);
         },
         error: function () {
-            input.css('background', '#f8d7da'); // красный
+            input.css('background', '#da4755'); // красный
         }
     });
 });
