@@ -830,7 +830,7 @@ class Product extends ActiveRecord implements CartPositionInterface
         }
         return Schema::product()
             ->name($this->name)
-            ->url(Yii::$app->request->absoluteUrl)
+            ->url(Url::canonical())
             ->image($this->getSchemaImg($this->id))
             ->description(strip_tags($this->short_description))
             ->sku($this->sku)
@@ -841,7 +841,7 @@ class Product extends ActiveRecord implements CartPositionInterface
                 ->ratingValue($this->getSchemaRating($this->id))
                 ->reviewCount($this->getSchemaCountReviews($this->id)))
             ->offers(Schema::offer()
-                ->url(Yii::$app->request->absoluteUrl)
+                ->url(Url::canonical())
                 ->image($this->getSchemaImg($this->id))
                 ->priceCurrency("UAH")
                 ->price($this->getPrice())

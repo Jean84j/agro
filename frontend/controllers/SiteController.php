@@ -9,6 +9,7 @@ use frontend\models\VerifyEmailForm;
 use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -99,7 +100,7 @@ class SiteController extends Controller
                 ->telephone('+3(066)394-18-28')
                 ->areaServed('UA')
                 ->contactType('customer service')
-                ->url(Yii::$app->request->absoluteUrl)
+                ->url(Url::canonical())
                 ->hoursAvailable(Schema::openingHoursSpecification()
                     ->opens('9:00')
                     ->closes('19:00')
@@ -126,7 +127,7 @@ class SiteController extends Controller
         $homepage = Schema::WebPage()
             ->name($seo->title)
             ->description($seo->description)
-            ->url(Yii::$app->request->absoluteUrl);
+            ->url(Url::canonical());
         Yii::$app->params['webPage'] = $homepage->toScript();
 
         $type = 'website';

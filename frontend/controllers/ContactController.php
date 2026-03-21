@@ -7,6 +7,7 @@ use common\models\Messages;
 use common\models\Settings;
 use Spatie\SchemaOrg\Schema;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -82,7 +83,7 @@ class ContactController extends Controller
                 ->telephone('+3(066)394-18-28')
                 ->areaServed('UA')
                 ->contactType('customer service')
-                ->url(Yii::$app->request->absoluteUrl)
+                ->url(Url::canonical())
                 ->hoursAvailable(Schema::openingHoursSpecification()
                     ->opens($opens)
                     ->closes($closes)
