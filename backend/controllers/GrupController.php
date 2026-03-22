@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use backend\models\ProductsBackend;
 use common\models\shop\Grup;
 use backend\models\search\GrupSearch;
+use common\models\shop\ProductGrup;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -94,12 +96,17 @@ class GrupController extends Controller
     {
         $model = $this->findModel($id);
 
+        $productsId = ProductGrup::find()->select('product_id')->where(['grup_id' => $id])->column();
+
+        $products = ProductsBackend::find()->where(['id' => $productsId])->all();
+
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['update', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'products' => $products,
         ]);
     }
 
