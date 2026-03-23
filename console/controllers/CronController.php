@@ -154,8 +154,9 @@ class CronController extends Controller
         $countIps = str_pad($countIps, 6, ' ', STR_PAD_LEFT);
         $ip = str_pad($ip, 20, ' ', STR_PAD_RIGHT);
         $status = str_pad($status, 20, ' ', STR_PAD_RIGHT);
-
-        echo "\t $countIps\t\t $ip\t\t $status\t\t " . ($response['isp']) . "\n";
+        if ($status == '-> ROBOT <-') {
+            echo "\t $countIps\t\t $ip\t\t $status\t\t " . ($response['isp']) . "\n";
+        }
 
     }
 
@@ -341,7 +342,6 @@ class CronController extends Controller
                         $model->save();
 
                         Console::output("\n🔎 --> : " . ' ' . $word);
-
                     }
                 }
 
@@ -365,10 +365,10 @@ class CronController extends Controller
             ->all();
 
         if ($urls) {
+            Console::output("\t 🗑️ *** Убрать лишние ссылки ***");
             foreach ($urls as $url) {
-
                 if ($url->delete()) {
-                    Console::output("❌ [ID: {$url->id}] «{$url->url_page}»: Статус: {$url->status_serv}");
+                    Console::output("\n ❌ [ID: {$url->id}] «{$url->url_page}»: Статус: {$url->status_serv}");
                 }
             }
         }
@@ -399,6 +399,7 @@ class CronController extends Controller
             }
         }
         if (count($matchedIds) != 0) {
+            Console::output("\t🔎 *** Убрать дубли ссылок ***");
             Console::output("\n🔎 Збіги знайдено: " . count($matchedIds));
 
             $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
@@ -439,7 +440,11 @@ class CronController extends Controller
         // удаляем всё лишнее
         SearchWords::deleteAll(['not in', 'id', $idsToKeep]);
         if ((count($words) - count($idsToKeep) != 0)) {
-            echo "Удалено: " . (count($words) - count($idsToKeep));
+            $count = count($words) - count($idsToKeep);
+            Console::output("\t🗑️ *** Убрать дубликаты поисковых слов ***");
+            Console::output("\n");
+            Console::output("\n Удалено слов: {$count} ");
+
         }
     }
 
