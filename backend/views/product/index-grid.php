@@ -159,7 +159,7 @@ $btnMob = false;
                                     if ($model->grups) {
                                         $html .= '<li class="sa-meta__item"><i class="fas fa-layer-group"></i>: <span class="st-copy">';
                                         foreach ($model->grups as $grup) {
-                                            $html .= '<span class="badge badge-sa-secondary-grup">' . $grup->name . '</span>';
+                                            $html .= '<span class="badge badge-sa-secondary-grup indent">' . $grup->name . '</span>';
                                         }
                                         $html .= '</span></li>';
                                     }
@@ -171,7 +171,7 @@ $btnMob = false;
                                     if ($model->tags) {
                                         $html .= '<li class="sa-meta__item"><i class="fas fa-tags"></i>: <span class="st-copy">';
                                         foreach ($model->tags as $tag) {
-                                            $html .= '<span class="badge badge-sa-secondary">' . $tag->name . '</span>';
+                                            $html .= '<span class="badge badge-sa-secondary indent">' . $tag->name . '</span>';
                                         }
                                         $html .= '</span></li>';
                                     }
@@ -251,6 +251,11 @@ $btnMob = false;
 <div id="price-url" data-url="<?= Yii::$app->urlManager->createUrl(['product/update-price-ajax']); ?>"></div>
 
 <style>
+
+    .indent {
+        margin-right: 3px;
+    }
+
     .summary-info {
         font-size: 18px;
         font-weight: bold;
