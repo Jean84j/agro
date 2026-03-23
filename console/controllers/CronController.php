@@ -339,6 +339,9 @@ class CronController extends Controller
                         $model->word = $word;
                         $model->counts_query = 1;
                         $model->save();
+
+                        Console::output("\n🔎 --> : " . ' ' . $word);
+
                     }
                 }
 
@@ -365,10 +368,7 @@ class CronController extends Controller
             foreach ($urls as $url) {
 
                 if ($url->delete()) {
-                    Console::output(Console::ansiFormat(
-                        "❌ [ID: {$url->id}] «{$url->url_page}»: Статус: {$url->status_serv}",
-                        [Console::FG_YELLOW, Console::BOLD]
-                    ));
+                    Console::output("❌ [ID: {$url->id}] «{$url->url_page}»: Статус: {$url->status_serv}");
                 }
             }
         }
@@ -395,10 +395,7 @@ class CronController extends Controller
             if ($current['ip_user'] === $next['ip_user'] && $current['url_page'] === $next['url_page']) {
                 $matchedIds[] = $current['id'];
 
-                Console::output(Console::ansiFormat(
-                    "✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})",
-                    [Console::FG_GREEN]
-                ));
+                Console::output("✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
             }
         }
         if (count($matchedIds) != 0) {
@@ -406,10 +403,7 @@ class CronController extends Controller
 
             $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
 
-            Console::output(Console::ansiFormat(
-                "\n🗑️ Видалено записів: {$deleted}",
-                [Console::FG_RED, Console::BOLD]
-            ));
+            Console::output("\n🗑️ Видалено записів: {$deleted}");
         }
     }
 
