@@ -407,5 +407,41 @@ class CronController extends Controller
         }
     }
 
+    /**
+     *  Убрать дубликаты поисковых слов
+     */
+    public function actionDeleteDuplicateWord()
+    {
+        $words = SearchWords::find()->asArray()->all();
+
+        usort($words, fn($a, $b) => mb_strlen($b['word']) - mb_strlen($a['word']));
+
+        $result = [];
+
+        foreach ($words as $item) {
+            $found = false;
+
+            foreach ($result as $r) {
+                if (mb_strpos($r['word'], $item['word']) !== false) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $result[] = $item;
+            }
+        }
+
+        // оставляем только нужные ID
+        $idsToKeep = array_column($result, 'id');
+
+        // удаляем всё лишнее
+        SearchWords::deleteAll(['not in', 'id', $idsToKeep]);
+        if ((count($words) - count($idsToKeep) != 0)) {
+            echo "Удалено: " . (count($words) - count($idsToKeep));
+        }
+    }
+
 }
 
