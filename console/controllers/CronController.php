@@ -388,23 +388,27 @@ class CronController extends Controller
 
         $matchedIds = [];
 
+        $k = 0;
         for ($i = 0; $i < count($pages) - 1; $i++) {
             $current = $pages[$i];
             $next = $pages[$i + 1];
 
             if ($current['ip_user'] === $next['ip_user'] && $current['url_page'] === $next['url_page']) {
                 $matchedIds[] = $current['id'];
-
-                Console::output("✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
+                if ($k == 0) {
+                    Console::output("\t 🔎 *** Убрать дубли ссылок ***");
+                    $k++;
+                }
+                Console::output("\n ✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
             }
         }
         if (count($matchedIds) != 0) {
-            Console::output("\t🔎 *** Убрать дубли ссылок ***");
-            Console::output("\n🔎 Збіги знайдено: " . count($matchedIds));
+
+            Console::output("\n 🔎 Збіги знайдено: " . count($matchedIds));
 
             $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
 
-            Console::output("\n🗑️ Видалено записів: {$deleted}");
+            Console::output("\n 🗑️ Видалено записів: {$deleted}");
         }
     }
 
