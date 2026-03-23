@@ -7,9 +7,11 @@ use common\models\shop\Grup;
 use backend\models\search\GrupSearch;
 use common\models\shop\ProductGrup;
 use Yii;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * GrupController implements the CRUD actions for Grup model.
@@ -139,4 +141,33 @@ class GrupController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function actionDeleteProductGroup()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (!Yii::$app->request->isPost) {
+            throw new BadRequestHttpException('Некорректный запрос.');
+        }
+
+        $id = Yii::$app->request->post('id');
+        $productId = Yii::$app->request->post('productId');
+
+        if (!$id || !$productId) {
+            return ['success' => false, 'error' => 'Недостаточно данных.'];
+        }
+
+        $model = ProductGrup::find()->where(['product_id' => $productId])->andWhere(['grup_id' => $id])->one();
+        $model->delete();
+
+        $productsId = ProductGrup::find()->select('product_id')->where(['grup_id' => $id])->column();
+
+        $products = ProductsBackend::find()->where(['id' => $productsId])->all();
+
+        return [
+            'success' => true,
+            'group' => $this->renderPartial('_products-table', ['products' => $products, 'id' => $id]),
+        ];
+    }
+
 }

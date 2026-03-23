@@ -44,71 +44,7 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <?php if (isset($products)): ?>
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-striped mb-0">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Фото</th>
-                                    <th scope="col">Товар</th>
-                                    <th scope="col">Статус</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php $i = 1;
-                                foreach ($products as $product): ?>
-                                    <?php switch ($product->status_id) {
-                                        case 1:
-                                            $color = 'success';
-                                            break;
-                                        case 2:
-                                            $color = 'danger';
-                                            break;
-                                        case 3:
-                                            $color = 'warning';
-                                            break;
-                                        case 4:
-                                            $color = 'info';
-                                            break;
-
-                                        default:
-                                            $color = 'secondary';
-                                    } ?>
-
-                                    <tr>
-                                        <td><?= $i ?></td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <a href="#" class="me-4">
-                                                    <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg">
-                                                        <img src="<?= isset($product->images[0])
-                                                            ? Url::to('/product/' . $product->images[0]->extra_small, true)
-                                                            : Url::to('/images/no-image.png', true) ?>"
-                                                             width="40" height="40" alt=""/>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <?php
-                                            $url = Url::to(['product/update', 'id' => $product->id]);
-                                            ?>
-                                            <a href="<?= $url ?>" class="text-reset" style="font-weight: bold;">
-                                                <?= $product->name ?>
-                                            </a>
-                                        </td>
-
-                                        <td><?= '<div class="badge badge-sa-' . $color . '">' . $product->status->name ?? '—' . '</div>' ?></td>
-
-                                    </tr>
-                                    <?php $i++; ?>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <?= $this->render('products', ['products' => $products, 'groupId' => $model->id]); ?>
                 <?php endif; ?>
             </div>
         </div>
