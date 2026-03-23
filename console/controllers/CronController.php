@@ -11,6 +11,7 @@ use common\models\NpCity;
 use common\models\NpWarehouses;
 use LisDev\Delivery\NovaPoshtaApi2;
 use yii\db\Query;
+use yii\helpers\Console;
 
 
 class CronController extends Controller
@@ -345,6 +346,37 @@ class CronController extends Controller
                     ActivePages::deleteAll(['id' => $idUrl]);
                 }
             }
+        }
+    }
+
+    /**
+     *  Убрать лишние ссылки
+     */
+    public function actionDeleteUnknownTransitions()
+    {
+
+        $urls = ActivePages::find()
+            ->where(['client_from' => 'Не известно'])
+            ->andWhere(['status_serv' => '200'])
+            ->limit(1000)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->all();
+
+        if ($urls) {
+            foreach ($urls as $url) {
+
+                if ($url->delete()) {
+                    Console::output(Console::ansiFormat(
+                        "❌ [ID: {$url->id}] «{$url->url_page}»: Статус: {$url->status_serv}",
+                        [Console::FG_YELLOW, Console::BOLD]
+                    ));
+                }
+            }
+        } else {
+            Console::output(Console::ansiFormat(
+                "❌ Нет результатов",
+                [Console::FG_RED, Console::BOLD]
+            ));
         }
     }
 

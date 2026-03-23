@@ -9,7 +9,6 @@ use common\models\shop\CategoriesProperties;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductPropertiesTranslate;
-use common\models\shop\ProductsTranslate;
 use common\models\shop\ProductTag;
 use common\models\shop\PropertiesNameTranslate;
 use Yii;
@@ -330,6 +329,5 @@ class XController extends Controller
             }
         }
     }
-
 
 }
