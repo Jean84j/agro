@@ -2,15 +2,12 @@
 
 namespace console\controllers;
 
-use common\models\shop\Product;
-use common\models\shop\Review;
-use Faker\Factory;
 use Yii;
-use yii\base\BaseObject;
+use yii\console\Controller;
 use yii\console\ExitCode;
 use yii\helpers\Console;
 
-class DbController extends \yii\console\Controller
+class DbController extends Controller
 {
 
     /**

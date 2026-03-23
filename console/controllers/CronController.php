@@ -354,7 +354,6 @@ class CronController extends Controller
      */
     public function actionDeleteUnknownTransitions()
     {
-
         $urls = ActivePages::find()
             ->where(['client_from' => 'Не известно'])
             ->andWhere(['status_serv' => '200'])
@@ -372,11 +371,6 @@ class CronController extends Controller
                     ));
                 }
             }
-        } else {
-            Console::output(Console::ansiFormat(
-                "❌ Нет результатов",
-                [Console::FG_RED, Console::BOLD]
-            ));
         }
     }
 
@@ -385,18 +379,12 @@ class CronController extends Controller
      */
     public function actionDeleteDuplicateUrl()
     {
-        // Отримуємо всі записи, упорядковані за id
         $pages = ActivePages::find()
             ->select(['id', 'ip_user', 'url_page'])
             ->orderBy(['id' => SORT_DESC])
             ->limit(1000)
             ->asArray()
             ->all();
-
-        if (count($pages) < 2) {
-            Console::output("Недостатньо записів для порівняння.");
-            return;
-        }
 
         $matchedIds = [];
 
@@ -413,16 +401,16 @@ class CronController extends Controller
                 ));
             }
         }
-        // Підсумок
-        Console::output("\n🔎 Збіги знайдено: " . count($matchedIds));
+        if (count($matchedIds) != 0) {
+            Console::output("\n🔎 Збіги знайдено: " . count($matchedIds));
 
-        // Видалення знайдених записів
-        $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
+            $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
 
-        Console::output(Console::ansiFormat(
-            "\n🗑️ Видалено записів: {$deleted}",
-            [Console::FG_RED, Console::BOLD]
-        ));
+            Console::output(Console::ansiFormat(
+                "\n🗑️ Видалено записів: {$deleted}",
+                [Console::FG_RED, Console::BOLD]
+            ));
+        }
     }
 
 }
