@@ -360,7 +360,7 @@ class CronController extends Controller
         $urls = ActivePages::find()
             ->where(['client_from' => 'Не известно'])
             ->andWhere(['status_serv' => '200'])
-            ->limit(1000)
+            ->limit(300)
             ->orderBy(['date_visit' => SORT_DESC])
             ->all();
 
@@ -382,7 +382,7 @@ class CronController extends Controller
         $pages = ActivePages::find()
             ->select(['id', 'ip_user', 'url_page'])
             ->orderBy(['id' => SORT_DESC])
-            ->limit(1000)
+            ->limit(300)
             ->asArray()
             ->all();
 
