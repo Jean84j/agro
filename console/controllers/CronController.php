@@ -365,10 +365,10 @@ class CronController extends Controller
             ->all();
 
         if ($urls) {
-            Console::output("\t 🗑️ *** Убрать лишние ссылки ***");
+            Console::output("\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
-                    Console::output("\n ❌ [ID: {$url->id}] «{$url->url_page}»: Статус: {$url->status_serv}");
+                    Console::output("\n ❌ [IP: {$url->ip}] «{$url->url_page}»: Статус: {$url->status_serv}");
                 }
             }
         }
