@@ -368,7 +368,7 @@ class CronController extends Controller
             Console::output("\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
-                    Console::output("\n ❌ [IP: {$url->ip}] «{$url->url_page}»: Статус: {$url->status_serv}");
+                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
                 }
             }
         }
