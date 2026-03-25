@@ -1,6 +1,5 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -40,6 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th class="min-w-15x"><?= Yii::t('app', 'Parent ID') ?></th>
                         <th class="min-w-15x"><?= Yii::t('app', 'name') ?></th>
                         <th class="min-w-15x"><?= Yii::t('app', 'Date updated') ?></th>
+                        <th><?= Yii::t('app', 'H1') ?></th>
+                        <th><?= Yii::t('app', 'K_W') ?></th>
                         <th><?= Yii::t('app', 'visibility') ?></th>
                         <th class="w-min" data-orderable="false"></th>
                     </tr>
@@ -66,6 +67,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                    class="text-reset"><?= $model->name ?></a></td>
                             <td>
                                 <?php echo $model->getDateUpdated($model->date_updated) ?>
+                            </td>
+                            <td>
+                                <?= $model->h1 ? '<div class="badge badge-sa-info">YES</div>' : '<div class="badge badge-sa-danger">NO</div>' ?>
+                            </td>
+                            <td>
+                                <?= $model->keywords ? '<div class="badge badge-sa-info">YES</div>' : '<div class="badge badge-sa-danger">NO</div>' ?>
                             </td>
                             <td>
                                 <?php if ($model->visibility == 1): ?>
