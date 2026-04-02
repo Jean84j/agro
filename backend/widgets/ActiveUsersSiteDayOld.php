@@ -16,8 +16,8 @@ class ActiveUsersSiteDayOld extends BaseWidgetBackend
 
     public function run()
     {
-        $dateFrom = strtotime(date('Y-m-d', strtotime('-1 year -30 days')));
-        $dateTo   = strtotime(date('Y-m-d', strtotime('-1 year')));
+        $dateFrom = strtotime('-1 year -30 days midnight');
+        $dateTo   = strtotime('-1 year 23:59:59');
 
         $users = ActivePages::find()
             ->select('date_visit')
