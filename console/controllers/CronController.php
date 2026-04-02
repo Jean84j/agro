@@ -365,10 +365,10 @@ class CronController extends Controller
             ->all();
 
         if ($urls) {
-            Console::output("\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
+//            Console::output("\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
-                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
+//                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
                 }
             }
         }
@@ -395,20 +395,20 @@ class CronController extends Controller
 
             if ($current['ip_user'] === $next['ip_user'] && $current['url_page'] === $next['url_page']) {
                 $matchedIds[] = $current['id'];
-                if ($k == 0) {
-                    Console::output("\t 🔎 *** Убрать дубли ссылок ***");
-                    $k++;
-                }
-                Console::output("\n ✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
+//                if ($k == 0) {
+//                    Console::output("\t 🔎 *** Убрать дубли ссылок ***");
+//                    $k++;
+//                }
+//                Console::output("\n ✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
             }
         }
         if (count($matchedIds) != 0) {
 
-            Console::output("\n 🔎 Збіги знайдено: " . count($matchedIds));
+//            Console::output("\n 🔎 Збіги знайдено: " . count($matchedIds));
 
             $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
 
-            Console::output("\n 🗑️ Видалено записів: {$deleted}");
+//            Console::output("\n 🗑️ Видалено записів: {$deleted}");
         }
     }
 
