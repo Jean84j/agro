@@ -2,7 +2,6 @@
 
 use backend\widgets\ActiveUsersSite;
 use backend\widgets\ActiveUsersSiteDay;
-use backend\widgets\ActiveUsersSiteDayOld;
 use backend\widgets\AverageOrder;
 use backend\widgets\BrandOrders;
 use backend\widgets\IncomeStatistics;
@@ -220,7 +219,6 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
             >
                 <div class="row g-4 g-xl-5">
                     <?php echo ActiveUsersSiteDay::widget() ?>
-                    <?php echo ActiveUsersSiteDayOld::widget() ?>
                 </div>
             </div>
             <div

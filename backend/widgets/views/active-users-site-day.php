@@ -1,13 +1,15 @@
 <?php
 
 /** @var \common\models\shop\ActivePages $resultArray  */
+/** @var \common\models\shop\ActivePages $resultArrayOld  */
 
 ?>
 
 <div class="col-12 col-lg-8 col-xxl-9 d-flex" style="width: 100%">
     <div
-        class="card flex-grow-1 saw-chart"
+        class="card flex-grow-1 saw-chart-bar-stacked"
         data-sa-data='<?= $resultArray ?>'
+        data-sa-old-data='<?= $resultArrayOld ?>'
         data-sumb-data='🏃'
     >
         <div class="sa-widget-header saw-chart__header">

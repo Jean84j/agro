@@ -309,6 +309,107 @@
         });
     });
 
+
+
+
+    /*
+// Stacked Bar   (.saw-chart-bar-stacked)
+*/
+    $('.saw-chart-bar-stacked[data-sa-data]').each(function() {
+
+            const data = $(this).data('sa-data');
+            const dataOld = $(this).data('sa-old-data');
+            const sumb = $(this).data('sumb-data');
+            const labels = data.map(function(item) { return item.label; });
+            const values = data.map(function(item) { return item.value; });
+            const valuesOld = dataOld.map(function(item) { return item.value; });
+            const canvas = $(this).find('canvas')[0];
+
+            // Цвета
+            const defaultColor = window.stroyka.colors.getThemeColor(); // Жёлтый
+            const highlightColor = '#ff8000';
+
+            // Получаем текущий месяц (например: "Червень")
+            const now = new Date();
+            const monthNames = [
+                'Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер',
+                'Лип', 'Сер', 'Вер', 'Жов', 'Лис', 'Гру'
+            ];
+            const currentMonthName = monthNames[now.getMonth()];
+
+
+        new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        backgroundColor: '#ffd333',
+                        borderColor: 'transparent',
+                        borderWidth: 0,
+                        fill: 'origin',
+                        data: values,
+                    },
+                    {
+                        backgroundColor: '#ff8b33',
+                        borderColor: 'transparent',
+                        borderWidth: 0,
+                        fill: 'origin',
+                        data: valuesOld,
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+
+                scales: {
+                    y: {
+                        stacked: true,
+                        ticks: {
+                            fontFamily: 'Roboto',
+                            fontSize: 13,
+                            fontColor: '#828f99',
+                            // Include a dollar sign in the ticks
+                            callback: function (value) {
+                                if (sumb){
+                                    return sumb + ' ' + value;
+                                }else {
+                                    return '₴ ' + value;
+                                }
+                            },
+                        },
+                        gridLines: {
+                            lineWidth: 1,
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            zeroLineWidth: 1,
+                            zeroLineColor: 'rgba(0, 0, 0, 0.1)',
+                            drawBorder: false,
+                        },
+                    },
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            fontFamily: 'Roboto',
+                            fontSize: 13,
+                            fontColor: '#828f99',
+                        },
+                        gridLines: {
+                            display: false,
+                        },
+                    },
+                },
+            },
+        });
+    });
+
+
+
+
     /*
     // Feather
     */
