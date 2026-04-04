@@ -6,6 +6,8 @@ use backend\models\Report;
 use backend\models\search\ReportSearch;
 use backend\models\ReportItem;
 use backend\models\ReportReminder;
+use common\models\shop\Order;
+use common\models\shop\OrderItem;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -79,16 +81,50 @@ class ReportController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($order_id = null)
     {
+
         $model = new Report();
 
         $model->date_order = date('Y-m-d');
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save(true) && $model->validate()) {
+        if ($order_id) {
+            $order = Order::findOne($order_id);
+            if ($order) {
+                $model->date_order = date('Y-m-d', $order->created_at);
+                $model->number_order = $order_id . 'a';
+                $model->fio = $order->fio;
+                $model->platform = 'AgroPro';
+                $model->tel_number = $order->phone;
+                $model->comments = $order->note;
+                $model->address = $order->area . ' ' . $order->city . ' ' . $order->warehouses;
+            }
+        }
 
-                Yii::$app->session->setFlash('info', ' Заявку створено, Додайте товари!');
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+
+                if (isset($order->id)) {
+                    if ($order->id) {
+                        $products = OrderItem::find()->where(['order_id' => $order->id])->all();
+                        if ($products) {
+                            foreach ($products as $product) {
+                                $report_item = new ReportItem();
+                                $report_item->order_id = $model->id;
+                                $report_item->product_name = $product->getProductName($product->product_id);
+                                $report_item->price = $product->price;
+                                $report_item->quantity = $product->quantity;
+                                if (!$report_item->save()) {
+                                    Yii::error($report_item->errors);
+                                }
+                            }
+                            Yii::$app->session->setFlash('info', ' Заявку створено, Товари додано!');
+                        }
+                    }
+                } else {
+                    Yii::$app->session->setFlash('info', ' Заявку створено, Додайте товари!');
+                }
+
 
                 return $this->redirect(['view', 'id' => $model->id]);
             }

@@ -2,6 +2,7 @@
 
 namespace common\models\shop;
 
+use backend\models\Report;
 use Yii;
 use common\models\NpAreas;
 use common\models\NpCity;
@@ -298,6 +299,46 @@ class Order extends ActiveRecord
             $img = Yii::$app->request->hostInfo . "/images/no-image.png";
         }
         return $img;
+    }
+
+    public function getButtonOrderInReport($id)
+    {
+        $numbersOrder = [$id . 'a', $id . 'а'];
+
+        $exists = Report::find()
+            ->where(['number_order' => $numbersOrder])
+            ->exists();
+
+        if ($exists) {
+            return [
+                'label' => 'Уже в Звіті',
+                'class' => 'btn btn-outline-dark disabled'
+            ];
+        }
+
+        return [
+            'label' => 'Додати в Звіт',
+            'class' => 'btn btn-outline-danger'
+        ];
+    }
+
+    public function getOrderInReport($id)
+    {
+        $numbersOrder = [$id . 'a', $id . 'а'];
+
+        $exists = Report::find()
+            ->where(['number_order' => $numbersOrder])
+            ->exists();
+
+        if ($exists) {
+            return '<svg width="20px" height="20px" style="display: unset;" fill="green">
+                                        <use xlink:href="/admin/images/sprite.svg#check"/>
+                                    </svg>' ;
+        }
+
+        return '<svg width="20px" height="20px" style="display: unset;" fill="red">
+                                        <use xlink:href="/admin/images/sprite.svg#cross"/>
+                                    </svg>';
     }
     
 }

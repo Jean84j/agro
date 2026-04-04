@@ -39,9 +39,13 @@ YiiAsset::register($this);
                     </div>
                     <div class="col-auto d-flex">
                         <?php echo Html::a('Редагувати', Url::to(['update', 'id' => $model->id]), [
-                            'class' => "btn btn-primary",
-//                                'role' => 'modal-remote',
-//                                'data-toggle' => 'tooltip'
+                            'class' => "btn btn-primary mr-1",
+                        ]) ?>
+
+                        <?php
+                        $buttonMoveToReport = $model->getButtonOrderInReport($model->id);
+                        echo Html::a($buttonMoveToReport['label'], Url::to(['report/create', 'order_id' => $model->id]), [
+                            'class' => $buttonMoveToReport['class'],
                         ]) ?>
                     </div>
                 </div>
@@ -169,12 +173,12 @@ YiiAsset::register($this);
                                 <div class="text-muted mt-1">телефон</div>
                                 <div class="mt-1"><?= $model->phone ?></div>
                                 <?php if ($model->area): ?>
-                                <div class="text-muted mt-1">область</div>
-                                <div class="mt-1"><?= $model->area ?></div>
-                                <div class="text-muted mt-1">місто</div>
-                                <div class="mt-1"><?= $model->city ?></div>
-                                <div class="text-muted mt-1">відділення</div>
-                                <div class="mt-1"><?= $model->warehouses ?></div>
+                                    <div class="text-muted mt-1">область</div>
+                                    <div class="mt-1"><?= $model->area ?></div>
+                                    <div class="text-muted mt-1">місто</div>
+                                    <div class="mt-1"><?= $model->city ?></div>
+                                    <div class="text-muted mt-1">відділення</div>
+                                    <div class="mt-1"><?= $model->warehouses ?></div>
                                 <?php elseif ($model->warehouses): ?>
                                     <div class="text-muted mt-1">індекс</div>
                                     <div class="mt-1"><?= $model->warehouses ?></div>
