@@ -4,6 +4,8 @@ namespace backend\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "report".
@@ -325,7 +327,7 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
     }
@@ -338,7 +340,7 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
     }
@@ -361,7 +363,7 @@ class Report extends ActiveRecord
             ->column();
 
         if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
     }
@@ -374,7 +376,7 @@ class Report extends ActiveRecord
             ->andWhere(['or', ['ttn' => null], ['ttn' => '']])
             ->column();
         if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
     }
@@ -387,7 +389,7 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return 'ID = ' . implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
     }
@@ -401,7 +403,7 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
     }
@@ -415,24 +417,7 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
-        }
-        return null;
-    }
-
-    static public function StatusUnpaidMonth()
-    {
-        $oneMonthAgo = (new \DateTime())->modify('-1 month')->format('Y-m-d H:i:s');
-
-        $orderNumbers = Report::find()
-            ->select('number_order')
-            ->where(['order_pay_ment_id' => 'Не оплачено'])
-            ->andWhere(['<', 'date_order', $oneMonthAgo])
-            ->andWhere(['not in', 'order_status_id', ['Очікується']])
-            ->column();
-
-        if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
     }
@@ -449,9 +434,51 @@ class Report extends ActiveRecord
             ->column();
 
         if ($orderNumbers) {
-            return implode('      ', $orderNumbers);
+            return self::buttonsNumberOrder($orderNumbers);
         }
         return null;
+    }
+
+    static public function StatusUnpaidMonth()
+    {
+        $oneMonthAgo = (new \DateTime())->modify('-1 month')->format('Y-m-d H:i:s');
+
+        $orderNumbers = Report::find()
+            ->select('number_order')
+            ->where(['order_pay_ment_id' => 'Не оплачено'])
+            ->andWhere(['<', 'date_order', $oneMonthAgo])
+            ->andWhere(['not in', 'order_status_id', ['Очікується']])
+            ->column();
+
+        if ($orderNumbers) {
+            return self::buttonsNumberOrder($orderNumbers);
+        }
+        return null;
+    }
+
+    protected static function buttonsNumberOrder($numbers)
+    {
+        $reports = Report::find()
+            ->select(['id', 'number_order'])
+            ->where(['number_order' => $numbers])
+            ->indexBy('number_order')
+            ->all();
+
+        $buttons = '';
+
+        foreach ($numbers as $number) {
+            if (!isset($reports[$number])) {
+                continue;
+            }
+
+            $buttons .= Html::a(
+                $number,
+                ['view', 'id' => $reports[$number]->id],
+                ['class' => 'btn btn-primary mr-2 mb-3']
+            );
+        }
+
+        return $buttons;
     }
 
 }
