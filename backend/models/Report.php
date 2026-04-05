@@ -474,7 +474,10 @@ class Report extends ActiveRecord
             $buttons .= Html::a(
                 $number,
                 ['view', 'id' => $reports[$number]->id],
-                ['class' => 'btn btn-primary mr-2 mb-3']
+                [
+                    'class' => 'btn btn-primary mr-2 mb-3',
+                    'target' => '_blank',
+                ]
             );
         }
 
