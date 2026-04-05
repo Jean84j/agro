@@ -327,7 +327,8 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'update';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -340,7 +341,8 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'update';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -363,7 +365,8 @@ class Report extends ActiveRecord
             ->column();
 
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'view';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -376,7 +379,8 @@ class Report extends ActiveRecord
             ->andWhere(['or', ['ttn' => null], ['ttn' => '']])
             ->column();
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'update';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -389,7 +393,8 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'update';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -403,7 +408,8 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'update';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -417,7 +423,8 @@ class Report extends ActiveRecord
             ->andWhere(['not in', 'order_status_id', ['Очікується']])
             ->column();
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'update';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -434,7 +441,8 @@ class Report extends ActiveRecord
             ->column();
 
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'update';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
@@ -451,12 +459,13 @@ class Report extends ActiveRecord
             ->column();
 
         if ($orderNumbers) {
-            return self::buttonsNumberOrder($orderNumbers);
+            $action = 'view';
+            return self::buttonsNumberOrder($orderNumbers, $action);
         }
         return null;
     }
 
-    protected static function buttonsNumberOrder($numbers)
+    protected static function buttonsNumberOrder($numbers, $action)
     {
         $reports = Report::find()
             ->select(['id', 'number_order'])
@@ -473,7 +482,7 @@ class Report extends ActiveRecord
 
             $buttons .= Html::a(
                 $number,
-                ['view', 'id' => $reports[$number]->id],
+                [$action, 'id' => $reports[$number]->id],
                 [
                     'class' => 'btn btn-primary mr-2 mb-3',
                     'target' => '_blank',
