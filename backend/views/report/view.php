@@ -53,8 +53,12 @@ if ($model->order_status_id == 'Повернення' || $model->order_pay_ment_
                     <div class="sa-page-meta mb-5">
                         <div class="sa-page-meta__body">
                             <div class="sa-page-meta__list">
-                                <div class="sa-page-meta__item"><h5 class="m-0">Замовлення
-                                        # <?= $model->number_order ?></h5></div>
+                                <div class="sa-page-meta__item">
+                                    <h5 class="m-0"><?= $model->platform ?>
+                                       <span style="color: rgb(240,105,8)"> # </span>
+                                        <?= $model->number_order ?>
+                                    </h5>
+                                </div>
                                 <div class="sa-page-meta__item" style="font-weight: bold; font-size: 18px">
                                         <span class="text-muted"
                                               style="font-size: 14px">Позицій: </span><?= $model->getCountItemsOrder($model->id) ?>
