@@ -57,8 +57,10 @@ class DeepL extends Component
         foreach ($parts as $part) {
             try {
                 $response = $this->client->post('translate', [
+                    'headers' => [
+                        'Authorization' => 'DeepL-Auth-Key ' . $this->apiKey,
+                    ],
                     'form_params' => array_merge($params, [
-                        'auth_key'    => $this->apiKey,
                         'text'        => $part,
                         'source_lang' => strtoupper($sourceLang),
                         'target_lang' => strtoupper($targetLang),
