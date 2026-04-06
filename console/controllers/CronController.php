@@ -353,66 +353,6 @@ class CronController extends Controller
     }
 
     /**
-     *  Убрать лишние ссылки
-     */
-    public function actionDeleteUnknownTransitions()
-    {
-        $urls = ActivePages::find()
-            ->where(['client_from' => 'Не известно'])
-            ->andWhere(['status_serv' => '200'])
-            ->limit(300)
-            ->orderBy(['date_visit' => SORT_DESC])
-            ->all();
-
-        if ($urls) {
-//            Console::output("\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
-            foreach ($urls as $url) {
-                if ($url->delete()) {
-//                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
-                }
-            }
-        }
-    }
-
-    /**
-     *  Убрать дубли ссылок
-     */
-    public function actionDeleteDuplicateUrl()
-    {
-        $pages = ActivePages::find()
-            ->select(['id', 'ip_user', 'url_page'])
-            ->orderBy(['id' => SORT_DESC])
-            ->limit(300)
-            ->asArray()
-            ->all();
-
-        $matchedIds = [];
-
-        $k = 0;
-        for ($i = 0; $i < count($pages) - 1; $i++) {
-            $current = $pages[$i];
-            $next = $pages[$i + 1];
-
-            if ($current['ip_user'] === $next['ip_user'] && $current['url_page'] === $next['url_page']) {
-                $matchedIds[] = $current['id'];
-//                if ($k == 0) {
-//                    Console::output("\t 🔎 *** Убрать дубли ссылок ***");
-//                    $k++;
-//                }
-//                Console::output("\n ✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
-            }
-        }
-        if (count($matchedIds) != 0) {
-
-//            Console::output("\n 🔎 Збіги знайдено: " . count($matchedIds));
-
-            $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
-
-//            Console::output("\n 🗑️ Видалено записів: {$deleted}");
-        }
-    }
-
-    /**
      *  Убрать дубликаты поисковых слов
      */
     public function actionDeleteDuplicateWord()
@@ -449,6 +389,70 @@ class CronController extends Controller
             Console::output("\n");
             Console::output("\n Удалено слов: {$count} ");
 
+        }
+    }
+
+
+    /**
+     *  Убрать ненужные ссылки
+     */
+    public function actionDeleteUnnecessaryLinks()
+    {
+        self::RemovalDuplicateLinks();
+        self::RemovalUnknownLinks();
+    }
+
+    protected function RemovalDuplicateLinks()
+    {
+        $pages = ActivePages::find()
+            ->select(['id', 'ip_user', 'url_page'])
+            ->orderBy(['id' => SORT_DESC])
+            ->limit(300)
+            ->asArray()
+            ->all();
+
+        $matchedIds = [];
+
+        $k = 0;
+        for ($i = 0; $i < count($pages) - 1; $i++) {
+            $current = $pages[$i];
+            $next = $pages[$i + 1];
+
+            if ($current['ip_user'] === $next['ip_user'] && $current['url_page'] === $next['url_page']) {
+                $matchedIds[] = $current['id'];
+                if ($k == 0) {
+                    Console::output("\t 🔎 *** Убрать дубли ссылок ***");
+                    $k++;
+                }
+                Console::output("\n ✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
+            }
+        }
+        if (count($matchedIds) != 0) {
+
+            Console::output("\n 🔎 Збіги знайдено: " . count($matchedIds));
+
+            $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
+
+            Console::output("\n 🗑️ Видалено записів: {$deleted} \n");
+        }
+    }
+
+    protected function RemovalUnknownLinks()
+    {
+        $urls = ActivePages::find()
+            ->where(['client_from' => 'Не известно'])
+            ->andWhere(['status_serv' => '200'])
+            ->limit(300)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->all();
+
+        if ($urls) {
+            Console::output("\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
+            foreach ($urls as $url) {
+                if ($url->delete()) {
+                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
+                }
+            }
         }
     }
 
