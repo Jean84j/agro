@@ -267,7 +267,7 @@ class ActivePages extends ActiveRecord
         $slug = end($segments);
         $dir = implode('/', array_slice($segments, 0, -1));
 
-        $status = '<i class="fas fa-times-circle mr-1" style="color: #97a3a8"></i>';
+        $status = '';
 
         if ($dir === 'product' && !empty($slug)) {
             $statusId = ProductsBackend::find()
