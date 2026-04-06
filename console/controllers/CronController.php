@@ -6,6 +6,7 @@ use backend\models\IpBot;
 use backend\models\SearchWords;
 use common\models\shop\ActivePages;
 use common\models\shop\Product;
+use Yii;
 use yii\console\Controller;
 use common\models\NpCity;
 use common\models\NpWarehouses;
@@ -398,16 +399,21 @@ class CronController extends Controller
      */
     public function actionDeleteUnnecessaryLinks()
     {
-        self::RemovalDuplicateLinks();
-        self::RemovalUnknownLinks();
+        $limit = 300;
+
+        self::removalDuplicateLinks($limit);
+        self::removalUnknownLinks($limit);
+        self::removalPageLinks($limit);
+        self::removalSiteTransitionsLinks($limit);
+
     }
 
-    protected function RemovalDuplicateLinks()
+    protected function removalDuplicateLinks($limit)
     {
         $pages = ActivePages::find()
             ->select(['id', 'ip_user', 'url_page'])
             ->orderBy(['id' => SORT_DESC])
-            ->limit(300)
+            ->limit($limit)
             ->asArray()
             ->all();
 
@@ -421,7 +427,7 @@ class CronController extends Controller
             if ($current['ip_user'] === $next['ip_user'] && $current['url_page'] === $next['url_page']) {
                 $matchedIds[] = $current['id'];
                 if ($k == 0) {
-                    Console::output("\t 🔎 *** Убрать дубли ссылок ***");
+                    Console::output("\n\t 🔎 *** Убрать дубли ссылок ***");
                     $k++;
                 }
                 Console::output("\n ✔ Збіг: ID {$current['id']} та ID {$next['id']} (IP: {$current['ip_user']}, URL: {$current['url_page']})");
@@ -433,26 +439,70 @@ class CronController extends Controller
 
             $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
 
-            Console::output("\n 🗑️ Видалено записів: {$deleted} \n");
+            Console::output("\n 🗑️ Видалено записів: {$deleted}");
         }
     }
 
-    protected function RemovalUnknownLinks()
+    protected function removalUnknownLinks($limit)
     {
         $urls = ActivePages::find()
             ->where(['client_from' => 'Не известно'])
             ->andWhere(['status_serv' => '200'])
-            ->limit(300)
+            ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
             ->all();
 
         if ($urls) {
-            Console::output("\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
+            Console::output("\n\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
                     Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
                 }
             }
+        }
+    }
+
+    protected function removalPageLinks($limit)
+    {
+        $urls = ActivePages::find()
+            ->where(['like', 'url_page', '/page/'])
+            ->andWhere(['status_serv' => '200'])
+            ->limit($limit)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->all();
+
+        if ($urls) {
+            Console::output("\n\t 🗑️ **** Убрать ссылки пагинацыи ****");
+            foreach ($urls as $url) {
+                if ($url->delete()) {
+                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
+                }
+            }
+        }
+    }
+
+    protected function removalSiteTransitionsLinks($limit)
+    {
+        $host = Yii::$app->params['hostInfo'];
+
+        $exclude = ['/search/', '/cart/', '/order/'];
+
+        $urls = ActivePages::find()
+            ->where(['like', 'client_from', $host . '%', false])
+            ->andWhere(['not like', 'url_page', $exclude])
+            ->andWhere(['status_serv' => '200'])
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->limit($limit)
+            ->all();
+
+        if ($urls) {
+            $i = 1;
+            Console::output("\n\t 🗑️ **** Убрать ссылки перехода по сайту ****");
+            foreach ($urls as $url) {
+//                if ($url->delete()) {
+                    Console::output("\n  {$i}  ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
+//                }
+            $i++;}
         }
     }
 
