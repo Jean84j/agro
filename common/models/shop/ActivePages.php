@@ -2,6 +2,7 @@
 
 namespace common\models\shop;
 
+use backend\models\ProductsBackend;
 use common\models\Bots;
 use backend\models\IpBot;
 use common\models\Posts;
@@ -183,74 +184,127 @@ class ActivePages extends ActiveRecord
 
         return $url;
     }
-    
-     public function getImage(string $url): string
+
+    public function getImage(string $url): string
     {
-    $path = parse_url($url, PHP_URL_PATH);
-    $path = $path ?? '';
-    $segments = explode('/', trim($path, '/'));
+        $path = parse_url($url, PHP_URL_PATH);
+        $path = $path ?? '';
+        $segments = explode('/', trim($path, '/'));
 
-    if (!empty($segments) && $segments[0] === 'ru') {
-        array_shift($segments);
-    }
+        if (!empty($segments) && $segments[0] === 'ru') {
+            array_shift($segments);
+        }
 
-    $slug = end($segments);
-    $dir  = implode('/', array_slice($segments, 0, -1));
+        $slug = end($segments);
+        $dir = implode('/', array_slice($segments, 0, -1));
 
-    $noImage = '/images/no-image.png';
+        $noImage = '/images/no-image.png';
 
-    $map = [
-        'product' => [
-            'model' => Product::class,
-            'image' => function ($model) {
-                $productImage = ProductImage::find()
-                    ->where(['product_id' => $model->id])
-                    ->orderBy('priority')
-                    ->one();
-                return $productImage->extra_small ?? null
-                    ? '/product/' . $productImage->extra_small
-                    : null;
-            },
-        ],
-        'post' => [
-            'model' => Posts::class,
-            'imageField' => 'small',
-            'prefix' => '/posts/',
-        ],
-        'auxiliary-product-list' => [
-            'model' => AuxiliaryCategories::class,
-            'imageField' => 'image',
-            'prefix' => '/images/auxiliary-categories/',
-        ],
-        'product-list' => [
-            'model' => Category::class,
-            'imageField' => 'file',
-            'prefix' => '/images/category/',
-        ],
-    ];
+        $map = [
+            'product' => [
+                'model' => Product::class,
+                'image' => function ($model) {
+                    $productImage = ProductImage::find()
+                        ->where(['product_id' => $model->id])
+                        ->orderBy('priority')
+                        ->one();
+                    return $productImage->extra_small ?? null
+                            ? '/product/' . $productImage->extra_small
+                            : null;
+                },
+            ],
+            'post' => [
+                'model' => Posts::class,
+                'imageField' => 'small',
+                'prefix' => '/posts/',
+            ],
+            'auxiliary-product-list' => [
+                'model' => AuxiliaryCategories::class,
+                'imageField' => 'image',
+                'prefix' => '/images/auxiliary-categories/',
+            ],
+            'product-list' => [
+                'model' => Category::class,
+                'imageField' => 'file',
+                'prefix' => '/images/category/',
+            ],
+        ];
 
-    if (!isset($map[$dir])) {
+        if (!isset($map[$dir])) {
+            return $noImage;
+        }
+
+        $config = $map[$dir];
+        $model = ($config['model'])::findOne(['slug' => $slug]);
+
+        if (!$model) {
+            return $noImage;
+        }
+
+        // Если задана функция получения изображения
+        if (isset($config['image']) && is_callable($config['image'])) {
+            return $config['image']($model) ?? $noImage;
+        }
+
+        // Если задано поле и префикс
+        if (!empty($config['imageField']) && !empty($model->{$config['imageField']})) {
+            return $config['prefix'] . $model->{$config['imageField']};
+        }
+
         return $noImage;
     }
 
-    $config = $map[$dir];
-    $model = ($config['model'])::findOne(['slug' => $slug]);
+    public function getStatus(string $url): string
+    {
+        $path = parse_url($url, PHP_URL_PATH);
+        $path = $path ?? '';
+        $segments = explode('/', trim($path, '/'));
 
-    if (!$model) {
-        return $noImage;
-    }
+        if (!empty($segments) && $segments[0] === 'ru') {
+            array_shift($segments);
+        }
 
-    // Если задана функция получения изображения
-    if (isset($config['image']) && is_callable($config['image'])) {
-        return $config['image']($model) ?? $noImage;
-    }
+        $slug = end($segments);
+        $dir = implode('/', array_slice($segments, 0, -1));
 
-    // Если задано поле и префикс
-    if (!empty($config['imageField']) && !empty($model->{$config['imageField']})) {
-        return $config['prefix'] . $model->{$config['imageField']};
-    }
+        $status = '<i class="fas fa-times-circle mr-1" style="color: #97a3a8"></i>';
 
-    return $noImage;
+        if ($dir === 'product' && !empty($slug)) {
+            $statusId = ProductsBackend::find()
+                ->select('status_id')
+                ->where(['slug' => $slug])
+                ->scalar();
+
+            switch ($statusId) {
+                case 1:
+                    // В наявності  зеленый
+                    $status = '<i class="fas fa-chevron-circle-down mr-1" style="color: rgba(19,165,10,0.82)"></i>';
+                    break;
+
+                case 2:
+                    // Відсутній  красный
+                    $status = '<i class="fas fa-exclamation-circle mr-1" style="color: rgba(195,18,18,0.82)"></i>';
+                    break;
+
+                case 3:
+                    // Очікується желтый
+                    $status = '<i class="fas fa-stopwatch mr-1" style="color: rgba(204,175,12,0.82)"></i>';
+                    break;
+
+                case 4:
+                    // Під заказ  голубой
+                    $status = '<i class="fas fa-envelope-square mr-1" style="color: rgba(16,133,176,0.82)"></i>';
+                    break;
+
+                default:
+                    $status = '<i class="fas fa-exclamation-triangle mr-1"></i>';
+                    break;
+
+            }
+        }
+
+        return $status;
+
     }
 
 }

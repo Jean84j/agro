@@ -103,7 +103,10 @@ $ipAddress = Yii::$app->request->getUserIP();
                                 $productUrl = $model->getClearUrl($model->url_page);
                                 $imageUrl = $model->getImage($productUrl);
 
-                                return Html::img(Yii::$app->request->hostInfo . $imageUrl, [
+                                return
+                                    $model->getStatus($productUrl) .
+
+                                    Html::img(Yii::$app->request->hostInfo . $imageUrl, [
                                         'style' => 'max-width:42px; max-height:42px; margin-right:5px;',
                                     ]) .
                                     Html::encode($productUrl);
