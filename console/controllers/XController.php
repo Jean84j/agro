@@ -6,6 +6,7 @@ use backend\models\IpBot;
 use backend\models\ReportItem;
 use common\models\shop\ActivePages;
 use common\models\shop\CategoriesProperties;
+use common\models\shop\Category;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductPropertiesTranslate;
@@ -240,30 +241,6 @@ class XController extends Controller
     }
 
 
-    /**
-     *  Добвить товарам количество просмотров
-     */
-    public function actionAddCountViewsProduct()
-    {
-        $rows = (new \yii\db\Query())
-            ->select([
-                'p.id',
-                'COUNT(ap.id) as views'
-            ])
-            ->from(['p' => Product::tableName()])
-            ->leftJoin(['ap' => ActivePages::tableName()], 'ap.url_page LIKE CONCAT("%", p.slug, "%")')
-            ->groupBy('p.id')
-            ->all();
-
-        foreach ($rows as $row) {
-            Product::updateAll(
-                ['views' => $row['views']],
-                ['id' => $row['id']]
-            );
-        }
-    }
-
-
     //======================================================
 
     /**
@@ -272,62 +249,66 @@ class XController extends Controller
     public function actionAddPropertiesProducts()
     {
 
-        $categoryId = 18;
+        $categoriesId = Category::find()->select('id')->where(['visibility' => true])->column();
 
-        $categoryPropertiesId = CategoriesProperties::find()
-            ->select('property_id')
-            ->where(['category_id' => $categoryId])
-            ->column();
+        foreach ($categoriesId as $categoryId) {
 
-        $productsId = Product::find()
-            ->select('id')
-            ->where(['category_id' => $categoryId])
-            ->column();
+            $categoryPropertiesId = CategoriesProperties::find()
+                ->select('property_id')
+                ->where(['category_id' => $categoryId])
+                ->column();
 
-        foreach ($productsId as $productId) {
-            foreach ($categoryPropertiesId as $propertyId) {
-                $productProperties = ProductProperties::find()
-                    ->where(['product_id' => $productId])
-                    ->andWhere(['property_id' => $propertyId])
-                    ->asArray()
-                    ->all();
+            $productsId = Product::find()
+                ->select('id')
+                ->where(['category_id' => $categoryId])
+                ->column();
 
-                if (!$productProperties) {
+            foreach ($productsId as $productId) {
+                foreach ($categoryPropertiesId as $propertyId) {
+                    $productProperties = ProductProperties::find()
+                        ->where(['product_id' => $productId])
+                        ->andWhere(['property_id' => $propertyId])
+                        ->asArray()
+                        ->all();
 
-                    $property = new ProductProperties();
-                    $property->product_id = $productId;
-                    $property->property_id = $propertyId;
-                    $property->category_id = $categoryId;
+                    if (!$productProperties) {
 
-                    if ($property->save()) {
+                        $property = new ProductProperties();
+                        $property->product_id = $productId;
+                        $property->property_id = $propertyId;
+                        $property->category_id = $categoryId;
 
-                        echo "\t Сохранено свойство \n";
+                        if ($property->save()) {
 
-                        $propertyIdTranslate = PropertiesNameTranslate::find()
-                            ->select('id')
-                            ->where(['name_id' => $propertyId])
-                            ->andWhere(['language' => 'ru'])
-                            ->one();
+                            echo "\t Сохранено свойство \n";
 
-                        $propertyTranslate = new ProductPropertiesTranslate();
-                        $propertyTranslate->product_properties_id = $property->id;
-                        $propertyTranslate->language = 'ru';
-                        $propertyTranslate->propertyName_id = $propertyIdTranslate->id;
-                        $propertyTranslate->product_id = $productId;
+                            $propertyIdTranslate = PropertiesNameTranslate::find()
+                                ->select('id')
+                                ->where(['name_id' => $propertyId])
+                                ->andWhere(['language' => 'ru'])
+                                ->one();
 
-                        if ($propertyTranslate->save()) {
+                            $propertyTranslate = new ProductPropertiesTranslate();
+                            $propertyTranslate->product_properties_id = $property->id;
+                            $propertyTranslate->language = 'ru';
+                            $propertyTranslate->propertyName_id = $propertyIdTranslate->id;
+                            $propertyTranslate->product_id = $productId;
 
-                            echo "\t Сохранено свойство перевод \n";
+                            if ($propertyTranslate->save()) {
 
+                                echo "\t Сохранено свойство перевод \n";
+
+                            } else {
+                                dd($propertyTranslate->errors);
+                            }
                         } else {
-                            dd($propertyTranslate->errors);
+                            dd($property->errors);
                         }
-                    } else {
-                        dd($property->errors);
                     }
                 }
             }
         }
+
     }
 
 }
