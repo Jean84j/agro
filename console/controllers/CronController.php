@@ -200,19 +200,14 @@ class CronController extends Controller
         }
     }
 
-
-    /**
-     * Обновление отделений Новой Почты
-     */
-    const KEY = 'f1c1e7b2520a9fa092bb1afa0e7bc514';
-
     /**
      * Добавленрие отделений НП
      */
     public function actionWarehouses()
     {
+        $key = Yii::$app->params['novaPostKey'];
         $np = new NovaPoshtaApi2(
-            self::KEY,
+                    $key,
             'ua', // Язык возвращаемых данных: ru (default) | ua | en
             FALSE, // При ошибке в запросе выбрасывать Exception: FALSE (default) | TRUE
             'file_get_content' // Используемый механизм запроса: curl (default) | file_get_content
