@@ -496,13 +496,12 @@ class CronController extends Controller
             ->all();
 
         if ($urls) {
-            $i = 1;
             Console::output("\n\t 🗑️ **** Убрать ссылки перехода по сайту ****");
             foreach ($urls as $url) {
-//                if ($url->delete()) {
-                    Console::output("\n  {$i}  ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
-//                }
-            $i++;}
+                if ($url->delete()) {
+                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
+                }
+            }
         }
     }
 
