@@ -283,7 +283,7 @@ class ActivePages extends ActiveRecord
 
                 case 2:
                     // Відсутній  красный
-                    $status = '<i class="fas fa-exclamation-circle mr-1" style="color: rgba(195,18,18,0.82)"></i>';
+                    $status = '<i class="fas fa-times-circle mr-1" style="color: rgba(195,18,18,0.82)"></i>';
                     break;
 
                 case 3:
