@@ -85,7 +85,9 @@ unset($this->linkTags[$key]);
     <?php $this->beginBody() ?>
     <div class="site">
         <?php echo SiteHeader::widget() ?>
+        <main role="main">
         <?= $content ?>
+        </main>
         <?php echo SiteFooter::widget() ?>
     </div>
     <?= $this->render('quickview-modal') ?>
