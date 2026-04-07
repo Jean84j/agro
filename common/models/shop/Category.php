@@ -2,6 +2,7 @@
 
 namespace common\models\shop;
 
+use backend\models\ProductsBackend;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -457,6 +458,21 @@ class Category extends ActiveRecord
                 'icon' => 'fas fa-search-dollar',
                 'label' => 'SEO шаблон',
                 'view' => '/category/seo-information-product'],
+            [
+                'id' => 'seo-words',
+                'icon' => 'fas fa-globe',
+                'label' => 'SEO слова',
+                'view' => '/category/seo-words'],
         ];
+    }
+
+    public function getCategoryName($id)
+    {
+        return Category::findOne($id)?->name;
+    }
+
+    public function getProductName($id)
+    {
+        return ProductsBackend::findOne($id)?->name;
     }
 }
