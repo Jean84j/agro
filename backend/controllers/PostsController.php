@@ -86,7 +86,7 @@ class PostsController extends BaseBackendController
                     $this->getDeeplTranslate($model);
                     $this->createPostProduct($model);
 
-                    return $this->redirect(['index']);
+                    return $this->redirect(['update', 'id' => $model->id]);
 
                 } else {
                     print_r($model->errors);
