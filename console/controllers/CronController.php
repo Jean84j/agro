@@ -66,7 +66,7 @@ class CronController extends Controller
             $countIps--;
         }
 
-        if ($ipDelete) {
+        if (!empty($ipDelete)) {
             echo "=======================================\n";
             $this->getIpDelete($ipDelete);
             echo "=======================================\n";
@@ -302,53 +302,6 @@ class CronController extends Controller
     }
 
     /**
-     *  Добвить слова с поиска
-     */
-    public function actionAddSearchWord()
-    {
-        $searchUrl = ActivePages::find()
-            ->where(['like', 'url_page', '/search/'])
-            ->all();
-        if ($searchUrl) {
-            $idUrl = [];
-            $words = [];
-            foreach ($searchUrl as $item) {
-                $idUrl[] = $item->id;
-                $query = parse_url($item->url_page, PHP_URL_QUERY);
-                parse_str($query, $params);
-
-                $q = trim($params['q'] ?? '');
-
-                if (!empty($q) && mb_strlen($q) >= 3) {
-                    $words[] = $q;
-                }
-            }
-
-            if ($words) {
-                foreach ($words as $word) {
-                    $searchWords = SearchWords::find()->where(['word' => $word])->one();
-
-                    if ($searchWords) {
-                        $searchWords->counts_query = $searchWords->counts_query + 1;
-                        $searchWords->save();
-                    } else {
-                        $model = new SearchWords();
-                        $model->word = $word;
-                        $model->counts_query = 1;
-                        $model->save();
-
-                        Console::output("\n🔎 --> : " . ' ' . $word);
-                    }
-                }
-
-                if ($idUrl) {
-                    ActivePages::deleteAll(['id' => $idUrl]);
-                }
-            }
-        }
-    }
-
-    /**
      *  Убрать дубликаты поисковых слов
      */
     public function actionDeleteDuplicateWord()
@@ -400,6 +353,7 @@ class CronController extends Controller
         self::removalUnknownLinks($limit);
         self::removalPageLinks($limit);
         self::removalSiteTransitionsLinks($limit);
+        self::addSearchWord($limit);
 
     }
 
@@ -422,6 +376,7 @@ class CronController extends Controller
             if ($current['ip_user'] === $next['ip_user'] && $current['url_page'] === $next['url_page']) {
                 $matchedIds[] = $current['id'];
                 if ($k == 0) {
+                    Console::output("\n\t====================================================");
                     Console::output("\n\t 🔎 *** Убрать дубли ссылок ***");
                     $k++;
                 }
@@ -448,6 +403,7 @@ class CronController extends Controller
             ->all();
 
         if ($urls) {
+            Console::output("\n\t====================================================");
             Console::output("\n\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
@@ -467,6 +423,7 @@ class CronController extends Controller
             ->all();
 
         if ($urls) {
+            Console::output("\n\t====================================================");
             Console::output("\n\t 🗑️ **** Убрать ссылки пагинацыи ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
@@ -491,10 +448,59 @@ class CronController extends Controller
             ->all();
 
         if ($urls) {
+            Console::output("\n\t====================================================");
             Console::output("\n\t 🗑️ **** Убрать ссылки перехода по сайту ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
                     Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
+                }
+            }
+        }
+    }
+
+    protected function addSearchWord($limit)
+    {
+        $searchUrl = ActivePages::find()
+            ->where(['like', 'url_page', '/search/'])
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->limit($limit)
+            ->all();
+        if ($searchUrl) {
+            $idUrl = [];
+            $words = [];
+            foreach ($searchUrl as $item) {
+                $idUrl[] = $item->id;
+                $query = parse_url($item->url_page, PHP_URL_QUERY);
+                parse_str($query, $params);
+
+                $q = trim($params['q'] ?? '');
+
+                if (!empty($q) && mb_strlen($q) >= 3) {
+                    $words[] = $q;
+                }
+            }
+
+            if ($words) {
+                Console::output("\n\t====================================================");
+                Console::output("\n\t **** Слова добавлены, ссылки удалены **** ");
+                foreach ($words as $word) {
+                    $searchWords = SearchWords::find()->where(['word' => $word])->one();
+
+                    if ($searchWords) {
+                        $searchWords->counts_query = $searchWords->counts_query + 1;
+                        $searchWords->save();
+                    } else {
+                        $model = new SearchWords();
+                        $model->word = $word;
+                        $model->counts_query = 1;
+                        $model->save();
+
+                        Console::output("\n🔎 --> : " . ' ' . $word);
+                    }
+                }
+
+                if ($idUrl) {
+                    ActivePages::deleteAll(['id' => $idUrl]);
                 }
             }
         }
