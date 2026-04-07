@@ -2,6 +2,7 @@
 
 use common\models\shop\ActivePages;
 use frontend\assets\OrderCheckoutPageAsset;
+use frontend\widgets\ViewProduct;
 use kartik\form\ActiveForm;
 
 OrderCheckoutPageAsset::register($this);
@@ -34,5 +35,6 @@ $breadcrumbItemActive = 'Оформлення замовлення';
             </div>
         </div>
     </div>
+    <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
     <?php ActiveForm::end(); ?>
 </div>
