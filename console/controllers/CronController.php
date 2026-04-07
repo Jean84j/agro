@@ -2,17 +2,17 @@
 
 namespace console\controllers;
 
-use backend\models\IpBot;
-use backend\models\SearchWords;
+use LisDev\Delivery\NovaPoshtaApi2;
 use common\models\shop\ActivePages;
+use common\models\NpWarehouses;
+use backend\models\SearchWords;
 use common\models\shop\Product;
-use Yii;
 use yii\console\Controller;
 use common\models\NpCity;
-use common\models\NpWarehouses;
-use LisDev\Delivery\NovaPoshtaApi2;
-use yii\db\Query;
+use backend\models\IpBot;
 use yii\helpers\Console;
+use yii\db\Query;
+use Yii;
 
 
 class CronController extends Controller

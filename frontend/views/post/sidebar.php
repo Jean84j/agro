@@ -21,7 +21,8 @@ use yii\helpers\Url;
                     <input class="widget-search__input" name="q"
                            placeholder="<?= Yii::t('app', 'Пошук статтів...') ?>" type="text"
                            autocomplete="off" spellcheck="false">
-                    <button class="search__button widget-search__button" type="submit">
+                    <button class="search__button widget-search__button" type="submit"
+                            aria-label="Post search">
                         <svg width="20px" height="20px">
                             <use xlink:href="/images/sprite.svg#search-20"></use>
                         </svg>
