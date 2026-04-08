@@ -4,9 +4,13 @@ namespace console\controllers;
 
 use backend\models\IpBot;
 use backend\models\ReportItem;
+use common\models\NpAreas;
+use common\models\NpCity;
+use common\models\NpWarehouses;
 use common\models\shop\ActivePages;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\Category;
+use common\models\shop\Order;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductPropertiesTranslate;
@@ -14,6 +18,7 @@ use common\models\shop\ProductTag;
 use common\models\shop\PropertiesNameTranslate;
 use Yii;
 use yii\console\Controller;
+use yii\helpers\Console;
 
 class XController extends Controller
 {
@@ -309,6 +314,48 @@ class XController extends Controller
             }
         }
 
+    }
+
+
+    /**
+     *  ***** Заменить в заказах код на название на название
+     */
+    public function actionAdressChenchName()
+    {
+        $orders = Order::find()->all();
+
+        foreach ($orders as $order) {
+            $area = NpAreas::find()->where(['ref' => $order->area])->one();
+            if (!empty($area)) {
+                Console::output("\t\n =========================================");
+
+                Console::output("\t\n {$order->area}  ===  {$area->description}");
+            }
+
+            $city = NpCity::find()->where(['ref' => $order->city])->one();
+            if (!empty($city)) {
+                Console::output("\t\n {$order->city}  ===  {$city->description}");
+            }
+
+            $warehouse = NpWarehouses::find()->where(['ref' => $order->warehouses])->one();
+            if (!empty($warehouse)) {
+                Console::output("\t\n {$order->warehouses}  ===  {$warehouse->description}");
+                Console::output("\t\n =========================================");
+            }
+
+            if (!empty($area) && !empty($city) && !empty($warehouse)) {
+
+                $order->area = $area->description;
+                $order->city = $city->description;
+                $order->warehouses = $warehouse->description;
+
+                if ($order->save()) {
+
+                    Console::output("\t\n ***   Сохраняем № Заказа  {$order->id}   ***");
+
+                }
+            }
+        }
     }
 
 }
