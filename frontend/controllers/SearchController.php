@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
-use common\models\shop\ProductProperties;
 use common\models\shop\ProductsTranslate;
+use common\models\shop\ProductProperties;
 use common\models\shop\ProductTag;
 use common\models\shop\Product;
 use common\models\shop\Tag;
