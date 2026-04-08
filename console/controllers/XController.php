@@ -354,6 +354,10 @@ class XController extends Controller
                     Console::output("\t\n ***   Сохраняем № Заказа  {$order->id}   ***");
 
                 }
+            } else {
+
+                Console::output("\t\n ***   НЕ Сохраняем № Заказа  {$order->id}   ***");
+
             }
         }
     }
