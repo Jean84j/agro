@@ -450,6 +450,18 @@ $seoRules = Yii::$app->params['seoRules'];
                                     Ключові слова
                                 </label>
                             </li>
+                            <li>
+                                <label class="d-flex align-items-center pt-2">
+                                    <input
+                                            type="radio"
+                                            class="form-check-input m-0 me-3 fs-exact-16"
+                                            name="seo"
+                                            value="non-faq"
+                                        <?= isset($filterParam['seo']) && $filterParam['seo'] == 'non-faq' ? 'checked' : '' ?>
+                                    />
+                                    Немає FAQ
+                                </label>
+                            </li>
                         </ul>
                     </div>
                 </li>

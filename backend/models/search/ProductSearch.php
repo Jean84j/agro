@@ -2,6 +2,7 @@
 
 namespace backend\models\search;
 
+use common\models\shop\Faq;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -239,6 +240,16 @@ class ProductSearch extends ProductsBackend
                     ['<', 'CHAR_LENGTH(short_description)', 150],
                 ]);
             }
+
+            if ($params['seo'] == 'non-faq') {
+
+                $query->andWhere([
+                    'not in',
+                    'id',
+                    Faq::find()->select('product_id')
+                ]);
+            }
+
         }
 
         $query->andFilterWhere(['like', 'name', $this->name])
