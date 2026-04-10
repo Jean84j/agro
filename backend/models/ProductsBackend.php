@@ -57,7 +57,7 @@ class ProductsBackend extends Product
                     'id' => 'faq',
                     'icon' => 'far fa-question-circle',
                     'label' => 'Запитання',
-                    'view' => '/product/faq'
+                    'view' => '/product/faq/faq'
                 ],
             ]);
         }

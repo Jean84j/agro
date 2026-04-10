@@ -1160,7 +1160,7 @@ class ProductController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return [
                     'success' => true,
-                    'faq' => $this->renderPartial('_faq-table', ['faq' => $faq, 'id' => $productId]), // Рендерим частичную таблицу
+                    'faq' => $this->renderPartial('faq/_faq-table', ['faq' => $faq, 'id' => $productId]), // Рендерим частичную таблицу
                 ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -1219,7 +1219,7 @@ class ProductController extends Controller
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return [
                     'success' => true,
-                    'faq' => $this->renderPartial('_faq-table', ['faq' => $faq, 'id' => $productId]), // Рендерим частичную таблицу
+                    'faq' => $this->renderPartial('faq/_faq-table', ['faq' => $faq, 'id' => $productId]), // Рендерим частичную таблицу
                 ];
             } else {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -1270,7 +1270,7 @@ class ProductController extends Controller
 
         return [
             'success' => true,
-            'faq' => $this->renderPartial('_faq-table', ['faq' => $faq, 'id' => $productId]),
+            'faq' => $this->renderPartial('faq/_faq-table', ['faq' => $faq, 'id' => $productId]),
         ];
     }
 
@@ -1313,7 +1313,7 @@ class ProductController extends Controller
         return [
             'success' => true,
             'newState' => $state,
-            'faq' => $this->renderPartial('_faq-table', ['faq' => $faq, 'id' => $productId]),
+            'faq' => $this->renderPartial('faq/_faq-table', ['faq' => $faq, 'id' => $productId]),
         ];
     }
 
@@ -1473,6 +1473,31 @@ class ProductController extends Controller
         }
 
         return ['success' => false];
+    }
+
+    public function actionAddFaqTranslate()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $text = Yii::$app->request->post('text');
+
+        try {
+            $sourceLanguage = 'UK';
+            $targetLanguages = 'RU';
+
+            $tr = Yii::$app->deepl;
+
+            $result = $tr->translate($text ?? '', $targetLanguages, $sourceLanguage);
+
+            return [
+                'translation' => $result ?? ''
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'translation' => $text
+            ];
+        }
     }
 
 }
