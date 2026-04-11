@@ -45,13 +45,13 @@ class DbController extends Controller
 
         if ($charset === null) {
             $charset = $this->prompt('Which character set should be used?', [
-                'default' => $dbConfig->charset ?? 'utf8',
+                'default' => $dbConfig->charset ?? 'utf8mb4',
             ]);
         }
 
         if ($collation === null) {
             $collation = $this->prompt('Which collation should be used?', [
-                'default' => $dbConfig->collation ?? 'utf8_unicode_ci',
+                'default' => $dbConfig->collation ?? 'utf8mb4_unicode_ci',
             ]);
         }
 

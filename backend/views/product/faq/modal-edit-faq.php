@@ -53,7 +53,7 @@ Modal::begin([
 </div>
 
 <div class="mt-5 d-flex justify-content-end" id="faq-container">
-    <button type="button" class="btn btn-primary editFaqBtn" data-id="<?= $faq['id'] ?>">Додати</button>
+    <button type="button" class="btn btn-primary editFaqBtn" data-id="<?= $faq['id'] ?>">Сохранить</button>
 </div>
 
 <?php Modal::end(); ?>
