@@ -59,7 +59,7 @@ use yii\helpers\Url;
                                             </div>
                                             <div class="product-card__actions">
                                                 <?= $this->render('/_partials/status', ['product' => $product_analog]) ?>
-                                                <?= $this->render('/_partials/price', ['product' => $product]) ?>
+                                                <?= $this->render('/_partials/price', ['product' => $product_analog]) ?>
                                                 <?= $this->render('/_partials/add-to-cart-button', ['product' => $product_analog]) ?>
                                             </div>
                                         </div>
