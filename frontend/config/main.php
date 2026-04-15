@@ -1,4 +1,7 @@
 <?php
+
+use yii\web\UrlNormalizer;
+
 define('PROJECT_VERSION', 84);
 
 $params = array_merge(
@@ -97,6 +100,14 @@ return [
             'enableLocaleUrls' => true,
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+
+            'normalizer' => [
+                'class' => 'yii\web\UrlNormalizer',
+                'collapseSlashes' => true,
+                'normalizeTrailingSlash' => true,
+                'action' => UrlNormalizer::ACTION_REDIRECT_PERMANENT,
+            ],
+
             'rules' => [
                 '/' => 'site/index',
 
