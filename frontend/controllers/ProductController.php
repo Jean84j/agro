@@ -112,8 +112,7 @@ class ProductController extends Controller
         Yii::$app->params['product'] = $schemaProduct->toScript();
 
         $type = 'product';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $product->seo_title;
         $description = $product->seo_description;
         $image = $product->getImgSeo($product->id);

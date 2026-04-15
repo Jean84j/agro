@@ -20,11 +20,12 @@ class ContactController extends Controller
 
         $seo = Settings::seoPageTranslate('contact');
         $type = 'website';
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         $this->setSchemaLocalBusiness();
 

@@ -7,6 +7,7 @@ use common\models\Posts;
 use common\models\PostsReview;
 use common\models\Settings;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use common\models\shop\Product;
 use yii\web\NotFoundHttpException;
@@ -91,8 +92,7 @@ class PostController extends Controller
         Yii::$app->params['post'] = $schemaPost->toScript();
 
         $type = 'article';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $postItem->seo_title;
         $description = $postItem->seo_description;
         $image = '/posts/' . $postItem->image;

@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Settings;
 use common\models\shop\Product;
 use Yii;
+use yii\helpers\Url;
 
 class WishController extends BaseFrontendController
 {
@@ -20,11 +21,12 @@ class WishController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('wish');
         $type = 'website';
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         $page_description = $seo->page_description;
 

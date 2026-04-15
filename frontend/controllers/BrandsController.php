@@ -7,6 +7,7 @@ use common\models\shop\Brand;
 use common\models\shop\Product;
 use Yii;
 use yii\db\Expression;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 class BrandsController extends BaseFrontendController
@@ -19,11 +20,12 @@ class BrandsController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('brands');
         $type = 'website';
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         return $this->render('view',
             [

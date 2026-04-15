@@ -40,8 +40,7 @@ class CategoryController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('catalog');
         $type = 'website';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
@@ -102,8 +101,7 @@ class CategoryController extends BaseFrontendController
         }
 
         $type = 'website';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $category->pageTitle;
         $description = $category->metaDescription;
         $image = '/images/category/' . $category->file;
@@ -248,8 +246,7 @@ class CategoryController extends BaseFrontendController
         $this->setCatalogProductSchema($category, $products_all);
 
         $type = 'product.group';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $category->pageTitle;
         $description = $category->metaDescription;
         $image = '/images/category/' . $category->file;
@@ -353,8 +350,7 @@ class CategoryController extends BaseFrontendController
         $this->setAuxiliaryCatalogProductSchema($category, $products_all, $productsId);
 
         $type = 'product.group';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $category->pageTitle;
         $description = $category->metaDescription;
         $image = '/images/auxiliary-categories/' . $category->image;

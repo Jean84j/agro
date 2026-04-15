@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Delivery;
 use common\models\Settings;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 class DeliveryController extends Controller
@@ -17,11 +18,12 @@ class DeliveryController extends Controller
 
         $seo = Settings::seoPageTranslate('delivery');
         $type = 'website';
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         Yii::$app->view->registerMetaTag([
             'name' => 'robots',

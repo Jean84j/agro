@@ -43,13 +43,6 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 $hostName = true;
 }
 }
-if ($hasNoIndex || ($page !== null && intval($page) > 1) || Yii::$app->language == 'en' || isset($hostName)) {
-foreach ($this->linkTags as $key => $tag) {
-if (str_contains($tag, 'rel="canonical"')) {
-unset($this->linkTags[$key]);
-}
-}
-}
 ?>
 
 <?php if (isset(Yii::$app->params['alternateUrls'])): ?>

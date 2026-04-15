@@ -36,8 +36,7 @@ class SpecialController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('special');
         $type = 'product.group';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';

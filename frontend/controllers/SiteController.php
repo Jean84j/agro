@@ -131,11 +131,12 @@ class SiteController extends Controller
         Yii::$app->params['webPage'] = $homepage->toScript();
 
         $type = 'website';
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
 
         return $this->render('index');
     }

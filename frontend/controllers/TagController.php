@@ -64,8 +64,7 @@ class TagController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('tag');
         $type = 'website';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';

@@ -50,8 +50,7 @@ class BlogsController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('blogs');
         $type = 'website';
-        $url = $this->request->hostInfo . $this->request->url;
-        $url = strtok($url, '?');
+        $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
