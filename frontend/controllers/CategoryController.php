@@ -373,15 +373,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setChildrenProductSchema($category)
     {
-        $language = Yii::$app->language;
-
-        if ($language !== 'uk') {
-            $url = Yii::$app->request->hostInfo . '/' . $language;
-        } else {
-            $url = Yii::$app->request->hostInfo;
-        }
-
-        $url = rtrim($url, '/') . '/';
+        $url = self::getUrlForSchema();
 
         $res = [];
         foreach ($category->parents as $cat) {
@@ -405,7 +397,7 @@ class CategoryController extends BaseFrontendController
         if ($res) {
             $productList = Schema::Product()
                 ->name($category->name)
-                ->url($url . 'catalog/' . $category->slug)
+                ->url(Url::canonical())
                 ->description(
                 mb_strlen(strip_tags($category->description)) > 500
                     ? mb_substr(strip_tags($category->description), 0, 497) . '...'
@@ -427,15 +419,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setCatalogProductSchema($category, $products_all)
     {
-        $language = Yii::$app->language;
-
-        if ($language !== 'uk') {
-            $url = Yii::$app->request->hostInfo . '/' . $language;
-        } else {
-            $url = Yii::$app->request->hostInfo;
-        }
-
-        $url = rtrim($url, '/') . '/';
+        $url = self::getUrlForSchema();
 
         $results = Product::find()->where(['category_id' => $category->id])->all();
         $offers = [];
@@ -449,7 +433,7 @@ class CategoryController extends BaseFrontendController
 
         $productList = Schema::Product()
             ->name($category->name)
-            ->url($url)
+            ->url(Url::canonical())
             ->description(
                 mb_strlen(strip_tags($category->description)) > 500
                     ? mb_substr(strip_tags($category->description), 0, 497) . '...'
@@ -470,15 +454,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setAuxiliaryCatalogProductSchema($category, $products_all, $productsId)
     {
-        $language = Yii::$app->language;
-
-        if ($language !== 'uk') {
-            $url = Yii::$app->request->hostInfo . '/' . $language;
-        } else {
-            $url = Yii::$app->request->hostInfo;
-        }
-
-        $url = rtrim($url, '/') . '/';
+        $url = self::getUrlForSchema();
 
         $results = Product::find()->where(['id' => $productsId])->all();
         $offers = [];
@@ -491,7 +467,7 @@ class CategoryController extends BaseFrontendController
 
         $productList = Schema::Product()
             ->name($category->name)
-            ->url($url . 'auxiliary-product-list/' . $category->slug)
+            ->url(Url::canonical())
             ->description(
                 mb_strlen(strip_tags($category->description)) > 500
                     ? mb_substr(strip_tags($category->description), 0, 497) . '...'
@@ -514,15 +490,7 @@ class CategoryController extends BaseFrontendController
     protected function setCatalogBreadCrumbSchema($category)
     {
 
-        $language = Yii::$app->language;
-
-        if ($language !== 'uk') {
-            $url = Yii::$app->request->hostInfo . '/' . $language;
-        } else {
-            $url = Yii::$app->request->hostInfo;
-        }
-
-        $url = rtrim($url, '/') . '/';
+        $url = self::getUrlForSchema();
 
         if (isset($category->parent->name)) {
             $schemaBreadcrumb = Schema::breadcrumbList()
@@ -569,15 +537,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setAuxiliaryCatalogBreadCrumbSchema($category, $breadcrumbCategory)
     {
-        $language = Yii::$app->language;
-
-        if ($language !== 'uk') {
-            $url = Yii::$app->request->hostInfo . '/' . $language;
-        } else {
-            $url = Yii::$app->request->hostInfo;
-        }
-
-        $url = rtrim($url, '/') . '/';
+        $url = self::getUrlForSchema();
 
         $schemaBreadcrumb = Schema::breadcrumbList()
             ->itemListElement([
@@ -599,6 +559,19 @@ class CategoryController extends BaseFrontendController
             ]);
 
         Yii::$app->params['breadcrumb'] = $schemaBreadcrumb->toScript();
+    }
+
+    protected function getUrlForSchema(): string
+    {
+        $language = Yii::$app->language;
+
+        if ($language !== 'uk') {
+            $url = Yii::$app->request->hostInfo . '/' . $language;
+        } else {
+            $url = Yii::$app->request->hostInfo;
+        }
+
+        return rtrim($url, '/') . '/';
     }
 
 }
