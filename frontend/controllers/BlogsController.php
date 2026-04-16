@@ -86,8 +86,14 @@ class BlogsController extends BaseFrontendController
 
     protected function getSchemaBlogs($posts)
     {
+        $language = Yii::$app->language;
         $blogPosting = [];
         $formatter = new Formatter;
+        $host = Yii::$app->request->hostInfo;
+
+        if ($language != 'uk'){
+            $host = $host . '/ru';
+        }
 
         foreach ($posts as $post) {
             $blogPost = [
@@ -99,22 +105,22 @@ class BlogsController extends BaseFrontendController
                 "articleSection" => $post->category->name ?? null,
                 "datePublished" => $formatter->asDatetime($post->date_public, 'php:Y-m-d\TH:i:sP'),
                 "dateModified" => $formatter->asDatetime($post->date_updated ?? $post->date_public, 'php:Y-m-d\TH:i:sP'),
-                "url" => Yii::$app->request->hostInfo . '/post/' . $post->slug,
+                "url" => $host . '/post/' . $post->slug,
                 "image" => [
                     Yii::$app->request->hostInfo . '/posts/' . $post->image
                 ],
                 "author" => [
                     "@type" => "Person",
                     "name" => "AgroPro",
-                    "url" => Yii::$app->request->hostInfo
+                    "url" => $host
                 ],
                 "publisher" => [
                     "@type" => "Organization",
                     "name" => "AgroPro",
-//                    "logo" => [
-//                        "@type" => "ImageObject",
-//                        "url" => Yii::$app->request->hostInfo . '/logos/meta_logo.jpg'
-//                    ]
+                    "logo" => [
+                        "@type" => "ImageObject",
+                        "url" => Yii::$app->request->hostInfo . '/logos/meta_logo.jpg'
+                    ]
                 ]
             ];
 
