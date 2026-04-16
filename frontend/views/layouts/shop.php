@@ -40,7 +40,6 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
 } elseif (str_contains(Yii::$app->request->hostInfo, 'mail')) {
 $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
-$hostName = true;
 }
 }
 ?>

@@ -154,11 +154,9 @@ class BaseFrontendController extends Controller
     protected function getAlternateUrl(): array
     {
         $host = Yii::$app->request->hostInfo;
-        $path = Yii::$app->request->pathInfo;
         $url = Yii::$app->request->url;
         $url = strtok($url, '?');
         $url = preg_replace('#^/ru#', '', $url);
-
 
         if ($url == '/'){
             $ukUrl = $host;
@@ -168,16 +166,10 @@ class BaseFrontendController extends Controller
             $ruUrl = $host . '/ru' . $url;
         }
 
-
-//            dd($host);
-
-
-
         return [
             'ukUrl' => $ukUrl,
             'ruUrl' => $ruUrl,
         ];
-
     }
 
 }
