@@ -8,11 +8,10 @@ use common\models\PostsReview;
 use common\models\Settings;
 use Yii;
 use yii\helpers\Url;
-use yii\web\Controller;
 use common\models\shop\Product;
 use yii\web\NotFoundHttpException;
 
-class PostController extends Controller
+class PostController extends BaseFrontendController
 {
     public function actionView($slug)
     {
@@ -97,7 +96,7 @@ class PostController extends Controller
         $description = $postItem->seo_description;
         $image = '/posts/' . $postItem->image;
         $keywords = '';
-        $alternateUrls = $this->getAlernateUrl($slug);
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         return $this->render('view', [
@@ -107,18 +106,6 @@ class PostController extends Controller
             'products' => $products,
             'products_id' => $products_id,
         ]);
-    }
-
-    protected function getAlernateUrl($slug): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/post/' . $slug;
-        $ruUrl = $url . '/ru/post/' . $slug;
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
 }

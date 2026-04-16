@@ -67,7 +67,7 @@ class CompareController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        $alternateUrls = $this->getAlernateUrl();
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         Yii::$app->view->registerMetaTag([
@@ -81,18 +81,6 @@ class CompareController extends BaseFrontendController
                 'properties' => $uniqueArray,
                 'page_description' => $seo->page_description,
             ]);
-    }
-
-    protected function getAlernateUrl(): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/compare';
-        $ruUrl = $url . '/ru/compare';
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
     public function actionAddToCompare()

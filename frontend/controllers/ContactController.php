@@ -8,10 +8,9 @@ use common\models\Settings;
 use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\helpers\Url;
-use yii\web\Controller;
 use yii\web\Response;
 
-class ContactController extends Controller
+class ContactController extends BaseFrontendController
 {
     public function actionView(): string
     {
@@ -25,7 +24,7 @@ class ContactController extends Controller
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        $alternateUrls = $this->getAlernateUrl();
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $this->setSchemaLocalBusiness();
@@ -36,18 +35,6 @@ class ContactController extends Controller
                 'page_description' => $seo->page_description,
             ]);
 
-    }
-
-    protected function getAlernateUrl(): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/contact';
-        $ruUrl = $url . '/ru/contact';
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
     public function actionCreate()

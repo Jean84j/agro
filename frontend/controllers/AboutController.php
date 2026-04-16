@@ -6,9 +6,8 @@ use common\models\About;
 use common\models\Settings;
 use Yii;
 use yii\helpers\Url;
-use yii\web\Controller;
 
-class AboutController extends Controller
+class AboutController extends BaseFrontendController
 {
 
     public function actionView()
@@ -23,7 +22,7 @@ class AboutController extends Controller
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        $alternateUrls = $this->getAlernateUrl();
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         Yii::$app->view->registerMetaTag([
@@ -36,18 +35,6 @@ class AboutController extends Controller
                 'model' => $model,
                 'page_description' => $seo->page_description,
             ]);
-    }
-
-    protected function getAlernateUrl(): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/about';
-        $ruUrl = $url . '/ru/about';
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
 }

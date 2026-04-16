@@ -11,7 +11,6 @@ use Yii;
 use yii\base\InvalidArgumentException;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -24,7 +23,7 @@ use yii\web\Response;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseFrontendController
 {
 
      public function actionError()
@@ -136,22 +135,10 @@ class SiteController extends Controller
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        $alternateUrls = $this->getAlernateUrl();
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         return $this->render('index');
-    }
-
-    protected function getAlernateUrl(): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/';
-        $ruUrl = $url . '/ru';
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
     /**

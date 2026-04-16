@@ -23,7 +23,7 @@ class SearchController extends BaseFrontendController
         $products = Product::find()
             ->select(['id', 'slug', 'name', 'price', 'currency', 'status_id', 'sku', 'category_id'])
             ->orWhere(['in', 'id', $id_prod])
-            ->limit(15)
+            ->limit(10)
             ->orderBy([new Expression('FIELD(status_id, 1, 3, 4, 2)')])
             ->all();
 

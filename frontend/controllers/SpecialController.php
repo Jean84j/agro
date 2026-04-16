@@ -6,7 +6,6 @@ use common\models\Settings;
 use common\models\shop\Product;
 use Yii;
 use yii\db\Expression;
-use yii\helpers\FileHelper;
 use yii\helpers\Url;
 
 class SpecialController extends BaseFrontendController
@@ -41,7 +40,7 @@ class SpecialController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        $alternateUrls = $this->getAlernateUrl();
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $page_description = $seo->page_description;
@@ -56,18 +55,6 @@ class SpecialController extends BaseFrontendController
             'page_description',
             'files'
         ]));
-    }
-
-    protected function getAlernateUrl(): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/special';
-        $ruUrl = $url . '/ru/special';
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
 }

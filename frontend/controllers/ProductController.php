@@ -13,11 +13,10 @@ use common\models\shop\ProductProperties;
 use common\models\shop\Review;
 use common\models\shop\Brand;
 use yii\helpers\Url;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
 
-class ProductController extends Controller
+class ProductController extends BaseFrontendController
 {
     public function actionView($slug): string
     {
@@ -117,7 +116,7 @@ class ProductController extends Controller
         $description = $product->seo_description;
         $image = $product->getImgSeo($product->id);
         $keywords = $product->keywords;
-        $alternateUrls = $this->getAlernateUrl($slug);
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         return $this->render('index', [
@@ -205,18 +204,6 @@ class ProductController extends Controller
                 }
             }
         }
-    }
-
-    protected function getAlernateUrl($slug): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/product/' . $slug;
-        $ruUrl = $url . '/ru/product/' . $slug;
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
 }

@@ -105,7 +105,7 @@ class Settings extends Model
         }
 
         if ($keywords) {
-            Yii::$app->view->registerMetaTag([
+            $view->registerMetaTag([
                 'name' => 'keywords',
                 'content' => $keywords,
             ]);
@@ -113,4 +113,7 @@ class Settings extends Model
 
         $metaMaster->register(Yii::$app->getView());
     }
+
+
+
 }

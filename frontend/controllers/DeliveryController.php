@@ -6,9 +6,8 @@ use common\models\Delivery;
 use common\models\Settings;
 use Yii;
 use yii\helpers\Url;
-use yii\web\Controller;
 
-class DeliveryController extends Controller
+class DeliveryController extends BaseFrontendController
 {
 
     public function actionView()
@@ -23,7 +22,7 @@ class DeliveryController extends Controller
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        $alternateUrls = $this->getAlernateUrl();
+        $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         Yii::$app->view->registerMetaTag([
@@ -37,18 +36,6 @@ class DeliveryController extends Controller
                 'page_description' => $seo->page_description,
             ]);
 
-    }
-
-    protected function getAlernateUrl(): array
-    {
-        $url = Yii::$app->request->hostInfo;
-        $ukUrl = $url . '/delivery';
-        $ruUrl = $url . '/ru/delivery';
-
-        return [
-            'ukUrl' => $ukUrl,
-            'ruUrl' => $ruUrl,
-        ];
     }
 
 }
