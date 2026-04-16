@@ -23,7 +23,8 @@ class AboutController extends Controller
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrl();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         Yii::$app->view->registerMetaTag([
             'name' => 'robots',
@@ -35,6 +36,18 @@ class AboutController extends Controller
                 'model' => $model,
                 'page_description' => $seo->page_description,
             ]);
+    }
+
+    protected function getAlernateUrl(): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/about';
+        $ruUrl = $url . '/ru/about';
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
 }

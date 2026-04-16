@@ -55,7 +55,8 @@ class BlogsController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrl();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $files = $this->getRelativeFiles('@webroot/images/blogs');
 
@@ -105,6 +106,18 @@ class BlogsController extends BaseFrontendController
         $schemaBlog = Schema::Blog()
             ->blogPosts($blogPosting);
         Yii::$app->params['blog'] = $schemaBlog->toScript();
+    }
+
+    protected function getAlernateUrl(): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/blogs';
+        $ruUrl = $url . '/ru/blogs';
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
 }

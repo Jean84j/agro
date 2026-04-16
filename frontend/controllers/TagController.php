@@ -69,7 +69,8 @@ class TagController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrl();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $page_description = $seo->page_description;
 
@@ -78,6 +79,18 @@ class TagController extends BaseFrontendController
                 'categories' => $categoriesTags,
                 'page_description' => $page_description,
             ]);
+    }
+
+    protected function getAlernateUrl(): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/tag';
+        $ruUrl = $url . '/ru/tag';
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
     public function actionView($slug, $category_slug = null)
@@ -199,7 +212,7 @@ class TagController extends BaseFrontendController
             }
         }
 
-        $this->setProductMetadata($tag_name, $language);
+        $this->setProductMetadata($tag_name, $category_slug, $language);
 
         return $this->render('view',
             [
@@ -225,7 +238,7 @@ class TagController extends BaseFrontendController
         return $this->redirect($newUrl, 301);
     }
 
-    protected function setProductMetadata($tag_name, $language)
+    protected function setProductMetadata($tag_name, $category_slug, $language)
     {
         if ($tag_name->seo_title) {
             $title = $tag_name->getTagSeoTitleTranslate($tag_name, $language);
@@ -239,11 +252,34 @@ class TagController extends BaseFrontendController
 
         }
 
-        Yii::$app->metamaster
-            ->setType('website')
-            ->setUrl(Url::canonical())
-            ->setTitle($title)
-            ->setDescription($description)
-            ->register(Yii::$app->getView());
+
+        $type = 'website';
+        $url = Url::canonical();
+        $title = $title;
+        $description = $description;
+        $image = '';
+        $keywords = '';
+        $alternateUrls = $this->getAlernateUrlView($tag_name->slug, $category_slug);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+
     }
+
+    protected function getAlernateUrlView($tag_slug, $category_slug): array
+    {
+
+        $url = Yii::$app->request->hostInfo;
+        if (empty($category_slug)){
+            $ukUrl = $url . '/tag/' . $tag_slug;
+            $ruUrl = $url . '/ru/tag/' . $tag_slug;
+        }else{
+            $ukUrl = $url . '/tag/' . $tag_slug . '/' . $category_slug;
+            $ruUrl = $url . '/ru/tag/' . $tag_slug . '/' . $category_slug;
+        }
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
+    }
+
 }

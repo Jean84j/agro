@@ -25,7 +25,8 @@ class ContactController extends Controller
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrl();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $this->setSchemaLocalBusiness();
 
@@ -35,6 +36,18 @@ class ContactController extends Controller
                 'page_description' => $seo->page_description,
             ]);
 
+    }
+
+    protected function getAlernateUrl(): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/contact';
+        $ruUrl = $url . '/ru/contact';
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
     public function actionCreate()

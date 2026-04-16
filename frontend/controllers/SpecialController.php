@@ -41,7 +41,8 @@ class SpecialController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrl();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $page_description = $seo->page_description;
 
@@ -55,6 +56,18 @@ class SpecialController extends BaseFrontendController
             'page_description',
             'files'
         ]));
+    }
+
+    protected function getAlernateUrl(): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/special';
+        $ruUrl = $url . '/ru/special';
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
 }

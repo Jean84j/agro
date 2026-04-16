@@ -117,9 +117,8 @@ class ProductController extends Controller
         $description = $product->seo_description;
         $image = $product->getImgSeo($product->id);
         $keywords = $product->keywords;
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
-
-        $this->setAlernateUrl($slug);
+        $alternateUrls = $this->getAlernateUrl($slug);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         return $this->render('index', [
             'product' => $product,
@@ -208,20 +207,16 @@ class ProductController extends Controller
         }
     }
 
-    protected function setAlernateUrl($slug)
+    protected function getAlernateUrl($slug): array
     {
         $url = Yii::$app->request->hostInfo;
         $ukUrl = $url . '/product/' . $slug;
-        $enUrl = $url . '/en/product/' . $slug;
         $ruUrl = $url . '/ru/product/' . $slug;
 
-        $alternateUrls = [
+        return [
             'ukUrl' => $ukUrl,
-            'enUrl' => $enUrl,
             'ruUrl' => $ruUrl,
         ];
-
-        Yii::$app->params['alternateUrls'] = $alternateUrls;
     }
 
 }

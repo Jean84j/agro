@@ -26,7 +26,8 @@ class WishController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrl();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $page_description = $seo->page_description;
 
@@ -40,6 +41,18 @@ class WishController extends BaseFrontendController
                 'products' => $products,
                 'page_description' => $page_description,
             ]);
+    }
+
+    protected function getAlernateUrl(): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/wish';
+        $ruUrl = $url . '/ru/wish';
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
     public function actionAddToWish()

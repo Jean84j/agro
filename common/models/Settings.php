@@ -61,10 +61,11 @@ class Settings extends Model
         return $seo;
     }
 
-    static function setMetamaster($type = null, $title = null, $description = null, $image = null, $keywords = null, $url = null)
+    static function setMetamaster($type = null, $title = null, $description = null, $image = null, $keywords = null, $url = null, $alternateUrls = null)
     {
 
         $metaMaster = Yii::$app->metamaster;
+        $view = Yii::$app->view;
 
         if ($type) {
             $metaMaster->setType($type);
@@ -80,7 +81,29 @@ class Settings extends Model
         }
         if ($url) {
             $metaMaster->setUrl($url);
+
+            if ($alternateUrls) {
+
+                $view->registerLinkTag([
+                    'rel' => 'alternate',
+                    'hreflang' => 'uk-UA',
+                    'href' => $alternateUrls['ukUrl'],
+                ]);
+
+                $view->registerLinkTag([
+                    'rel' => 'alternate',
+                    'hreflang' => 'ru-UA',
+                    'href' => $alternateUrls['ruUrl'],
+                ]);
+
+                $view->registerLinkTag([
+                    'rel' => 'alternate',
+                    'hreflang' => 'x-default',
+                    'href' => $alternateUrls['ukUrl'],
+                ]);
+            }
         }
+
         if ($keywords) {
             Yii::$app->view->registerMetaTag([
                 'name' => 'keywords',

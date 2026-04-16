@@ -97,9 +97,8 @@ class PostController extends Controller
         $description = $postItem->seo_description;
         $image = '/posts/' . $postItem->image;
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
-
-        $this->setAlernateUrl($slug);
+        $alternateUrls = $this->getAlernateUrl($slug);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         return $this->render('view', [
             'postItem' => $postItem,
@@ -110,18 +109,16 @@ class PostController extends Controller
         ]);
     }
 
-    protected function setAlernateUrl($slug)
+    protected function getAlernateUrl($slug): array
     {
         $url = Yii::$app->request->hostInfo;
         $ukUrl = $url . '/post/' . $slug;
         $ruUrl = $url . '/ru/post/' . $slug;
 
-        $alternateUrls = [
+        return [
             'ukUrl' => $ukUrl,
             'ruUrl' => $ruUrl,
         ];
-
-        Yii::$app->params['alternateUrls'] = $alternateUrls;
     }
 
 }

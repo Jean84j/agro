@@ -44,11 +44,6 @@ $hostName = true;
 }
 }
 ?>
-
-<?php if (isset(Yii::$app->params['alternateUrls'])): ?>
-<link rel="alternate" hreflang="uk" href="<?= Yii::$app->params['alternateUrls']['ukUrl'] ?? '' ?>"/>
-<link rel="alternate" hreflang="ru" href="<?= Yii::$app->params['alternateUrls']['ruUrl'] ?? '' ?>"/>
-<?php endif; ?>
 <?= Yii::$app->params['schema'] ?? '' ?>
 <?= Yii::$app->params['product'] ?? '' ?>
 <?= Yii::$app->params['organization'] ?? '' ?>

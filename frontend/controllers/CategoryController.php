@@ -45,7 +45,8 @@ class CategoryController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrlList();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $files = $this->getRelativeFiles('@webroot/images/catalog-categories');
 
@@ -56,6 +57,18 @@ class CategoryController extends BaseFrontendController
                 'page_description' => $seo->page_description,
                 'files' => $files,
             ]);
+    }
+
+    protected function getAlernateUrlList(): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/catalog';
+        $ruUrl = $url . '/ru/catalog';
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
     public function actionChildren($slug)
@@ -106,7 +119,8 @@ class CategoryController extends BaseFrontendController
         $description = $category->metaDescription;
         $image = '/images/category/' . $category->file;
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrlChildren($slug);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $this->setChildrenProductSchema($category);
 
@@ -115,6 +129,18 @@ class CategoryController extends BaseFrontendController
                 'category' => $category,
                 'language' => $language,
             ]);
+    }
+
+    protected function getAlernateUrlChildren($slug): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/catalog/' . $slug;
+        $ruUrl = $url . '/ru/catalog/' . $slug;
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
     public function actionCatalog($slug)
@@ -251,7 +277,8 @@ class CategoryController extends BaseFrontendController
         $description = $category->metaDescription;
         $image = '/images/category/' . $category->file;
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrlCatalog($slug);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         return $this->render('catalog',
             compact([
@@ -263,6 +290,18 @@ class CategoryController extends BaseFrontendController
                 'auxiliaryCategories',
                 'language',
             ]));
+    }
+
+    protected function getAlernateUrlCatalog($slug): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/product-list/' . $slug;
+        $ruUrl = $url . '/ru/product-list/' . $slug;
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
     public function actionAuxiliaryCatalog($slug)
@@ -355,7 +394,8 @@ class CategoryController extends BaseFrontendController
         $description = $category->metaDescription;
         $image = '/images/auxiliary-categories/' . $category->image;
         $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+        $alternateUrls = $this->getAlernateUrlAuxiliary($slug);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         return $this->render('view',
             compact([
@@ -368,6 +408,18 @@ class CategoryController extends BaseFrontendController
 //                'propertiesFilter',
 //                'auxiliaryCategories',
             ]));
+    }
+
+    protected function getAlernateUrlAuxiliary($slug): array
+    {
+        $url = Yii::$app->request->hostInfo;
+        $ukUrl = $url . '/auxiliary-product-list/' . $slug;
+        $ruUrl = $url . '/ru/auxiliary-product-list/' . $slug;
+
+        return [
+            'ukUrl' => $ukUrl,
+            'ruUrl' => $ruUrl,
+        ];
     }
 
 
