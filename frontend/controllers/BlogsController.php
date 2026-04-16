@@ -25,7 +25,7 @@ class BlogsController extends BaseFrontendController
             }
         }
 
-        $this->setShemaBlogs($posts);
+        $this->getSchemaBlogs($posts);
 
         if ($q == null) {
             $query = Posts::find();
@@ -84,27 +84,46 @@ class BlogsController extends BaseFrontendController
         }
     }
 
-    protected function setShemaBlogs($posts)
+    protected function getSchemaBlogs($posts)
     {
         $blogPosting = [];
         $formatter = new Formatter;
+
         foreach ($posts as $post) {
             $blogPost = [
-                "articleSection" => $post->seo_description,
-                "headLine" => $post->title,
-                "articleBody" => $post->description,
+                "@type" => "BlogPosting",
+                "headline" => $post->title,
+                "articleBody" => mb_strlen(strip_tags($post->description)) > 500
+                    ? mb_substr(strip_tags($post->description), 0, 497) . '...'
+                    : strip_tags($post->description),
+                "articleSection" => $post->category->name ?? null,
                 "datePublished" => $formatter->asDatetime($post->date_public, 'php:Y-m-d\TH:i:sP'),
-                "dateModified" => $formatter->asDatetime($post->date_public, 'php:Y-m-d\TH:i:sP'),
+                "dateModified" => $formatter->asDatetime($post->date_updated ?? $post->date_public, 'php:Y-m-d\TH:i:sP'),
                 "url" => Yii::$app->request->hostInfo . '/post/' . $post->slug,
-                "image" => Yii::$app->request->hostInfo . '/posts/' . $post->image,
-                "author" => Schema::person()
-                    ->name('AgroPro')
-                    ->url(Yii::$app->request->hostInfo . '/post/' . $post->slug)
+                "image" => [
+                    Yii::$app->request->hostInfo . '/posts/' . $post->image
+                ],
+                "author" => [
+                    "@type" => "Person",
+                    "name" => "AgroPro",
+                    "url" => Yii::$app->request->hostInfo
+                ],
+                "publisher" => [
+                    "@type" => "Organization",
+                    "name" => "AgroPro",
+//                    "logo" => [
+//                        "@type" => "ImageObject",
+//                        "url" => Yii::$app->request->hostInfo . '/logos/meta_logo.jpg'
+//                    ]
+                ]
             ];
+
             $blogPosting[] = $blogPost;
         }
+
         $schemaBlog = Schema::Blog()
             ->blogPosts($blogPosting);
+
         Yii::$app->params['blog'] = $schemaBlog->toScript();
     }
 
