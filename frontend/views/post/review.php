@@ -134,8 +134,8 @@ use yii\helpers\Html;
                            placeholder="<?=Yii::t('app','Ваше ім’я')?>" required>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="name">email</label>
-                    <input type="email" name="email" class="form-control"
+                    <label for="email">email</label>
+                    <input type="email" name="email" id="email" class="form-control"
                            placeholder="Email"
                            oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваш email'); this.reportValidity();"
                            oninput="this.setCustomValidity('')"

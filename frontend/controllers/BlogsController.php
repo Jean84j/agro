@@ -20,9 +20,7 @@ class BlogsController extends BaseFrontendController
         $posts = Posts::find()->all();
 
         if ($language !== 'uk') {
-            foreach ($posts as $post) {
-                $this->getPostTranslation($post, $language);
-            }
+            $this->getPostTranslation($posts, $language);
         }
 
         $this->getSchemaBlogs($posts);
@@ -41,11 +39,8 @@ class BlogsController extends BaseFrontendController
         $pages = $this->setPagination($query, $count);
         $blogs = $query->offset($pages->offset)->limit($pages->limit)->orderBy('date_public DESC')->all();
 
-
         if ($language !== 'uk') {
-            foreach ($blogs as $blog) {
-                $this->getPostTranslation($blog, $language);
-            }
+            $this->getPostTranslation($blogs, $language);
         }
 
         $seo = Settings::seoPageTranslate('blogs');
@@ -69,16 +64,18 @@ class BlogsController extends BaseFrontendController
             ]);
     }
 
-    protected function getPostTranslation($postItem, $language)
+    protected function getPostTranslation($posts, $language)
     {
-        if ($postItem) {
-            $translationPost = $postItem->getTranslation($language)->one();
-            if ($translationPost) {
-                if ($translationPost->title) {
-                    $postItem->title = $translationPost->title;
-                }
-                if ($translationPost->description) {
-                    $postItem->description = $translationPost->description;
+        foreach ($posts as $postItem) {
+            if ($postItem) {
+                $translationPost = $postItem->getTranslation($language)->one();
+                if ($translationPost) {
+                    if ($translationPost->title) {
+                        $postItem->title = $translationPost->title;
+                    }
+                    if ($translationPost->description) {
+                        $postItem->description = $translationPost->description;
+                    }
                 }
             }
         }
@@ -91,7 +88,7 @@ class BlogsController extends BaseFrontendController
         $formatter = new Formatter;
         $host = Yii::$app->request->hostInfo;
 
-        if ($language != 'uk'){
+        if ($language != 'uk') {
             $host = $host . '/ru';
         }
 

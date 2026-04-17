@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use common\models\PostProducts;
 use common\models\Posts;
-use common\models\PostsReview;
 use common\models\Settings;
 use Yii;
 use yii\helpers\Url;
@@ -16,7 +15,7 @@ class PostController extends BaseFrontendController
     public function actionView($slug)
     {
         $language = Yii::$app->language;
-        $model_review = new PostsReview();
+
         $blogs = Posts::find()
             ->alias('p')
             ->select([
@@ -102,7 +101,6 @@ class PostController extends BaseFrontendController
         return $this->render('view', [
             'postItem' => $postItem,
             'blogs' => $blogs,
-            'model_review' => $model_review,
             'products' => $products,
             'products_id' => $products_id,
         ]);

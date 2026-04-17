@@ -65,6 +65,9 @@ class BaseWidgetFronted extends Widget
             ->all();
     }
 
+    /**
+     *
+     */
     protected function getWidgetProducts($grup_id, $limit): array
     {
         $products_grup = ProductGrup::find()

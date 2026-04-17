@@ -24,7 +24,7 @@
         </div>
         <div class="form-group">
             <label for="messages-subject"><?=Yii::t('app','Тема')?></label>
-            <input type="text" name=subject class="form-control"
+            <input type="text" name="subject" class="form-control"
                    placeholder="<?=Yii::t('app','Тема')?>"
                    oninvalid="this.setCustomValidity('<?=Yii::t('app','Вкажіть будь ласка Тему')?>')"
                    oninput="this.setCustomValidity('')"
@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
             <label for="messages-messages"><?=Yii::t('app','Повідомлення')?></label>
-            <textarea name=message class="form-control" rows="4"
+            <textarea name="message" class="form-control" rows="4"
                       oninvalid="this.setCustomValidity('<?=Yii::t('app','Напишіть будь ласка Ваше повідомлення')?>')"
                       oninput="this.setCustomValidity('')"
                       required></textarea>

@@ -5,9 +5,10 @@ namespace frontend\controllers;
 use common\models\Posts;
 use common\models\PostsReview;
 use Yii;
+use yii\web\Controller;
 use yii\web\Response;
 
-class PostsReviewController extends \yii\web\Controller
+class PostsReviewController extends Controller
 {
     public function actionCreate()
     {
