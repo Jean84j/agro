@@ -4,35 +4,18 @@ use yii\helpers\Url;
 
 /** @var $path */
 /** @var $lang */
+/** @var $topBarLinks */
 
 ?>
 <div class="site-header__topbar topbar">
     <div class="topbar__container container">
         <div class="topbar__row">
-            <div class="topbar__item topbar__item--link">
-                <a class="topbar-link"
-                   href="<?= Url::to(['about/view']) ?>"><?= Yii::t('app', 'Про нас') ?></a>
-            </div>
-            <div class="topbar__item topbar__item--link">
-                <a class="topbar-link"
-                   href="<?= Url::to(['contact/view']) ?>"><?= Yii::t('app', 'Контакти') ?></a>
-            </div>
-            <div class="topbar__item topbar__item--link">
-                <a class="topbar-link"
-                   href="<?= Url::to(['delivery/view']) ?>"><?= Yii::t('app', 'Доставка Оплата') ?></a>
-            </div>
-            <div class="topbar__item topbar__item--link">
-                <a class="topbar-link"
-                   href="<?= Url::to(['tag/index']) ?>"><?= Yii::t('app', 'Теги') ?></a>
-            </div>
-            <div class="topbar__item topbar__item--link">
-                <a class="topbar-link"
-                   href="<?= Url::to(['brands/view']) ?>"><?= Yii::t('app', 'Бренди') ?></a>
-            </div>
-            <div class="topbar__item topbar__item--link">
-                <a class="topbar-link"
-                   href="<?= Url::to(['blogs/view']) ?>"><?= Yii::t('app', 'Статті') ?></a>
-            </div>
+            <?php foreach ($topBarLinks as $topBarLink): ?>
+                <div class="topbar__item topbar__item--link">
+                    <a class="topbar-link"
+                       href="<?= Url::to([$topBarLink['url']]) ?>"><?= Yii::t('app', $topBarLink['name']) ?></a>
+                </div>
+            <?php endforeach; ?>
             <div class="topbar__spring"></div>
             <div class="topbar__item">
                 <div class="topbar-dropdown">

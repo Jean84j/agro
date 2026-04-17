@@ -4,8 +4,6 @@
 namespace frontend\widgets;
 
 use app\widgets\BaseWidgetFronted;
-use common\models\shop\Product;
-use common\models\shop\ProductGrup;
 use Yii;
 
 class BestsellersDacha extends BaseWidgetFronted
@@ -22,29 +20,14 @@ class BestsellersDacha extends BaseWidgetFronted
         $language = Yii::$app->language;
         $title = 'Товари для Дачі';
 
-        $products_grup = ProductGrup::find()
-            ->select('product_id')
-            ->where(['grup_id' => 7])
-            ->column();
+        $grup_id = 7;
+        $limit = 7;
 
-        $products = Product::find()
-            ->select([
-                'id',
-                'name',
-                'slug',
-                'price',
-                'old_price',
-                'status_id',
-                'label_id',
-                'currency',
-                'category_id',
-            ])
-            ->with('label')
-            ->where(['id' => $products_grup])
-            ->limit(7)
-            ->all();
+        $products = $this->getWidgetProducts($grup_id, $limit);
 
-        $products = $this->translateProductsItem($language, $products);
+        if ($language !== 'uk') {
+            $products = $this->translateProductsItem($language, $products);
+        }
 
         $backgroundColor = '#94d944c2';
         $borderColor = '#57ab07cc';

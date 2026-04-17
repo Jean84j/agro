@@ -7,35 +7,6 @@ use yii\helpers\Url;
 /** @var $path */
 /** @var $lang */
 
-$itemsMenu = [
-    [
-        'url' => 'special/view',
-        'name' => Yii::t('app', 'Спеціальні пропозиції'),
-        'icon' => '<i class="fas fa-tags"></i>',
-    ],
-    [
-        'url' => 'delivery/view',
-        'name' => Yii::t('app', 'Доставка та оплата'),
-        'icon' => '<i class="fas fa-truck"></i>',
-    ],
-    [
-        'url' => 'about/view',
-        'name' => Yii::t('app', 'Про нас'),
-        'icon' => '<i class="fas fa-address-card"></i>',
-    ],
-    [
-        'url' => 'contact/view',
-        'name' => Yii::t('app', 'Зв’язок з нами'),
-        'icon' => '<i class="fas fa-phone-square-alt"></i>',
-    ],
-    [
-        'url' => 'blogs/view',
-        'name' => Yii::t('app', 'Статті'),
-        'icon' => '<i class="fas fa-file-alt"> </i>',
-    ]
-];
-
-
 ?>
 <div class="mobilemenu">
     <div class="mobilemenu__backdrop"></div>

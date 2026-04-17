@@ -3,8 +3,6 @@
 namespace frontend\widgets;
 
 use app\widgets\BaseWidgetFronted;
-use common\models\shop\Product;
-use common\models\shop\ProductGrup;
 use Yii;
 use yii\caching\DbDependency;
 
@@ -30,33 +28,19 @@ class FeaturedProduct extends BaseWidgetFronted
         $products = Yii::$app->cache->get($cacheKey);
 
         if ($products === false || !Yii::$app->cache->get($cacheKey . '_db')) {
-            $products_grup = ProductGrup::find()
-                ->select('product_id')
-                ->where(['grup_id' => 2])            //  Друга_Группа_Тест
-                ->column();
 
-            $products = Product::find()
-                ->with(['category.parent'])
-                ->select([
-                    'id',
-                    'name',
-                    'slug',
-                    'price',
-                    'old_price',
-                    'status_id',
-                    'label_id',
-                    'currency',
-                    'category_id',
-                ])
-                ->where(['id' => $products_grup])
-                ->limit(20)
-                ->all();
+            $grup_id = 2;
+            $limit = 20;
+
+            $products = $this->getWidgetProducts($grup_id, $limit);
 
             Yii::$app->cache->set($cacheKey, $products, 3600, $dependency);
             Yii::$app->cache->set($cacheKey . '_db', true, 0, $dependency);
         }
 
-        $products = $this->translateProductsItem($language, $products);
+        if ($language !== 'uk') {
+            $products = $this->translateProductsItem($language, $products);
+        }
 
         $backgroundColor = '#ff000069';
         $borderColor = '#e70f0fcc';

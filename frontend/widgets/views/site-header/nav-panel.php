@@ -6,6 +6,7 @@ use yii\helpers\Url;
 /** @var $compareList */
 /** @var $wishList */
 /** @var $checkoutUrl */
+/** @var $navLinks */
 
 ?>
 <div class="site-header__nav-panel">
@@ -18,39 +19,20 @@ use yii\helpers\Url;
                 </div>
                 <div class="nav-panel__nav-links nav-links">
                     <ul class="nav-links__list">
-                        <li class="nav-links__item  nav-links__item--has-submenu ">
-                            <a class="nav-links__item-link" href="<?= Url::to(['special/view']) ?>">
-                                <div class="nav-links__item-body header-menu">
-                                    <?= Yii::t('app', 'Спеціальні пропозиції') ?>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-links__item  nav-links__item--has-submenu ">
-                            <a class="nav-links__item-link" href="<?= Url::to(['delivery/view']) ?>">
-                                <div class="nav-links__item-body header-menu">
-                                    <?= Yii::t('app', 'Доставка') ?>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-links__item  nav-links__item--has-submenu ">
-                            <a class="nav-links__item-link" href="<?= Url::to(['contact/view']) ?>">
-                                <div class="nav-links__item-body header-menu">
-                                    <?= Yii::t('app', 'Зв’язок з нами') ?>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-links__item  nav-links__item--has-submenu ">
-                            <a class="nav-links__item-link" href="<?= Url::to(['blogs/view']) ?>">
-                                <div class="nav-links__item-body header-menu">
-                                    <?= Yii::t('app', 'Статті') ?>
-                                </div>
-                            </a>
-                        </li>
+                        <?php foreach ($navLinks as $navLink): ?>
+                            <li class="nav-links__item  nav-links__item--has-submenu ">
+                                <a class="nav-links__item-link" href="<?= Url::to([$navLink['url']]) ?>">
+                                    <div class="nav-links__item-body header-menu">
+                                        <?= Yii::t('app', $navLink['name']) ?>
+                                    </div>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
                 <div class="nav-panel__indicators">
                     <div class="indicator">
-                        <a href="<?= Url::to(['wish/view']) ?>" data-toggle="tooltip" title="Бажання"
+                        <a href="<?= Url::to(['/wish']) ?>" data-toggle="tooltip" title="Бажання"
                            class="indicator__button">
                                             <span class="indicator__area">
                                                 <svg width="20px" height="20px">
@@ -62,7 +44,7 @@ use yii\helpers\Url;
                         </a>
                     </div>
                     <div class="indicator">
-                        <a href="<?= Url::to(['compare/view']) ?>" data-toggle="tooltip" title="Порівняння"
+                        <a href="<?= Url::to(['/compare']) ?>" data-toggle="tooltip" title="Порівняння"
                            class="indicator__button">
                                             <span class="indicator__area">
                                                 <svg width="20px" height="20px">

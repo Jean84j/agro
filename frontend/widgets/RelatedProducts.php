@@ -44,7 +44,9 @@ class RelatedProducts extends BaseWidgetFronted
             ->limit(15)
             ->all();
 
-        $products = $this->translateProductsItem($language, $products);
+        if ($language !== 'uk') {
+            $products = $this->translateProductsItem($language, $products);
+        }
 
         $backgroundColor = '#56e9b87d';
         $borderColor = '#2d92b7cc';

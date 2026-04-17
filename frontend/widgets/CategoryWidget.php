@@ -32,59 +32,64 @@ class CategoryWidget extends Widget
         }
 
         if ($language !== 'uk') {
-            foreach ($categories as $category) {
-                $translationCat = $category->getTranslation($language)->one();
-                if ($translationCat) {
-                    if ($translationCat->name) {
-                        $category->name = $translationCat->name;
-                    }
-                    if ($translationCat->description) {
-                        $category->description = $translationCat->description;
-                    }
+            $categories = $this->getCategoriesTranslate($categories, $language);
+        }
+
+        return $this->render('category-widget', ['categories' => $categories]);
+    }
+
+    protected function getCategoriesTranslate($categories, $language)
+    {
+        foreach ($categories as $category) {
+            $translationCat = $category->getTranslation($language)->one();
+            if ($translationCat) {
+                if ($translationCat->name) {
+                    $category->name = $translationCat->name;
                 }
-                if ($category->parents){
-                    foreach ($category->parents as $parent) {
-                        if ($parent !== null) {
-                            $translationCatParent = $parent->getTranslation($language)->one();
-                            if ($translationCatParent) {
-                                $parent->name = $translationCatParent->name;
-                            }
-                            if ($parent->products) {
-                                $i = 0;
-                                foreach ($parent->products as $product) {
-                                    if ($i <= 5) {
-                                        if ($product) {
-                                            $translationProduct = $product->getTranslation($language)->one();
-                                            if ($translationProduct) {
-                                                $product->name = $translationProduct->name;
-                                            }
+                if ($translationCat->description) {
+                    $category->description = $translationCat->description;
+                }
+            }
+            if ($category->parents){
+                foreach ($category->parents as $parent) {
+                    if ($parent !== null) {
+                        $translationCatParent = $parent->getTranslation($language)->one();
+                        if ($translationCatParent) {
+                            $parent->name = $translationCatParent->name;
+                        }
+                        if ($parent->products) {
+                            $i = 0;
+                            foreach ($parent->products as $product) {
+                                if ($i <= 5) {
+                                    if ($product) {
+                                        $translationProduct = $product->getTranslation($language)->one();
+                                        if ($translationProduct) {
+                                            $product->name = $translationProduct->name;
                                         }
                                     }
-                                    $i++;
                                 }
+                                $i++;
                             }
                         }
                     }
-                }else{
-                    if ($category->products){
-                        $i = 0;
-                        foreach ($category->products as $product) {
-                            if ($i <= 5) {
-                                if ($product) {
-                                    $translationProduct = $product->getTranslation($language)->one();
-                                    if ($translationProduct) {
-                                        $product->name = $translationProduct->name;
-                                    }
+                }
+            }else{
+                if ($category->products){
+                    $i = 0;
+                    foreach ($category->products as $product) {
+                        if ($i <= 5) {
+                            if ($product) {
+                                $translationProduct = $product->getTranslation($language)->one();
+                                if ($translationProduct) {
+                                    $product->name = $translationProduct->name;
                                 }
                             }
-                            $i++;
                         }
+                        $i++;
                     }
                 }
             }
         }
-
-        return $this->render('category-widget', ['categories' => $categories]);
-
+        return $categories;
     }
 }

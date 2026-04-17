@@ -7,6 +7,9 @@
 /** @var $lang */
 /** @var $compareList */
 /** @var $wishList */
+/** @var $navLinks */
+/** @var $topBarLinks */
+/** @var $itemsMenu */
 
 $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
 
@@ -17,6 +20,7 @@ $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
         [
             'categories' => $categories,
             'contacts' => $contacts,
+            'itemsMenu' => $itemsMenu,
             'path' => $path,
             'lang' => $lang
         ]) ?>
@@ -26,6 +30,7 @@ $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
             <?= $this->render('topbar',
                 [
                     'path' => $path,
+                    'topBarLinks' => $topBarLinks,
                     'lang' => $lang
                 ]) ?>
 
@@ -37,6 +42,7 @@ $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
             <?= $this->render('nav-panel',
                 [
                     'contacts' => $contacts,
+                    'navLinks' => $navLinks,
                     'compareList' => $compareList,
                     'wishList' => $wishList,
                     'checkoutUrl' => $checkoutUrl,

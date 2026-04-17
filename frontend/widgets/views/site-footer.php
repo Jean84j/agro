@@ -3,20 +3,16 @@
 use yii\helpers\Url;
 
 /** @var \common\models\Contact $contacts */
+/** @var $backgroundStyle */
+/** @var $infoLinks */
+/** @var $goodLinks */
+/** @var $mobile */
 
-$mobile = Yii::$app->devicedetect->isMobile();
-if ($mobile):
-    $class = '';
-    $style = '';
-else:
-    $class = 'bk-1';
-    $style = 'margin: 0 0';
-endif;
 ?>
 <footer>
     <div class="site-footer">
         <div class="container">
-            <div class="site-footer__widgets <?= $class ?>" style="<?= $style ?>">
+            <div class="site-footer__widgets <?= $backgroundStyle['class'] ?>" style="<?= $backgroundStyle['style'] ?>">
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="site-footer__widget footer-contacts">
@@ -48,26 +44,12 @@ endif;
                         <div class="site-footer__widget footer-links">
                             <h4 class="footer-links__title"><?= Yii::t('app', 'Інформація') ?></h4>
                             <ul class="footer-links__list">
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['about/view']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Про нас') ?></a>
-                                </li>
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['delivery/view']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Про доставку') ?></a>
-                                </li>
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['contact/view']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Контакти') ?></a>
-                                </li>
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['order/conditions']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Повернення') ?></a>
-                                </li>
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['brands/view']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Бренди') ?></a>
-                                </li>
+                                <?php foreach ($infoLinks as $infoLink): ?>
+                                    <li class="footer-links__item footer-color">
+                                        <a href="<?= Url::to([$infoLink['url']]) ?>"
+                                           class="footer-links__link"><?= Yii::t('app', $infoLink['name']) ?></a>
+                                    </li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
@@ -75,22 +57,12 @@ endif;
                         <div class="site-footer__widget footer-links">
                             <h4 class="footer-links__title"><?= Yii::t('app', 'Товари') ?></h4>
                             <ul class="footer-links__list">
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['category/list']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Каталог') ?></a>
-                                </li>
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['special/view']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Спеціальні пропозиції') ?></a>
-                                </li>
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['blogs/view']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Статті') ?></a>
-                                </li>
-                                <li class="footer-links__item footer-color"><a
-                                            href="<?= Url::to(['tag/index']) ?>"
-                                            class="footer-links__link"><?= Yii::t('app', 'Теги') ?></a>
-                                </li>
+                                <?php foreach ($goodLinks as $goodLink): ?>
+                                    <li class="footer-links__item footer-color">
+                                        <a href="<?= Url::to([$goodLink['url']]) ?>"
+                                           class="footer-links__link"><?= Yii::t('app', $goodLink['name']) ?></a>
+                                    </li>
+                                <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>

@@ -15,24 +15,21 @@ class BaseWidgetFronted extends Widget
      */
     protected function translateProductsItem($language, $products)
     {
-
-        if ($language !== 'uk') {
-            foreach ($products as $product) {
-                if ($product) {
-                    $translationProd = $product->getTranslation($language)->one();
-                    if ($translationProd) {
-                        if ($translationProd->name) {
-                            $product->name = $translationProd->name;
-                        }
+        foreach ($products as $product) {
+            if ($product) {
+                $translationProd = $product->getTranslation($language)->one();
+                if ($translationProd) {
+                    if ($translationProd->name) {
+                        $product->name = $translationProd->name;
                     }
-                    $translationCat = $product->category->getTranslation($language)->one();
-                    if ($translationCat) {
-                        if ($translationCat->name) {
-                            $product->category->name = $translationCat->name;
-                        }
-                        if ($translationCat->prefix) {
-                            $product->category->prefix = $translationCat->prefix;
-                        }
+                }
+                $translationCat = $product->category->getTranslation($language)->one();
+                if ($translationCat) {
+                    if ($translationCat->name) {
+                        $product->category->name = $translationCat->name;
+                    }
+                    if ($translationCat->prefix) {
+                        $product->category->prefix = $translationCat->prefix;
                     }
                 }
             }
@@ -43,7 +40,7 @@ class BaseWidgetFronted extends Widget
     /**
      *
      */
-    protected function translateProductsCarousel($language, $grup_id, $limit)
+    protected function translateProductsCarousel($language, $grup_id, $limit): array
     {
         return Product::find()
             ->alias('p')
@@ -65,6 +62,32 @@ class BaseWidgetFronted extends Widget
             ->with('label')
             ->limit($limit)
             ->addParams([':language' => $language])
+            ->all();
+    }
+
+    protected function getWidgetProducts($grup_id, $limit): array
+    {
+        $products_grup = ProductGrup::find()
+            ->select('product_id')
+            ->where(['grup_id' => $grup_id])
+            ->column();
+
+        return Product::find()
+            ->select([
+                'id',
+                'name',
+                'slug',
+                'price',
+                'old_price',
+                'status_id',
+                'label_id',
+                'currency',
+                'category_id',
+            ])
+            ->with('label')
+            ->with(['category.parent'])
+            ->where(['id' => $products_grup])
+            ->limit($limit)
             ->all();
     }
 

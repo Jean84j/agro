@@ -51,7 +51,9 @@ class ViewProduct extends BaseWidgetFronted
             ->where(['id' => $viewedProducts])
             ->all();
 
-        $viewedProductsData = $this->translateProductsItem($language, $viewedProductsData);
+        if ($language !== 'uk') {
+            $viewedProductsData = $this->translateProductsItem($language, $viewedProductsData);
+        }
 
         $backgroundColor = '#d197f882';
         $borderColor = '#a536bacc';
