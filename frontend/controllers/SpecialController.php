@@ -31,7 +31,9 @@ class SpecialController extends BaseFrontendController
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
         $products_all = $query->count();
 
-        $products = $this->translateProduct($products, $language);
+        if ($language !== 'uk') {
+            $products = $this->translateProduct($products, $language);
+        }
 
         $seo = Settings::seoPageTranslate('special');
         $type = 'product.group';
