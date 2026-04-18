@@ -345,9 +345,8 @@ class CategoryController extends BaseFrontendController
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
         $products_all = $query->count();
 
-        $category = $this->translateCategory($category, $language);
-
         if ($language !== 'uk') {
+            $category = $this->translateCategory($category, $language);
             $products = $this->translateProduct($products, $language);
         }
 
@@ -404,10 +403,10 @@ class CategoryController extends BaseFrontendController
                 ->name($category->name)
                 ->url(Url::canonical())
                 ->description(
-                mb_strlen(strip_tags($category->description)) > 500
-                    ? mb_substr(strip_tags($category->description), 0, 497) . '...'
-                    : strip_tags($category->description)
-            )
+                    mb_strlen(strip_tags($category->description)) > 500
+                        ? mb_substr(strip_tags($category->description), 0, 497) . '...'
+                        : strip_tags($category->description)
+                )
                 ->image(Yii::$app->request->hostInfo . '/images/category/' . $category->file)
                 ->aggregateRating(Schema::aggregateRating()
                     ->ratingValue($category->getSchemaRatingChildren($res))
