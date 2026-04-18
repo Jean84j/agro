@@ -346,8 +346,10 @@ class CategoryController extends BaseFrontendController
         $products_all = $query->count();
 
         $category = $this->translateCategory($category, $language);
-        $products = $this->translateProduct($products, $language);
 
+        if ($language !== 'uk') {
+            $products = $this->translateProduct($products, $language);
+        }
 
         $this->setAuxiliaryCatalogBreadCrumbSchema($category, $breadcrumbCategory);
         $this->setAuxiliaryCatalogProductSchema($category, $products_all, $productsId);
