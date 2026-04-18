@@ -201,7 +201,7 @@ class Category extends ActiveRecord
 
         $property = [];
         foreach ($properties as $item) {
-            if ($item !== '*') {
+            if ($item !== null && $item !== '*') {
                 $subArray = preg_split('/,\s+|\s+\+\s+/', $item);
                 $property = array_merge($property, array_map('trim', $subArray));
             }
