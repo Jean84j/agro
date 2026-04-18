@@ -80,7 +80,7 @@ class PostController extends BaseFrontendController
             ])
             ->leftJoin('products_translate pt', 'pt.product_id = p.id AND pt.language = :language')
             ->where(['p.id' => $products_id])
-            ->addParams([':language' => $language]) // Параметр языка
+            ->addParams([':language' => $language])
             ->all();
 
         $schemaPost = $postItem->getSchemaPost();

@@ -23,40 +23,7 @@ class CompareController extends BaseFrontendController
         }
         $categories_id = array_unique($categories_id);
 
-        $properties = ProductProperties::find()
-            ->alias('pp')
-            ->select([
-                'pp.property_id',
-                'COALESCE(pnt.name, pn.name) AS properties',
-                'COALESCE(ppt.value, pp.value) AS value',
-            ])
-            ->leftJoin(
-                'properties_name pn',
-                'pn.id = pp.property_id'
-            )
-            ->leftJoin(
-                'properties_name_translate pnt',
-                'pnt.name_id = pn.id AND pnt.language = :language'
-            )
-            ->leftJoin(
-                'product_properties_translate ppt',
-                'ppt.product_properties_id = pp.id AND ppt.language = :language'
-            )
-            ->where(['pp.category_id' => $categories_id])
-            ->asArray()
-            ->orderBy(['pn.sort' => SORT_ASC])
-            ->addParams([':language' => $language])
-            ->all();
-
-        $uniqueArray = [];
-        $seenProperties = [];
-
-        foreach ($properties as $item) {
-            if (!in_array($item['properties'], $seenProperties)) {
-                $seenProperties[] = $item['properties'];
-                $uniqueArray[] = $item;
-            }
-        }
+        $properties = $this->getProductProperties($categories_id, $language);
 
         $products = $this->translateProduct($products, $language);
 
@@ -78,7 +45,7 @@ class CompareController extends BaseFrontendController
         return $this->render('view',
             [
                 'products' => $products,
-                'properties' => $uniqueArray,
+                'properties' => $properties,
                 'page_description' => $seo->page_description,
             ]);
     }
@@ -129,40 +96,9 @@ class CompareController extends BaseFrontendController
                 $categories_id[] = $product->category_id;
             }
             $categories_id = array_unique($categories_id);
-            $properties = ProductProperties::find()
-                ->alias('pp')
-                ->select([
-                    'pp.property_id',
-                    'COALESCE(pnt.name, pn.name) AS properties',
-                    'COALESCE(ppt.value, pp.value) AS value',
-                ])
-                ->leftJoin(
-                    'properties_name pn',
-                    'pn.id = pp.property_id'
-                )
-                ->leftJoin(
-                    'properties_name_translate pnt',
-                    'pnt.name_id = pn.id AND pnt.language = :language'
-                )
-                ->leftJoin(
-                    'product_properties_translate ppt',
-                    'ppt.product_properties_id = pp.id AND ppt.language = :language'
-                )
-                ->where(['pp.category_id' => $categories_id])
-                ->asArray()
-                ->orderBy(['pn.sort' => SORT_ASC])
-                ->addParams([':language' => $language])
-                ->all();
 
-            $uniqueArray = [];
-            $seenProperties = [];
+            $properties = $this->getProductProperties($categories_id, $language);
 
-            foreach ($properties as $item) {
-                if (!in_array($item['properties'], $seenProperties)) {
-                    $seenProperties[] = $item['properties'];
-                    $uniqueArray[] = $item;
-                }
-            }
 
             $products = $this->translateProduct($products, $language);
             return $this->asJson([
@@ -171,7 +107,7 @@ class CompareController extends BaseFrontendController
                     [
                         'compareList' => $compareList,
                         'products' => $products,
-                        'properties' => $uniqueArray,
+                        'properties' => $properties,
                     ]),
                 'compareCount' => count($compareList), // Отправляем количество продуктов в сравнении
             ]);
@@ -179,6 +115,45 @@ class CompareController extends BaseFrontendController
 
         // Если товар не найден, отправляем JSON-ответ с ошибкой
         return $this->asJson(['success' => false]);
+    }
+
+    protected function getProductProperties($categories_id, $language): array
+    {
+        $properties = ProductProperties::find()
+            ->alias('pp')
+            ->select([
+                'pp.property_id',
+                'COALESCE(pnt.name, pn.name) AS properties',
+                'COALESCE(ppt.value, pp.value) AS value',
+            ])
+            ->leftJoin(
+                'properties_name pn',
+                'pn.id = pp.property_id'
+            )
+            ->leftJoin(
+                'properties_name_translate pnt',
+                'pnt.name_id = pn.id AND pnt.language = :language'
+            )
+            ->leftJoin(
+                'product_properties_translate ppt',
+                'ppt.product_properties_id = pp.id AND ppt.language = :language'
+            )
+            ->where(['pp.category_id' => $categories_id])
+            ->asArray()
+            ->orderBy(['pn.sort' => SORT_ASC])
+            ->addParams([':language' => $language])
+            ->all();
+
+        $uniqueArray = [];
+        $seenProperties = [];
+
+        foreach ($properties as $item) {
+            if (!in_array($item['properties'], $seenProperties)) {
+                $seenProperties[] = $item['properties'];
+                $uniqueArray[] = $item;
+            }
+        }
+        return $uniqueArray;
     }
 
 }

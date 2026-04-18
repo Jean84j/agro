@@ -17,8 +17,32 @@ class TagController extends BaseFrontendController
     {
         $language = Yii::$app->language;
 
-        $categoriesTags = [];
-        $categories = Category::find()
+        $categories = $this->getCategories($language);
+
+        $tagCategories = $this->getTagCategories($categories, $language);
+
+        $seo = Settings::seoPageTranslate('tag');
+        $type = 'website';
+        $url = Url::canonical();
+        $title = $seo->title;
+        $description = $seo->description;
+        $image = '';
+        $keywords = '';
+        $alternateUrls = $this->getAlternateUrl();
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+
+        $page_description = $seo->page_description;
+
+        return $this->render('index',
+            [
+                'categories' => $tagCategories,
+                'page_description' => $page_description,
+            ]);
+    }
+
+    protected function getCategories($language): array
+    {
+        return Category::find()
             ->alias('c')
             ->select([
                 'c.id',
@@ -34,7 +58,11 @@ class TagController extends BaseFrontendController
             ->where(['c.visibility' => true])
             ->distinct()
             ->all();
+    }
 
+    protected function getTagCategories($categories, $language): array
+    {
+        $categoriesTags = [];
         foreach ($categories as $category) {
             $tags = Tag::find()
                 ->alias('t')
@@ -61,24 +89,7 @@ class TagController extends BaseFrontendController
                 ];
             }
         }
-
-        $seo = Settings::seoPageTranslate('tag');
-        $type = 'website';
-        $url = Url::canonical();
-        $title = $seo->title;
-        $description = $seo->description;
-        $image = '';
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
-
-        $page_description = $seo->page_description;
-
-        return $this->render('index',
-            [
-                'categories' => $categoriesTags,
-                'page_description' => $page_description,
-            ]);
+        return $categoriesTags;
     }
 
     public function actionView($slug, $category_slug = null)
