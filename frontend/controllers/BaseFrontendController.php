@@ -62,28 +62,27 @@ class BaseFrontendController extends Controller
 
     protected function translateCategory($category, $language)
     {
-        if ($language !== 'uk') {
-            if ($category) {
-                $translationCat = $category->getTranslation($language)->one();
-                if ($translationCat) {
-                    if ($translationCat->name) {
-                        $category->name = $translationCat->name;
-                    }
-                    if ($translationCat->h1) {
-                        $category->h1 = $translationCat->h1;
-                    }
-                    if ($translationCat->description) {
-                        $category->description = $translationCat->description;
-                    }
-                    if ($translationCat->pageTitle) {
-                        $category->pageTitle = $translationCat->pageTitle;
-                    }
-                    if ($translationCat->metaDescription) {
-                        $category->metaDescription = $translationCat->metaDescription;
-                    }
+        if ($category) {
+            $translationCat = $category->getTranslation($language)->one();
+            if ($translationCat) {
+                if ($translationCat->name) {
+                    $category->name = $translationCat->name;
+                }
+                if ($translationCat->h1) {
+                    $category->h1 = $translationCat->h1;
+                }
+                if ($translationCat->description) {
+                    $category->description = $translationCat->description;
+                }
+                if ($translationCat->pageTitle) {
+                    $category->pageTitle = $translationCat->pageTitle;
+                }
+                if ($translationCat->metaDescription) {
+                    $category->metaDescription = $translationCat->metaDescription;
                 }
             }
         }
+
         return $category;
     }
 
