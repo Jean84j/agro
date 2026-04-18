@@ -53,7 +53,9 @@ class SearchController extends BaseFrontendController
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
         $products_all = $query->count();
 
-        $products = $this->translateProduct($products, $language);
+        if ($language !== 'uk') {
+            $products = $this->translateProduct($products, $language);
+        }
 
         return $this->render('suggestions-list', [
             'products' => $products,
