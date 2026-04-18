@@ -51,7 +51,7 @@ class SiteController extends BaseFrontendController
 
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
@@ -67,7 +67,7 @@ class SiteController extends BaseFrontendController
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -82,10 +82,6 @@ class SiteController extends BaseFrontendController
      */
     public function actionIndex()
     {
-
-//                Yii::$app->session->removeAll();
-
-
         $seo = Settings::seoPageTranslate('home');
 
         $organization = Schema::localBusiness()
