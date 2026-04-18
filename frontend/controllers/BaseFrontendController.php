@@ -37,27 +37,26 @@ class BaseFrontendController extends Controller
      */
     protected function translateProduct($products, $language)
     {
-        if ($language !== 'uk') {
-            foreach ($products as $product) {
-                if ($product) {
-                    $translationProd = $product->getTranslation($language)->one();
-                    if ($translationProd) {
-                        if ($translationProd->name) {
-                            $product->name = $translationProd->name;
-                        }
+        foreach ($products as $product) {
+            if ($product) {
+                $translationProd = $product->getTranslation($language)->one();
+                if ($translationProd) {
+                    if ($translationProd->name) {
+                        $product->name = $translationProd->name;
                     }
-                    $translationCat = $product->category->getTranslation($language)->one();
-                    if ($translationCat) {
-                        if ($translationCat->name) {
-                            $product->category->name = $translationCat->name;
-                        }
-                        if ($translationCat->prefix) {
-                            $product->category->prefix = $translationCat->prefix;
-                        }
+                }
+                $translationCat = $product->category->getTranslation($language)->one();
+                if ($translationCat) {
+                    if ($translationCat->name) {
+                        $product->category->name = $translationCat->name;
+                    }
+                    if ($translationCat->prefix) {
+                        $product->category->prefix = $translationCat->prefix;
                     }
                 }
             }
         }
+
         return $products;
     }
 
@@ -158,10 +157,10 @@ class BaseFrontendController extends Controller
         $url = strtok($url, '?');
         $url = preg_replace('#^/ru#', '', $url);
 
-        if ($url == '/'){
+        if ($url == '/') {
             $ukUrl = $host;
             $ruUrl = $host . '/ru';
-        }else{
+        } else {
             $ukUrl = $host . $url;
             $ruUrl = $host . '/ru' . $url;
         }
