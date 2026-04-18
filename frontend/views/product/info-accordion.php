@@ -65,7 +65,7 @@ use common\models\shop\Product;
                         </li>
                         <li>
                             <?= Yii::t('app', 'Тарифи') ?> <a
-                                    href="https://novaposhta.ua/basic_tariffs"
+                                    href="https://novaposhta.ua/shipping-cost/"
                                     target="_bank"><?= Yii::t('app', 'перевізника') ?></a>
                         </li>
                     </ul>
@@ -77,11 +77,11 @@ use common\models\shop\Product;
                     </div>
                     <ul>
                         <li>
-                            <?= Yii::t('app', Yii::t('app', 'Від') . ' 40 ' . Yii::t('app', 'грн.')) ?>
+                            <?= Yii::t('app', Yii::t('app', 'Від') . ' 50 ' . Yii::t('app', 'грн.')) ?>
                         </li>
                         <li>
                             <?= Yii::t('app', 'Тарифи') ?> <a
-                                    href="https://www.ukrposhta.ua/ua/taryfy-ukrposhta-standart"
+                                    href="https://www.ukrposhta.ua/ua/taryfy-ukrposhta-priorytetnyi"
                                     target="_bank"><?= Yii::t('app', 'перевізника') ?></a>
                         </li>
                     </ul>
