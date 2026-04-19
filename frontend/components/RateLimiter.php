@@ -8,7 +8,7 @@ use yii\web\TooManyRequestsHttpException;
 
 class RateLimiter extends Component
 {
-    public $limit = 30; // запитів
+    public $limit = 60; // запитів
     public $window = 60; // секунд
 
     public function init()
