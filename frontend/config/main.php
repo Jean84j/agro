@@ -14,7 +14,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'devicedetect'],
+    'bootstrap' => ['log', 'devicedetect', 'rateLimiter'],
     'layout' => 'shop',
     'name' => 'Інтернет магазин Засобів Захисту Рослин AgroPro',
     'language' => 'uk',
@@ -22,6 +22,9 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => '/site',
     'components' => [
+        'rateLimiter' => [
+            'class' => 'frontend\components\RateLimiter',
+        ],
         'devicedetect' => [
             'class' => 'alexandernst\devicedetect\DeviceDetect'
         ],
