@@ -66,30 +66,12 @@ class ActivePages extends ActiveRecord
     public static function setActiveUser()
     {
 
-        $botAgents = Bots::find()->select('name')->distinct()->column();
-        $botIps = IpBot::find()->select('ip')->distinct()->column();
-
         $server = $_SERVER;
         $userAgent = $server['HTTP_USER_AGENT'] ?? "Не известно";
-
-        foreach ($botAgents as $botAgent) {
-            if (str_contains($userAgent, $botAgent)) {
-
-                return;
-            }
-        }
 
         $clientFrom = $server['HTTP_REFERER'] ?? "Не известно";
         $parts = explode('&', $clientFrom);
         $clientFrom = $parts[0];
-
-        $userIp = $server['REMOTE_ADDR'] ?? "Не известно";
-        foreach ($botIps as $botIp) {
-            if (str_contains($userIp, $botIp)) {
-
-                return;
-            }
-        }
 
         if (Yii::$app->devicedetect->isMobile()) {
             $device = 'mobile';
