@@ -18,6 +18,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use yii\web\Cookie;
+use yii\web\HttpException;
 use yii\web\Response;
 
 /**
@@ -26,22 +27,24 @@ use yii\web\Response;
 class SiteController extends BaseFrontendController
 {
 
-     public function actionError()
+    public function actionError()
     {
         $exception = Yii::$app->errorHandler->exception;
 
-        if ($exception !== null) {
-            $statusCode = $exception->statusCode ?? 500;
-            
-            if ($statusCode === 404) {
-                return $this->render('404', ['exception' => $exception]);
-            }
-            
-            return $this->render('404', ['exception' => $exception]);
+        if ($exception === null) {
+            return $this->redirect(Yii::$app->homeUrl);
         }
-        
-        return $this->redirect(Yii::$app->homeUrl);
+
+        $statusCode = $exception instanceof HttpException
+            ? $exception->statusCode
+            : 500;
+
+        return $this->render('error/error', [
+            'statusCode' => $statusCode,
+            'exception' => $exception
+        ]);
     }
+
 
     /**
      * {@inheritdoc}
@@ -74,7 +77,7 @@ class SiteController extends BaseFrontendController
             ],
         ];
     }
-    
+
     /**
      * Displays homepage.
      *
@@ -321,15 +324,15 @@ class SiteController extends BaseFrontendController
         if (Yii::$app->request->isPost) {
             $email = Yii::$app->request->post('email');
 
-                $model = new Messages();
-                $model->name = 'AgroPro';
-                $model->email = $email;
-                $model->message = 'Додати в розсилку';
-                if ($model->save()) {
-                    return ['success' => true, 'message' => 'Подписка оформлена!'];
-                } else {
-                    return ['success' => false, 'message' => 'Ошибка при сохранении данных.'];
-                }
+            $model = new Messages();
+            $model->name = 'AgroPro';
+            $model->email = $email;
+            $model->message = 'Додати в розсилку';
+            if ($model->save()) {
+                return ['success' => true, 'message' => 'Подписка оформлена!'];
+            } else {
+                return ['success' => false, 'message' => 'Ошибка при сохранении данных.'];
+            }
 
         } else {
             throw new BadRequestHttpException('Неверный запрос.');
@@ -345,8 +348,8 @@ class SiteController extends BaseFrontendController
         ]));
         return $this->asJson(['success' => true]);
     }
-    
-     public function actionLanguageCookies()
+
+    public function actionLanguageCookies()
     {
         Yii::$app->response->cookies->add(new Cookie([
             'name' => 'cookies_language',
