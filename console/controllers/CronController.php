@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use backend\models\IpBot;
 use LisDev\Delivery\NovaPoshtaApi2;
 use common\models\shop\ActivePages;
 use common\models\NpWarehouses;
@@ -169,6 +170,7 @@ class CronController extends Controller
         self::removalUnknownLinks($limit);
         self::removalPageLinks($limit);
         self::removalSiteTransitionsLinks($limit);
+        self::removalBotIp($limit);
         self::addSearchWord($limit);
 
     }
@@ -319,6 +321,36 @@ class CronController extends Controller
                     ActivePages::deleteAll(['id' => $idUrl]);
                 }
             }
+        }
+    }
+
+    protected function removalBotIp($limit)
+    {
+        $exclude = ['/search/', '/cart/', '/order/'];
+
+        $botIps = IpBot::find()->select('ip')->where(['blocking' => 1])->column();
+
+        $usersIp = ActivePages::find()
+            ->where(['status_serv' => '200'])
+            ->andWhere(['not like', 'url_page', $exclude])
+            ->limit($limit)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->asArray()
+            ->all();
+
+        $deleteId = [];
+        foreach ($botIps as $botIp) {
+            foreach ($usersIp as $userIp) {
+                if (str_contains($userIp['ip_user'], $botIp)) {
+
+                    $deleteId[] = $userIp['id'];
+                }
+            }
+
+        }
+
+        if (!empty($deleteId)) {
+            ActivePages::deleteAll(['id' => $deleteId]);
         }
     }
 
