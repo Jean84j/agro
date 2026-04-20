@@ -346,7 +346,7 @@ class XController extends Controller
      */
     public function actionParserIp()
     {
-        $limit = 300;
+        $limit = null;
 
         $exclude = ['/search/', '/cart/', '/order/'];
 
