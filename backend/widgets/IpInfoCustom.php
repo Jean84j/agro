@@ -4,6 +4,8 @@ namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
 use backend\models\IpBot;
+use common\models\shop\ActivePages;
+use common\models\shop\AuxiliaryCategories;
 use Yii;
 use yii\httpclient\Client;
 
@@ -23,6 +25,8 @@ class IpInfoCustom extends BaseWidgetBackend
         $ip = $this->ip ?: Yii::$app->request->userIP;
         $token = Yii::$app->params['ipinfo.io.token'];
 
+        $countIp = $this->countIp($ip);
+
         $client = new Client(['baseUrl' => 'https://ipinfo.io']);
 
         $data = Yii::$app->cache->getOrSet("ipinfo-{$ip}", function () use ($client, $ip, $token) {
@@ -35,6 +39,7 @@ class IpInfoCustom extends BaseWidgetBackend
         return $this->render($this->view, [
             'data' => $data,
             'inBase' => $inBase,
+            'countIp' => $countIp,
         ]);
     }
 
@@ -54,6 +59,11 @@ class IpInfoCustom extends BaseWidgetBackend
             'result' => 'Нет в базе',
             'class' => 'background-ip',
         ];
+    }
+
+    protected function countIp($userIp)
+    {
+        return ActivePages::find()->where(['ip_user' => $userIp])->count();
     }
 }
 
