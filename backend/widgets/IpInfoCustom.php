@@ -1,7 +1,9 @@
 <?php
+
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
+use backend\models\IpBot;
 use Yii;
 use yii\httpclient\Client;
 
@@ -22,16 +24,36 @@ class IpInfoCustom extends BaseWidgetBackend
         $token = Yii::$app->params['ipinfo.io.token'];
 
         $client = new Client(['baseUrl' => 'https://ipinfo.io']);
-        $response = $client->get("{$ip}?token={$token}")->send();
 
-        // ✅ Кэшируем ответ на 1 час
-        $data = Yii::$app->cache->getOrSet("ipinfo-{$ip}", function() use ($client, $ip, $token) {
+        $data = Yii::$app->cache->getOrSet("ipinfo-{$ip}", function () use ($client, $ip, $token) {
             $response = $client->get("{$ip}?token={$token}")->send();
             return $response->isOk ? $response->data : null;
-        }, 3600);
+        }, 2592000);
 
-        $data = $response->data;
-        return $this->render($this->view, ['data' => $data]);
+        $inBase = $this->inBaseIpBot($ip);
+
+        return $this->render($this->view, [
+            'data' => $data,
+            'inBase' => $inBase,
+        ]);
+    }
+
+    protected function inBaseIpBot($ip)
+    {
+        $botIps = IpBot::find()->select('ip')->where(['blocking' => 1])->column();
+
+        foreach ($botIps as $botIp) {
+            if (str_contains($ip, $botIp)) {
+                return [
+                    'result' => 'Есть в базе',
+                    'class' => 'background-ip-in-base',
+                ];
+            }
+        }
+        return [
+            'result' => 'Нет в базе',
+            'class' => 'background-ip',
+        ];
     }
 }
 
