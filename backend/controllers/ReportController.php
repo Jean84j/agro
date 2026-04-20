@@ -83,27 +83,15 @@ class ReportController extends Controller
      */
     public function actionCreate($order_id = null)
     {
-
         $model = new Report();
 
         $model->date_order = date('Y-m-d');
 
         if ($order_id) {
-            $order = Order::findOne($order_id);
-            if ($order) {
-                $model->date_order = date('Y-m-d', $order->created_at);
-                $model->number_order = $order_id . 'a';
-                $model->fio = $order->fio;
-                $model->platform = 'AgroPro';
-                $model->tel_number = $order->phone;
-                $model->comments = $order->note;
-                $model->address = $order->area . ' ' . $order->city . ' ' . $order->warehouses;
-            }
+            $order = $this->transferringDataFromOrder($model, $order_id);
         }
-
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-
                 if (isset($order->id)) {
                     if ($order->id) {
                         $products = OrderItem::find()->where(['order_id' => $order->id])->all();
@@ -124,8 +112,6 @@ class ReportController extends Controller
                 } else {
                     Yii::$app->session->setFlash('info', ' Заявку створено, Додайте товари!');
                 }
-
-
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -135,6 +121,22 @@ class ReportController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    protected function transferringDataFromOrder($model, $order_id)
+    {
+        $order = Order::findOne($order_id);
+        if ($order) {
+            $model->date_order = date('Y-m-d', $order->created_at);
+            $model->number_order = $order_id . 'a';
+            $model->fio = $order->fio;
+            $model->platform = 'AgroPro';
+            $model->tel_number = $order->phone;
+            $model->comments = $order->note;
+            $model->address = $order->area . ' ' . $order->city . ' ' . $order->warehouses;
+            return $order;
+        }
+        return null;
     }
 
     /**
