@@ -346,7 +346,7 @@ class XController extends Controller
      */
     public function actionParserIp()
     {
-        $limit = null;
+        $limit = 300;
 
         $exclude = ['/search/', '/cart/', '/order/'];
 
@@ -375,10 +375,12 @@ class XController extends Controller
 
         }
 
+        $i = 1;
         foreach ($deleteId as $item) {
 //            if ($url->delete()) {
-            Console::output("\n ❌ [IP: {$item['userIp']}]  «{$item['botIp']}»: Id: {$item['userId']}");
+            Console::output("\n {$i} \t  ❌ [IP: {$item['userIp']}]  «{$item['botIp']}»: Id: {$item['userId']}");
 //            }
+            $i++;
         }
 
     }
