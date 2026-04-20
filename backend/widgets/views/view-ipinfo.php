@@ -1,6 +1,7 @@
 <?php
 /** @var array|null $data */
 /** @var array|null $inBase */
+/** @var  $countIp */
 if (!$data) {
     echo "<p>Нет данных по IP.</p>";
     return;
@@ -19,11 +20,14 @@ $countryCode = strtolower($data['country'] ?? '');
         <tbody>
         <tr>
             <th scope="row">База IP Bot</th>
-            <td><span class="ip <?= $inBase['class']; ?>"><?= $inBase['result']; ?></span></td>
+            <td><span class="ip <?= $inBase['class'] ?>"><?= $inBase['result'] ?></span></td>
         </tr>
         <tr>
             <th scope="row">IP</th>
-            <td><?= htmlspecialchars($data['ip'] ?? '') ?></td>
+            <td>
+                <?= htmlspecialchars($data['ip'] ?? '') ?>
+                <span class="count-ip">в базе :<?= ' ' . $countIp ?></span>
+            </td>
         </tr>
         <tr>
             <th scope="row">Страна</th>
@@ -63,15 +67,26 @@ $countryCode = strtolower($data['country'] ?? '');
     .background-ip-in-base {
         background-color: #c43131;
     }
+
     .background-ip {
         background-color: #31e125;
 
     }
+
     .ip {
         padding: 5px;
         border-radius: 10px;
         font-weight: bold;
         color: #ffffff;
 
+    }
+
+    .count-ip {
+        background-color: #f1dd08;
+        border-radius: 10px;
+        margin-left: 30px;
+        padding: 5px;
+        font-weight: bold;
+        color: #0b2e13;
     }
 </style>
