@@ -65,9 +65,13 @@ $countryCode = strtolower($data['country'] ?? '');
     }
     .background-ip {
         background-color: #31e125;
+
     }
     .ip {
         padding: 5px;
         border-radius: 10px;
+        font-weight: bold;
+        color: #ffffff;
+
     }
 </style>
