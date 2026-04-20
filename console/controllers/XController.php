@@ -334,9 +334,53 @@ class XController extends Controller
             ->limit(20)
             ->all();
 
-        foreach ($ips as $ip){
+        foreach ($ips as $ip) {
             Console::output("\t\n ❌ [IP: {$ip['ip_user']}]  Views: {$ip['count']}");
         }
 
     }
+
+
+    /**
+     * 888888888888888888888888888
+     */
+    public function actionParserIp()
+    {
+        $limit = 300;
+
+        $exclude = ['/search/', '/cart/', '/order/'];
+
+        $botIps = IpBot::find()->select('ip')->where(['blocking' => 1])->column();
+
+        $usersIp = ActivePages::find()
+            ->where(['status_serv' => '200'])
+            ->andWhere(['not like', 'url_page', $exclude])
+            ->limit($limit)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->asArray()
+            ->all();
+
+        $deleteId = [];
+        foreach ($botIps as $botIp) {
+            foreach ($usersIp as $userIp) {
+                if (str_contains($userIp['ip_user'], $botIp)) {
+
+                    $deleteId[] = [
+                        'userId' => $userIp['id'],
+                        'userIp' => $userIp['ip_user'],
+                        'botIp' => $botIp,
+                    ];
+                }
+            }
+
+        }
+
+        foreach ($deleteId as $item) {
+//            if ($url->delete()) {
+            Console::output("\n ❌ [IP: {$item['userIp']}]  «{$item['botIp']}»: Id: {$item['userId']}");
+//            }
+        }
+
+    }
+
 }
