@@ -32,7 +32,7 @@ class SiteController extends BaseFrontendController
         $exception = Yii::$app->errorHandler->exception;
 
         if ($exception === null) {
-            return $this->redirect(Yii::$app->homeUrl);
+            throw new \yii\web\NotFoundHttpException();
         }
 
         $statusCode = $exception instanceof HttpException
