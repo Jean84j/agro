@@ -362,6 +362,8 @@ class CronController extends Controller
             'check_user',
             'sprite',
             'well-known',
+            'yii.js',
+            'jquery.min.js',
         ];
 
         $links = ActivePages::find()
