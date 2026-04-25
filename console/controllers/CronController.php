@@ -24,7 +24,7 @@ class CronController extends Controller
     {
         $key = Yii::$app->params['novaPostKey'];
         $np = new NovaPoshtaApi2(
-                    $key,
+            $key,
             'ua', // Язык возвращаемых данных: ru (default) | ua | en
             FALSE, // При ошибке в запросе выбрасывать Exception: FALSE (default) | TRUE
             'file_get_content' // Используемый механизм запроса: curl (default) | file_get_content
@@ -171,6 +171,7 @@ class CronController extends Controller
         self::removalPageLinks($limit);
         self::removalSiteTransitionsLinks($limit);
         self::removalBotIp($limit);
+        self::removalUrlNonExistent($limit);
         self::addSearchWord($limit);
 
     }
@@ -351,6 +352,36 @@ class CronController extends Controller
 
         if (!empty($deleteId)) {
             ActivePages::deleteAll(['id' => $deleteId]);
+        }
+    }
+
+    protected function removalUrlNonExistent($limit)
+    {
+        $badParts = [
+            'wp-login',
+            'check_user',
+            'sprite',
+            'well-known',
+        ];
+
+        $links = ActivePages::find()
+            ->where(['status_serv' => '404'])
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->limit($limit)
+            ->all();
+        if ($links) {
+            Console::output("\n\t====================================================");
+            Console::output("\n\t 🗑️ **** Убрать не существующие ссылки ****");
+
+            foreach ($links as $link) {
+                foreach ($badParts as $bad) {
+                    if (str_contains($link->url_page, $bad)) {
+                        $link->delete();
+                        Console::output("\n Удалено запись: {$link->url_page} ");
+                        break;
+                    }
+                }
+            }
         }
     }
 
