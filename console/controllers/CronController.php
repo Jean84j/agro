@@ -364,6 +364,7 @@ class CronController extends Controller
             'well-known',
             'yii.js',
             'jquery.min.js',
+            'extra_large',
         ];
 
         $links = ActivePages::find()
