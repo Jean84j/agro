@@ -373,15 +373,20 @@ class CronController extends Controller
             ->limit($limit)
             ->all();
         if ($links) {
-            Console::output("\n\t====================================================");
-            Console::output("\n\t 🗑️ **** Убрать не существующие ссылки ****");
-
+            $i = 1;
             foreach ($links as $link) {
                 foreach ($badParts as $bad) {
-                    if (str_contains($link->url_page, $bad)) {
-                        $link->delete();
-                        Console::output("\n Удалено запись: {$link->url_page} ");
-                        break;
+                    if (!empty($bad) && !empty($link->url_page)) {
+                        if (str_contains($link->url_page, $bad)) {
+                            if ($i === 1) {
+                                Console::output("\n\t====================================================");
+                                Console::output("\n\t 🗑️ **** Убрать не существующие ссылки ****");
+                            }
+                            $link->delete();
+                            Console::output("\n Удалено запись: {$link->url_page} ");
+                            $i++;
+                            break;
+                        }
                     }
                 }
             }
