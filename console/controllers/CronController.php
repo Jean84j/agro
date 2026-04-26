@@ -365,30 +365,37 @@ class CronController extends Controller
             'yii.js',
             'jquery.min.js',
             'extra_large',
+            'extra_small',
+            'privacy-policy',
+            'cookies',
+            'news-sitemap',
+            'main.min.js',
+            'bundle.min.js',
+            'env.docker',
+            'appsettings',
+//            '',
         ];
 
-        $links = ActivePages::find()
-            ->where(['status_serv' => '404'])
-            ->orderBy(['date_visit' => SORT_DESC])
+        $query = ActivePages::find()
+            ->where(['status_serv' => '404']);
+
+        $orConditions = ['or'];
+        foreach ($badParts as $bad) {
+            $orConditions[] = ['like', 'url_page', $bad];
+        }
+
+        $links = $query
+            ->andWhere($orConditions)
             ->limit($limit)
             ->all();
+
         if ($links) {
-            $i = 1;
+            Console::output("\n\t====================================================");
+            Console::output("\n\t 🗑️ **** Убрать не существующие ссылки ****");
+
             foreach ($links as $link) {
-                foreach ($badParts as $bad) {
-                    if (!empty($bad) && !empty($link->url_page)) {
-                        if (str_contains($link->url_page, $bad)) {
-                            if ($i === 1) {
-                                Console::output("\n\t====================================================");
-                                Console::output("\n\t 🗑️ **** Убрать не существующие ссылки ****");
-                            }
-                            $link->delete();
-                            Console::output("\n Удалено запись: {$link->url_page} ");
-                            $i++;
-                            break;
-                        }
-                    }
-                }
+                $link->delete();
+                Console::output("\n Удалено запись: {$link->url_page}");
             }
         }
     }
