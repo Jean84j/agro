@@ -290,7 +290,7 @@ class CronController extends Controller
             foreach ($searchUrl as $item) {
                 $idUrl[] = $item->id;
                 $query = parse_url($item->url_page, PHP_URL_QUERY);
-                parse_str($query, $params);
+                parse_str($query ?? '', $params);
 
                 $q = trim($params['q'] ?? '');
 
