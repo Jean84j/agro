@@ -373,6 +373,11 @@ class CronController extends Controller
             'bundle.min.js',
             'env.docker',
             'appsettings',
+            'post-page.min.js',
+            'webp',
+            'sitemap.html',
+            'sitemap-index.xml',
+//            '',
 //            '',
         ];
 
