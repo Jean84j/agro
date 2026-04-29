@@ -39,6 +39,7 @@ $smallProfit = $smallSum
 $commonParams =
     [
         'action' => 'prom-report',
+        'minDataOrder' => $minDataOrder,
         'periodStart' => $periodStart,
         'periodEnd' => $periodEnd
     ];

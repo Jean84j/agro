@@ -434,6 +434,7 @@ class ReportController extends Controller
 
     public function actionPromReport()
     {
+        $minDataOrder = Report::find()->min('date_order');
         $periodEnd = Report::find()->max('date_order');
         $periodStart = (new DateTime($periodEnd))
             ->modify('-30 days')
@@ -527,6 +528,7 @@ class ReportController extends Controller
             'smallQty' => $smallQtyCount,
             'smallSum' => $smallSumTotal,
             'periodStart' => $periodStart,
+            'minDataOrder' => $minDataOrder,
             'bigDiscount' => $bigDiscountTotal,
             'bigDelivery' => $bigDeliveryTotal,
             'bigPlatform' => $bigPlatformTotal,
