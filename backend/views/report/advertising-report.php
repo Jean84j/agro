@@ -18,7 +18,6 @@
 
 /** @var backend\models\Report $smallQty */
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -47,6 +46,7 @@ if ($bigQty + $smallQty == 0) {
 $commonParams =
     [
         'action' => 'advertising-report',
+        'minDataOrder' => $minDataOrder,
         'periodStart' => $periodStart,
         'periodEnd' => $periodEnd
     ];

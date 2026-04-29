@@ -540,6 +540,8 @@ class ReportController extends Controller
 
     public function actionAdvertisingReport()
     {
+
+        $minDataOrder = Report::find()->min('date_order');
         $periodEnd = Report::find()->max('date_order');
         $periodStart = (new DateTime($periodEnd))
             ->modify('-30 days')
@@ -683,6 +685,7 @@ class ReportController extends Controller
 
         return $this->render('advertising-report', [
             'agroprocvitCount' => $agroprocvitCount,
+            'minDataOrder' => $minDataOrder,
             'faceBookCount' => $faceBookCount,
             'instagramCount' => $instagramCount,
             'dzvinokCount' => $dzvinokCount,
