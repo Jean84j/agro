@@ -18,6 +18,7 @@ ActivePages::setActiveUser();
 /** @var Product $propertiesFilter */
 /** @var AuxiliaryCategories $auxiliaryCategories */
 /** @var Category $category */
+/** @var $symbol */
 
 $h1 = $category->h1 ?: $category->name;
 
@@ -55,7 +56,6 @@ $breadcrumbItemActive = $category->name;
                             <?php if (isset($auxiliaryCategories) && $auxiliaryCategories != null): ?>
                                 <div class="tags tags--lg">
                                     <div class="tags__list">
-                                        <?php $symbol = '<i class="fas fa-spa" style="color: #f8d105"></i>' ?>
                                         <?php foreach ($auxiliaryCategories as $auxiliaryCategory): ?>
                                             <a href="<?= Url::to(['category/auxiliary-catalog', 'slug' => $auxiliaryCategory->slug]) ?>">
                                                 <?php echo $symbol . ' ' . $auxiliaryCategory->name ?></a>
