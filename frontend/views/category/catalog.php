@@ -57,6 +57,11 @@ $breadcrumbItemActive = $category->name;
                                 <div class="tags tags--lg">
                                     <div class="tags__list">
                                         <?php foreach ($auxiliaryCategories as $auxiliaryCategory): ?>
+                                            <?php if (!empty($auxiliaryCategory->svg)) {
+                                                $symbol = $auxiliaryCategory->svg;
+                                            } else {
+                                                $symbol = '🌱';
+                                            } ?>
                                             <a href="<?= Url::to(['category/auxiliary-catalog', 'slug' => $auxiliaryCategory->slug]) ?>">
                                                 <?php echo $symbol . ' ' . $auxiliaryCategory->name ?></a>
                                         <?php endforeach; ?>
@@ -99,6 +104,6 @@ $breadcrumbItemActive = $category->name;
         </div>
     </div>
     <?php echo Html::hiddenInput('slug', $category->slug);
-    echo Html::endForm();?>
+    echo Html::endForm(); ?>
     <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>

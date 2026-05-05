@@ -143,7 +143,6 @@ class CategoryController extends BaseFrontendController
             throw new NotFoundHttpException('Category not found ' . '" ' . $slug . ' "');
         }
 
-        $symbol = '🌱';
         $auxiliaryCategories = AuxiliaryCategories::find()
             ->where(['parentId' => $category->id])
             ->andWhere(['visibility' => 1])
@@ -266,7 +265,6 @@ class CategoryController extends BaseFrontendController
                 'propertiesFilter',
                 'auxiliaryCategories',
                 'language',
-                'symbol',
             ]));
     }
 

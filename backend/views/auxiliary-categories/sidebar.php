@@ -55,4 +55,12 @@ use yii\helpers\ArrayHelper;
         </div>
     </div>
     <?= $this->render('/_partials/image-upload', $params) ?>
+    <div class="card w-100 mt-5">
+        <div class="card-body p-5">
+            <?= $this->render('/_partials/card-name-label', ['cardName' => 'SVG']); ?>
+            <div class="mb-4">
+                <?= $form->field($model, 'svg')->textInput(['maxlength' => true])->label(Yii::t('app', 'SVG')) ?>
+            </div>
+        </div>
+    </div>
 </div>
