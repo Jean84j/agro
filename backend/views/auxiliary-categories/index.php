@@ -36,7 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <thead>
                     <tr>
                         <th><?= Yii::t('app', 'Image') ?></th>
-                        <th class="min-w-15x"><?= Yii::t('app', 'Parent ID') ?></th>
+                        <th class="min-w"><?= Yii::t('app', 'Parent ID') ?></th>
+                        <th class="min-w"><?= Yii::t('app', 'SVG') ?></th>
                         <th class="min-w-15x"><?= Yii::t('app', 'name') ?></th>
                         <th class="min-w-15x"><?= Yii::t('app', 'Date updated') ?></th>
                         <th><?= Yii::t('app', 'H1') ?></th>
@@ -62,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td>
                                 <?php echo $model->getCategopyName($model->parentId) ?>
                             </td>
+                            <td> <?php echo $model->svg ?> </td>
                             <td>
                                 <a href="<?= Url::to(['auxiliary-categories/update', 'id' => $model->id]) ?>"
                                    class="text-reset"><?= $model->name ?></a></td>
