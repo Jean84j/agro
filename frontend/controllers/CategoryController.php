@@ -122,6 +122,7 @@ class CategoryController extends BaseFrontendController
     public function actionCatalog($slug)
     {
         $language = Yii::$app->language;
+        $mobile = Yii::$app->devicedetect->isMobile();
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];
@@ -265,6 +266,7 @@ class CategoryController extends BaseFrontendController
                 'propertiesFilter',
                 'auxiliaryCategories',
                 'language',
+                'mobile',
             ]));
     }
 
