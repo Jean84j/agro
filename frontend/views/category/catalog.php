@@ -5,6 +5,7 @@ use common\models\shop\AuxiliaryCategories;
 use common\models\shop\ActivePages;
 use common\models\shop\Category;
 use common\models\shop\Product;
+use frontend\widgets\CategoriesAuxiliary;
 use frontend\widgets\ViewProduct;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -18,7 +19,7 @@ ActivePages::setActiveUser();
 /** @var Product $propertiesFilter */
 /** @var AuxiliaryCategories $auxiliaryCategories */
 /** @var Category $category */
-/** @var $symbol */
+/** @var $mobile */
 
 $h1 = $category->h1 ?: $category->name;
 
@@ -52,23 +53,8 @@ $breadcrumbItemActive = $category->name;
             <div class="col-12">
                 <div class="block">
                     <div class="products-view">
-                        <?php if (!Yii::$app->devicedetect->isMobile()): ?>
-                            <?php if (isset($auxiliaryCategories) && $auxiliaryCategories != null): ?>
-                                <div class="tags tags--lg">
-                                    <div class="tags__list">
-                                        <?php foreach ($auxiliaryCategories as $auxiliaryCategory): ?>
-                                            <?php if (!empty($auxiliaryCategory->svg)) {
-                                                $symbol = $auxiliaryCategory->svg;
-                                            } else {
-                                                $symbol = '🌱';
-                                            } ?>
-                                            <a href="<?= Url::to(['category/auxiliary-catalog', 'slug' => $auxiliaryCategory->slug]) ?>">
-                                                <?php echo $symbol . ' ' . $auxiliaryCategory->name ?></a>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                                <hr>
-                            <?php endif; ?>
+                        <?php if (!$mobile && !empty($auxiliaryCategories)): ?>
+                            <?php echo CategoriesAuxiliary::widget(['auxiliaryCategories' => $auxiliaryCategories]) ?>
                         <?php endif; ?>
                         <div class="products-view__options">
                             <div class="view-options view-options--offcanvas--always">
@@ -95,6 +81,9 @@ $breadcrumbItemActive = $category->name;
                                 'auxiliaryCategories' => $auxiliaryCategories,
                             ]) ?>
                         <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
+                        <?php if ($mobile && !empty($auxiliaryCategories)): ?>
+                            <?php echo CategoriesAuxiliary::widget(['auxiliaryCategories' => $auxiliaryCategories]) ?>
+                        <?php endif; ?>
                         <div class="spec__disclaimer">
                             <?= $category->description ?>
                         </div>
