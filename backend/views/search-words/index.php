@@ -38,10 +38,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'word',
             'counts_query',
             [
+                'attribute' => 'counts_products',
+                'label' => 'Результатов',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return
+                        $model->getCountSearchResult($model->word);
+                },
+            ],
+            [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, SearchWords $model) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
