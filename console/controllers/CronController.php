@@ -172,6 +172,7 @@ class CronController extends Controller
         self::removalSiteTransitionsLinks($limit);
         self::removalBotIp($limit);
         self::removalUrlNonExistent($limit);
+        self::removalHttpLinks($limit);
         self::addSearchWord($limit);
 
     }
@@ -401,6 +402,26 @@ class CronController extends Controller
             foreach ($links as $link) {
                 $link->delete();
                 Console::output("\n Удалено запись: {$link->url_page}");
+            }
+        }
+    }
+
+    protected function removalHttpLinks($limit)
+    {
+        $urls = ActivePages::find()
+            ->where(['like', 'client_from', 'http://'])
+            ->andWhere(['status_serv' => '200'])
+            ->limit($limit)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->all();
+
+        if ($urls) {
+            Console::output("\n\t====================================================");
+            Console::output("\n\t 🗑️ **** Убрать ссылки с HTTP переходом ****");
+            foreach ($urls as $url) {
+                if ($url->delete()) {
+                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
+                }
             }
         }
     }
