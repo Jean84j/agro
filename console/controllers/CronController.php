@@ -144,20 +144,30 @@ class CronController extends Controller
             }
         }
 
-        // оставляем только нужные ID
+        // ID записей, которые оставляем
         $idsToKeep = array_column($result, 'id');
 
-        // удаляем всё лишнее
-        SearchWords::deleteAll(['not in', 'id', $idsToKeep]);
-        if ((count($words) - count($idsToKeep) != 0)) {
-            $count = count($words) - count($idsToKeep);
-            Console::output("\t🗑️ *** Убрать дубликаты поисковых слов ***");
-            Console::output("\n");
-            Console::output("\n Удалено слов: {$count} ");
+        // Список удаляемых слов
+        $deletedWords = array_filter($words, function ($item) use ($idsToKeep) {
+            return !in_array($item['id'], $idsToKeep);
+        });
 
+        // Удаляем лишнее
+        SearchWords::deleteAll(['not in', 'id', $idsToKeep]);
+
+        $count = count($deletedWords);
+
+        if ($count > 0) {
+            Console::output("\t🗑️ *** Убрать дубликаты поисковых слов ***");
+            Console::output("");
+            Console::output("Удалено слов: {$count}");
+            Console::output("");
+
+            foreach ($deletedWords as $word) {
+                Console::output("\t- {$word['word']}");
+            }
         }
     }
-
 
     /**
      *  Убрать ненужные ссылки
