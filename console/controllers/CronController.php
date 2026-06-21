@@ -173,6 +173,7 @@ class CronController extends Controller
         self::removalBotIp($limit);
         self::removalUrlNonExistent($limit);
         self::removalHttpLinks($limit);
+        self::removalWWWLinks($limit);
         self::addSearchWord($limit);
 
     }
@@ -418,6 +419,26 @@ class CronController extends Controller
         if ($urls) {
             Console::output("\n\t====================================================");
             Console::output("\n\t 🗑️ **** Убрать ссылки с HTTP переходом ****");
+            foreach ($urls as $url) {
+                if ($url->delete()) {
+                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
+                }
+            }
+        }
+    }
+
+    protected function removalWWWLinks($limit)
+    {
+        $urls = ActivePages::find()
+            ->where(['client_from' => 'https://www.agropro.org.ua/'])
+            ->andWhere(['status_serv' => '200'])
+            ->limit($limit)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->all();
+
+        if ($urls) {
+            Console::output("\n\t====================================================");
+            Console::output("\n\t 🗑️ **** Убрать ссылки с https://www.agropro.org.ua/ переходом ****");
             foreach ($urls as $url) {
                 if ($url->delete()) {
                     Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
