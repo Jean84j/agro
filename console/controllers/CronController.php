@@ -174,6 +174,7 @@ class CronController extends Controller
         self::removalUrlNonExistent($limit);
         self::removalHttpLinks($limit);
         self::removalWWWLinks($limit);
+        self::removal429status($limit);
         self::addSearchWord($limit);
 
     }
@@ -442,6 +443,25 @@ class CronController extends Controller
             foreach ($urls as $url) {
                 if ($url->delete()) {
                     Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->client_from}»: Статус: {$url->status_serv}");
+                }
+            }
+        }
+    }
+
+    protected function removal429status($limit)
+    {
+        $urls = ActivePages::find()
+            ->where(['status_serv' => '429'])
+            ->limit($limit)
+            ->orderBy(['date_visit' => SORT_DESC])
+            ->all();
+
+        if ($urls) {
+            Console::output("\n\t====================================================");
+            Console::output("\n\t 🗑️ **** Убрать ссылки с статусом 429 ****");
+            foreach ($urls as $url) {
+                if ($url->delete()) {
+                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
                 }
             }
         }
