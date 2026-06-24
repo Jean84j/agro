@@ -144,15 +144,12 @@ class CronController extends Controller
             }
         }
 
-        // ID записей, которые оставляем
         $idsToKeep = array_column($result, 'id');
 
-        // Список удаляемых слов
         $deletedWords = array_filter($words, function ($item) use ($idsToKeep) {
             return !in_array($item['id'], $idsToKeep);
         });
 
-        // Удаляем лишнее
         SearchWords::deleteAll(['not in', 'id', $idsToKeep]);
 
         $count = count($deletedWords);
@@ -390,7 +387,7 @@ class CronController extends Controller
             'webp',
             'sitemap.html',
             'sitemap-index.xml',
-//            '',
+            '.php',
 //            '',
         ];
 
