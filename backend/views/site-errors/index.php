@@ -9,7 +9,7 @@ use yii\helpers\Url;
 use yii\bootstrap5\LinkPager;
 
 /** @var yii\web\View $this */
-/** @var backend\models\search\SearchSiteErrors $searchModel */
+/** @var backend\models\search\SiteErrorsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Site Errors';

@@ -46,7 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     try {
                                         return IpInfoCustom::widget([
                                             'ip' => $model->ip_user,
-                                            'view' => 'view-ipinfo'
+                                            'view' => 'view-ipinfo',
+                                            'modelName' => 'SiteErrors'
                                         ]);
                                     } catch (\Throwable $e) {
                                         Yii::error("IpInfo error for IP {$model->ip_user}: " . $e->getMessage(), __METHOD__);

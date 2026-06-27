@@ -5,7 +5,7 @@ namespace backend\widgets;
 use app\widgets\BaseWidgetBackend;
 use backend\models\IpBot;
 use common\models\shop\ActivePages;
-use common\models\shop\AuxiliaryCategories;
+use common\models\SiteErrors;
 use Yii;
 use yii\httpclient\Client;
 
@@ -20,12 +20,17 @@ class IpInfoCustom extends BaseWidgetBackend
     /** @var string Шаблон вывода */
     public $view = 'index-ipinfo';
 
+    /** @var string Модель */
+    public $modelName = 'ActivePages';
+
     public function run()
     {
         $ip = $this->ip ?: Yii::$app->request->userIP;
         $token = Yii::$app->params['ipinfo.io.token'];
 
-        $countIp = $this->countIp($ip);
+        $modelName = $this->modelName;
+
+        $countIp = $this->countIp($ip, $modelName);
 
         $client = new Client(['baseUrl' => 'https://ipinfo.io']);
 
@@ -61,9 +66,13 @@ class IpInfoCustom extends BaseWidgetBackend
         ];
     }
 
-    protected function countIp($userIp)
+    protected function countIp($userIp, $modelName)
     {
-        return ActivePages::find()->where(['ip_user' => $userIp])->count();
+        if ($modelName == 'SiteErrors') {
+            return SiteErrors::find()->where(['ip_user' => $userIp])->count();
+        } else {
+            return ActivePages::find()->where(['ip_user' => $userIp])->count();
+        }
     }
 }
 
