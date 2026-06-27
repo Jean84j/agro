@@ -3,6 +3,7 @@
 namespace console\controllers;
 
 use backend\models\IpBot;
+use common\models\SiteErrors;
 use LisDev\Delivery\NovaPoshtaApi2;
 use common\models\shop\ActivePages;
 use common\models\NpWarehouses;
@@ -178,7 +179,7 @@ class CronController extends Controller
         self::removalPageLinks($limit);
         self::removalSiteTransitionsLinks($limit);
         self::removalBotIp($limit);
-        self::removalUrlNonExistent($limit);
+//        self::removalUrlNonExistent($limit);
         self::removalHttpLinks($limit);
         self::removalWWWLinks($limit);
         self::removal429status($limit);
@@ -226,7 +227,6 @@ class CronController extends Controller
     {
         $urls = ActivePages::find()
             ->where(['client_from' => 'Не известно'])
-            ->andWhere(['status_serv' => '200'])
             ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
             ->all();
@@ -246,7 +246,6 @@ class CronController extends Controller
     {
         $urls = ActivePages::find()
             ->where(['like', 'url_page', '/page/'])
-            ->andWhere(['status_serv' => '200'])
             ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
             ->all();
@@ -271,7 +270,6 @@ class CronController extends Controller
         $urls = ActivePages::find()
             ->where(['like', 'client_from', $host . '%', false])
             ->andWhere(['not like', 'url_page', $exclude])
-            ->andWhere(['status_serv' => '200'])
             ->orderBy(['date_visit' => SORT_DESC])
             ->limit($limit)
             ->all();
@@ -342,8 +340,7 @@ class CronController extends Controller
         $botIps = IpBot::find()->select('ip')->where(['blocking' => 1])->column();
 
         $usersIp = ActivePages::find()
-            ->where(['status_serv' => '200'])
-            ->andWhere(['not like', 'url_page', $exclude])
+            ->where(['not like', 'url_page', $exclude])
             ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
             ->asArray()
@@ -391,7 +388,7 @@ class CronController extends Controller
 //            '',
         ];
 
-        $query = ActivePages::find()
+        $query = SiteErrors::find()
             ->where(['status_serv' => '404']);
 
         $orConditions = ['or'];
@@ -419,7 +416,6 @@ class CronController extends Controller
     {
         $urls = ActivePages::find()
             ->where(['like', 'client_from', 'http://'])
-            ->andWhere(['status_serv' => '200'])
             ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
             ->all();
@@ -439,7 +435,6 @@ class CronController extends Controller
     {
         $urls = ActivePages::find()
             ->where(['client_from' => 'https://www.agropro.org.ua/'])
-            ->andWhere(['status_serv' => '200'])
             ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
             ->all();
@@ -457,7 +452,7 @@ class CronController extends Controller
 
     protected function removal429status($limit)
     {
-        $urls = ActivePages::find()
+        $urls = SiteErrors::find()
             ->where(['status_serv' => '429'])
             ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
