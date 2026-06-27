@@ -179,7 +179,7 @@ class CronController extends Controller
         self::removalPageLinks($limit);
         self::removalSiteTransitionsLinks($limit);
         self::removalBotIp($limit);
-//        self::removalUrlNonExistent($limit);
+        self::removalUrlNonExistent($limit);
         self::removalHttpLinks($limit);
         self::removalWWWLinks($limit);
         self::removal429status($limit);
