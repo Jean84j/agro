@@ -348,6 +348,16 @@ use yii\helpers\Url;
                             </a>
                         </li>
                         <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
+                            <a href="<?= Url::to(['/site-errors']) ?>" class="sa-nav__link">
+                                            <span class="sa-nav__icon">
+                                                <svg width="20px" height="20px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#active-pages"/>
+                                                </svg>
+                                            </span>
+                                <span class="sa-nav__title"><?= Yii::t('app', 'Site Errors') ?></span>
+                            </a>
+                        </li>
+                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
                             <a href="<?= Url::to(['/ip-bot']) ?>" class="sa-nav__link">
                                             <span class="sa-nav__icon">
                                                <svg width="20px" height="20px" style="display: unset;">
