@@ -161,22 +161,6 @@ $ipAddress = Yii::$app->request->getUserIP();
                             'contentOptions' => ['style' => 'width: 62px'],
                         ],
                         [
-                            'attribute' => 'status_serv',
-                            'format' => 'raw',
-                            'value' => function ($model) {
-                                if ($model->status_serv == '200') {
-                                    return '<i style="color: #398d05">' . $model->status_serv . '</i>';
-                                } elseif ($model->status_serv == '500') {
-                                    return '<i style="color: #c86408">' . $model->status_serv . '</i>';
-                                } elseif ($model->status_serv == '404') {
-                                    return '<i style="color: #c10518">' . $model->status_serv . '</i>';
-                                } else {
-                                    return '<i style="color: #0c33be">' . $model->status_serv . '</i>';
-                                }
-                            },
-                            'contentOptions' => ['style' => 'width: 40px; text-align: center;'],
-                        ],
-                        [
                             'class' => ActionColumn::class,
                             'urlCreator' => function ($action, ActivePages $model) {
                                 return Url::toRoute([$action, 'id' => $model->id, 'selection' => $model->id]);
