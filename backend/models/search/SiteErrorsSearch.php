@@ -9,7 +9,7 @@ use common\models\SiteErrors;
 /**
  * SearchSiteErrors represents the model behind the search form of `common\models\SiteErrors`.
  */
-class SearchSiteErrors extends SiteErrors
+class SiteErrorsSearch extends SiteErrors
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class SearchSiteErrors extends SiteErrors
      */
     public function search($params, $formName = null)
     {
-        $query = SiteErrors::find();
+        $query = SiteErrors::find()->orderBy('date_visit DESC');
 
         // add conditions that should always apply here
 

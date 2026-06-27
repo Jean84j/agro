@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use common\models\SiteErrors;
-use backend\models\search\SearchSiteErrors;
+use backend\models\search\SiteErrorsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,7 +22,7 @@ class SiteErrorsController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -38,7 +38,7 @@ class SiteErrorsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchSiteErrors();
+        $searchModel = new SiteErrorsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
