@@ -6,6 +6,7 @@ use backend\models\ProductsBackend;
 use common\models\Bots;
 use backend\models\IpBot;
 use common\models\Posts;
+use common\models\SiteErrors;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -97,13 +98,20 @@ class ActivePages extends ActiveRecord
             $device = 'desktop';
         }
 
-        $model = new ActivePages();
+        $status_serv = strval(Yii::$app->response->statusCode) ?? "Не известно";
+
+        if ($status_serv == '200') {
+            $model = new ActivePages();
+        } else {
+            $model = new SiteErrors();
+        }
+
         $model->ip_user = $server['REMOTE_ADDR'] ?? "Не известно";
         $model->url_page = Yii::$app->request->hostInfo . $server['REQUEST_URI'] ?? "Не известно";
         $model->user_agent = $userAgent;
         $model->client_from = $clientFrom;
         $model->date_visit = strval($server['REQUEST_TIME']) ?? "Не известно";
-        $model->status_serv = strval(Yii::$app->response->statusCode) ?? "Не известно";
+        $model->status_serv = $status_serv;
         $model->other = $device ?? "Не известно";
 
         if ($model->save()) {
