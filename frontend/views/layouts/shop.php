@@ -1,7 +1,6 @@
 <?php
 
 /** @var yii\web\View $this */
-
 /** @var string $content */
 
 use frontend\widgets\SiteHeader;
@@ -20,7 +19,6 @@ AppAsset::register($this);
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="color-scheme" content="light only"/>
 <meta name="theme-color" content="#47991f"/>
-<link rel="manifest" href="/manifest.json">
 <?php $this->registerCsrfMetaTags() ?>
 <title><?= Html::encode($this->title) ?></title>
 <?php $this->head() ?>
