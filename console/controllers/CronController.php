@@ -366,6 +366,13 @@ class CronController extends Controller
     {
         $badParts = [
             '.php',
+            '.json',
+            '.asp',
+            '.yml',
+            '.env',
+//            '',
+//            '',
+//            '',
 //            '',
         ];
 
