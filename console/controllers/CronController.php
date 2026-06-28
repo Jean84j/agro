@@ -370,7 +370,7 @@ class CronController extends Controller
             '.asp',
             '.yml',
             '.env',
-//            '',
+            '.ico',
 //            '',
 //            '',
 //            '',
