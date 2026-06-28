@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\SiteErrors;
 use backend\models\search\SiteErrorsSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -112,6 +113,20 @@ class SiteErrorsController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionCheckDelete()
+    {
+        $selectedItems = Yii::$app->request->post('selection', []);
+
+        foreach ($selectedItems as $id) {
+            $model = $this->findModel($id);
+            if ($model !== null) {
+                $model->delete();
+            }
+        }
 
         return $this->redirect(['index']);
     }
