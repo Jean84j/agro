@@ -179,6 +179,7 @@ class CronController extends Controller
         self::removalPageLinks($limit);
         self::removalSiteTransitionsLinks($limit);
         self::removalBotIp($limit);
+        self::removalUrlNonExistent($limit);
         self::removalHttpLinks($limit);
         self::removalWWWLinks($limit);
         self::removal429status($limit);
@@ -358,6 +359,38 @@ class CronController extends Controller
 
         if (!empty($deleteId)) {
             ActivePages::deleteAll(['id' => $deleteId]);
+        }
+    }
+
+    protected function removalUrlNonExistent($limit)
+    {
+        $badParts = [
+            '.php',
+//            '',
+        ];
+
+        $query = SiteErrors::find()
+            ->where(['status_serv' => '404'])
+            ->limit($limit);
+
+        $orConditions = ['or'];
+        foreach ($badParts as $bad) {
+            $orConditions[] = ['like', 'url_page', $bad];
+        }
+
+        $links = $query
+            ->andWhere($orConditions)
+            ->limit($limit)
+            ->all();
+
+        if ($links) {
+            Console::output("\n\t====================================================");
+            Console::output("\n\t 🗑️ **** Убрать не существующие ссылки ****");
+
+            foreach ($links as $link) {
+                $link->delete();
+                Console::output("\n Удалено запись: {$link->url_page}");
+            }
         }
     }
 
