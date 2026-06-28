@@ -160,6 +160,10 @@ $ipAddress = Yii::$app->request->getUserIP();
                             'contentOptions' => ['style' => 'width: 62px'],
                         ],
                         [
+                            'attribute' => 'user_agent',
+                            'format' => 'raw',
+                        ],
+                        [
                             'attribute' => 'status_serv',
                             'format' => 'raw',
                             'value' => function ($model) {
