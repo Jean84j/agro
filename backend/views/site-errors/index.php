@@ -110,6 +110,7 @@ $ipAddress = Yii::$app->request->getUserIP();
                                     ]) .
                                     Html::encode($productUrl);
                             },
+                            'contentOptions' => ['style' => 'width: 62px'],
                         ],
                         [
                             'attribute' => 'client_from',
