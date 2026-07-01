@@ -373,7 +373,7 @@ class CronController extends Controller
             '.ico',
             '.html',
             '.jsp',
-            'wp-content',
+            'wp-',
             'accept-cookies',
 //            '',
 //            '',
