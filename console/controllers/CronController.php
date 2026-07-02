@@ -382,6 +382,7 @@ class CronController extends Controller
             '/login',
             'plugins',
             'system',
+            'config',
             'editors',
             'accept-cookies',
             '/en/',
