@@ -375,6 +375,8 @@ class CronController extends Controller
             '.jsp',
             '.txt',
             'wp-',
+            '/wp',
+            'wordpress',
             'accept-cookies',
             '/en/',
 //            '',
