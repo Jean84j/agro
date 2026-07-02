@@ -382,7 +382,7 @@ class CronController extends Controller
 
         $query = SiteErrors::find()
             ->where(['status_serv' => '404'])
-            ->andWhere(['status_serv' => '400'])
+            ->orWhere(['status_serv' => '400'])
             ->limit($limit);
 
         $orConditions = ['or'];
