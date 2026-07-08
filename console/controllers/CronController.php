@@ -376,6 +376,8 @@ class CronController extends Controller
             '.txt',
             '.git',
             '.aws',
+            '.boto',
+            '.cargo',
             'wp-',
             '/wp',
             'wordpress',
@@ -384,7 +386,9 @@ class CronController extends Controller
             'system',
             'config',
             'editors',
+            'apple-touch',
             'accept-cookies',
+            'politica-de-cookies',
             '/en/',
 //            '',
         ];
