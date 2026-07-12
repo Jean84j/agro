@@ -388,6 +388,7 @@ class CronController extends Controller
             'editors',
             'apple-touch',
             'accept-cookies',
+            'file-manager',
             'politica-de-cookies',
             '/en/',
 //            '',
