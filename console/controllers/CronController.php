@@ -386,6 +386,7 @@ class CronController extends Controller
             'system',
             'config',
             'editors',
+            'initialize',
             'apple-touch',
             'accept-cookies',
             'file-manager',
