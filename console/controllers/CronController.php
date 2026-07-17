@@ -379,6 +379,7 @@ class CronController extends Controller
             '.boto',
             '.cargo',
             '.well-known',
+            'optim.css',
             'wp-',
             '/wp',
             'wordpress',
