@@ -8,6 +8,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * BotsController implements the CRUD actions for Bots model.
@@ -131,5 +132,15 @@ class BotsController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Проверка name при вводе на уникальность.
+     */
+    public function actionCheckName($name)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $exists = Bots::find()->where(['name' => $name])->exists();
+        return ['exists' => $exists];
     }
 }

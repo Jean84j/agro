@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
                                                 class="mb-0 fs-exact-18"><?= Yii::t('app', 'Basic information') ?></h2>
                                     </div>
                                     <div class="mb-4">
-                                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($model, 'name')->textInput(['id' => 'name_bot','maxlength' => true]) ?>
                                     </div>
                                     <div class="mb-4">
                                         <?= $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
@@ -53,3 +53,29 @@ use yii\widgets\ActiveForm;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+
+<?php
+$url = Url::to(['bots/check-name']);
+
+$js = <<<JS
+$('#name_bot').on('input', function() {
+    var name = $(this).val();
+    if (name.length > 0) {
+        $.ajax({
+            url: '$url',
+            data: {name: name},
+            success: function(data) {
+                if (data.exists) {
+                    $('#name_bot').css('background-color', '#e9544e5c');
+                } else {
+                    $('#name_bot').css('background-color', '#4ee95e5c');
+                }
+            }
+        });
+    } else {
+        $('#name_bot').css('background-color', '');
+    }
+});
+JS;
+$this->registerJs($js);
+?>
