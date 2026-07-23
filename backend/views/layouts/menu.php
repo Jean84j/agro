@@ -22,506 +22,362 @@ $reviewsPostNews = PostsReview::reviewsNews();
 
 $countErrors = SiteErrors::find()->count();
 
-?>
+$menuSections = [
+    '0' => [
+        'order' => [
+            'url' => '/order',
+            'icon' => '<span style="font-size: 22px">🛒</span>',
+            'title' => 'Orders',
+            'badge' => $orderNews,
+        ],
+    ],
+    '1' => [
+        'report' => [
+            'url' => '/report',
+            'icon' => '<span style="font-size: 22px">📂</span>',
+            'title' => 'Report',
+            'reminder' => 1,
+        ],
+    ],
+    '2' => [
+        'statistic' => [
+            'url' => '/',
+            'icon' => '<span style="font-size: 22px">📉</span>',
+            'title' => 'Analytics Site',
+        ],
+    ],
+    '3' => [
+        'statisticReport' => [
+            'url' => '/report-analytic',
+            'icon' => '<span style="font-size: 22px">📈</span>',
+            'title' => 'Analytics Report',
+        ],
+    ],
+    '4' => [
+        'categories' => [
+            'url' => null,
+            'icon' => '<span style="font-size: 22px">🗃️</span>',
+            'title' => 'Categories',
+            'subItems' => [
+                'primeCategories' => [
+                    'url' => '/category',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
+                                                </svg>',
+                    'title' => 'First',
+                ],
+                'auxiliaryCategories' => [
+                    'url' => '/auxiliary-categories',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
+                                                </svg>',
+                    'title' => 'Second',
+                ],
+            ],
+        ],
+        'products' => [
+            'url' => '/product',
+            'icon' => '<span style="font-size: 22px">🛢️</span>',
+            'title' => 'Product',
+        ],
+        'providers' => [
+            'url' => '/order-provider',
+            'icon' => '<span style="font-size: 22px">🤝</span>',
+            'title' => 'Providers',
+        ],
+        'labels' => [
+            'url' => '/label',
+            'icon' => '<span style="font-size: 22px">🔖</span>',
+            'title' => 'Label',
+        ],
+        'groups' => [
+            'url' => '/grup',
+            'icon' => '<span style="font-size: 22px">🗂️</span>',
+            'title' => 'Group',
+        ],
+        'status' => [
+            'url' => '/status',
+            'icon' => '<span style="font-size: 22px">📌</span>',
+            'title' => 'Status',
+        ],
+        'tags' => [
+            'url' => '/tag',
+            'icon' => '<span style="font-size: 22px">🏷️</span>',
+            'title' => 'Tag',
+        ],
+    ],
+    '5' => [
+        'posts' => [
+            'url' => '/posts',
+            'icon' => '<span style="font-size: 22px">📝</span>',
+            'title' => 'Posts',
+        ],
+    ],
+    '6' => [
+        'slider' => [
+            'url' => '/slider',
+            'icon' => '<span style="font-size: 22px">🖼️</span>',
+            'title' => 'Slider',
+        ],
+    ],
+    '7' => [
+        'messages' => [
+            'url' => '/messages',
+            'icon' => '<span style="font-size: 22px">📧</span>',
+            'title' => 'Messages',
+            'message' => $messagesNews,
+        ],
+    ],
+    '8' => [
+        'reviews' => [
+            'url' => null,
+            'icon' => '<span style="font-size: 22px">⭐</span>',
+            'title' => 'Reviews',
+            'newReviews' => 1,
+            'subItems' => [
+                'product' => [
+                    'url' => '/review',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
+                                                </svg>',
+                    'title' => 'Product Reviews',
+                    'newProductReview' => 1,
+                ],
+                'posts' => [
+                    'url' => '/posts-review',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
+                                                </svg>',
+                    'title' => 'Posts Reviews',
+                    'newPostReview' => 1,
+                ],
+            ],
+        ],
+    ],
+    '9' => [
+        'activeUsers' => [
+            'url' => null,
+            'icon' => '<span style="font-size: 22px">🤓</span>',
+            'title' => 'Active users',
+            'subItems' => [
+                'activePages' => [
+                    'url' => '/active-pages',
+                    'icon' => '<span style="font-size: 22px">😎</span>',
+                    'title' => 'Active users',
+                ],
+                'siteErrors' => [
+                    'url' => '/site-errors',
+                    'icon' => '<span style="font-size: 22px">👿</span>',
+                    'title' => 'Site Errors',
+                    'newErrors' => 1,
+                ],
+                'ipBot' => [
+                    'url' => '/ip-bot',
+                    'icon' => '<span style="font-size: 22px">👾</span>',
+                    'title' => 'IP Bot',
+                ],
+                'bots' => [
+                    'url' => '/bots',
+                    'icon' => '<span style="font-size: 22px">🤖</span>',
+                    'title' => 'Name Bot',
+                ],
+            ],
+        ],
+    ],
+    '10' => [
+        'settings' => [
+            'url' => null,
+            'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#setting"/>
+                                                </svg>',
+            'title' => 'Settings',
+            'subItems' => [
+                'searchWords' => [
+                    'url' => '/search-words',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#search"/>
+                                                </svg>',
+                    'title' => 'Search word',
+                ],
+                'brand' => [
+                    'url' => '/brand',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#brand"/>
+                                                </svg>',
+                    'title' => 'Brand',
+                ],
+                'propertiesName' => [
+                    'url' => '/properties-name',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#brand"/>
+                                                </svg>',
+                    'title' => 'Property name',
+                ],
+                'about' => [
+                    'url' => '/about',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#about"/>
+                                                </svg>',
+                    'title' => 'About',
+                ],
+                'contact' => [
+                    'url' => '/contact',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#contact"/>
+                                                </svg>',
+                    'title' => 'Contact',
+                ],
+                'seoPages' => [
+                    'url' => '/seo-pages',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#seo-pages"/>
+                                                </svg>',
+                    'title' => 'Seo Pages',
+                ],
+                'delivery' => [
+                    'url' => '/delivery',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#delivery"/>
+                                                </svg>',
+                    'title' => 'Delivery',
+                ],
+                'translations' => [
+                    'url' => '/translations',
+                    'icon' => '<svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#language"/>
+                                                </svg>',
+                    'title' => 'Translations',
+                ],
+            ],
+        ],
+    ],
+    '11' => [
+        'minimumOrderAmount' => [
+            'url' => '/minimum-order-amount',
+            'icon' => '<span style="font-size: 22px">💸</span>',
+            'title' => 'Min sum order',
+        ],
+    ],
+    '12' => [
+        'sticker' => [
+            'url' => '/sticker',
+            'icon' => '<span style="font-size: 22px">🌼</span>',
+            'title' => 'Stickers',
+        ],
+    ],
+];
 
+?>
 <div class="sa-sidebar__body" data-simplebar="">
     <ul class="sa-nav sa-nav--sidebar" data-sa-collapse="">
         <!--   ------------------------------------------------------------>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/order']) ?>" class="sa-nav__link">
+        <?php foreach ($menuSections as $menuSection): ?>
+            <li class="sa-nav__section">
+                <ul class="sa-nav__menu sa-nav__menu--root">
+                    <?php foreach ($menuSection as $menuItem): ?>
+                        <?php if ($menuItem['url'] == null): ?>
+                            <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
+                                data-sa-collapse-item="sa-nav__menu-item--open">
+                                <a href="" class="sa-nav__link" data-sa-collapse-trigger="">
                                             <span class="sa-nav__icon">
+                                                <?= $menuItem['icon'] ?>
+                                            </span>
+                                    <span class="sa-nav__title"><?= Yii::t('app', $menuItem['title']) ?></span>
+                                    <?php if (isset($menuItem['newReviews']) && ($reviewsNews != 0 || $reviewsPostNews != 0)) : ?>
+                                        <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"
+                                              style="font-size: 16px">!</span>
+                                    <?php else : ?>
+                                        <span class="sa-nav__arrow">
                                                 <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#order"/>
+                                                 <use xlink:href="/admin/images/sprite.svg#arrow"/>
                                                 </svg>
                                             </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Orders') ?></span>
-                        <?php if ($orderNews != 0) { ?>
-                            <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $orderNews ?></span>
-                        <?php } ?>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/report']) ?>" class="sa-nav__link">
+                                    <?php endif; ?>
+                                </a>
+                                <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
+                                    <?php foreach ($menuItem['subItems'] as $subItem): ?>
+                                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
+                                            <a href="<?= Url::to([$subItem['url']]) ?>" class="sa-nav__link">
                                             <span class="sa-nav__icon">
-                                                <svg width="20px" height="20px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#report"/>
-                                                </svg>
+                                              <?= $subItem['icon'] ?>
                                             </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Report') ?></span>
-                    </a>
-                </li>
-                <?php
+                                                <span class="sa-nav__title"><?= Yii::t('app', $subItem['title']) ?></span>
+                                                <?php if (isset($subItem['newProductReview']) && $reviewsNews != 0) { ?>
+                                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme"><?= $reviewsNews ?></span>
+                                                <?php } ?>
+                                                <?php if (isset($subItem['newPostReview']) && $reviewsPostNews != 0) { ?>
+                                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme"><?= $reviewsPostNews ?></span>
+                                                <?php } ?>
+                                                <?php if (isset($subItem['newErrors']) && $countErrors != 0) { ?>
+                                                    <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $countErrors ?></span>
+                                                <?php } ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php else: ?>
+                            <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
+                                <a href="<?= Url::to([$menuItem['url']]) ?>" class="sa-nav__link">
+                                            <span class="sa-nav__icon">
+                                                <?= $menuItem['icon'] ?>
+                                            </span>
+                                    <span class="sa-nav__title"><?= Yii::t('app', $menuItem['title']) ?></span>
+                                    <?php if (isset($menuItem['badge']) && $orderNews != 0) { ?>
+                                        <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $orderNews ?></span>
+                                    <?php } ?>
+                                    <?php if (isset($menuItem['message']) && $messagesNews != 0) { ?>
+                                        <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $messagesNews ?></span>
+                                    <?php } ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php
+                        if (isset($menuItem['reminder'])) {
+                            if ($event !== null) {
+                                $countEvents = ReportReminder::find()
+                                    ->where(['status' => 1])
+                                    ->count();
 
-                if ($event !== null) {
-                    $countEvents = ReportReminder::find()
-                        ->where(['status' => 1])
-                        ->count();
+                                $currentDate = new DateTimeImmutable(date('Y-m-d'));
+                                $eventDate = new DateTimeImmutable(date('Y-m-d', $event->date));
+                                $days = (int)$currentDate->diff($eventDate)->format('%r%a');
 
-                    $currentDate = new DateTimeImmutable(date('Y-m-d'));
-                    $eventDate = new DateTimeImmutable(date('Y-m-d', $event->date));
-                    $days = (int)$currentDate->diff($eventDate)->format('%r%a');
+                                // Цвет и анимация бейджа
+                                $colors = [
+                                    -1 => ['badge-event-0day', 'badge-sa-theme-event-0day'],
+                                    0 => ['badge-event-0day', 'badge-sa-theme-event-0day'],
+                                    1 => ['badge-event-1day', 'badge-sa-theme-event-1day'],
+                                    2 => ['badge-event-2day', 'badge-sa-theme-event-2day'],
+                                ];
 
-                    // Цвет и анимация бейджа
-                    $colors = [
-                        -1 => ['badge-event-0day', 'badge-sa-theme-event-0day'],
-                        0 => ['badge-event-0day', 'badge-sa-theme-event-0day'],
-                        1 => ['badge-event-1day', 'badge-sa-theme-event-1day'],
-                        2 => ['badge-event-2day', 'badge-sa-theme-event-2day'],
-                    ];
-
-                    [$eventBandageAnimColor, $eventBandageBackground] = $colors[$days] ?? ['', 'badge-sa-theme-event'];
-                    $blinkClass = $days < 0 ? 'reminder-blink-red' : '';
-                    $textReminderClass = $days < 0 ? 'text-reminder-red' : '';
-                    ?>
-                    <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                        <a href="<?= Url::to(['/report-reminder']) ?>" class="sa-nav__link">
+                                [$eventBandageAnimColor, $eventBandageBackground] = $colors[$days] ?? ['', 'badge-sa-theme-event'];
+                                $blinkClass = $days < 0 ? 'reminder-blink-red' : '';
+                                $textReminderClass = $days < 0 ? 'text-reminder-red' : '';
+                                ?>
+                                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
+                                    <a href="<?= Url::to(['/report-reminder']) ?>" class="sa-nav__link">
                             <span class="sa-nav__icon <?= $blinkClass ?>">
                                 <svg width="20px" height="20px" style="display: unset;">
                                     <use xlink:href="/admin/images/sprite.svg#tasks-admin"/>
                                 </svg>
                             </span>
-                            <span class="sa-nav__title <?= $textReminderClass ?>">
+                                        <span class="sa-nav__title <?= $textReminderClass ?>">
                                 <?= Yii::t('app', 'Reminder') ?>
                             </span>
-                            <span class="sa-nav__menu-item-badge badge
+                                        <span class="sa-nav__menu-item-badge badge
                                                 <?= $eventBandageAnimColor ?> badge-sa-pill
                                                 <?= $eventBandageBackground ?>">
                                 <?= $countEvents ?>
                             </span>
-                        </a>
-                    </li>
-                <?php } ?>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#statistic"/>
-                                              </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Analytics Site') ?></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/report-analytic']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#statistic"/>
-                                              </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Analytics Report') ?></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
-                    data-sa-collapse-item="sa-nav__menu-item--open">
-                    <a href="" class="sa-nav__link" data-sa-collapse-trigger="">
-                                            <span class="sa-nav__icon">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#categories"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Categories') ?></span>
-                        <span class="sa-nav__arrow">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#arrow"/>
-                                                </svg>
-                                            </span>
-                    </a>
-                    <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/category']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'First') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/auxiliary-categories']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Second') ?></span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/product']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#products"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Product') ?></span>
-                    </a>
-                </li>
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/order-provider']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                           <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#providers"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Providers') ?></span>
-                    </a>
-                </li>
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/label']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#labels"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Label') ?></span>
-                    </a>
-                </li>
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/grup']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                               <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#groups"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Group') ?></span>
-                    </a>
-                </li>
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/status']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#status"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Status') ?></span>
-                    </a>
-                </li>
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/tag']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                            <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#tags"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Tag') ?></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/posts']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#posts"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Posts') ?></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/slider']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#slider"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Slider') ?></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/messages']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#messages"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Messages') ?></span>
-                        <?php if ($messagesNews != 0) { ?>
-                            <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $messagesNews ?></span>
-                        <?php } ?>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
-                    data-sa-collapse-item="sa-nav__menu-item--open">
-                    <a href="" class="sa-nav__link" data-sa-collapse-trigger="">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Reviews') ?></span>
-                        <?php if ($reviewsNews != 0 || $reviewsPostNews != 0) { ?>
-                            <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"
-                                  style="font-size: 16px">!</span>
-                        <?php } else { ?>
-                            <span class="sa-nav__arrow">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#arrow"/>
-                                                </svg>
-                                            </span>
-                        <?php } ?>
-                    </a>
-                    <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/review']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Product Reviews') ?></span>
-                                <?php if ($reviewsNews != 0) { ?>
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme"><?= $reviewsNews ?></span>
-                                <?php } ?>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/posts-review']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#star"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Posts Reviews') ?></span>
-                                <?php if ($reviewsPostNews != 0) { ?>
-                                    <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme"><?= $reviewsPostNews ?></span>
-                                <?php } ?>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
-                    data-sa-collapse-item="sa-nav__menu-item--open">
-                    <a href="" class="sa-nav__link" data-sa-collapse-trigger="">
-                                            <span class="sa-nav__icon">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#users"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Active users') ?></span>
-                        <span class="sa-nav__arrow">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#arrow"/>
-                                                </svg>
-                                            </span>
-                    </a>
-                    <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/active-pages']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                                <svg width="20px" height="20px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#active-pages"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Active users') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/site-errors']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                                <svg width="20px" height="20px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#active-pages"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Site Errors') ?></span>
-                                <?php if ($countErrors != 0) { ?>
-                                    <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $countErrors ?></span>
-                                <?php } ?>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/ip-bot']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                               <svg width="20px" height="20px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#users-sub"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'IP Bot') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/bots']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                                <svg width="20px" height="20px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#robot-bot"/>
-                                                </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Name Bot') ?></span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon"
-                    data-sa-collapse-item="sa-nav__menu-item--open">
-                    <a href="" class="sa-nav__link" data-sa-collapse-trigger="">
-                                            <span class="sa-nav__icon">
-                                                <svg width="20px" height="20px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#setting"></use>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Settings') ?></span>
-                        <span class="sa-nav__arrow">
-                                                <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#arrow"/>
-                                                </svg>
-                                            </span>
-                    </a>
-                    <ul class="sa-nav__menu sa-nav__menu--sub" data-sa-collapse-content="">
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/search-words']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#search"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Search word') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/brand']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#brand"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Brand') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/properties-name']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#brand"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Property name') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/about']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#about"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'About') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/contact']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                            <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#contact"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Contact') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/seo-pages']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                            <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#seo-pages"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Seo Pages') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/delivery']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#delivery"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Delivery') ?></span>
-                            </a>
-                        </li>
-                        <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                            <a href="<?= Url::to(['/translations']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#language"/>
-                                              </svg>
-                                            </span>
-                                <span class="sa-nav__title"><?= Yii::t('app', 'Translations') ?></span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/minimum-order-amount']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#slider"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Min sum order') ?></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="sa-nav__section">
-            <ul class="sa-nav__menu sa-nav__menu--root">
-                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
-                    <a href="<?= Url::to(['/sticker']) ?>" class="sa-nav__link">
-                                            <span class="sa-nav__icon">
-                                              <svg width="16px" height="16px" style="display: unset;">
-                                                 <use xlink:href="/admin/images/sprite.svg#slider"/>
-                                                </svg>
-                                            </span>
-                        <span class="sa-nav__title"><?= Yii::t('app', 'Stickers') ?></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                                    </a>
+                                </li>
+                            <?php }
+                        } ?>
+                    <?php endforeach; ?>
+                </ul>
+            </li>
+        <?php endforeach; ?>
         <!--   ------------------------------------------------------------>
         <li class="sa-nav__section">
             <ul class="sa-nav__menu sa-nav__menu--root">
