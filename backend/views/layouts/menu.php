@@ -5,6 +5,7 @@ use common\models\PostsReview;
 use backend\models\ReportReminder;
 use common\models\shop\Order;
 use common\models\shop\Review;
+use common\models\SiteErrors;
 use yii\helpers\Url;
 
 ?>
@@ -355,6 +356,10 @@ use yii\helpers\Url;
                                                 </svg>
                                             </span>
                                 <span class="sa-nav__title"><?= Yii::t('app', 'Site Errors') ?></span>
+                                <?php $countErrors = SiteErrors::find()->count() ?>
+                                <?php if ($countErrors != 0) { ?>
+                                    <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $countErrors ?></span>
+                                <?php } ?>
                             </a>
                         </li>
                         <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
