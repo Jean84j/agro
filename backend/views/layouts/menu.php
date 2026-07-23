@@ -8,7 +8,22 @@ use common\models\shop\Review;
 use common\models\SiteErrors;
 use yii\helpers\Url;
 
+$orderNews = Order::orderNews();
+
+$event = ReportReminder::find()
+    ->where(['status' => 1])
+    ->orderBy(['date' => SORT_ASC])
+    ->one();
+
+$messagesNews = Messages::messagesNews();
+
+$reviewsNews = Review::reviewsNews();
+$reviewsPostNews = PostsReview::reviewsNews();
+
+$countErrors = SiteErrors::find()->count();
+
 ?>
+
 <div class="sa-sidebar__body" data-simplebar="">
     <ul class="sa-nav sa-nav--sidebar" data-sa-collapse="">
         <!--   ------------------------------------------------------------>
@@ -22,7 +37,6 @@ use yii\helpers\Url;
                                                 </svg>
                                             </span>
                         <span class="sa-nav__title"><?= Yii::t('app', 'Orders') ?></span>
-                        <?php $orderNews = Order::orderNews() ?>
                         <?php if ($orderNews != 0) { ?>
                             <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $orderNews ?></span>
                         <?php } ?>
@@ -42,10 +56,7 @@ use yii\helpers\Url;
                         <span class="sa-nav__title"><?= Yii::t('app', 'Report') ?></span>
                     </a>
                 </li>
-                <?php $event = ReportReminder::find()
-                    ->where(['status' => 1])
-                    ->orderBy(['date' => SORT_ASC])
-                    ->one();
+                <?php
 
                 if ($event !== null) {
                     $countEvents = ReportReminder::find()
@@ -256,7 +267,6 @@ use yii\helpers\Url;
                                                 </svg>
                                             </span>
                         <span class="sa-nav__title"><?= Yii::t('app', 'Messages') ?></span>
-                        <?php $messagesNews = Messages::messagesNews() ?>
                         <?php if ($messagesNews != 0) { ?>
                             <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $messagesNews ?></span>
                         <?php } ?>
@@ -275,9 +285,6 @@ use yii\helpers\Url;
                                                 </svg>
                                             </span>
                         <span class="sa-nav__title"><?= Yii::t('app', 'Reviews') ?></span>
-                        <?php $reviewsNews = Review::reviewsNews() ?>
-                        <?php $reviewsPostNews = PostsReview::reviewsNews() ?>
-
                         <?php if ($reviewsNews != 0 || $reviewsPostNews != 0) { ?>
                             <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"
                                   style="font-size: 16px">!</span>
@@ -356,7 +363,6 @@ use yii\helpers\Url;
                                                 </svg>
                                             </span>
                                 <span class="sa-nav__title"><?= Yii::t('app', 'Site Errors') ?></span>
-                                <?php $countErrors = SiteErrors::find()->count() ?>
                                 <?php if ($countErrors != 0) { ?>
                                     <span class="sa-nav__menu-item-badge badge badge-new badge-sa-pill badge-sa-theme"><?= $countErrors ?></span>
                                 <?php } ?>
@@ -523,6 +529,7 @@ use yii\helpers\Url;
         </li>
     </ul>
 </div>
+
 <style>
     .badge-new {
         animation: pulseOutlineYellow 2s infinite;
