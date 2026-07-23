@@ -502,6 +502,20 @@ use yii\helpers\Url;
                 </li>
             </ul>
         </li>
+        <li class="sa-nav__section">
+            <ul class="sa-nav__menu sa-nav__menu--root">
+                <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">
+                    <a href="<?= Url::to(['/sticker']) ?>" class="sa-nav__link">
+                                            <span class="sa-nav__icon">
+                                              <svg width="16px" height="16px" style="display: unset;">
+                                                 <use xlink:href="/admin/images/sprite.svg#slider"/>
+                                                </svg>
+                                            </span>
+                        <span class="sa-nav__title"><?= Yii::t('app', 'Stickers') ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <!--   ------------------------------------------------------------>
         <li class="sa-nav__section">
             <ul class="sa-nav__menu sa-nav__menu--root">
