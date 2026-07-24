@@ -27,7 +27,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="home-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-briefcase header-icon-tab"></i>
+                    <span style="font-size: 30px">💼</span>
+<!--                    <i class="fas fa-briefcase header-icon-tab"></i>-->
                     <span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
@@ -43,7 +44,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="order-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-shopping-cart header-icon-tab"></i>
+                    <span style="font-size: 30px">🛒</span>
+<!--                    <i class="fas fa-shopping-cart header-icon-tab"></i>-->
                     <span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
@@ -59,7 +61,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="views-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-eye header-icon-tab"></i>
+                    <span style="font-size: 30px">🤓</span>
+<!--                    <i class="fas fa-eye header-icon-tab"></i>-->
                     <span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
@@ -75,7 +78,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="review-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-star-half-alt header-icon-tab"></i>
+                    <span style="font-size: 30px">⭐</span>
+<!--                    <i class="fas fa-star-half-alt header-icon-tab"></i>-->
                     <span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
@@ -90,7 +94,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="user-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-user-plus header-icon-tab"></i>
+                    <span style="font-size: 30px">🗓️</span>
+<!--                    <i class="fas fa-user-plus header-icon-tab"></i>-->
                     <span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
@@ -105,7 +110,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="user-month-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-chart-line header-icon-tab"></i>
+                    <span style="font-size: 30px">⌚</span>
+<!--                    <i class="fas fa-chart-line header-icon-tab"></i>-->
                     <span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
@@ -121,7 +127,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="top-review-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-trophy header-icon-tab"></i>
+                    <span style="font-size: 30px">🏆</span>
+<!--                    <i class="fas fa-trophy header-icon-tab"></i>-->
                     <i class="far fa-eye"></i>
                     <span class="nav-link-sa-indicator"></span>
                 </button>
@@ -138,7 +145,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="top-bay-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-trophy header-icon-tab"></i>
+                    <span style="font-size: 30px">🏆</span>
+<!--                    <i class="fas fa-trophy header-icon-tab"></i>-->
                     <i class="fas fa-money-bill-wave"></i>
                     <span class="nav-link-sa-indicator"></span>
                 </button>
@@ -156,7 +164,8 @@ $dataUrl = '/admin/uk/site/dashboard-tab-content';
                         aria-controls="sub-top-review-tab-content"
                         aria-selected="true"
                 >
-                    <i class="fas fa-eye-slash header-icon-tab"></i>
+                    <span style="font-size: 30px">😎</span>
+<!--                    <i class="fas fa-eye-slash header-icon-tab"></i>-->
                     <span class="nav-link-sa-indicator"></span>
                 </button>
             </li>
