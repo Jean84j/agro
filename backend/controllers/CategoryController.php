@@ -231,12 +231,12 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $dir = Yii::getAlias('@frontendWeb/images');
+//        $dir = Yii::getAlias('@frontendWeb/images');
         $model = $this->findModel($id);
 
-        if (file_exists($dir . '/category/' . $model->file)) {
-            unlink($dir . '/category/' . $model->file);
-        }
+//        if (file_exists($dir . '/category/' . $model->file)) {
+//            unlink($dir . '/category/' . $model->file);
+//        }
 
         CategoriesTranslate::deleteAll(['category_id' => $id]);
 
