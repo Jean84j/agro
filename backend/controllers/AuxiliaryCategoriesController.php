@@ -178,7 +178,7 @@ class AuxiliaryCategoriesController extends Controller
         if (empty($model->slug)) {
             $imageName = Inflector::slug($model->name);
         } else {
-            $imageName = $model->slug;
+            $imageName = $model->slug . '_' . time();
         }
         $file->saveAs($dir . $imageName . '.' . $file->extension);
         return $imageName . '.' . $file->extension;
