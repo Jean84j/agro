@@ -9,6 +9,7 @@ use common\models\shop\ProductProperties;
 use common\models\shop\Category;
 use common\models\shop\Product;
 use Spatie\SchemaOrg\Schema;
+use yii\db\Expression;
 use yii\helpers\Url;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -38,6 +39,19 @@ class CategoryController extends BaseFrontendController
             ->addParams([':language' => $language])
             ->all();
 
+        $auxiliaryCategories = Yii::$app->cache->getOrSet(
+            'auxiliary_categories_random_12',
+            static function () {
+                return AuxiliaryCategories::find()
+                    ->orderBy(new Expression('RAND()'))
+                    ->limit(12)
+                    ->andWhere(['visibility' => 1])
+                    ->all();
+            },
+            60 * 60 * 24 // 24 часа
+        );
+
+
         $seo = Settings::seoPageTranslate('catalog');
         $type = 'website';
         $url = Url::canonical();
@@ -53,6 +67,7 @@ class CategoryController extends BaseFrontendController
         return $this->render('list',
             [
                 'categories' => $categories,
+                'auxiliaryCategories' => $auxiliaryCategories,
                 'language' => $language,
                 'page_description' => $seo->page_description,
                 'files' => $files,

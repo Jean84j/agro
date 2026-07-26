@@ -8,6 +8,7 @@ use yii\helpers\Url;
 /** @var \common\models\shop\Product $categories */
 /** @var \frontend\controllers\CategoryController $page_description */
 /** @var  $files */
+/** @var  $auxiliaryCategories */
 
 $h1 = 'Категорії';
 $breadcrumbItemActive = 'Категорії';
@@ -63,6 +64,35 @@ ActivePages::setActiveUser();
                                     </div>
                                 <?php endforeach; ?>
                             </div>
+                            <div class="popular-sub_categories">
+                                <h2><?= Yii::t('app', 'Популярні підкатегорії') ?></h2>
+                            </div>
+                            <div class="products-list__body">
+                                <?php if ($auxiliaryCategories): ?>
+                                    <?php foreach ($auxiliaryCategories as $category): ?>
+                                        <div class="products-list__item">
+                                            <div class="product-card ">
+                                                <div class="product-card__image product-image">
+                                                    <a href="<?= Url::to(['category/auxiliary-catalog', 'slug' => $category->slug]) ?>"
+                                                       class="product-image__body">
+                                                        <img class="product-image__img"
+                                                             src="/images/auxiliary-categories/<?= $category->image ?>"
+                                                             width="231" height="231"
+                                                             alt="<?= $category->name ?>">
+                                                    </a>
+                                                </div>
+                                                <div class="product-card__info">
+                                                    <div class="product-card__name">
+                                                        <a href="<?= Url::to(['category/auxiliary-catalog', 'slug' => $category->slug]) ?>"><?= $category->name ?></a>
+                                                    </div>
+                                                </div>
+                                                <div class="product-card__actions">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
                             <div class="spec__disclaimer">
                                 <?= $page_description ?>
                             </div>
@@ -74,3 +104,8 @@ ActivePages::setActiveUser();
     </div>
     <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>
+<style>
+    .popular-sub_categories {
+        margin: 30px 5px;
+    }
+</style>
