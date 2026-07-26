@@ -41,15 +41,13 @@ $webp_support = ProductImage::imageWebp();
                                         <div class="post-card post-card--layout--list post-card--size--nl">
                                             <div class="post-card__image">
                                                 <a href="<?= Url::to(['post/view', 'slug' => $post->slug]) ?>">
-                                                    <?php if ($webp_support == true && isset($post->webp_extra_large)) { ?>
-                                                        <img src="/posts/<?= $post->webp_extra_large ?>"
-                                                             width="350" height="235"
-                                                             alt="<?= $post->title ?>">
-                                                    <?php } else { ?>
-                                                        <img src="/posts/<?= $post->extra_large ?>"
-                                                             width="350" height="235"
-                                                             alt="<?= $post->title ?>">
-                                                    <?php } ?>
+                                                    <?php $image = ($webp_support && isset($post->webp_extra_large))
+                                                        ? $post->webp_extra_large
+                                                        : $post->extra_large;
+                                                    ?>
+                                                    <img src="/posts/<?= $image ?>"
+                                                         width="350" height="235"
+                                                         alt="<?= $post->title ?>">
                                                 </a>
                                             </div>
                                             <div class="post-card__info">
