@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use kartik\color\ColorInput;
 
 /** @var yii\web\View $this */
 /** @var common\models\shop\Status $model */
@@ -39,6 +40,17 @@ use yii\widgets\ActiveForm;
                                         <!--                                        <label for="form-category/name" class="form-label">Name</label>-->
                                         <!--                                        <input type="text" class="form-control" id="form-category/name" value="Hand Tools" />-->
                                         <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label(Yii::t('app', 'name')) ?>
+                                    </div>
+                                    <div class="mb-4">
+                                        <!--                                        <label for="form-category/name" class="form-label">Name</label>-->
+                                        <!--                                        <input type="text" class="form-control" id="form-category/name" value="Hand Tools" />-->
+                                        <?= $form->field($model, 'icon')->textInput(['maxlength' => true])->label(Yii::t('app', 'icon')) ?>
+                                    </div>
+                                    <div class="mb-4">
+                                        <?= $form->field($model, 'color')->widget(ColorInput::class, [
+                                            'options' => ['placeholder' => Yii::t('app', 'Select color')],
+                                            'pluginOptions' => ['preferredFormat' => 'rgb'],
+                                        ])->label(Yii::t('app', 'Color')) ?>
                                     </div>
 
                                 </div>

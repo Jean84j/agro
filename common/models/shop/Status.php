@@ -10,6 +10,8 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string|null $name
+ * @property string|null $icon
+ * @property string|null $color
  */
 class Status extends ActiveRecord
 {
@@ -28,6 +30,7 @@ class Status extends ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 255],
+            [['icon', 'color'], 'string', 'max' => 50],
         ];
     }
 

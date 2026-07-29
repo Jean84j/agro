@@ -35,6 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th><?=Yii::t('app', 'ID')?></th>
                         <th class="min-w-15x"><?=Yii::t('app', 'name')?></th>
                         <th class="min-w-15x"><?=Yii::t('app', 'Count')?></th>
+                        <th class="min-w-15x"><?=Yii::t('app', 'Color')?></th>
+                        <th class="min-w-15x"><?=Yii::t('app', 'Icon')?></th>
                         <th class="w-min" data-orderable="false"></th>
                     </tr>
                     </thead>
@@ -49,6 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td><a href="<?=Url::to(['status/update', 'id' => $model->id])?>" class="text-reset"><?=$model->name?></a></td>
                             <td>
                                 <?= $model->getProductStatus($model->id) ?>
+                            </td>
+                            <td>
+                                <div style="width: 20px; height: 20px; background-color: <?= $model->color ?>; border: 1px solid #000;"></div>
+                            </td>
+                            <td>
+                                <i style="color: <?= $model->color ?>;" class="<?= $model->icon ?>"></i>
                             </td>
 
                             <td>
