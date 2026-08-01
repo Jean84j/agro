@@ -55,7 +55,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                      'levels' => [
-                        'error',
+//                        'error',
 //                        'warning',
 //                        'info',
 //                        'trace'
