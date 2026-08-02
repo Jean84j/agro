@@ -7,6 +7,7 @@ use common\models\shop\Category;
 use common\models\shop\ProductTag;
 use common\models\shop\Product;
 use common\models\shop\Tag;
+use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Url;
@@ -33,12 +34,32 @@ class TagController extends BaseFrontendController
 
         $page_description = $seo->page_description;
 
+        $this->setTagsSchema($title, $description, $image, $url);
+
         return $this->render('index',
             [
                 'categories' => $tagCategories,
                 'page_description' => $page_description,
             ]);
     }
+
+
+    protected function setTagsSchema($title, $description, $image, $url)
+    {
+        $tag = Schema::collectionPage()
+            ->name($title)
+            ->description($description)
+            ->url($url)
+            ->image($image)
+            ->publisher(
+                Schema::organization()
+                    ->name('AgroPro')
+                    ->url('https://agropro.org.ua')
+            );
+
+        Yii::$app->params['schema'] = $tag->toScript();
+    }
+
 
     protected function getCategories($language): array
     {
