@@ -77,7 +77,6 @@ class CategoryController extends BaseFrontendController
 
     protected function setCatalogSchema($title, $description, $image, $url)
     {
-
        $catalog = Schema::collectionPage()
             ->name($title)
             ->description($description)
@@ -281,7 +280,7 @@ class CategoryController extends BaseFrontendController
         $this->setCatalogBreadCrumbSchema($category);
         $this->setCatalogProductSchema($category, $products_all);
 
-        $type = 'product.group';
+        $type = 'website';
         $url = Url::canonical();
         $title = $category->pageTitle;
         $description = $category->metaDescription;
@@ -388,7 +387,7 @@ class CategoryController extends BaseFrontendController
         $this->setAuxiliaryCatalogBreadCrumbSchema($category, $breadcrumbCategory);
         $this->setAuxiliaryCatalogProductSchema($category, $products_all, $productsId);
 
-        $type = 'product.group';
+        $type = 'website';
         $url = Url::canonical();
         $title = $category->pageTitle;
         $description = $category->metaDescription;
