@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Settings;
 use common\models\shop\Product;
+use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\db\Expression;
 use yii\helpers\Url;
@@ -36,7 +37,7 @@ class SpecialController extends BaseFrontendController
         }
 
         $seo = Settings::seoPageTranslate('special');
-        $type = 'product.group';
+        $type = 'website';
         $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
@@ -46,6 +47,8 @@ class SpecialController extends BaseFrontendController
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
         $page_description = $seo->page_description;
+
+        $this->setSpecialSchema($title, $description, $image, $url);
 
         $files = $this->getRelativeFiles('@webroot/images/special');
 
@@ -57,6 +60,22 @@ class SpecialController extends BaseFrontendController
             'page_description',
             'files'
         ]));
+    }
+
+    protected function setSpecialSchema($title, $description, $image, $url)
+    {
+        $special = Schema::collectionPage()
+            ->name($title)
+            ->description($description)
+            ->url($url)
+            ->image($image)
+            ->publisher(
+                Schema::organization()
+                    ->name('AgroPro')
+                    ->url('https://agropro.org.ua')
+            );
+
+        Yii::$app->params['schema'] = $special->toScript();
     }
 
 }

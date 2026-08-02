@@ -23,8 +23,6 @@ class BlogsController extends BaseFrontendController
             $this->getPostTranslation($posts, $language);
         }
 
-        $this->getSchemaBlogs($posts);
-
         if ($q == null) {
             $query = Posts::find();
         } else {
@@ -55,6 +53,8 @@ class BlogsController extends BaseFrontendController
 
         $files = $this->getRelativeFiles('@webroot/images/blogs');
 
+        $this->getSchemaBlogs($posts, $description);
+
         return $this->render('view',
             [
                 'blogs' => $blogs,
@@ -81,51 +81,66 @@ class BlogsController extends BaseFrontendController
         }
     }
 
-    protected function getSchemaBlogs($posts)
+    protected function getSchemaBlogs($posts, $description)
     {
         $language = Yii::$app->language;
-        $blogPosting = [];
-        $formatter = new Formatter;
-        $host = Yii::$app->request->hostInfo;
+        $formatter = new Formatter();
 
-        if ($language != 'uk') {
-            $host = $host . '/ru';
+        $host = Yii::$app->request->hostInfo;
+        if ($language !== 'uk') {
+            $host .= '/ru';
         }
+
+        $blogPosts = [];
 
         foreach ($posts as $post) {
-            $blogPost = [
-                "@type" => "BlogPosting",
-                "headline" => $post->title,
-                "articleBody" => mb_strlen(strip_tags($post->description)) > 500
-                    ? mb_substr(strip_tags($post->description), 0, 497) . '...'
-                    : strip_tags($post->description),
-                "articleSection" => $post->category->name ?? null,
-                "datePublished" => $formatter->asDatetime($post->date_public, 'php:Y-m-d\TH:i:sP'),
-                "dateModified" => $formatter->asDatetime($post->date_updated ?? $post->date_public, 'php:Y-m-d\TH:i:sP'),
-                "url" => $host . '/post/' . $post->slug,
-                "image" => [
-                    Yii::$app->request->hostInfo . '/posts/' . $post->image
-                ],
-                "author" => [
-                    "@type" => "Person",
-                    "name" => "AgroPro",
-                    "url" => $host
-                ],
-                "publisher" => [
-                    "@type" => "Organization",
-                    "name" => "AgroPro",
-                    "logo" => [
-                        "@type" => "ImageObject",
-                        "url" => Yii::$app->request->hostInfo . '/logos/meta_logo.jpg'
-                    ]
-                ]
-            ];
 
-            $blogPosting[] = $blogPost;
+            $text = trim(strip_tags($post->description));
+
+            if (mb_strlen($text) > 200) {
+                $text = mb_substr($text, 0, 197) . '...';
+            }
+
+            $url = $host . '/post/' . $post->slug;
+            $image = Yii::$app->request->hostInfo . '/posts/' . $post->image;
+
+            $blogPosts[] = Schema::blogPosting()
+                ->headline($post->title)
+                ->description($post->seo_description ?: $text)
+                ->articleBody($text)
+                ->articleSection($post->category->name ?? null)
+                ->datePublished($formatter->asDatetime($post->date_public, 'php:c'))
+                ->dateModified($formatter->asDatetime($post->date_updated ?? $post->date_public, 'php:c'))
+                ->url($url)
+                ->mainEntityOfPage(
+                    Schema::webPage()
+                        ->id($url)
+                )
+                ->image(
+                    Schema::imageObject()
+                        ->url($image)
+                )
+                ->author(
+                    Schema::organization()
+                        ->name('AgroPro')
+                        ->url($host)
+                )
+                ->publisher(
+                    Schema::organization()
+                        ->name('AgroPro')
+                        ->url($host)
+                        ->logo(
+                            Schema::imageObject()
+                                ->url(Yii::$app->request->hostInfo . '/images/logos/meta_logo.jpg')
+                        )
+                );
         }
 
-        $schemaBlog = Schema::Blog()
-            ->blogPosts($blogPosting);
+        $schemaBlog = Schema::blog()
+            ->name('Блог AgroPro')
+            ->url($host . '/blogs')
+            ->description($description)
+            ->blogPosts($blogPosts);
 
         Yii::$app->params['blog'] = $schemaBlog->toScript();
     }
