@@ -357,14 +357,15 @@ class Product extends ActiveRecord implements CartPositionInterface
         $product = Product::find()->with('images')->where(['id' => $id])->one();
 
         $images = $product->images;
+
         $priorities = array_column($images, 'priority');
         array_multisort($priorities, SORT_ASC, $images);
 
         if (isset($images[0])) {
             if ($webp_support == true && isset($images[0]->webp_large)) {
-                $img = Yii::$app->request->hostInfo . '/product/' . $images[0]->webp_large;
+                $img = Yii::$app->request->hostInfo . '/product/' . $images[0]->webp_name;
             } else {
-                $img = Yii::$app->request->hostInfo . '/product/' . $images[0]->large;
+                $img = Yii::$app->request->hostInfo . '/product/' . $images[0]->name;
             }
         } else {
             $img = Yii::$app->request->hostInfo . "/images/no-image.png";

@@ -29,7 +29,7 @@ return [
             'class' => 'alexandernst\devicedetect\DeviceDetect'
         ],
         'metamaster' => [
-            'class' => 'floor12\metamaster\MetaMaster',
+            'class' => frontend\components\SeoMetaMaster::class,
             'type' => 'website',
             'siteName' => 'AgroPro',
             'title' => 'AgroPro магазин',

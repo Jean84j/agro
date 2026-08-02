@@ -61,10 +61,19 @@ class Settings extends Model
         return $seo;
     }
 
-    static function setMetamaster($type = null, $title = null, $description = null, $image = null, $keywords = null, $url = null, $alternateUrls = null)
+    static function setMetamaster(
+        $type = null,
+        $title = null,
+        $description = null,
+        $image = null,
+        $keywords = null,
+        $url = null,
+        $alternateUrls = null,
+        $price = null)
     {
 
         $metaMaster = Yii::$app->metamaster;
+
         $view = Yii::$app->view;
 
         if ($type) {
@@ -105,10 +114,10 @@ class Settings extends Model
         }
 
         if ($keywords) {
-            $view->registerMetaTag([
-                'name' => 'keywords',
-                'content' => $keywords,
-            ]);
+            $metaMaster->setKeywords($keywords);
+        }
+        if ($price){
+            $metaMaster->setPrice($price);
         }
 
         $metaMaster->register(Yii::$app->getView());

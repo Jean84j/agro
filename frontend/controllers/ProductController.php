@@ -21,82 +21,22 @@ class ProductController extends BaseFrontendController
     public function actionView($slug): string
     {
         $language = Yii::$app->language;
-
         $mobile = Yii::$app->devicedetect->isMobile();
-
         $webp_support = ProductImage::imageWebp();
-
         $product = Product::find()->with(['category.parent', 'images'])->where(['slug' => $slug])->one();
 
         if ($product === null) {
             throw new NotFoundHttpException('Product not found ' . '" ' . $slug . ' "');
         }
 
-        $faq = Faq::find()
-            ->alias('f')
-            ->select([
-                'COALESCE(ft.question, f.question) AS question',
-                'COALESCE(ft.answer, f.answer) AS answer',
-            ])
-            ->leftJoin('faq_translate ft',
-                'ft.faq_id = f.id AND ft.language = :language')
-            ->where(['f.product_id' => $product->id])
-            ->andWhere(['f.visible' => 1])
-            ->addParams([':language' => $language])
-            ->asArray()
-            ->all();
-
-        $productVariants = ProductPackaging::find()
-            ->alias('pp')
-            ->select([
-                'pp.volume',
-                'p.slug',
-                'p.status_id',
-            ])
-            ->leftJoin(
-                'product p',
-                'p.id = pp.product_variant_id'
-            )
-            ->where(['pp.product_id' => $product->id])
-            ->asArray()
-            ->all();
-
-        $products_analog = Product::find()
-            ->alias('p')
-            ->innerJoin(AnalogProducts::tableName() . ' ap', 'ap.analog_product_id = p.id')
-            ->with(['category.parent', 'images'])
-            ->where(['ap.product_id' => $product->id])
-            ->all();
+        $faq = $this->faqProduct($product, $language);
+        $productVariants = $this->variantsProduct($product);
+        $products_analog = $this->analogsProduct($product);
         $products_analog_count = count($products_analog);
-
         $images = $product->images;
         $priorities = array_column($images, 'priority');
         array_multisort($priorities, SORT_ASC, $images);
-
-        $product_properties = ProductProperties::find()
-            ->alias('pp')
-            ->select([
-                'COALESCE(pnt.name, pn.name) AS properties',
-                'COALESCE(ppt.value, pp.value) AS value',
-            ])
-            ->leftJoin(
-                'properties_name pn',
-                'pn.id = pp.property_id'
-            )
-            ->leftJoin(
-                'properties_name_translate pnt',
-                'pnt.name_id = pn.id AND pnt.language = :language'
-            )
-            ->leftJoin(
-                'product_properties_translate ppt',
-                'ppt.product_properties_id = pp.id AND ppt.language = :language'
-            )
-            ->where(['pp.product_id' => $product->id])
-            ->asArray()
-            ->orderBy(['pn.sort' => SORT_ASC])
-            ->addParams([':language' => $language])
-            ->all();
-
+        $product_properties = $this->propertiesProduct($product, $language);
         $img_brand = Brand::find()->where(['id' => $product->brand_id])->one();
         $model_review = new Review();
 
@@ -111,13 +51,14 @@ class ProductController extends BaseFrontendController
         Yii::$app->params['product'] = $schemaProduct->toScript();
 
         $type = 'product';
+        $price = $product->price;
         $url = Url::canonical();
         $title = $product->seo_title;
         $description = $product->seo_description;
         $image = $product->getImgSeo($product->id);
         $keywords = $product->keywords;
         $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls, $price);
 
         return $this->render('index', [
             'product' => $product,
@@ -204,6 +145,78 @@ class ProductController extends BaseFrontendController
                 }
             }
         }
+    }
+
+    protected function faqProduct($product, $language)
+    {
+        return Faq::find()
+            ->alias('f')
+            ->select([
+                'COALESCE(ft.question, f.question) AS question',
+                'COALESCE(ft.answer, f.answer) AS answer',
+            ])
+            ->leftJoin('faq_translate ft',
+                'ft.faq_id = f.id AND ft.language = :language')
+            ->where(['f.product_id' => $product->id])
+            ->andWhere(['f.visible' => 1])
+            ->addParams([':language' => $language])
+            ->asArray()
+            ->all();
+    }
+
+    protected function propertiesProduct($product, $language)
+    {
+       return ProductProperties::find()
+           ->alias('pp')
+           ->select([
+               'COALESCE(pnt.name, pn.name) AS properties',
+               'COALESCE(ppt.value, pp.value) AS value',
+           ])
+           ->leftJoin(
+               'properties_name pn',
+               'pn.id = pp.property_id'
+           )
+           ->leftJoin(
+               'properties_name_translate pnt',
+               'pnt.name_id = pn.id AND pnt.language = :language'
+           )
+           ->leftJoin(
+               'product_properties_translate ppt',
+               'ppt.product_properties_id = pp.id AND ppt.language = :language'
+           )
+           ->where(['pp.product_id' => $product->id])
+           ->asArray()
+           ->orderBy(['pn.sort' => SORT_ASC])
+           ->addParams([':language' => $language])
+           ->all();
+    }
+
+    protected function variantsProduct($product)
+    {
+        return ProductPackaging::find()
+            ->alias('pp')
+            ->select([
+                'pp.volume',
+                'p.slug',
+                'p.status_id',
+            ])
+            ->leftJoin(
+                'product p',
+                'p.id = pp.product_variant_id'
+            )
+            ->where(['pp.product_id' => $product->id])
+            ->asArray()
+            ->all();
+    }
+
+    protected function analogsProduct($product)
+    {
+        return Product::find()
+            ->alias('p')
+            ->innerJoin(AnalogProducts::tableName() . ' ap', 'ap.analog_product_id = p.id')
+            ->with(['category.parent', 'images'])
+            ->where(['ap.product_id' => $product->id])
+            ->all();
     }
 
 }
