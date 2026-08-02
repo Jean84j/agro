@@ -51,7 +51,6 @@ class CategoryController extends BaseFrontendController
             60 * 60 * 24 // 24 часа
         );
 
-
         $seo = Settings::seoPageTranslate('catalog');
         $type = 'website';
         $url = Url::canonical();
@@ -61,6 +60,8 @@ class CategoryController extends BaseFrontendController
         $keywords = '';
         $alternateUrls = $this->getAlternateUrl();
         Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+
+        $this->setCatalogSchema($title, $description, $image, $url);
 
         $files = $this->getRelativeFiles('@webroot/images/catalog-categories');
 
@@ -72,6 +73,23 @@ class CategoryController extends BaseFrontendController
                 'page_description' => $seo->page_description,
                 'files' => $files,
             ]);
+    }
+
+    protected function setCatalogSchema($title, $description, $image, $url)
+    {
+
+       $catalog = Schema::collectionPage()
+            ->name($title)
+            ->description($description)
+            ->url($url)
+            ->image($image)
+            ->publisher(
+                Schema::organization()
+                    ->name('AgroPro')
+                    ->url('https://agropro.org.ua')
+            );
+
+            Yii::$app->params['schema'] = $catalog->toScript();
     }
 
     public function actionChildren($slug)
