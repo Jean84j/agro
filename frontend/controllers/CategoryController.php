@@ -22,34 +22,9 @@ class CategoryController extends BaseFrontendController
     public function actionList()
     {
         $language = Yii::$app->language;
-        $categories = Category::find()
-            ->alias('c')
-            ->select([
-                'c.id',
-                'c.slug',
-                'c.parentId',
-                'c.file',
-                'IFNULL(ct.name, c.name) AS name',
-                'c.visibility',
-                'c.svg',
-            ])
-            ->leftJoin('categories_translate ct', 'ct.category_id = c.id AND ct.language = :language')
-            ->where(['c.parentId' => null])
-            ->andWhere(['c.visibility' => 1])
-            ->addParams([':language' => $language])
-            ->all();
+        $categories = $this->getCategoriesCatalog($language);
 
-        $auxiliaryCategories = Yii::$app->cache->getOrSet(
-            'auxiliary_categories_random_12',
-            static function () {
-                return AuxiliaryCategories::find()
-                    ->orderBy(new Expression('RAND()'))
-                    ->limit(12)
-                    ->andWhere(['visibility' => 1])
-                    ->all();
-            },
-            60 * 60 * 24 // 24 часа
-        );
+        $auxiliaryCategories = $this->getAuxiliaryCategoriesCatalog();
 
         $seo = Settings::seoPageTranslate('catalog');
         $type = 'website';
@@ -73,6 +48,41 @@ class CategoryController extends BaseFrontendController
                 'page_description' => $seo->page_description,
                 'files' => $files,
             ]);
+    }
+
+    protected function getCategoriesCatalog($language)
+    {
+        return Category::find()
+            ->alias('c')
+            ->select([
+                'c.id',
+                'c.slug',
+                'c.parentId',
+                'c.file',
+                'IFNULL(ct.name, c.name) AS name',
+                'c.visibility',
+                'c.svg',
+            ])
+            ->leftJoin('categories_translate ct', 'ct.category_id = c.id AND ct.language = :language')
+            ->where(['c.parentId' => null])
+            ->andWhere(['c.visibility' => 1])
+            ->addParams([':language' => $language])
+            ->all();
+    }
+
+    protected function getAuxiliaryCategoriesCatalog()
+    {
+        return Yii::$app->cache->getOrSet(
+            'auxiliary_categories_random_12',
+            static function () {
+                return AuxiliaryCategories::find()
+                    ->orderBy(new Expression('RAND()'))
+                    ->limit(12)
+                    ->andWhere(['visibility' => 1])
+                    ->all();
+            },
+            60 * 60 * 24 // 24 часа
+        );
     }
 
     protected function setCatalogSchema($title, $description, $image, $url)

@@ -309,16 +309,13 @@
         });
     });
 
-
-
-
-    /*
+/*
 // Stacked Bar   (.saw-chart-bar-stacked)
 */
     $('.saw-chart-bar-stacked[data-sa-data]').each(function() {
 
-            const data = $(this).data('sa-data');
             const dataOld = $(this).data('sa-old-data');
+            const data = $(this).data('sa-data');
             const sumb = $(this).data('sumb-data');
             const labels = data.map(function(item) { return item.label; });
             const values = data.map(function(item) { return item.value; });
@@ -344,14 +341,16 @@
                 labels: labels,
                 datasets: [
                     {
-                        backgroundColor: '#ffd333',
+                        label: 'New',
+                        backgroundColor: defaultColor,
                         borderColor: 'transparent',
                         borderWidth: 0,
                         fill: 'origin',
                         data: values,
                     },
                     {
-                        backgroundColor: '#ff8b33',
+                        label: 'Old',
+                        backgroundColor: highlightColor,
                         borderColor: 'transparent',
                         borderWidth: 0,
                         fill: 'origin',
@@ -365,6 +364,11 @@
                     legend: {
                         display: false,
                     },
+                    tooltip: {
+                        itemSort: function(b, a) {
+                            return a.datasetIndex - b.datasetIndex;
+                        }
+                    }
                 },
 
                 scales: {
@@ -406,9 +410,6 @@
             },
         });
     });
-
-
-
 
     /*
     // Feather
