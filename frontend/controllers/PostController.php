@@ -89,14 +89,16 @@ class PostController extends BaseFrontendController
         Yii::$app->params['breadcrumb'] = $schemaBreadcrumb->toScript();
         Yii::$app->params['post'] = $schemaPost->toScript();
 
-        $type = 'article';
-        $url = Url::canonical();
-        $title = $postItem->seo_title;
-        $description = $postItem->seo_description;
-        $image = '/posts/' . $postItem->image;
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+        Settings::setMetamaster([
+            'type' => 'article',
+            'title' => $postItem->seo_title,
+            'description' => $postItem->seo_description,
+            'image' => '/posts/' . $postItem->image,
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         return $this->render('view', [
             'postItem' => $postItem,

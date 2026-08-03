@@ -78,6 +78,10 @@ class SeoMetaMaster extends Component
      * @var float
      */
     private $price;
+    /**
+     * @var boolean
+     */
+    private $indexable;
 
     /**
      * @inheritDoc
@@ -183,6 +187,16 @@ class SeoMetaMaster extends Component
         return $this;
     }
 
+    /** Set Product price
+     * @param boolean $indexable
+     * @return $this
+     */
+    public function setIndexable(bool $indexable)
+    {
+        $this->indexable = $indexable;
+        return $this;
+    }
+
     /** Register meta tags in View
      * @param View $view
      */
@@ -200,7 +214,13 @@ class SeoMetaMaster extends Component
      */
     private function registerCoreInfo()
     {
-        $this->registerOrUpdateMetaTag(['property' => 'og:site_name', 'content' => $this->siteName]);
+        if ($this->indexable === false) {
+            $this->registerOrUpdateMetaTag(['name' => 'robots', 'content' => 'noindex,nofollow']);
+        }else{
+            $this->registerOrUpdateMetaTag(['name' => 'robots', 'content' => 'index,follow']);
+        }
+
+
         $this->registerOrUpdateMetaTag(['property' => 'og:site_name', 'content' => $this->siteName]);
         $this->registerOrUpdateMetaTag(['property' => 'og:type', 'content' => $this->type]);
         $this->registerOrUpdateMetaTag(['property' => 'og:url', 'content' => $this->url ?: $this->getAbsoluteUrl()]);
@@ -209,17 +229,17 @@ class SeoMetaMaster extends Component
         $this->registerOrUpdateLinkTag(['rel' => 'canonical', 'href' => $this->url ?: $this->getAbsoluteUrl()]);
 
         if ($this->price) {
-            $this->registerOrUpdateMetaTag(['property'=>'product:price:amount', 'content'=>$this->price]);
-            $this->registerOrUpdateMetaTag(['property'=>'product:price:currency', 'content'=>'UAH']);
+            $this->registerOrUpdateMetaTag(['property' => 'product:price:amount', 'content' => $this->price]);
+            $this->registerOrUpdateMetaTag(['property' => 'product:price:currency', 'content' => 'UAH']);
         }
 
         if ($this->keywords) {
-            $this->registerOrUpdateMetaTag(['name'=>'keywords', 'content'=>$this->keywords]);
+            $this->registerOrUpdateMetaTag(['name' => 'keywords', 'content' => $this->keywords]);
         }
 
-        if (Yii::$app->language == 'uk'){
+        if (Yii::$app->language == 'uk') {
             $this->registerOrUpdateMetaTag(['property' => 'og:locale', 'content' => 'uk_UA']);
-        }else{
+        } else {
             $this->registerOrUpdateMetaTag(['property' => 'og:locale', 'content' => 'ru_RU']);
         }
 
@@ -279,7 +299,7 @@ class SeoMetaMaster extends Component
         if ($this->title) {
             $this->view->title = $this->title;
             $this->registerOrUpdateMetaTag(['property' => 'og:title', 'content' => $this->title]);
-            $this->registerOrUpdateMetaTag(['name' => 'twitter:title','content' => $this->title]);
+            $this->registerOrUpdateMetaTag(['name' => 'twitter:title', 'content' => $this->title]);
             $this->registerOrUpdateMetaTag(['itemprop' => 'name', 'content' => $this->title]);
         }
     }

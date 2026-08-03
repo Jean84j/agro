@@ -18,14 +18,17 @@ class ContactController extends BaseFrontendController
         $contacts = Contact::find()->where(['language' => $language])->one();
 
         $seo = Settings::seoPageTranslate('contact');
-        $type = 'website';
-        $url = Url::canonical();
-        $title = $seo->title;
-        $description = $seo->description;
-        $image = '';
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $seo->title,
+            'description' => $seo->description,
+            'image' => '',
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         $this->setSchemaLocalBusiness();
 

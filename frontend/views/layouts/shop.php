@@ -22,25 +22,6 @@ AppAsset::register($this);
 <?php $this->registerCsrfMetaTags() ?>
 <title><?= Html::encode($this->title) ?></title>
 <?php $this->head() ?>
-<?php
-$page = Yii::$app->request->get('page');
-$hasNoIndex = false;
-foreach ($this->metaTags as $tag) {
-if (str_contains($tag, 'name="robots"')) {
-$hasNoIndex = true;
-break;
-}
-}
-if (!$hasNoIndex) {
-if ($page !== null && intval($page) > 1) {
-$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
-} elseif (Yii::$app->language == 'en') {
-$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
-} elseif (str_contains(Yii::$app->request->hostInfo, 'mail')) {
-$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, follow']);
-}
-}
-?>
 <?= Yii::$app->params['schema'] ?? '' ?>
 <?= Yii::$app->params['product'] ?? '' ?>
 <?= Yii::$app->params['organization'] ?? '' ?>

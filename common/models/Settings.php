@@ -61,68 +61,70 @@ class Settings extends Model
         return $seo;
     }
 
-    static function setMetamaster(
-        $type = null,
-        $title = null,
-        $description = null,
-        $image = null,
-        $keywords = null,
-        $url = null,
-        $alternateUrls = null,
-        $price = null)
+    static function setMetamaster($data)
     {
+        extract($data);
 
         $metaMaster = Yii::$app->metamaster;
 
         $view = Yii::$app->view;
 
-        if ($type) {
+        if (isset($indexable)) {
+
+            $page = Yii::$app->request->get('page');
+            if ($page !== null && intval($page) > 1) {
+                $indexable = false;
+            } elseif (str_contains(Yii::$app->request->hostInfo, 'mail')) {
+                $indexable = false;
+            }
+
+            $metaMaster->setIndexable($indexable);
+        }
+        if (isset($type)) {
             $metaMaster->setType($type);
         }
-        if ($title) {
+        if (isset($title)) {
             $metaMaster->setTitle($title);
         }
-        if ($description) {
+        if (isset($description)) {
             $metaMaster->setDescription(strip_tags($description));
         }
-        if ($image) {
+        if (isset($image)) {
             $metaMaster->setImage($image);
         }
-        if ($url) {
+        if (isset($url)) {
             $metaMaster->setUrl($url);
-
-            if ($alternateUrls) {
-
-                $view->registerLinkTag([
-                    'rel' => 'alternate',
-                    'hreflang' => 'uk-UA',
-                    'href' => $alternateUrls['ukUrl'],
-                ]);
-
-                $view->registerLinkTag([
-                    'rel' => 'alternate',
-                    'hreflang' => 'ru-UA',
-                    'href' => $alternateUrls['ruUrl'],
-                ]);
-
-                $view->registerLinkTag([
-                    'rel' => 'alternate',
-                    'hreflang' => 'x-default',
-                    'href' => $alternateUrls['ukUrl'],
-                ]);
-            }
         }
+        if (isset($alternateUrls)) {
 
-        if ($keywords) {
+            $view->registerLinkTag([
+                'rel' => 'alternate',
+                'hreflang' => 'uk-UA',
+                'href' => $alternateUrls['ukUrl'],
+            ]);
+
+
+            $view->registerLinkTag([
+                'rel' => 'alternate',
+                'hreflang' => 'ru-UA',
+                'href' => $alternateUrls['ruUrl'],
+            ]);
+
+            $view->registerLinkTag([
+                'rel' => 'alternate',
+                'hreflang' => 'x-default',
+                'href' => $alternateUrls['ukUrl'],
+            ]);
+        }
+        if (isset($keywords)) {
             $metaMaster->setKeywords($keywords);
         }
-        if ($price){
+        if (isset($price)) {
             $metaMaster->setPrice($price);
         }
 
         $metaMaster->register(Yii::$app->getView());
     }
-
 
 
 }

@@ -23,14 +23,22 @@ class TagController extends BaseFrontendController
         $tagCategories = $this->getTagCategories($categories, $language);
 
         $seo = Settings::seoPageTranslate('tag');
-        $type = 'website';
+
         $url = Url::canonical();
         $title = $seo->title;
         $description = $seo->description;
         $image = '';
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $seo->title,
+            'description' => $seo->description,
+            'image' => '',
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         $page_description = $seo->page_description;
 
@@ -261,12 +269,16 @@ class TagController extends BaseFrontendController
 
         }
 
-        $type = 'website';
-        $url = Url::canonical();
-        $image = '';
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $title,
+            'description' => $description,
+            'image' => '',
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
     }
 
 }

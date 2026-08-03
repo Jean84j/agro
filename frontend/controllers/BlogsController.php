@@ -42,18 +42,21 @@ class BlogsController extends BaseFrontendController
         }
 
         $seo = Settings::seoPageTranslate('blogs');
-        $type = 'website';
-        $url = Url::canonical();
-        $title = $seo->title;
-        $description = $seo->description;
-        $image = '';
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $seo->title,
+            'description' => $seo->description,
+            'image' => '',
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         $files = $this->getRelativeFiles('@webroot/images/blogs');
 
-        $this->getSchemaBlogs($posts, $description);
+        $this->getSchemaBlogs($posts, $seo->description);
 
         return $this->render('view',
             [

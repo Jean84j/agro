@@ -27,16 +27,21 @@ class CategoryController extends BaseFrontendController
         $auxiliaryCategories = $this->getAuxiliaryCategoriesCatalog();
 
         $seo = Settings::seoPageTranslate('catalog');
-        $type = 'website';
         $url = Url::canonical();
-        $title = $seo->title;
-        $description = $seo->description;
         $image = '';
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
 
-        $this->setCatalogSchema($title, $description, $image, $url);
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $seo->title,
+            'description' => $seo->description,
+            'image' => '',
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
+
+        $this->setCatalogSchema($seo->title, $seo->description, $image, $url);
 
         $files = $this->getRelativeFiles('@webroot/images/catalog-categories');
 
@@ -143,14 +148,16 @@ class CategoryController extends BaseFrontendController
             }
         }
 
-        $type = 'website';
-        $url = Url::canonical();
-        $title = $category->pageTitle;
-        $description = $category->metaDescription;
-        $image = '/images/category/' . $category->file;
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $category->pageTitle,
+            'description' => $category->metaDescription,
+            'image' => '/images/category/' . $category->file,
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         $this->setChildrenProductSchema($category);
 
@@ -290,14 +297,16 @@ class CategoryController extends BaseFrontendController
         $this->setCatalogBreadCrumbSchema($category);
         $this->setCatalogProductSchema($category, $products_all);
 
-        $type = 'website';
-        $url = Url::canonical();
-        $title = $category->pageTitle;
-        $description = $category->metaDescription;
-        $image = '/images/category/' . $category->file;
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $category->pageTitle,
+            'description' => $category->metaDescription,
+            'image' => '/images/category/' . $category->file,
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         return $this->render('catalog',
             compact([
@@ -397,14 +406,16 @@ class CategoryController extends BaseFrontendController
         $this->setAuxiliaryCatalogBreadCrumbSchema($category, $breadcrumbCategory);
         $this->setAuxiliaryCatalogProductSchema($category, $products_all, $productsId);
 
-        $type = 'website';
-        $url = Url::canonical();
-        $title = $category->pageTitle;
-        $description = $category->metaDescription;
-        $image = '/images/auxiliary-categories/' . $category->image;
-        $keywords = '';
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls);
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $category->pageTitle,
+            'description' => $category->metaDescription,
+            'image' => '/images/auxiliary-categories/' . $category->image,
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         return $this->render('view',
             compact([

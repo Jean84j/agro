@@ -19,13 +19,17 @@ class BrandsController extends BaseFrontendController
         $brands = Brand::find()->all();
 
         $seo = Settings::seoPageTranslate('brands');
-        $type = 'website';
-        $url = Url::canonical();
-        $title = $seo->title;
-        $description = $seo->description;
-        $image = '';
-        $keywords = '';
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url);
+
+        Settings::setMetamaster([
+            'type' => 'website',
+            'title' => $seo->title,
+            'description' => $seo->description,
+            'image' => '',
+            'keywords' => '',
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         return $this->render('view',
             [

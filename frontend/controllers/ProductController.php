@@ -50,15 +50,17 @@ class ProductController extends BaseFrontendController
         $schemaProduct = $product->getSchemaProduct();
         Yii::$app->params['product'] = $schemaProduct->toScript();
 
-        $type = 'product';
-        $price = $product->price;
-        $url = Url::canonical();
-        $title = $product->seo_title;
-        $description = $product->seo_description;
-        $image = $product->getImgSeo($product->id);
-        $keywords = $product->keywords;
-        $alternateUrls = $this->getAlternateUrl();
-        Settings::setMetamaster($type, $title, $description, $image, $keywords, $url, $alternateUrls, $price);
+        Settings::setMetamaster([
+            'type' => 'product',
+            'price' => $product->price,
+            'title' => $product->seo_title,
+            'description' => $product->seo_description,
+            'image' => $product->getImgSeo($product->id),
+            'keywords' => $product->keywords,
+            'url' => Url::canonical(),
+            'alternateUrls' => $this->getAlternateUrl(),
+            'indexable' => true,
+        ]);
 
         return $this->render('index', [
             'product' => $product,
