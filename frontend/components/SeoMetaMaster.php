@@ -245,7 +245,7 @@ class SeoMetaMaster extends Component
         $this->registerOrUpdateMetaTag(['property' => 'og:url', 'content' => $this->url ?: $this->getAbsoluteUrl()]);
         $this->registerOrUpdateMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image']);
         $this->registerOrUpdateMetaTag(['name' => 'twitter:domain', 'content' => parse_url($this->request->getHostInfo(), PHP_URL_HOST)]);
-        $this->registerOrUpdateLinkTag(['rel' => 'canonical', 'href' => $this->url ?: $this->getAbsoluteUrl()]);
+        $this->registerOrUpdateLinkTag(['rel' => 'canonical', 'href' => $this->canonicalUrl($this->url) ?: $this->getAbsoluteUrl()]);
 
         if ($this->alternateUrls) {
             $this->registerOrUpdateLinkTag(['rel' => 'alternate', 'hreflang' => 'uk-UA', 'href' => $this->alternateUrls['ukUrl']]);
@@ -268,6 +268,11 @@ class SeoMetaMaster extends Component
             $this->registerOrUpdateMetaTag(['property' => 'og:locale', 'content' => 'ru_RU']);
         }
 
+    }
+
+    private function canonicalUrl(string $url): string
+    {
+        return str_replace('://mail.', '://', $url);
     }
 
     private function registerOrUpdateMetaTag($tag)
