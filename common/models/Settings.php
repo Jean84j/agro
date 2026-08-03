@@ -61,43 +61,4 @@ class Settings extends Model
         return $seo;
     }
 
-    static function setMetamaster($data)
-    {
-        extract($data);
-
-        $metaMaster = Yii::$app->metamaster;
-
-        if (isset($indexable)) {
-            $metaMaster->setIndexable($indexable);
-        }
-        if (isset($type)) {
-            $metaMaster->setType($type);
-        }
-        if (isset($title)) {
-            $metaMaster->setTitle($title);
-        }
-        if (isset($description)) {
-            $metaMaster->setDescription(strip_tags($description));
-        }
-        if (isset($image)) {
-            $metaMaster->setImage($image);
-        }
-        if (isset($url)) {
-            $metaMaster->setUrl($url);
-        }
-        if (isset($alternateUrls)) {
-
-            $metaMaster->setAlternateUrls($alternateUrls);
-        }
-        if (isset($keywords)) {
-            $metaMaster->setKeywords($keywords);
-        }
-        if (isset($price)) {
-            $metaMaster->setPrice($price);
-        }
-
-        $metaMaster->register(Yii::$app->getView());
-    }
-
-
 }
