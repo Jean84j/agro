@@ -29,16 +29,17 @@ class TagController extends BaseFrontendController
         $description = $seo->description;
         $image = '';
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $seo->title,
-            'description' => $seo->description,
-            'image' => '',
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($seo->title)
+            ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         $page_description = $seo->page_description;
 
@@ -260,25 +261,28 @@ class TagController extends BaseFrontendController
         if ($tag_name->seo_title) {
             $title = $tag_name->getTagSeoTitleTranslate($tag_name, $language);
         } else {
-            $title = 'Продукти які відповідають запиту ' . '[ ' . $tag_name->getTagTranslate($tag_name, $language) . ' ]';
+            $title = 'Продукти які відповідають запиту ' . '[ ' .
+                $tag_name->getTagTranslate($tag_name, $language) . ' ]';
         }
         if ($tag_name->seo_description) {
             $description = $tag_name->getTagSeoDescriptionTranslate($tag_name, $language);
         } else {
-            $description = 'На сторінці відображено товари які згруповані запитом ' . '[ ' . $tag_name->getTagTranslate($tag_name, $language) . ' ]';
-
+            $description = 'На сторінці відображено товари які згруповані запитом ' . '[ ' .
+                $tag_name->getTagTranslate($tag_name, $language) . ' ]';
         }
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $title,
-            'description' => $description,
-            'image' => '',
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($title)
+            ->setDescription(strip_tags($description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
+
     }
 
 }

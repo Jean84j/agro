@@ -82,6 +82,10 @@ class SeoMetaMaster extends Component
      * @var boolean
      */
     private $indexable;
+    /**
+     * @var array
+     */
+    private $alternateUrls;
 
     /**
      * @inheritDoc
@@ -123,6 +127,16 @@ class SeoMetaMaster extends Component
         return $this;
     }
 
+    /** Alternate Url setter
+     * @param array $alternateUrls
+     * @return $this
+     */
+    public function setAlternateUrls(array $alternateUrls)
+    {
+        $this->alternateUrls = $alternateUrls;
+        return $this;
+    }
+
     /** Set request object
      * @param $title
      * @return $this
@@ -132,7 +146,6 @@ class SeoMetaMaster extends Component
         $this->request = $request;
         return $this;
     }
-
 
     /** OgType setter
      * @param $type
@@ -187,12 +200,19 @@ class SeoMetaMaster extends Component
         return $this;
     }
 
-    /** Set Product price
+    /** Set Indexable
      * @param boolean $indexable
      * @return $this
      */
     public function setIndexable(bool $indexable)
     {
+        $page = Yii::$app->request->get('page');
+        if ($page !== null && intval($page) > 1) {
+            $indexable = false;
+        } elseif (str_contains(Yii::$app->request->hostInfo, 'mail')) {
+            $indexable = false;
+        }
+
         $this->indexable = $indexable;
         return $this;
     }
@@ -216,10 +236,9 @@ class SeoMetaMaster extends Component
     {
         if ($this->indexable === false) {
             $this->registerOrUpdateMetaTag(['name' => 'robots', 'content' => 'noindex,nofollow']);
-        }else{
+        } else {
             $this->registerOrUpdateMetaTag(['name' => 'robots', 'content' => 'index,follow']);
         }
-
 
         $this->registerOrUpdateMetaTag(['property' => 'og:site_name', 'content' => $this->siteName]);
         $this->registerOrUpdateMetaTag(['property' => 'og:type', 'content' => $this->type]);
@@ -227,6 +246,12 @@ class SeoMetaMaster extends Component
         $this->registerOrUpdateMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image']);
         $this->registerOrUpdateMetaTag(['name' => 'twitter:domain', 'content' => parse_url($this->request->getHostInfo(), PHP_URL_HOST)]);
         $this->registerOrUpdateLinkTag(['rel' => 'canonical', 'href' => $this->url ?: $this->getAbsoluteUrl()]);
+
+        if ($this->alternateUrls) {
+            $this->registerOrUpdateLinkTag(['rel' => 'alternate', 'hreflang' => 'uk-UA', 'href' => $this->alternateUrls['ukUrl']]);
+            $this->registerOrUpdateLinkTag(['rel' => 'alternate', 'hreflang' => 'ru-UA', 'href' => $this->alternateUrls['ruUrl']]);
+            $this->registerOrUpdateLinkTag(['rel' => 'alternate', 'hreflang' => 'x-default', 'href' => $this->alternateUrls['ukUrl']]);
+        }
 
         if ($this->price) {
             $this->registerOrUpdateMetaTag(['property' => 'product:price:amount', 'content' => $this->price]);
@@ -313,10 +338,8 @@ class SeoMetaMaster extends Component
             $this->registerOrUpdateMetaTag(['name' => 'description', 'content' => $this->description]);
             $this->registerOrUpdateMetaTag(['property' => 'og:description', 'content' => $this->description]);
             $this->registerOrUpdateMetaTag(['name' => 'twitter:description', 'content' => $this->description]);
-
         }
     }
-
 
     /**
      * Register image
@@ -333,7 +356,6 @@ class SeoMetaMaster extends Component
             $this->registerOrUpdateMetaTag(['property' => 'og:image:alt', 'content' => $this->title]);
             $this->registerOrUpdateMetaTag(['name' => 'twitter:image:alt', 'content' => $this->title]);
             $this->registerOrUpdateMetaTag(['property' => 'og:image:secure_url', 'content' => $imageUrl]);
-
         }
 
         $image = parse_url($image, PHP_URL_PATH);
@@ -354,7 +376,6 @@ class SeoMetaMaster extends Component
             'property' => 'og:image:type',
             'content' => $mime
         ]);
-
     }
 
     public function getRequest(): Request

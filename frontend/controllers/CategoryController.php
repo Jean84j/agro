@@ -30,16 +30,17 @@ class CategoryController extends BaseFrontendController
         $url = Url::canonical();
         $image = '';
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $seo->title,
-            'description' => $seo->description,
-            'image' => '',
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($seo->title)
+            ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         $this->setCatalogSchema($seo->title, $seo->description, $image, $url);
 
@@ -92,7 +93,7 @@ class CategoryController extends BaseFrontendController
 
     protected function setCatalogSchema($title, $description, $image, $url)
     {
-       $catalog = Schema::collectionPage()
+        $catalog = Schema::collectionPage()
             ->name($title)
             ->description($description)
             ->url($url)
@@ -103,7 +104,7 @@ class CategoryController extends BaseFrontendController
                     ->url('https://agropro.org.ua')
             );
 
-            Yii::$app->params['schema'] = $catalog->toScript();
+        Yii::$app->params['schema'] = $catalog->toScript();
     }
 
     public function actionChildren($slug)
@@ -148,16 +149,17 @@ class CategoryController extends BaseFrontendController
             }
         }
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $category->pageTitle,
-            'description' => $category->metaDescription,
-            'image' => '/images/category/' . $category->file,
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($category->pageTitle)
+            ->setDescription(strip_tags($category->metaDescription))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+            ->setImage('/images/category/' . $category->file)
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         $this->setChildrenProductSchema($category);
 
@@ -297,16 +299,17 @@ class CategoryController extends BaseFrontendController
         $this->setCatalogBreadCrumbSchema($category);
         $this->setCatalogProductSchema($category, $products_all);
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $category->pageTitle,
-            'description' => $category->metaDescription,
-            'image' => '/images/category/' . $category->file,
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($category->pageTitle)
+            ->setDescription(strip_tags($category->metaDescription))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+            ->setImage('/images/category/' . $category->file)
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         return $this->render('catalog',
             compact([
@@ -406,16 +409,17 @@ class CategoryController extends BaseFrontendController
         $this->setAuxiliaryCatalogBreadCrumbSchema($category, $breadcrumbCategory);
         $this->setAuxiliaryCatalogProductSchema($category, $products_all, $productsId);
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $category->pageTitle,
-            'description' => $category->metaDescription,
-            'image' => '/images/auxiliary-categories/' . $category->image,
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($category->pageTitle)
+            ->setDescription(strip_tags($category->metaDescription))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+            ->setImage('/images/auxiliary-categories/' . $category->image)
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         return $this->render('view',
             compact([

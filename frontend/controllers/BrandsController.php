@@ -20,16 +20,17 @@ class BrandsController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('brands');
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $seo->title,
-            'description' => $seo->description,
-            'image' => '',
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($seo->title)
+            ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         return $this->render('view',
             [
@@ -69,11 +70,17 @@ class BrandsController extends BaseFrontendController
             $products = $this->translateProduct($products, $language);
         }
 
-        // Регистрация тега meta
-        Yii::$app->view->registerMetaTag([
-            'name' => 'robots',
-            'content' => 'noindex, follow'
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(false)
+            ->setType('website')
+//            ->setTitle()
+//            ->setDescription(strip_tags())
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         return $this->render('catalog', [
             'products' => $products,

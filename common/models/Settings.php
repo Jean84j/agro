@@ -67,17 +67,7 @@ class Settings extends Model
 
         $metaMaster = Yii::$app->metamaster;
 
-        $view = Yii::$app->view;
-
         if (isset($indexable)) {
-
-            $page = Yii::$app->request->get('page');
-            if ($page !== null && intval($page) > 1) {
-                $indexable = false;
-            } elseif (str_contains(Yii::$app->request->hostInfo, 'mail')) {
-                $indexable = false;
-            }
-
             $metaMaster->setIndexable($indexable);
         }
         if (isset($type)) {
@@ -97,24 +87,7 @@ class Settings extends Model
         }
         if (isset($alternateUrls)) {
 
-            $view->registerLinkTag([
-                'rel' => 'alternate',
-                'hreflang' => 'uk-UA',
-                'href' => $alternateUrls['ukUrl'],
-            ]);
-
-
-            $view->registerLinkTag([
-                'rel' => 'alternate',
-                'hreflang' => 'ru-UA',
-                'href' => $alternateUrls['ruUrl'],
-            ]);
-
-            $view->registerLinkTag([
-                'rel' => 'alternate',
-                'hreflang' => 'x-default',
-                'href' => $alternateUrls['ukUrl'],
-            ]);
+            $metaMaster->setAlternateUrls($alternateUrls);
         }
         if (isset($keywords)) {
             $metaMaster->setKeywords($keywords);

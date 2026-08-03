@@ -43,16 +43,17 @@ class BlogsController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('blogs');
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $seo->title,
-            'description' => $seo->description,
-            'image' => '',
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('website')
+            ->setTitle($seo->title)
+            ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         $files = $this->getRelativeFiles('@webroot/images/blogs');
 

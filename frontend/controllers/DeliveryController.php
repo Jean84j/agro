@@ -17,16 +17,17 @@ class DeliveryController extends BaseFrontendController
 
         $seo = Settings::seoPageTranslate('delivery');
 
-        Settings::setMetamaster([
-            'type' => 'website',
-            'title' => $seo->title,
-            'description' => $seo->description,
-            'image' => '',
-            'keywords' => '',
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => false,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(false)
+            ->setType('website')
+            ->setTitle($seo->title)
+            ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         return $this->render('view',
             [

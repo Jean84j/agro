@@ -51,17 +51,17 @@ class ProductController extends BaseFrontendController
         $schemaProduct = $product->getSchemaProduct();
         Yii::$app->params['product'] = $schemaProduct->toScript();
 
-        Settings::setMetamaster([
-            'type' => 'product',
-            'price' => $product->price,
-            'title' => $product->seo_title,
-            'description' => $product->seo_description,
-            'image' => $product->getImgSeo($product->id),
-            'keywords' => $product->keywords,
-            'url' => Url::canonical(),
-            'alternateUrls' => $this->getAlternateUrl(),
-            'indexable' => true,
-        ]);
+        Yii::$app->metamaster
+            ->setIndexable(true)
+            ->setType('product')
+            ->setTitle($product->seo_title)
+            ->setDescription(strip_tags($product->seo_description))
+            ->setImage($product->getImgSeo($product->id))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+            ->setKeywords($product->keywords)
+            ->setPrice($product->price)
+            ->register(Yii::$app->view);
 
         return $this->render('index', [
             'product' => $product,
@@ -173,29 +173,29 @@ class ProductController extends BaseFrontendController
 
     protected function getPropertiesProduct($product, $language)
     {
-       return ProductProperties::find()
-           ->alias('pp')
-           ->select([
-               'COALESCE(pnt.name, pn.name) AS properties',
-               'COALESCE(ppt.value, pp.value) AS value',
-           ])
-           ->leftJoin(
-               'properties_name pn',
-               'pn.id = pp.property_id'
-           )
-           ->leftJoin(
-               'properties_name_translate pnt',
-               'pnt.name_id = pn.id AND pnt.language = :language'
-           )
-           ->leftJoin(
-               'product_properties_translate ppt',
-               'ppt.product_properties_id = pp.id AND ppt.language = :language'
-           )
-           ->where(['pp.product_id' => $product->id])
-           ->asArray()
-           ->orderBy(['pn.sort' => SORT_ASC])
-           ->addParams([':language' => $language])
-           ->all();
+        return ProductProperties::find()
+            ->alias('pp')
+            ->select([
+                'COALESCE(pnt.name, pn.name) AS properties',
+                'COALESCE(ppt.value, pp.value) AS value',
+            ])
+            ->leftJoin(
+                'properties_name pn',
+                'pn.id = pp.property_id'
+            )
+            ->leftJoin(
+                'properties_name_translate pnt',
+                'pnt.name_id = pn.id AND pnt.language = :language'
+            )
+            ->leftJoin(
+                'product_properties_translate ppt',
+                'ppt.product_properties_id = pp.id AND ppt.language = :language'
+            )
+            ->where(['pp.product_id' => $product->id])
+            ->asArray()
+            ->orderBy(['pn.sort' => SORT_ASC])
+            ->addParams([':language' => $language])
+            ->all();
     }
 
     protected function getVariantsProduct($product)
