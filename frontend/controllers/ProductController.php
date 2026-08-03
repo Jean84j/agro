@@ -29,19 +29,20 @@ class ProductController extends BaseFrontendController
             throw new NotFoundHttpException('Product not found ' . '" ' . $slug . ' "');
         }
 
-        $faq = $this->faqProduct($product, $language);
-        $productVariants = $this->variantsProduct($product);
-        $products_analog = $this->analogsProduct($product);
+        $faq = $this->getFaqProduct($product, $language);
+        $productVariants = $this->getVariantsProduct($product);
+        $products_analog = $this->getAnalogsProduct($product);
         $products_analog_count = count($products_analog);
         $images = $product->images;
         $priorities = array_column($images, 'priority');
         array_multisort($priorities, SORT_ASC, $images);
-        $product_properties = $this->propertiesProduct($product, $language);
+        $product_properties = $this->getPropertiesProduct($product, $language);
         $img_brand = Brand::find()->where(['id' => $product->brand_id])->one();
         $model_review = new Review();
 
         if ($language !== 'uk') {
-            $this->getProductTranslation($product, $language, $products_analog);
+            $this->getProductTranslation($product, $language);
+            $this->getProductAnalogTranslation($products_analog, $language);
         }
 
         $schemaBreadcrumb = $product->getSchemaBreadcrumb();
@@ -80,7 +81,7 @@ class ProductController extends BaseFrontendController
         ]);
     }
 
-    protected function getProductTranslation($product, $language, $products_analog)
+    protected function getProductTranslation($product, $language)
     {
         if ($product) {
             $translationProd = $product->getTranslation($language)->one();
@@ -128,6 +129,10 @@ class ProductController extends BaseFrontendController
                 }
             }
         }
+    }
+
+    protected function getProductAnalogTranslation($products_analog, $language)
+    {
         if ($products_analog) {
             foreach ($products_analog as $product) {
                 $translationProd = $product->getTranslation($language)->one();
@@ -149,7 +154,7 @@ class ProductController extends BaseFrontendController
         }
     }
 
-    protected function faqProduct($product, $language)
+    protected function getFaqProduct($product, $language)
     {
         return Faq::find()
             ->alias('f')
@@ -166,7 +171,7 @@ class ProductController extends BaseFrontendController
             ->all();
     }
 
-    protected function propertiesProduct($product, $language)
+    protected function getPropertiesProduct($product, $language)
     {
        return ProductProperties::find()
            ->alias('pp')
@@ -193,7 +198,7 @@ class ProductController extends BaseFrontendController
            ->all();
     }
 
-    protected function variantsProduct($product)
+    protected function getVariantsProduct($product)
     {
         return ProductPackaging::find()
             ->alias('pp')
@@ -211,7 +216,7 @@ class ProductController extends BaseFrontendController
             ->all();
     }
 
-    protected function analogsProduct($product)
+    protected function getAnalogsProduct($product)
     {
         return Product::find()
             ->alias('p')
