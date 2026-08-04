@@ -94,7 +94,7 @@ return [
         ],
         'urlManager' => [
             'class' => 'codemix\localeurls\UrlManager',
-            'languages' => ['uk', 'en', 'ru'],
+            'languages' => ['uk', 'ru'],
             'enableDefaultLanguageUrlCode' => false,
             'enableLanguageDetection' => false,
 
