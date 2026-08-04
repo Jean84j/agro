@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use common\models\shop\MinimumOrderAmount;
 use common\models\shop\AnalogProducts;
-use common\models\Settings;
 use common\models\shop\Faq;
 use common\models\shop\Product;
 use common\models\shop\ProductImage;

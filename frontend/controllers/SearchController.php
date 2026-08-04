@@ -2,6 +2,10 @@
 
 namespace frontend\controllers;
 
+use common\models\shop\AuxiliaryCategories;
+use common\models\shop\AuxiliaryTranslate;
+use common\models\shop\CategoriesTranslate;
+use common\models\shop\Category;
 use common\models\shop\ProductsTranslate;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductTag;
@@ -17,26 +21,91 @@ class SearchController extends BaseFrontendController
 
     public function actionSuggestionsAjax(?string $q): string
     {
+        $language = Yii::$app->language;
         $id_prod = $this->findProductIdsByQuery($q);
+        $id_cat = $this->findCategoryIdsByQuery($q);
+        $id_aux_cat = $this->findAuxCategoryIdsByQuery($q);
 
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $products = Product::find()
+        $products = $this->getProducts($id_prod);
+        $categories = $this->getCategories($id_cat, $language);
+        $aux_categories = $this->getAuxCategories($id_aux_cat, $language);
+
+        $categories_merge = array_merge($categories, $aux_categories);
+
+        return $this->renderAjax('suggestions', [
+            'products' => $products,
+            'categories' => $categories_merge
+        ]);
+    }
+
+    protected function getProducts($id_prod)
+    {
+        return Product::find()
             ->select(['id', 'slug', 'name', 'price', 'currency', 'status_id', 'sku', 'category_id'])
             ->orWhere(['in', 'id', $id_prod])
             ->limit(10)
             ->orderBy([new Expression('FIELD(status_id, 1, 3, 4, 2)')])
             ->all();
+    }
 
-        return $this->renderAjax('suggestions', [
-            'products' => $products
-        ]);
+    protected function getCategories($id_cat, $language)
+    {
+        return Category::find()
+            ->alias('c')
+            ->select([
+                'c.id',
+                'c.slug',
+                'c.parentId',
+                'IFNULL(ct.name, c.name) AS name',
+                'c.svg',
+                'products' => new Expression("
+            EXISTS(
+                SELECT 1
+                FROM product p
+                WHERE p.category_id = c.id
+                LIMIT 1
+            )
+        "),
+            ])
+            ->leftJoin('categories_translate ct', 'ct.category_id = c.id AND ct.language = :language')
+            ->where(['in', 'c.id', $id_cat])
+            ->andWhere(['c.visibility' => 1])
+            ->addParams([':language' => $language])
+            ->limit(4)
+            ->asArray()
+            ->all();
+    }
+
+    protected function getAuxCategories($id_aux_cat, $language)
+    {
+        return AuxiliaryCategories::find()
+            ->alias('c')
+            ->select([
+                'c.id',
+                'c.slug',
+                'IFNULL(ct.name, c.name) AS name',
+                'c.svg',
+                'products' => new Expression(2),
+                'parentId' => new Expression('NULL'),
+            ])
+            ->leftJoin('auxiliary_translate ct', 'ct.category_id = c.id AND ct.language = :language')
+            ->where(['in', 'c.id', $id_aux_cat])
+            ->andWhere(['c.visibility' => 1])
+            ->addParams([':language' => $language])
+            ->limit(4)
+            ->asArray()
+            ->all();
     }
 
     public function actionSuggestions(?string $q): string
     {
         $language = Yii::$app->language;
         $id_prod = $this->findProductIdsByQuery($q);
+        $id_cat = $this->findCategoryIdsByQuery($q);
+
+        $categories = $this->getCategories($id_cat, $language);
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];
@@ -74,6 +143,7 @@ class SearchController extends BaseFrontendController
             'products' => $products,
             'pages' => $pages,
             'products_all' => $products_all,
+            'categories' => $categories,
         ]);
     }
 
@@ -114,6 +184,50 @@ class SearchController extends BaseFrontendController
         $id_prod = array_merge($id_prod, $product_ids, $product_ids_ru);
 
         return array_unique($id_prod);
+    }
+
+    private function findCategoryIdsByQuery(?string $q = null): array
+    {
+        $q = trim($q);
+        if (!$q) {
+            return [];
+        }
+
+        $category_ids = Category::find()
+            ->select('id')
+            ->where(['like', 'name', $q])
+            ->column();
+
+        $category_ids_ru = CategoriesTranslate::find()
+            ->select('category_id')
+            ->where(['like', 'name', $q])
+            ->column();
+
+        $id_cat = array_merge($category_ids, $category_ids_ru);
+
+        return array_unique($id_cat);
+    }
+
+    private function findAuxCategoryIdsByQuery(?string $q = null): array
+    {
+        $q = trim($q);
+        if (!$q) {
+            return [];
+        }
+
+        $aux_category_ids = AuxiliaryCategories::find()
+            ->select('id')
+            ->where(['like', 'name', $q])
+            ->column();
+
+        $aux_category_ids_ru = AuxiliaryTranslate::find()
+            ->select('category_id')
+            ->where(['like', 'name', $q])
+            ->column();
+
+        $id_aux_cat = array_merge($aux_category_ids, $aux_category_ids_ru);
+
+        return array_unique($id_aux_cat);
     }
 
 
