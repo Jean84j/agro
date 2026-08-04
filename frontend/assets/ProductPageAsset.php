@@ -15,8 +15,9 @@ class ProductPageAsset extends AssetBundle
         '/vendor/photoswipe/default-skin/default-skin.css?v=' . PROJECT_VERSION,
     ];
     public $js = [
-        
-        '/js/product-page.min.js?v=' . PROJECT_VERSION,
+
+        YII_ENV_DEV ? '/js/product-page.js?v=' . PROJECT_VERSION : '/js/product-page.min.js?v=' . PROJECT_VERSION,
+
         '/vendor/photoswipe/photoswipe.min.js?v=' . PROJECT_VERSION,
         '/vendor/photoswipe/photoswipe-ui-default.min.js?v=' . PROJECT_VERSION,
 

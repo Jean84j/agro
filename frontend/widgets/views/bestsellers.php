@@ -81,6 +81,7 @@ $borderColor ?? $borderColor = '#f5962ecc';
                                 <?php if ($products[0]->status_id != 2) { ?>
                                     <button class="btn btn-primary product-card__addtocart "
                                             type="button"
+                                            data-status-btn="<?= Yii::t('app', 'В кошику') ?>"
                                             data-product-id="<?= $products[0]->id ?>"
                                             data-url-cart-view="<?= Yii::$app->urlManager->createUrl(['cart/cart-view']) ?>"
                                             data-url-qty-cart="<?= Yii::$app->urlManager->createUrl(['cart/qty-cart']) ?>"
