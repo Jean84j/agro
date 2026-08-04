@@ -7,10 +7,10 @@ use common\models\shop\Order;
 use yii\helpers\ArrayHelper;
 use common\models\NpAreas;
 use common\models\Contact;
-use yii\web\Controller;
+use yii\helpers\Url;
 use Yii;
 
-class OrderController extends Controller
+class OrderController extends BaseFrontendController
 {
     public function actionCheckout()
     {
@@ -61,6 +61,19 @@ class OrderController extends Controller
                 ->all(), 'ref', 'description');
 
             $contacts = Contact::find()->one();
+
+            Yii::$app->metamaster
+                ->setIndexable(false)
+                ->setType('website')
+//                ->setTitle($seo->title)
+//                ->setDescription(strip_tags($seo->description))
+                ->setUrl(Url::canonical())
+                ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+                ->register(Yii::$app->view);
+
             return $this->render('checkout', [
                 'contacts' => $contacts,
                 'order' => $order,
@@ -156,6 +169,18 @@ class OrderController extends Controller
 
     public function actionConditions()
     {
+        Yii::$app->metamaster
+            ->setIndexable(false)
+            ->setType('website')
+//                ->setTitle($seo->title)
+//                ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
+
         return $this->render('conditions');
     }
 

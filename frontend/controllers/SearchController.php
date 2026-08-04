@@ -8,6 +8,7 @@ use common\models\shop\ProductTag;
 use common\models\shop\Product;
 use common\models\shop\Tag;
 use yii\db\Expression;
+use yii\helpers\Url;
 use yii\web\Response;
 use Yii;
 
@@ -57,6 +58,18 @@ class SearchController extends BaseFrontendController
             $products = $this->translateProduct($products, $language);
         }
 
+        Yii::$app->metamaster
+            ->setIndexable(false)
+            ->setType('website')
+//                ->setTitle($seo->title)
+//                ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
+
         return $this->render('suggestions-list', [
             'products' => $products,
             'pages' => $pages,
@@ -64,7 +77,7 @@ class SearchController extends BaseFrontendController
         ]);
     }
 
-    private function findProductIdsByQuery(?string $q): array
+    private function findProductIdsByQuery(?string $q = null): array
     {
         $q = trim($q);
         if (!$q) {

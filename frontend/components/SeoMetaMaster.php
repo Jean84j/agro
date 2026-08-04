@@ -375,12 +375,14 @@ class SeoMetaMaster extends Component
             $this->registerOrUpdateMetaTag(['property' => 'og:image:height', 'content' => $imageSize[1]]);
         }
 
-        $mime = mime_content_type($path);
+        if (is_file($path)) {
+            $mime = mime_content_type($path);
 
-        $this->registerOrUpdateMetaTag([
-            'property' => 'og:image:type',
-            'content' => $mime
-        ]);
+            $this->registerOrUpdateMetaTag([
+                'property' => 'og:image:type',
+                'content' => $mime,
+            ]);
+        }
     }
 
     public function getRequest(): Request
