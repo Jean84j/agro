@@ -45,7 +45,7 @@ class SiteController extends BaseFrontendController
             ->setType('website')
 //            ->setTitle()
 //            ->setDescription(strip_tags())
-//            ->setUrl(Url::canonical())
+            ->setUrl(Url::canonical())
 //            ->setAlternateUrls($this->getAlternateUrl())
 //            ->setImage('')
 //            ->setKeywords('')
