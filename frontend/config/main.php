@@ -2,7 +2,7 @@
 
 use yii\web\UrlNormalizer;
 
-define('PROJECT_VERSION', 84);
+define('PROJECT_VERSION', 85);
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -55,7 +55,7 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                      'levels' => [
-//                        'error',
+                        'error',
 //                        'warning',
 //                        'info',
 //                        'trace'
@@ -69,24 +69,24 @@ return [
 //                        '_SERVER'
                     ],
                 ],
-                [
-                    'class' => 'yii\log\EmailTarget',
-                    'levels' => ['error'],
-                    'logVars' => [
+//                [
+//                    'class' => 'yii\log\EmailTarget',
+//                    'levels' => ['error'],
+//                    'logVars' => [
 //                        '_GET',
 //                        '_POST',
 //                        '_FILES',
 //                        '_COOKIE',
 //                        '_SESSION',
 //                        '_SERVER'
-                    ],
-
-                    'message' => [
-                        'from' => $params['email.from'],
-                        'to'   => $params['email.admins'],
-                        'subject' =>  YII_ENV_DEV ? 'Ошибка приложения LOCAL' : 'Ошибка приложения',
-                    ],
-                ],
+//                    ],
+//
+//                    'message' => [
+//                        'from' => $params['email.from'],
+//                        'to'   => $params['email.admins'],
+//                        'subject' =>  YII_ENV_DEV ? 'Ошибка приложения LOCAL' : 'Ошибка приложения',
+//                    ],
+//                ],
             ],
         ],
         'errorHandler' => [
