@@ -19,6 +19,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use yii\web\Cookie;
 use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -32,12 +33,24 @@ class SiteController extends BaseFrontendController
         $exception = Yii::$app->errorHandler->exception;
 
         if ($exception === null) {
-            throw new \yii\web\NotFoundHttpException();
+            throw new NotFoundHttpException();
         }
 
         $statusCode = $exception instanceof HttpException
             ? $exception->statusCode
             : 500;
+
+        Yii::$app->metamaster
+            ->setIndexable(false)
+            ->setType('website')
+//            ->setTitle()
+//            ->setDescription(strip_tags())
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
 
         return $this->render('error/error', [
             'statusCode' => $statusCode,
