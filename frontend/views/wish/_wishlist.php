@@ -57,30 +57,10 @@ if ($products) { ?>
                             <?= $this->render('/_partials/price', ['product' => $product]) ?>
                         </td>
                         <td class="wishlist__column wishlist__column--tocart">
-                            <?php if ($product->status_id != 2) { ?>
-                                <button class="btn btn-primary btn-sm product-card__addtocart"
-                                        type="button"
-                                        data-default-btn="<?= Yii::t('app', 'Купити') ?>"
-                                        data-status-btn="<?= Yii::t('app', 'В кошику') ?>"
-                                        data-product-id="<?= $product->id ?>"
-                                        data-url-cart-view="<?= Yii::$app->urlManager->createUrl(['cart/cart-view']) ?>"
-                                        data-url-qty-cart="<?= Yii::$app->urlManager->createUrl(['cart/qty-cart']) ?>"
-                                >
-                                    <svg width="20px" height="20px" style="display: unset;">
-                                        <use xlink:href="/images/sprite.svg#cart-20"></use>
-                                    </svg>
-                                    <?= !$product->getIssetToCart($product->id) ? Yii::t('app', 'Купити') : Yii::t('app', 'В кошику') ?>
-                                </button>
-                            <?php } else { ?>
-                                <button class="btn btn-secondary btn-sm disabled"
-                                        type="button"
-                                        data-product-id="<?= $product->id ?>">
-                                    <svg width="20px" height="20px" style="display: unset;">
-                                        <use xlink:href="/images/sprite.svg#cart-20"></use>
-                                    </svg>
-                                    <?= !$product->getIssetToCart($product->id) ? Yii::t('app', 'Купити') : Yii::t('app', 'В кошику') ?>
-                                </button>
-                            <?php } ?>
+                            <?= $this->render('/_partials/add-to-cart-button', [
+                                'product' => $product,
+                                'buttonsVisible' => false
+                            ]) ?>
                         </td>
                         <td class="wishlist__column wishlist__column--remove">
                             <button type="button"

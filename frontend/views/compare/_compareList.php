@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Url;
 
 /** @var  $products */
@@ -11,7 +12,7 @@ if ($products) { ?>
                 <table class="compare-table">
                     <tbody>
                     <tr>
-                        <th><?=Yii::t('app','Продукт')?></th>
+                        <th><?= Yii::t('app', 'Продукт') ?></th>
                         <?php foreach ($products as $product): ?>
                             <td>
                                 <a class="compare-table__product-link"
@@ -36,7 +37,7 @@ if ($products) { ?>
                         <?php endforeach; ?>
                     </tr>
                     <tr>
-                        <th><?=Yii::t('app','Наявність')?></th>
+                        <th><?= Yii::t('app', 'Наявність') ?></th>
                         <?php foreach ($products as $product): ?>
                             <td>
                                 <?= $this->render('/_partials/status', ['product' => $product]) ?>
@@ -44,7 +45,7 @@ if ($products) { ?>
                         <?php endforeach; ?>
                     </tr>
                     <tr>
-                        <th><?=Yii::t('app','Ціна')?></th>
+                        <th><?= Yii::t('app', 'Ціна') ?></th>
                         <?php foreach ($products as $product): ?>
                             <td>
                                 <?= $this->render('/_partials/price', ['product' => $product]) ?>
@@ -55,30 +56,13 @@ if ($products) { ?>
                         <th></th>
                         <?php foreach ($products as $product): ?>
                             <td>
-                                <?php if ($product->status_id != 2) { ?>
-                                    <button class="btn btn-primary btn-sm product-card__addtocart"
-                                            type="button"
-                                            data-status-btn="<?= Yii::t('app', 'В кошику') ?>"
-                                            data-default-btn="<?= Yii::t('app', 'Купити') ?>"
-                                            data-product-id="<?= $product->id ?>"
-                                            data-url-cart-view="<?= Yii::$app->urlManager->createUrl(['cart/cart-view']) ?>"
-                                            data-url-qty-cart="<?= Yii::$app->urlManager->createUrl(['cart/qty-cart']) ?>"
-                                    >
-                                        <svg width="20px" height="20px" style="display: unset;">
-                                            <use xlink:href="/images/sprite.svg#cart-20"></use>
-                                        </svg>
-                                        <?= !$product->getIssetToCart($product->id) ? Yii::t('app','Купити') : Yii::t('app','В кошику') ?>
-                                    </button>
-                                <?php } else { ?>
-                                    <button class="btn btn-secondary btn-sm disabled"
-                                            type="button"
-                                            data-product-id="<?= $product->id ?>">
-                                        <svg width="20px" height="20px" style="display: unset;">
-                                            <use xlink:href="/images/sprite.svg#cart-20"></use>
-                                        </svg>
-                                        <?= !$product->getIssetToCart($product->id) ? 'Купити' : 'В кошику' ?>
-                                    </button>
-                                <?php } ?>
+                                <div class="center-cell">
+                                    <?= $this->render('/_partials/add-to-cart-button', [
+                                        'product' => $product,
+                                        'buttonsVisible' => false
+                                    ]) ?>
+                                </div>
+
                             </td>
                         <?php endforeach; ?>
                     </tr>
@@ -91,7 +75,7 @@ if ($products) { ?>
                                         id="delete-from-compare-btn"
                                         data-url-compare="<?= Yii::$app->urlManager->createUrl(['compare/delete-from-compare']) ?>"
                                         data-compare-product-id="<?= $product->id ?>">
-                                    <i class="fas fa-trash-alt"></i> <?=Yii::t('app','Видалити')?>
+                                    <i class="fas fa-trash-alt"></i> <?= Yii::t('app', 'Видалити') ?>
                                 </button>
                             </td>
                         <?php endforeach; ?>
@@ -118,17 +102,17 @@ if ($products) { ?>
         <div class="container">
             <div class="compare-not-products">
                 <div class="compare-not-products__content">
-                    <h2 class="compare-not-products__title"><?=Yii::t('app','Список порівняння порожній!')?></h2>
+                    <h2 class="compare-not-products__title"><?= Yii::t('app', 'Список порівняння порожній!') ?></h2>
                     <p class="compare-not-products__text">
-                        <?=Yii::t('app','Додайте товари для порівняння.')?>
+                        <?= Yii::t('app', 'Додайте товари для порівняння.') ?>
                         <br>
-                        <?=Yii::t('app','Спробуйте скористатися пошуком.')?>
+                        <?= Yii::t('app', 'Спробуйте скористатися пошуком.') ?>
                     </p>
                     <img src="/images/no-compare.jpg" alt="Список порівняння порожній">
                     <p class="compare-not-products__text">
-                        <?=Yii::t('app','Або перейдіть на головну сторінку, щоб почати все спочатку.')?>
+                        <?= Yii::t('app', 'Або перейдіть на головну сторінку, щоб почати все спочатку.') ?>
                     </p>
-                    <a class="btn btn-secondary btn-sm" href="/"><?=Yii::t('app','На Головну Сторінку')?></a>
+                    <a class="btn btn-secondary btn-sm" href="/"><?= Yii::t('app', 'На Головну Сторінку') ?></a>
                 </div>
             </div>
         </div>
@@ -138,15 +122,24 @@ if ($products) { ?>
     .compare-not-products {
         text-align: center;
     }
-    .compare-not-products__content{
+
+    .compare-not-products__content {
         width: 480px;
         max-width: 100%;
         margin: 0 auto;
     }
-    .compare-not-products__title{
+
+    .compare-not-products__title {
         margin-bottom: 30px;
     }
-    .compare-not-products__text{
+
+    .compare-not-products__text {
         margin-bottom: 20px;
+    }
+
+    .center-cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
