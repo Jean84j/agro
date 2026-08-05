@@ -102,7 +102,7 @@ use yii\helpers\Html;
         </div>
     </div>
 </div>
-<form id="form-review" data-url-review="<?= Yii::$app->urlManager->createUrl(['posts-review/create']) ?>">
+<form id="form-review" data-url-review="<?= Yii::$app->urlManager->createUrl(['post/create']) ?>">
     <h3 class="reviews-view__header"><?= Yii::t('app', 'Залишити відгук') ?></h3>
     <div class="row">
         <div class="col-12 col-lg-9 col-xl-8">

@@ -125,6 +125,7 @@ return [
                 'product/create' => 'product/create',
                 'product/<slug:[\w+-]*\w+>' => 'product/view',
 
+                'post/create' => 'post/create',
                 'post/<slug:[\w+-]*\w+>' => 'post/view',
 
                 'about' => 'about/view',
