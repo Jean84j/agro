@@ -47,17 +47,23 @@ class CartController extends Controller
 
     public function actionRemove($id)
     {
+        $view = '_cart-view';
         $product = Product::findOne($id);
         if ($product) {
             Yii::$app->cart->remove($product);
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
-
-                return $this->renderAjax('_cart-view', [
-                    'orders' => Yii::$app->cart->getPositions(),
-                    'total_summ' => Yii::$app->cart->getCost(),
-                    'qty_cart' => Yii::$app->cart->getCount(),
-                ]);
+                if (Yii::$app->cart->getCount() < 1) {
+                    $view = 'cart-empty';
+                }
+                return [
+                    'qty' => Yii::$app->cart->getCount(),
+                    'html' => $this->renderAjax($view, [
+                        'orders' => Yii::$app->cart->getPositions(),
+                        'total_summ' => Yii::$app->cart->getCost(),
+                        'qty_cart' => Yii::$app->cart->getCount(),
+                    ]),
+                ];
             }
         }
         return null;
