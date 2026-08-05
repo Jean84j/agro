@@ -60,6 +60,7 @@ if ($products) { ?>
                             <?php if ($product->status_id != 2) { ?>
                                 <button class="btn btn-primary btn-sm product-card__addtocart"
                                         type="button"
+                                        data-default-btn="<?= Yii::t('app', 'Купити') ?>"
                                         data-status-btn="<?= Yii::t('app', 'В кошику') ?>"
                                         data-product-id="<?= $product->id ?>"
                                         data-url-cart-view="<?= Yii::$app->urlManager->createUrl(['cart/cart-view']) ?>"

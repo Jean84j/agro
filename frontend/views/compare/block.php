@@ -59,6 +59,7 @@ use yii\helpers\Url;
                                     <button class="btn btn-primary btn-sm product-card__addtocart"
                                             type="button"
                                             data-status-btn="<?= Yii::t('app', 'В кошику') ?>"
+                                            data-default-btn="<?= Yii::t('app', 'Купити') ?>"
                                             data-product-id="<?= $product->id ?>"
                                             data-url-cart-view="<?= Yii::$app->urlManager->createUrl(['cart/cart-view']) ?>"
                                             data-url-qty-cart="<?= Yii::$app->urlManager->createUrl(['cart/qty-cart']) ?>"

@@ -201,6 +201,14 @@ $urlRemove = Yii::$app->urlManager->createUrl(['cart/remove']);
             success: function (data) {
                 updateCartQty(urlQty);
                 $('.cart').html(data);
+
+                let buttons = $('.product-card__addtocart[data-product-id="' + id + '"]');
+                buttons.html(
+                    '<svg width="20px" height="20px" style="display: unset;">' +
+                    '<use xlink:href="/images/sprite.svg#cart-20"></use>' +
+                    '</svg> ' + buttons.first().data('defaultBtn')
+                );
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error('Ошибка удаления товара из корзины:', textStatus, errorThrown);

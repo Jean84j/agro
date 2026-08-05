@@ -90,7 +90,9 @@ use yii\helpers\Url;
                                 ?>
                                 <button class="<?= $buttonClass ?> btn-lg"
                                         type="button"
-                                        id="<?= $isAvailable ? 'add-to-cart' : '' ?>"
+                                        id="<?= $isAvailable ? 'add-to-cart-' . $product->id : '' ?>"
+                                        data-status-btn="<?= Yii::t('app', 'В кошику') ?>"
+                                        data-default-btn="<?= Yii::t('app', 'Купити') ?>"
                                         data-product-id="<?= $product->id ?>"
                                         data-url-cart-view="<?= $isAvailable ? Yii::$app->urlManager->createUrl(['cart/cart-view']) : '' ?>"
                                         data-url-qty-cart="<?= $isAvailable ? Yii::$app->urlManager->createUrl(['cart/qty-cart']) : '' ?>"
