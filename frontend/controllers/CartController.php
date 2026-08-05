@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\shop\MinimumOrderAmount;
 use yii\web\NotFoundHttpException;
 use common\models\shop\Product;
 use yii\web\Controller;
@@ -25,6 +26,8 @@ class CartController extends Controller
                 'orders' => Yii::$app->cart->getPositions(),
                 'total_summ' => Yii::$app->cart->getCost(),
                 'qty_cart' => Yii::$app->cart->getCount(),
+                'minimumOrderAmount' => $this->getMinimumOrderAmount(),
+                'urls' => $this->getUrls(),
             ]);
         }
         throw new NotFoundHttpException();
@@ -42,6 +45,8 @@ class CartController extends Controller
             'orders' => Yii::$app->cart->getPositions(),
             'total_summ' => Yii::$app->cart->getCost(),
             'qty_cart' => Yii::$app->cart->getCount(),
+            'minimumOrderAmount' => $this->getMinimumOrderAmount(),
+            'urls' => $this->getUrls(),
         ]);
     }
 
@@ -62,6 +67,8 @@ class CartController extends Controller
                         'orders' => Yii::$app->cart->getPositions(),
                         'total_summ' => Yii::$app->cart->getCost(),
                         'qty_cart' => Yii::$app->cart->getCount(),
+                        'minimumOrderAmount' => $this->getMinimumOrderAmount(),
+                        'urls' => $this->getUrls(),
                     ]),
                 ];
             }
@@ -83,11 +90,27 @@ class CartController extends Controller
     {
         $product = Product::findOne($id);
         Yii::$app->cart->update($product, $qty);
-        Yii::$app->response->format = Response::FORMAT_JSON;
+                Yii::$app->response->format = Response::FORMAT_JSON;
         return $this->renderAjax('_cart-view', [
             'orders' => Yii::$app->cart->getPositions(),
             'total_summ' => Yii::$app->cart->getCost(),
             'qty_cart' => Yii::$app->cart->getCount(),
+            'minimumOrderAmount' => $this->getMinimumOrderAmount(),
+            'urls' => $this->getUrls(),
         ]);
+    }
+
+    protected function getMinimumOrderAmount()
+    {
+        return MinimumOrderAmount::find()->select('amount')->one();
+    }
+
+    protected function getUrls()
+    {
+        return [
+            'urlUpdate' => Yii::$app->urlManager->createUrl(['cart/update']),
+            'urlQty' => Yii::$app->urlManager->createUrl(['cart/qty-cart']),
+            'urlRemove' => Yii::$app->urlManager->createUrl(['cart/remove']),
+        ];
     }
 }

@@ -24,7 +24,7 @@ $breadcrumbItemActive = 'Порівняння';
 
         ]) ?>
     <div id="compare-list">
-        <?= $this->render('block',
+        <?= $this->render('_compareList',
             [
                 'properties' => $properties,
                 'products' => $products,

@@ -24,7 +24,7 @@ $breadcrumbItemActive = 'Список бажань';
 
             ]) ?>
         <div id="wish-list">
-            <?= $this->render('block', ['products' => $products]) ?>
+            <?= $this->render('_wishlist', ['products' => $products]) ?>
         </div>
         <div class="container spec__disclaimer">
             <?= $page_description ?>

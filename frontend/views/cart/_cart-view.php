@@ -2,15 +2,14 @@
 
 use common\models\Settings;
 use common\models\shop\ActivePages;
-use common\models\shop\MinimumOrderAmount;
 use yii\helpers\Url;
 
-$minimumOrderAmount = MinimumOrderAmount::find()->select('amount')->one();
-ActivePages::setActiveUser();
+/** @var  $orders */
+/** @var  $urls */
+/** @var  $total_summ */
+/** @var  $minimumOrderAmount */
 
-$urlUpdate = Yii::$app->urlManager->createUrl(['cart/update']);
-$urlQty = Yii::$app->urlManager->createUrl(['cart/qty-cart']);
-$urlRemove = Yii::$app->urlManager->createUrl(['cart/remove']);
+ActivePages::setActiveUser();
 
 ?>
 <div class="cart block">
@@ -55,21 +54,22 @@ $urlRemove = Yii::$app->urlManager->createUrl(['cart/remove']);
                             <input class="form-control input-number__input update-numb" type="number"
                                    min="1" max="999"
                                    value="<?= $order->getQuantity() ?>"
-                                   data-url-update="<?= $urlUpdate ?>"
-                                   onchange="validateAndUpdateQty(this, <?= $order->getId() ?>, '<?= $urlUpdate ?>', '<?= $urlQty ?>')"
+                                   data-url-update="<?= $urls['urlUpdate'] ?>"
+                                   onchange="validateAndUpdateQty(this, <?= $order->getId() ?>, '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>')"
                                    onpaste="this.onchange()"
                                    onkeyup="this.onchange()"
                                    oninput="this.onchange()">
                             <div class="input-number__add"
-                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() + 1 ?>, '<?= $urlUpdate ?>', '<?= $urlQty ?>')"></div>
+                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() + 1 ?>, '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>')"></div>
                             <div class="input-number__sub"
-                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() - 1 ?>, '<?= $urlUpdate ?>', '<?= $urlQty ?>')"></div>
+                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() - 1 ?>, '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>')"></div>
                         </div>
                     </td>
                     <td class="cart-table__column cart-table__column--remove"
-                        onclick="removeProduct(<?= $order->id ?>, '<?= $urlRemove ?>', '<?= $urlQty ?>')">
+                        onclick="removeProduct(<?= $order->id ?>, '<?= $urls['urlRemove'] ?>', '<?= $urls['urlQty'] ?>')">
                         <button type="button" class="btn btn-light btn-sm btn-svg-icon gtm-remove-cart">
-                            <i class="fas fa-trash gtm-remove-cart" style="font-size: 20px; color: #CE272D"></i>
+                            <i class="fas fa-trash gtm-remove-cart"
+                               style="font-size: 20px; color: #CE272D"></i>
                         </button>
                     </td>
                 </tr>
@@ -113,4 +113,3 @@ $urlRemove = Yii::$app->urlManager->createUrl(['cart/remove']);
         </div>
     </div>
 </div>
-
