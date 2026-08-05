@@ -50,7 +50,7 @@ class BlogsController extends BaseFrontendController
             ->setDescription(strip_tags($seo->description))
             ->setUrl(Url::canonical())
             ->setAlternateUrls($this->getAlternateUrl())
-//            ->setImage('')
+            ->setImage('/images/og_img/blogs_page.webp')
 //            ->setKeywords('')
 //            ->setPrice('')
             ->register(Yii::$app->view);

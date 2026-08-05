@@ -24,7 +24,7 @@ class DeliveryController extends BaseFrontendController
             ->setDescription(strip_tags($seo->description))
             ->setUrl(Url::canonical())
             ->setAlternateUrls($this->getAlternateUrl())
-//            ->setImage('')
+            ->setImage('/images/og_img/delivery_page.webp')
 //            ->setKeywords('')
 //            ->setPrice('')
             ->register(Yii::$app->view);
