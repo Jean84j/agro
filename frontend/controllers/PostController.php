@@ -126,7 +126,7 @@ class PostController extends BaseFrontendController
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return $this->renderAjax('_review', [
                     'model_review' => $model,
-                    'res' => $res
+                    'postItem' => $res
                 ]);
             }else{
                 return '';
