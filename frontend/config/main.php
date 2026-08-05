@@ -54,7 +54,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                     'levels' => [
+                    'levels' => [
                         'error',
 //                        'warning',
 //                        'info',
@@ -122,8 +122,9 @@ return [
                 'auxiliary-product-list/<slug>/page/<page:\d+>' => 'category/auxiliary-catalog',
                 'auxiliary-product-list/<slug:[\w+-]*\w+>' => 'category/auxiliary-catalog',
 
+                'product/create' => 'product/create',
                 'product/<slug:[\w+-]*\w+>' => 'product/view',
-                
+
                 'post/<slug:[\w+-]*\w+>' => 'post/view',
 
                 'about' => 'about/view',
@@ -186,10 +187,10 @@ return [
                 ],
             ],
         ],
-         'i18n' => [
+        'i18n' => [
             'translations' => [
                 'app*' => [
-                    
+
                     'class' => 'frontend\components\DbMessageSource',
                     'sourceLanguage' => 'uk-UA',
                 ],
@@ -198,7 +199,7 @@ return [
                     'basePath' => '@frontend/messages',
                     'sourceLanguage' => 'uk-UA',
                     'fileMap' => [
-                        'home'      => 'home.php',
+                        'home' => 'home.php',
                         'home/error' => 'error.php',
                     ],
                 ],

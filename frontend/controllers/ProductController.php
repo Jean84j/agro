@@ -11,12 +11,15 @@ use common\models\shop\ProductPackaging;
 use common\models\shop\ProductProperties;
 use common\models\shop\Review;
 use common\models\shop\Brand;
+use yii\base\BaseObject;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use Yii;
+use yii\web\Response;
 
 class ProductController extends BaseFrontendController
 {
+
     public function actionView($slug): string
     {
         $language = Yii::$app->language;
@@ -223,6 +226,27 @@ class ProductController extends BaseFrontendController
             ->with(['category.parent', 'images'])
             ->where(['ap.product_id' => $product->id])
             ->all();
+    }
+
+    public function actionCreate(): string
+    {
+        if ($this->request->isPost) {
+            $post = Yii::$app->request->post();
+            $model = new Review();
+            $model->product_id = $post['id'];
+            $model->rating = $post['rating'];
+            $model->name = $post['name'];
+            $model->email = $post['email'];
+            $model->message = $post['mess'];
+            if ($model->save()) {
+                $product = Product::find()->with('reviews')->where(['id' => $post['id']])->one();
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return $this->renderAjax('_review', [
+                    'model_review' => $model,
+                    'product' => $product
+                ]);
+            }
+        }
     }
 
 }

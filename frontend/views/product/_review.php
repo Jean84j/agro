@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-use yii\helpers\Html; 
+use yii\helpers\Html;
 
 ?>
 <ol class="reviews-list__content">

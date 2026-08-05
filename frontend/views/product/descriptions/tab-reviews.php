@@ -145,7 +145,7 @@ use kartik\rating\StarRating;
                             ?>
                         </div>
                         <div class="form-group col-md-4" id="url-review"
-                             data-url-review="<?= Yii::$app->urlManager->createUrl(['review/create']) ?>">
+                             data-url-review="<?= Yii::$app->urlManager->createUrl(['product/create']) ?>">
                             <label for="review-name"><?= Yii::t('app', 'Ваше ім’я') ?></label>
                             <input type="text" name="name" class="form-control" id="review-name"
                                    oninvalid="this.setCustomValidity('Укажіть будь ласка Ваше ім’я')"
