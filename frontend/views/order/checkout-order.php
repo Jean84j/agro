@@ -1,5 +1,8 @@
 <?php
 
+/** @var  $orders */
+/** @var  $total_summ */
+
 use yii\helpers\Url;
 
 ?>
@@ -7,8 +10,6 @@ use yii\helpers\Url;
     <div class="card mb-0">
         <div class="card-body">
             <h3 class="card-title"><?= Yii::t('app', 'Ваше замовлення') ?></h3>
-
-
             <table class="checkout__totals">
                 <thead class="checkout__totals-header">
                 <tr>
@@ -33,8 +34,6 @@ use yii\helpers\Url;
                 </tr>
                 </tfoot>
             </table>
-
-
             <div class="checkout__agree form-group">
                 <div class="form-check">
                                     <span id="check-red" class="form-check-input input-check">

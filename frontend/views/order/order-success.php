@@ -5,6 +5,8 @@ use frontend\assets\OrderSuccessPageAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+/** @var  $order */
+
 OrderSuccessPageAsset::register($this);
 ActivePages::setActiveUser();
 

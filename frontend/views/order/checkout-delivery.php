@@ -4,6 +4,11 @@ use kartik\select2\Select2;
 use yii\web\JsExpression;
 use yii\widgets\MaskedInput;
 
+/** @var  $order */
+/** @var  $form */
+/** @var  $areas */
+/** @var  $contacts */
+
 ?>
 <div class="col-12 col-lg-6 col-xl-7">
     <div class="card mb-lg-0">

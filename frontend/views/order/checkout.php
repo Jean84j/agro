@@ -5,6 +5,13 @@ use frontend\assets\OrderCheckoutPageAsset;
 use frontend\widgets\ViewProduct;
 use kartik\form\ActiveForm;
 
+/** @var  $order */
+/** @var  $orders */
+/** @var  $form */
+/** @var  $areas */
+/** @var  $contacts */
+/** @var  $total_summ */
+
 OrderCheckoutPageAsset::register($this);
 ActivePages::setActiveUser();
 
