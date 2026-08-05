@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 
+/** @var  $product */
+
 ?>
 <ol class="reviews-list__content">
     <?php foreach ($product->reviews as $review):
@@ -13,7 +15,8 @@ use yii\helpers\Html;
                     <?php $avatar = $review->getAvatar($review->id) ?>
                     <img src="/images/avatars/<?= $avatar ?>.jpg"
                          width="70" height="70"
-                         alt="<?= $avatar ?>">
+                         alt="<?= $avatar ?>"
+                         loading="lazy">
                 </div>
                 <div class="review__content">
                     <div class="review__author"><?= Html::encode($review->name) ?></div>
@@ -22,7 +25,8 @@ use yii\helpers\Html;
                             <div class="rating__body">
                                 <?php if ($rating != 0): ?>
                                     <?php for ($i = 1; $i <= $rating; $i++): ?>
-                                        <svg class="rating__star rating__star--active" width="16px" height="15px">
+                                        <svg class="rating__star rating__star--active"
+                                             width="16px" height="15px">
                                             <g class="rating__fill">
                                                 <use xlink:href="/images/sprite.svg#star-normal"></use>
                                             </g>
@@ -41,7 +45,8 @@ use yii\helpers\Html;
                                     <?php endfor; ?>
                                     <?php if (5 - $rating != 0): ?>
                                         <?php for ($i = 1; $i <= 5 - $rating; $i++): ?>
-                                            <svg class="rating__star " width="16px" height="15px">
+                                            <svg class="rating__star " width="16px"
+                                                 height="15px">
                                                 <g class="rating__fill">
                                                     <use xlink:href="/images/sprite.svg#star-normal"></use>
                                                 </g>
@@ -61,7 +66,8 @@ use yii\helpers\Html;
                                     <?php endif; ?>
                                 <?php else: ?>
                                     <?php for ($i = 1; $i <= 5; $i++): ?>
-                                        <svg class="rating__star " width="16px" height="15px">
+                                        <svg class="rating__star " width="16px"
+                                             height="15px">
                                             <g class="rating__fill">
                                                 <use xlink:href="/images/sprite.svg#star-normal"></use>
                                             </g>
