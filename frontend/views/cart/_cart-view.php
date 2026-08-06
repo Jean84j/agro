@@ -11,6 +11,16 @@ use yii\helpers\Url;
 
 ActivePages::setActiveUser();
 
+$classDisable = 'btn-primary';
+$textButton = Yii::t('app', 'Оформити замовлення');
+
+if ($total_summ < $minimumOrderAmount->amount) {
+    $classDisable = 'btn-outline-danger disabled';
+    $textButton = '<span style="color: #CE272D; font-weight: bold;">' .
+        Yii::t('app', 'Замовлення від') . ' ' .
+        $minimumOrderAmount->amount . ' ₴</span>';
+}
+
 ?>
 <div class="cart block">
     <div class="container">
@@ -80,11 +90,6 @@ ActivePages::setActiveUser();
             <div class="col-12 col-md-9 col-lg-8 col-xl-7">
                 <div class="card">
                     <div class="card-body">
-                        <?php if ($total_summ < $minimumOrderAmount->amount and $total_summ > 0) { ?>
-                            <h5 class="card-title"
-                                style="color: red"><?= Yii::t('app', 'Замовлення від') ?> <?= $minimumOrderAmount->amount ?>
-                                ₴</h5>
-                        <?php } ?>
                         <table class="cart__totals">
                             <tfoot class="cart__totals-footer">
                             <tr>
@@ -93,20 +98,15 @@ ActivePages::setActiveUser();
                             </tr>
                             </tfoot>
                         </table>
-                        <?php if ($total_summ != 0) { ?>
-                            <?php if ($total_summ < $minimumOrderAmount->amount) { ?>
-                                <a class="btn btn-primary btn-lg btn-block disabled cart__checkout-button"
-                                   style="font-size: 16px"
-                                   href="<?= Url::to(['order/checkout']) ?>"><?= Yii::t('app', 'Оформити замовлення') ?></a>
-                            <?php } else { ?>
-                                <a class="btn btn-primary btn-lg btn-block cart__checkout-button"
-                                   style="font-size: 16px"
-                                   href="<?= Url::to(['order/checkout']) ?>"><?= Yii::t('app', 'Оформити замовлення') ?></a>
-                            <?php } ?>
-                        <?php } ?>
+                        <a class="btn btn-lg btn-block cart__checkout-button <?= $classDisable ?>"
+                           style="font-size: 16px"
+                           href="<?= Url::to(['order/checkout']) ?>"><?= $textButton ?>
+                        </a>
+
                         <a class="btn btn-warning btn-lg btn-block cart__checkout-button"
                            style="font-size: 16px"
-                           href="<?= $_SERVER['HTTP_REFERER'] ?>"><?= Yii::t('app', 'Дивитись товари') ?></a>
+                           href="<?= $_SERVER['HTTP_REFERER'] ?>"><?= Yii::t('app', 'Дивитись товари') ?>
+                        </a>
                     </div>
                 </div>
             </div>
