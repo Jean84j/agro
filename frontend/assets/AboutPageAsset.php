@@ -10,7 +10,6 @@ class AboutPageAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 
-        '/vendor/bootstrap/css/bootstrap.min.css?v=' . PROJECT_VERSION,
         '/css/about.css?v=' . PROJECT_VERSION,
         '/css/typography.css?v=' . PROJECT_VERSION,
     ];
@@ -19,9 +18,6 @@ class AboutPageAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-//        'yii\bootstrap5\BootstrapAsset',
     ];
-    public $cssOptions = [
-        'type' => 'text/css',
-    ];
+
 }

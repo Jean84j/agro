@@ -10,7 +10,6 @@ class PostPageAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 
-        // '/vendor/bootstrap/css/bootstrap.min.css?v=' . PROJECT_VERSION,
         '/css/typography.css?v=' . PROJECT_VERSION,
         '/css/post-page.min.css?v=' . PROJECT_VERSION,
         
@@ -21,13 +20,7 @@ class PostPageAsset extends AssetBundle
 
     ];
     public $depends = [
-        
         'yii\web\YiiAsset',
-        
     ];
-    public $cssOptions = [
-        
-        'type' => 'text/css',
-        
-    ];
+
 }

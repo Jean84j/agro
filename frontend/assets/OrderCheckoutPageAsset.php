@@ -20,9 +20,6 @@ class OrderCheckoutPageAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-//        'yii\bootstrap5\BootstrapAsset',
     ];
-    public $cssOptions = [
-        'type' => 'text/css',
-    ];
+
 }

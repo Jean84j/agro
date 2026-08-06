@@ -24,13 +24,6 @@ class ProductPageAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-//        'yii\bootstrap5\BootstrapAsset',
     ];
-    public $cssOptions = [
-        'type' => 'text/css',
-    ];
-    
-     public $jsOptions = [
-        // 'defer' => true,
-    ];
+
 }

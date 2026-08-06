@@ -10,7 +10,6 @@ class HomePageAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 
-        '/vendor/bootstrap/css/bootstrap.min.css?v=' . PROJECT_VERSION,
         '/css/category-card.css?v=' . PROJECT_VERSION,
         '/css/block-posts.css?v=' . PROJECT_VERSION,
         '/css/block-product-columns.css?v=' . PROJECT_VERSION,
@@ -30,9 +29,6 @@ class HomePageAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-//        'yii\bootstrap5\BootstrapAsset',
     ];
-    public $cssOptions = [
-        'type' => 'text/css',
-    ];
+
 }
