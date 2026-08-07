@@ -11,6 +11,7 @@ class QuickviewController extends Controller
     public function actionQuickview($id)
     {
         $language = Yii::$app->language;
+        $mobile = Yii::$app->devicedetect->isMobile();
         $product = Product::find()
             ->where(['id' => $id])
             ->one();
@@ -22,6 +23,7 @@ class QuickviewController extends Controller
         return $this->renderPartial('quickview', [
             'language' => $language,
             'product' => $product,
+            'mobile' => $mobile,
         ]);
     }
 

@@ -3,6 +3,10 @@
 use common\models\shop\Product;
 use yii\helpers\Url;
 
+/** @var Product $product */
+/** @var Product $language */
+/** @var Product $mobile */
+
 ?>
 <div class="quickview">
     <button class="quickview__close" type="button">
@@ -23,6 +27,26 @@ use yii\helpers\Url;
                         </div>
                     </div>
                 </div>
+                <?php if (!$mobile): ?>
+                    <div style="margin-top: 20px;">
+                        <div class="product__description">
+                            <?= mb_strlen($product->short_description) > 200 ? mb_substr($product->short_description, 0, 200) . '...' : $product->short_description ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if (!$mobile): ?>
+                    <div style="margin-top: 20px;">
+                        <div class="product__tags tags">
+                            <div class="tags__list">
+                                <?php foreach ($product->tags as $tag): ?>
+                                    <a href="<?= Url::to(['tag/view', 'slug' => $tag->slug]) ?>">
+                                        <?= $tag->getTagTranslate($tag, $language) ?>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="product__info">
                 <h1 class="product__name">
@@ -39,9 +63,12 @@ use yii\helpers\Url;
                         <?= $product->getRatingCount($product->id) ?>
                     </div>
                 </div>
-                <div class="product__description">
-                    <?= mb_strlen($product->short_description) > 200 ? mb_substr($product->short_description, 0, 200) . '...' : $product->short_description ?>
-                </div>
+
+                <?php if ($mobile): ?>
+                    <div class="product__description">
+                        <?= mb_strlen($product->short_description) > 200 ? mb_substr($product->short_description, 0, 200) . '...' : $product->short_description ?>
+                    </div>
+                <?php endif; ?>
                 <ul class="product-card__features-list">
                     <?= Product::productParamsList($product->id) ?>
                 </ul>
@@ -72,13 +99,15 @@ use yii\helpers\Url;
                 </form>
             </div>
             <div class="product__footer">
-                <div class="product__tags tags">
-                    <div class="tags__list">
-                        <?php foreach ($product->tags as $tag): ?>
-                            <a href="<?= Url::to(['tag/view', 'slug' => $tag->slug]) ?>"><?= $tag->getTagTranslate($tag, $language) ?></a>
-                        <?php endforeach; ?>
+                <?php if ($mobile): ?>
+                    <div class="product__tags tags">
+                        <div class="tags__list">
+                            <?php foreach ($product->tags as $tag): ?>
+                                <a href="<?= Url::to(['tag/view', 'slug' => $tag->slug]) ?>"><?= $tag->getTagTranslate($tag, $language) ?></a>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
