@@ -95,23 +95,23 @@ $ipAddress = Yii::$app->request->getUserIP();
                                         </span>';
                             },
                         ],
-                        [
-                            'attribute' => 'url_page',
-                            'format' => 'raw',
-                            'value' => function ($model) {
-                                $productUrl = $model->getClearUrl($model->url_page);
-                                $imageUrl = $model->getImage($productUrl);
-
-                                return
-                                    $model->getStatus($productUrl) .
-
-                                    Html::img(Yii::$app->request->hostInfo . $imageUrl, [
-                                        'style' => 'max-width:42px; max-height:42px; margin-right:5px;',
-                                    ]) .
-                                    Html::encode($productUrl);
-                            },
-                            'contentOptions' => ['style' => 'width: 62px'],
-                        ],
+//                        [
+//                            'attribute' => 'url_page',
+//                            'format' => 'raw',
+//                            'value' => function ($model) {
+//                                $productUrl = $model->getClearUrl($model->url_page);
+//                                $imageUrl = $model->getImage($productUrl);
+//
+//                                return
+//                                    $model->getStatus($productUrl) .
+//
+//                                    Html::img(Yii::$app->request->hostInfo . $imageUrl, [
+//                                        'style' => 'max-width:42px; max-height:42px; margin-right:5px;',
+//                                    ]) .
+//                                    Html::encode($productUrl);
+//                            },
+//                            'contentOptions' => ['style' => 'width: 62px'],
+//                        ],
                         [
                             'attribute' => 'client_from',
                             'label' => 'Откуда',
