@@ -93,8 +93,14 @@ class SiteErrors extends ActiveRecord
 
     public static function productCountViews($url)
     {
+
+        $url = mb_convert_encoding($url, 'UTF-8', 'UTF-8');
+        $url = iconv('UTF-8', 'UTF-8//IGNORE', $url);
+
         return SiteErrors::find()
-            ->where(['like', 'url_page', $url])
+            ->where("CONVERT(url_page USING utf8mb4) LIKE :url", [
+                ':url' => "%{$url}%"
+            ])
             ->count();
     }
 
