@@ -30,7 +30,7 @@ use yii\helpers\Url;
                 <?php if (!$mobile): ?>
                     <div style="margin-top: 20px;">
                         <div class="product__description">
-                            <?= mb_strlen($product->short_description) > 200 ? mb_substr($product->short_description, 0, 200) . '...' : $product->short_description ?>
+                            <?= mb_strlen($product->short_description) > 200 ? mb_substr($product->short_description, 0, 197) . '...' : $product->short_description ?>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -66,7 +66,7 @@ use yii\helpers\Url;
 
                 <?php if ($mobile): ?>
                     <div class="product__description">
-                        <?= mb_strlen($product->short_description) > 200 ? mb_substr($product->short_description, 0, 200) . '...' : $product->short_description ?>
+                        <?= mb_strlen($product->short_description) > 200 ? mb_substr($product->short_description, 0, 197) . '...' : $product->short_description ?>
                     </div>
                 <?php endif; ?>
                 <ul class="product-card__features-list">
