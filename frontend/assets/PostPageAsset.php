@@ -16,7 +16,7 @@ class PostPageAsset extends AssetBundle
     ];
     public $js = [
 
-        '/js/post-page.min.js?v=' .  PROJECT_VERSION,
+        YII_ENV_DEV ? '/js/post-page.js?v=' . PROJECT_VERSION : '/js/post-page.min.js?v=' . PROJECT_VERSION,
 
     ];
     public $depends = [

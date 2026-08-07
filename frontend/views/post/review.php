@@ -42,7 +42,7 @@ use kartik\rating\StarRating;
                 <div class="form-group col-md-4">
                     <label for="name"><?=Yii::t('app','Ваше ім’я')?></label>
                     <input type="text" name="name" class="form-control" id="name"
-                           oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваше ім’я'); this.reportValidity();"
+                           oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваше ім’я');"
                            oninput="this.setCustomValidity('')"
                            placeholder="<?=Yii::t('app','Ваше ім’я')?>" required>
                 </div>
@@ -50,7 +50,7 @@ use kartik\rating\StarRating;
                     <label for="email">email</label>
                     <input type="email" name="email" id="email" class="form-control"
                            placeholder="Email"
-                           oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваш email'); this.reportValidity();"
+                           oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваш email');"
                            oninput="this.setCustomValidity('')"
                            required>
                 </div>
@@ -60,7 +60,7 @@ use kartik\rating\StarRating;
                 <textarea class="form-control" name="message" id="review-text"
                           placeholder="<?=Yii::t('app','Ваш відгук')?>"
                           rows="6"
-                          oninvalid="this.setCustomValidity('Напишіть будь ласка Ваш відгук'); this.reportValidity();"
+                          oninvalid="this.setCustomValidity('Напишіть будь ласка Ваш відгук');"
                           oninput="this.setCustomValidity('')"
                           required></textarea>
             </div>
