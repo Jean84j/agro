@@ -16,7 +16,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 
-        YII_ENV_DEV ? '/css/mobile-header.css?v=' . PROJECT_VERSION : 'css/mobile-header.min.css?v=' . PROJECT_VERSION,
+        YII_ENV_DEV ? '/css/mobile-header.css?v=' . PROJECT_VERSION : '/css/mobile-header.min.css?v=' . PROJECT_VERSION,
         YII_ENV_DEV ? '/css/style.css?v=' . PROJECT_VERSION : '/css/style.min.css?v=' . PROJECT_VERSION,
         YII_ENV_DEV ? '/css/widgets.css?v=' . PROJECT_VERSION : '/css/widgets.min.css?v=' . PROJECT_VERSION,
 
