@@ -99,11 +99,11 @@ ActivePages::setActiveUser();
             success: function (data) {
                 updateCartQty(urlQty);
 
-                if (data.qty > 0) {
-                    $('.cart').html(data.html);
-                } else {
-                    $('#cart-view-modal .modal-content').html(data.html);
-                }
+                const $target = data.qty > 0 ? $('.cart') : $('#cart-view-modal .modal-content');
+
+                $target.fadeOut(200, function() {
+                    $(this).html(data.html).fadeIn(200);
+                });
 
                 let buttons = $('.product-card__addtocart[data-product-id="' + id + '"]');
                 buttons.html(
