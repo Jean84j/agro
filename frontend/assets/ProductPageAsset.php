@@ -2,28 +2,23 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class ProductPageAsset extends AssetBundle
+class ProductPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/product-page.min.css?v=' . PROJECT_VERSION,
-        '/vendor/photoswipe/photoswipe.css?v=' . PROJECT_VERSION,
-        '/vendor/photoswipe/default-skin/default-skin.css?v=' . PROJECT_VERSION,
+        'css/product-page.min.css',
+        'vendor/photoswipe/photoswipe.css',
+        'vendor/photoswipe/default-skin/default-skin.css',
     ];
     public $js = [
 
-        YII_ENV_DEV ? '/js/product-page.js?v=' . PROJECT_VERSION : '/js/product-page.min.js?v=' . PROJECT_VERSION,
+        YII_ENV_DEV ? 'js/product-page.js' : 'js/product-page.min.js',
 
-        '/vendor/photoswipe/photoswipe.min.js?v=' . PROJECT_VERSION,
-        '/vendor/photoswipe/photoswipe-ui-default.min.js?v=' . PROJECT_VERSION,
-
+        'vendor/photoswipe/photoswipe.min.js',
+        'vendor/photoswipe/photoswipe-ui-default.min.js',
     ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $depends = [];
 
 }

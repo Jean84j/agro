@@ -2,21 +2,15 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class ComparePageAsset extends AssetBundle
+class ComparePageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/compare-table.css?v=' . PROJECT_VERSION,
+        'css/compare-table.css'
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }

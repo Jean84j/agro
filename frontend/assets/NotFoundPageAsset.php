@@ -2,22 +2,15 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class NotFoundPageAsset extends AssetBundle
+class NotFoundPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/not-found.css?v=' . PROJECT_VERSION,
-
+        'css/not-found.css',
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }

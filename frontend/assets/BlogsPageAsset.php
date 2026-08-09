@@ -2,23 +2,16 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class BlogsPageAsset extends AssetBundle
+class BlogsPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/block-sidebar.css?v=' . PROJECT_VERSION,
-        '/css/widget-search.css?v=' . PROJECT_VERSION,
-
+        'css/block-sidebar.css',
+        'css/widget-search.css',
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }

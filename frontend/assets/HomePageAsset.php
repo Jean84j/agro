@@ -2,33 +2,28 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class HomePageAsset extends AssetBundle
+class HomePageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/category-card.css?v=' . PROJECT_VERSION,
-        '/css/block-posts.css?v=' . PROJECT_VERSION,
-        '/css/block-product-columns.css?v=' . PROJECT_VERSION,
-        '/css/block-features.css?v=' . PROJECT_VERSION,
-        '/css/block-banner.css?v=' . PROJECT_VERSION,
-        '/css/block-brands.css?v=' . PROJECT_VERSION,
-        '/css/block-products.css?v=' . PROJECT_VERSION,
-        '/css/block-slideshow.css?v=' . PROJECT_VERSION,
-        '/css/block-categories.css?v=' . PROJECT_VERSION,
+        'css/category-card.css',
+        'css/block-posts.css',
+        'css/block-product-columns.css',
+        'css/block-features.css',
+        'css/block-banner.css',
+        'css/block-brands.css',
+        'css/block-products.css',
+        'css/block-slideshow.css',
+        'css/block-categories.css',
 
     ];
     public $js = [
 
-        '/js/block-brands-carousel.js?v=' . PROJECT_VERSION,
-        '/js/block-posts-carousel.js?v=' . PROJECT_VERSION,
-
+        'js/block-brands-carousel.js',
+        'js/block-posts-carousel.js',
     ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $depends = [];
 
 }

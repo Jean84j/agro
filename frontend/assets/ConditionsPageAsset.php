@@ -2,21 +2,15 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class ConditionsPageAsset extends AssetBundle
+class ConditionsPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/typography.css?v=' . PROJECT_VERSION,
+        'css/typography.css',
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }

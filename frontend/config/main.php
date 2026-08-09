@@ -2,7 +2,7 @@
 
 use yii\web\UrlNormalizer;
 
-define('PROJECT_VERSION', 86);
+define('PROJECT_VERSION', 88);
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',

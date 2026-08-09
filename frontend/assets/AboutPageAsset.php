@@ -2,22 +2,16 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class AboutPageAsset extends AssetBundle
+class AboutPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/about.css?v=' . PROJECT_VERSION,
-        '/css/typography.css?v=' . PROJECT_VERSION,
+        'css/about.css',
+        'css/typography.css',
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }

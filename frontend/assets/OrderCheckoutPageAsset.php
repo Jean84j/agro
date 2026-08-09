@@ -2,24 +2,18 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class OrderCheckoutPageAsset extends AssetBundle
+class OrderCheckoutPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/checkout.css?v=' . PROJECT_VERSION,
-
+        'css/checkout.css',
     ];
     public $js = [
 
-        '/js/checkout-payment-methods.js?v=' . PROJECT_VERSION,
-
+        'js/checkout-payment-methods.js',
     ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $depends = [];
 
 }

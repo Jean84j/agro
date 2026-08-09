@@ -2,25 +2,19 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class PostPageAsset extends AssetBundle
+class PostPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/typography.css?v=' . PROJECT_VERSION,
-        '/css/post-page.min.css?v=' . PROJECT_VERSION,
-        
+        'css/typography.css',
+        'css/post-page.min.css',
     ];
     public $js = [
 
-        YII_ENV_DEV ? '/js/post-page.js?v=' . PROJECT_VERSION : '/js/post-page.min.js?v=' . PROJECT_VERSION,
-
+        YII_ENV_DEV ? 'js/post-page.js' : 'js/post-page.min.js',
     ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $depends = [];
 
 }

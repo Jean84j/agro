@@ -2,21 +2,15 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class WishListPageAsset extends AssetBundle
+class WishListPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/wishlist.css?v=' . PROJECT_VERSION,
+        'css/wishlist.css',
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }

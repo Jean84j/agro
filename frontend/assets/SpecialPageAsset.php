@@ -2,22 +2,15 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class SpecialPageAsset extends AssetBundle
+class SpecialPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/view-options.css?v=' . PROJECT_VERSION,
-
+        'css/view-options.css',
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }

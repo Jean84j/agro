@@ -2,20 +2,12 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class CategoryChildrenPageAsset extends AssetBundle
+class CategoryChildrenPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [
-
-    ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $css = [];
+    public $js = [];
+    public $depends = [];
 
 }

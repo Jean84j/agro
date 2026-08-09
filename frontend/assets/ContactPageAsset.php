@@ -2,21 +2,15 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
-
-class ContactPageAsset extends AssetBundle
+class ContactPageAsset extends BaseAssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
 
-        '/css/contact.css?v=' . PROJECT_VERSION,
+        'css/contact.css',
     ];
-    public $js = [
-
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+    public $js = [];
+    public $depends = [];
 
 }
