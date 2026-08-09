@@ -19,6 +19,8 @@ class ProductPageAsset extends BaseAssetBundle
         'vendor/photoswipe/photoswipe.min.js',
         'vendor/photoswipe/photoswipe-ui-default.min.js',
     ];
-    public $depends = [];
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 
 }

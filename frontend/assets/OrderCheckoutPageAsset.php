@@ -14,6 +14,8 @@ class OrderCheckoutPageAsset extends BaseAssetBundle
 
         'js/checkout-payment-methods.js',
     ];
-    public $depends = [];
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 
 }
