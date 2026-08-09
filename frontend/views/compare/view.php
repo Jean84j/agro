@@ -51,7 +51,11 @@ $script = <<< JS
         data: { id: productId },
         success: function(response) {
     if (response.success) {
-        compareListContainer.html(response.compareListHtml);
+        
+        compareListContainer.fadeOut(200, function() {
+                    $(this).html(response.compareListHtml).fadeIn(200);
+                });
+        
         compareIndicator.text(response.compareCount);
     } else {
         console.log('Произошла ошибка при удалении товара из списка сравнения')

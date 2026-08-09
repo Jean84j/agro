@@ -46,7 +46,11 @@ $script = <<< JS
         data: { id: productId },
         success: function(response) {
     if (response.success) {
-        wishListContainer.html(response.wishListHtml);
+        
+         wishListContainer.fadeOut(200, function() {
+                    $(this).html(response.wishListHtml).fadeIn(200);
+                });
+        
         wishIndicator.text(response.wishCount);
     } else {
         console.log('Произошла ошибка при удалении товара из списка сравнения')
