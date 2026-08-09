@@ -65,18 +65,23 @@ if ($total_summ < $minimumOrderAmount->amount) {
                                    min="1" max="999"
                                    value="<?= $order->getQuantity() ?>"
                                    data-url-update="<?= $urls['urlUpdate'] ?>"
-                                   onchange="validateAndUpdateQty(this, <?= $order->getId() ?>, '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>')"
+                                   onchange="validateAndUpdateQty(this, <?= $order->getId() ?>, '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>', '<?= $urls['urlOrderQty'] ?>')"
                                    onpaste="this.onchange()"
                                    onkeyup="this.onchange()"
                                    oninput="this.onchange()">
                             <div class="input-number__add"
-                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() + 1 ?>, '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>')"></div>
+                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() + 1 ?>,
+                                         '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>', '<?= $urls['urlOrderQty'] ?>')">
+
+                            </div>
                             <div class="input-number__sub"
-                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() - 1 ?>, '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>')"></div>
+                                 onclick="updateQty(<?= $order->getId() ?>, <?= $order->getQuantity() - 1 ?>,
+                                         '<?= $urls['urlUpdate'] ?>', '<?= $urls['urlQty'] ?>', '<?= $urls['urlOrderQty'] ?>')">
+                            </div>
                         </div>
                     </td>
                     <td class="cart-table__column cart-table__column--remove"
-                        onclick="removeProduct(<?= $order->id ?>, '<?= $urls['urlRemove'] ?>', '<?= $urls['urlQty'] ?>')">
+                        onclick="removeProduct(<?= $order->id ?>, '<?= $urls['urlRemove'] ?>', '<?= $urls['urlQty'] ?>', '<?= $urls['urlOrderQty'] ?>')">
                         <button type="button" class="btn btn-light btn-sm btn-svg-icon gtm-remove-cart">
                             <i class="fas fa-trash gtm-remove-cart"
                                style="font-size: 20px; color: #CE272D"></i>

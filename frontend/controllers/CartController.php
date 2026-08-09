@@ -2,14 +2,12 @@
 
 namespace frontend\controllers;
 
-use common\models\shop\MinimumOrderAmount;
 use yii\web\NotFoundHttpException;
 use common\models\shop\Product;
-use yii\web\Controller;
 use yii\web\Response;
 use Yii;
 
-class CartController extends Controller
+class CartController extends BaseFrontendController
 {
     public function actionCartView($id, $qty = 1)
     {
@@ -86,6 +84,16 @@ class CartController extends Controller
         ];
     }
 
+    public function actionQtyOrder()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $this->renderAjax('/order/_totals-products', [
+            'orders' => Yii::$app->cart->getPositions(),
+            'total_summ' => Yii::$app->cart->getCost(),
+            'minimumOrderAmount' => $this->getMinimumOrderAmount(),
+        ]);
+    }
+
     public function actionUpdate($id, $qty = null)
     {
         $product = Product::findOne($id);
@@ -100,16 +108,12 @@ class CartController extends Controller
         ]);
     }
 
-    protected function getMinimumOrderAmount()
-    {
-        return MinimumOrderAmount::find()->select('amount')->one();
-    }
-
     protected function getUrls()
     {
         return [
             'urlUpdate' => Yii::$app->urlManager->createUrl(['cart/update']),
             'urlQty' => Yii::$app->urlManager->createUrl(['cart/qty-cart']),
+            'urlOrderQty' => Yii::$app->urlManager->createUrl(['cart/qty-order']),
             'urlRemove' => Yii::$app->urlManager->createUrl(['cart/remove']),
         ];
     }

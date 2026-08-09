@@ -36,7 +36,7 @@ ActivePages::setActiveUser();
 </div>
 <script>
 
-    function validateAndUpdateQty(input, prodId, urlUpdate, urlQty) {
+    function validateAndUpdateQty(input, prodId, urlUpdate, urlQty, urlOrderQty) {
         var qty = input.value.trim();  // Удаляем пробелы в начале и конце строки
 
         // Если поле пустое или значение не является числом, не обновляем количество
@@ -54,7 +54,7 @@ ActivePages::setActiveUser();
             qty = input.max;
         }
 
-        updateQty(prodId, qty, urlUpdate, urlQty);
+        updateQty(prodId, qty, urlUpdate, urlQty, urlOrderQty);
 
         // Обновляем количество только если фокус потерян или пользователь завершил ввод (Enter)
         input.addEventListener('blur', function () {
@@ -69,7 +69,7 @@ ActivePages::setActiveUser();
         });
     }
 
-    function updateQty(prodId, qty, urlUpdate, urlQty) {
+    function updateQty(prodId, qty, urlUpdate, urlQty, urlOrderQty) {
         if (qty !== 0) {
             setTimeout(function () {
                 $.ajax({
@@ -80,6 +80,10 @@ ActivePages::setActiveUser();
                     },
                     success: function (data) {
                         updateCartQty(urlQty);
+                        let orders = $('#orders-total');
+                        if (orders) {
+                            updateOrderQty(urlOrderQty);
+                        }
                         $('.cart').html(data);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -90,7 +94,8 @@ ActivePages::setActiveUser();
         }
     }
 
-    function removeProduct(id, urlRemove, urlQty) {
+    function removeProduct(id, urlRemove, urlQty, urlOrderQty) {
+
         $.ajax({
             url: urlRemove,
             data: {
@@ -99,11 +104,17 @@ ActivePages::setActiveUser();
             success: function (data) {
                 updateCartQty(urlQty);
 
+                let orders = $('#orders-total');
+                if (orders) {
+                    updateOrderQty(urlOrderQty);
+                }
+
                 const $target = data.qty > 0 ? $('.cart') : $('#cart-view-modal .modal-content');
 
-                $target.fadeOut(200, function() {
+                $target.fadeOut(200, function () {
                     $(this).html(data.html).fadeIn(200);
                 });
+
 
                 let buttons = $('.product-card__addtocart[data-product-id="' + id + '"]');
                 buttons.html(
@@ -128,6 +139,19 @@ ActivePages::setActiveUser();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error('Ошибка обновления количества товаров в корзине:', textStatus, errorThrown);
+            }
+        });
+    }
+
+    function updateOrderQty(urlOrderQty) {
+        $.ajax({
+            url: urlOrderQty,
+            type: 'GET',
+            success: function (data) {
+                $('#orders-total').html(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Ошибка обновления в Orders:', textStatus, errorThrown);
             }
         });
     }

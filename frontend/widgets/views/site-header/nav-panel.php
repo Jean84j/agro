@@ -55,7 +55,7 @@ use yii\helpers\Url;
                                             </span>
                         </a>
                     </div>
-                    <?php if (!$checkoutUrl) : ?>
+<!--                    --><?php //if (!$checkoutUrl) : ?>
                         <div class="indicator indicator--trigger--click cart-header">
                             <a href="#" data-toggle="tooltip"
                                title="Корзина"
@@ -70,7 +70,7 @@ use yii\helpers\Url;
                                     </span>
                             </a>
                         </div>
-                    <?php endif; ?>
+<!--                    --><?php //endif; ?>
                 </div>
             </div>
         </div>

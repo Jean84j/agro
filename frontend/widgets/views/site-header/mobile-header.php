@@ -88,7 +88,7 @@ $wishList = count($wishList);
                                             </span>
                             </a>
                         </div>
-                        <?php if (!$checkoutUrl) : ?>
+<!--                        --><?php //if (!$checkoutUrl) : ?>
                             <div class="indicator indicator--trigger--click cart-header">
                                 <a href="#" class="indicator__button"
                                    data-url-cart-view-all="<?= Yii::$app->urlManager->createUrl(['cart/cart-view-all']) ?>"
@@ -102,7 +102,7 @@ $wishList = count($wishList);
                                     </span>
                                 </a>
                             </div>
-                        <?php endif; ?>
+<!--                        --><?php //endif; ?>
                     </div>
                 </div>
             </div>

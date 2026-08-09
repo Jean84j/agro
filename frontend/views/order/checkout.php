@@ -11,6 +11,7 @@ use kartik\form\ActiveForm;
 /** @var  $areas */
 /** @var  $contacts */
 /** @var  $total_summ */
+/** @var  $minimumOrderAmount */
 
 OrderCheckoutPageAsset::register($this);
 ActivePages::setActiveUser();
@@ -38,6 +39,7 @@ $breadcrumbItemActive = 'Оформлення замовлення';
                 <?= $this->render('checkout-order', [
                     'orders' => $orders,
                     'total_summ' => $total_summ,
+                    'minimumOrderAmount' => $minimumOrderAmount,
                 ]) ?>
             </div>
         </div>

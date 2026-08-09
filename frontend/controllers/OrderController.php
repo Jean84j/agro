@@ -81,6 +81,7 @@ class OrderController extends BaseFrontendController
                 'orders' => Yii::$app->cart->getPositions(),
                 'total_summ' => Yii::$app->cart->getCost(),
                 'qty_cart' => Yii::$app->cart->getCount(),
+                'minimumOrderAmount' => $this->getMinimumOrderAmount(),
             ]);
         } else {
             return $this->redirect(['/']);

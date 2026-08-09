@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\shop\MinimumOrderAmount;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\FileHelper;
@@ -168,6 +169,11 @@ class BaseFrontendController extends Controller
             'ukUrl' => $ukUrl,
             'ruUrl' => $ruUrl,
         ];
+    }
+
+    protected function getMinimumOrderAmount()
+    {
+        return MinimumOrderAmount::find()->select('amount')->one();
     }
 
 }
