@@ -206,13 +206,6 @@ class SeoMetaMaster extends Component
      */
     public function setIndexable(bool $indexable)
     {
-        $page = Yii::$app->request->get('page');
-        if ($page !== null && intval($page) > 1) {
-            $indexable = false;
-        } elseif (str_contains(Yii::$app->request->hostInfo, 'mail')) {
-            $indexable = false;
-        }
-
         $this->indexable = $indexable;
         return $this;
     }
