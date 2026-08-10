@@ -172,9 +172,9 @@ class SeoMetaMaster extends Component
      * @return $this
      * @deprecated
      */
-    public function setKeywords(string $keywords)
+    public function setKeywords(?string $keywords)
     {
-        $this->keywords = $keywords;
+        $this->keywords = $keywords ?? '';
         return $this;
     }
 
