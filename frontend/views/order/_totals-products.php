@@ -25,7 +25,8 @@ if (empty($orders)): ?>
         <div class="mt-5 text-muted">
             <small>
                 <?= Yii::t('app', 'Потрібна допомога? ') ?>
-                <a href="<?= Url::to(['/contact']) ?>" class="font-weight-bold"><?= Yii::t('app', 'Зв\'яжіться з нами') ?></a>
+                <a href="<?= Url::to(['/contact']) ?>"
+                   class="font-weight-bold"><?= Yii::t('app', 'Зв\'яжіться з нами') ?></a>
             </small>
         </div>
     </div>
@@ -46,37 +47,44 @@ if ($total_summ < $minimumOrderAmount->amount) {
 ?>
 
 <div id="orders-total">
-    <table class="checkout__totals">
-        <thead class="checkout__totals-header">
-        <tr>
-            <th><i class="fas fa-image"></i></th>
-            <th><?= Yii::t('app', 'Товар') ?></th>
-            <th><?= Yii::t('app', 'К-ть') ?></th>
-            <th><?= Yii::t('app', 'Всього') ?></th>
-        </tr>
-        </thead>
-        <tbody class="checkout__totals-products">
-        <?php foreach ($orders as $order): ?>
-            <tr>
-                <td style="width: 1%; white-space: nowrap; padding: 0;">
-                    <img src="<?= $order->getImgOne($order->getId()) ?>"
-                         width="30" height="30"
-                         alt="<?= $order->name ?>"
-                         style="display: block;">
-                </td>
-                <td><?= $order->name ?></td>
-                <td><?= $order->quantity ?></td>
-                <td><?= Yii::$app->formatter->asCurrency($order->getPrice() * $order->quantity) ?></td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-        <tfoot class="checkout__totals-footer">
-        <tr>
-            <th><?= Yii::t('app', 'Разом') ?></th>
-            <td><?= Yii::$app->formatter->asCurrency($total_summ) ?></td>
-        </tr>
-        </tfoot>
-    </table>
+    <div class="checkout__totals">
+        <!-- Шапка -->
+        <div class="d-flex align-items-center fw-bold border-bottom pb-2 mb-2 text-muted small">
+            <div style="width: 40px;" class="me-3 text-center"><i class="fas fa-image"></i></div>
+            <div class="flex-grow-1 me-2"><?= Yii::t('app', 'Товар') ?></div>
+            <div class="text-center me-3" style="width: 50px;"><?= Yii::t('app', 'К-ть') ?></div>
+            <div class="text-end" style="width: 90px;"><?= Yii::t('app', 'Всього') ?></div>
+        </div>
+
+        <!-- Список товаров -->
+        <div class="checkout__totals-products">
+            <?php foreach ($orders as $order): ?>
+                <div class="d-flex align-items-center border-bottom py-2">
+                    <div style="width: 40px;" class="me-3 flex-shrink-0">
+                        <img src="<?= $order->getImgOne($order->getId()) ?>"
+                             width="30" height="30"
+                             alt="<?= $order->name ?>"
+                             class="d-block rounded">
+                    </div>
+                    <div class="flex-grow-1 me-2 text-break">
+                        <?= $order->name ?>
+                    </div>
+                    <div class="text-center me-3 flex-shrink-0" style="width: 50px;">
+                        <?= $order->quantity ?>
+                    </div>
+                    <div class="text-end flex-shrink-0 fw-medium" style="width: 90px;">
+                        <?= Yii::$app->formatter->asCurrency($order->getPrice() * $order->quantity) ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Итоговый блок -->
+        <div class="checkout__totals-footer d-flex justify-content-between align-items-center pt-3 mt-2 fw-bold fs-5">
+            <div><?= Yii::t('app', 'Разом') ?></div>
+            <div><?= Yii::$app->formatter->asCurrency($total_summ) ?></div>
+        </div>
+    </div>
 
     <div class="checkout__agree form-group">
         <div class="form-check">
@@ -101,7 +109,8 @@ if ($total_summ < $minimumOrderAmount->amount) {
         </div>
     </div>
 
-    <button type="submit" id="orderTo" class="btn btn-dec-lg btn-block shadow_element <?= $classButton ?>" <?= $disableMinAmount ?>
+    <button type="submit" id="orderTo"
+            class="btn btn-dec-lg btn-block shadow_element <?= $classButton ?>" <?= $disableMinAmount ?>
             style="font-size: 16px"><?= $textButton ?>
     </button>
 </div>
