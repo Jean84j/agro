@@ -49,6 +49,7 @@ if ($total_summ < $minimumOrderAmount->amount) {
     <table class="checkout__totals">
         <thead class="checkout__totals-header">
         <tr>
+            <th><i class="fas fa-image"></i></th>
             <th><?= Yii::t('app', 'Товар') ?></th>
             <th><?= Yii::t('app', 'К-ть') ?></th>
             <th><?= Yii::t('app', 'Всього') ?></th>
@@ -57,6 +58,12 @@ if ($total_summ < $minimumOrderAmount->amount) {
         <tbody class="checkout__totals-products">
         <?php foreach ($orders as $order): ?>
             <tr>
+                <td style="width: 1%; white-space: nowrap; padding: 0;">
+                    <img src="<?= $order->getImgOne($order->getId()) ?>"
+                         width="30" height="30"
+                         alt="<?= $order->name ?>"
+                         style="display: block;">
+                </td>
                 <td><?= $order->name ?></td>
                 <td><?= $order->quantity ?></td>
                 <td><?= Yii::$app->formatter->asCurrency($order->getPrice() * $order->quantity) ?></td>
@@ -65,7 +72,7 @@ if ($total_summ < $minimumOrderAmount->amount) {
         </tbody>
         <tfoot class="checkout__totals-footer">
         <tr>
-            <th><?= Yii::t('app', 'Загальна сума') ?></th>
+            <th><?= Yii::t('app', 'Разом') ?></th>
             <td><?= Yii::$app->formatter->asCurrency($total_summ) ?></td>
         </tr>
         </tfoot>

@@ -35,77 +35,64 @@ ActivePages::setActiveUser();
     </div>
 </div>
 <script>
+    let qtyTimeout = null;
 
+    // Функция отправки AJAX
+    function updateQty(prodId, qty, urlUpdate, urlQty, urlOrderQty) {
+        if (qty <= 0) return;
+
+        // Отменяем предыдущий таймер, если пользователь продолжает ввод
+        clearTimeout(qtyTimeout);
+
+        qtyTimeout = setTimeout(function () {
+            $.ajax({
+                url: urlUpdate,
+                data: { id: prodId, qty: qty },
+                success: function (data) {
+                    updateCartQty(urlQty);
+
+                    // Корректная проверка наличия элемента в DOM
+                    if ($('#orders-total').length && urlOrderQty) {
+                        updateOrderQty(urlOrderQty);
+                    }
+                    $('.cart').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Ошибка обновления количества товара:', textStatus, errorThrown);
+                }
+            });
+        }, 300); // 300ms задержка для предотвращения спама запросами
+    }
+
+    // Валидация и запуск обновления
     function validateAndUpdateQty(input, prodId, urlUpdate, urlQty, urlOrderQty) {
-        var qty = input.value.trim();  // Удаляем пробелы в начале и конце строки
+        var rawValue = input.value.trim();
 
-        // Если поле пустое или значение не является числом, не обновляем количество
-        if (qty === '' || isNaN(qty)) {
-            return;
-        }
+        if (rawValue === '' || isNaN(rawValue)) return;
 
-        qty = parseInt(qty, 10);
+        var qty = parseInt(rawValue, 10);
+        var min = parseInt(input.min, 10) || 1;
+        var max = parseInt(input.max, 10) || Infinity;
 
-        // Проверяем минимальное значение
-        if (qty < input.min) {
-            qty = input.min;
-        }
-        if (qty > input.max) {
-            qty = input.max;
+        if (qty < min) qty = min;
+        if (qty > max) qty = max;
+
+        // Обновляем значение в самом инпуте, если оно вышло за границы
+        if (input.value != qty) {
+            input.value = qty;
         }
 
         updateQty(prodId, qty, urlUpdate, urlQty, urlOrderQty);
-
-        // Обновляем количество только если фокус потерян или пользователь завершил ввод (Enter)
-        input.addEventListener('blur', function () {
-            updateQty(prodId, qty, urlUpdate, urlQty);
-        });
-
-        // Если пользователь нажимает Enter, обновляем количество
-        input.addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                input.blur(); // Снимем фокус, чтобы триггерить обновление через blur
-            }
-        });
-    }
-
-    function updateQty(prodId, qty, urlUpdate, urlQty, urlOrderQty) {
-        if (qty !== 0) {
-            setTimeout(function () {
-                $.ajax({
-                    url: urlUpdate,
-                    data: {
-                        id: prodId,
-                        qty: qty
-                    },
-                    success: function (data) {
-                        updateCartQty(urlQty);
-                        let orders = $('#orders-total');
-                        if (orders) {
-                            updateOrderQty(urlOrderQty);
-                        }
-                        $('.cart').html(data);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error('Ошибка обновления количества товара:', textStatus, errorThrown);
-                    }
-                });
-            }, 100);
-        }
     }
 
     function removeProduct(id, urlRemove, urlQty, urlOrderQty) {
-
         $.ajax({
             url: urlRemove,
-            data: {
-                id: id,
-            },
+            data: { id: id },
             success: function (data) {
                 updateCartQty(urlQty);
 
-                let orders = $('#orders-total');
-                if (orders) {
+                if ($('#orders-total').length && urlOrderQty) {
                     updateOrderQty(urlOrderQty);
                 }
 
@@ -115,14 +102,14 @@ ActivePages::setActiveUser();
                     $(this).html(data.html).fadeIn(200);
                 });
 
-
                 let buttons = $('.product-card__addtocart[data-product-id="' + id + '"]');
-                buttons.html(
-                    '<svg width="20px" height="20px" style="display: unset;">' +
-                    '<use xlink:href="/images/sprite.svg#cart-20"></use>' +
-                    '</svg> ' + buttons.first().data('defaultBtn')
-                );
-
+                if (buttons.length) {
+                    buttons.html(
+                        '<svg width="20px" height="20px" style="display: unset;">' +
+                        '<use xlink:href="/images/sprite.svg#cart-20"></use>' +
+                        '</svg> ' + buttons.first().data('defaultBtn')
+                    );
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error('Ошибка удаления товара из корзины:', textStatus, errorThrown);
@@ -131,6 +118,7 @@ ActivePages::setActiveUser();
     }
 
     function updateCartQty(urlQty) {
+        if (!urlQty) return;
         $.ajax({
             url: urlQty,
             type: 'GET',
@@ -144,6 +132,7 @@ ActivePages::setActiveUser();
     }
 
     function updateOrderQty(urlOrderQty) {
+        if (!urlOrderQty) return;
         $.ajax({
             url: urlOrderQty,
             type: 'GET',
