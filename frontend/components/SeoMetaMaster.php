@@ -113,6 +113,12 @@ class SeoMetaMaster extends Component
      */
     public function setTitle(string $title)
     {
+        $page = Yii::$app->request->get('page');
+        if ($page !== null && intval($page) > 1) {
+            $title = '(' . Yii::t('app', 'Сторінка') . ' ' . intval($page) . ')' . ' ' . $title;
+        }
+
+
         $this->title = $title;
         return $this;
     }
@@ -265,7 +271,14 @@ class SeoMetaMaster extends Component
 
     private function canonicalUrl(string $url): string
     {
-        return str_replace('://mail.', '://', $url);
+        $url = str_replace('://mail.', '://', $url);
+
+        $page = Yii::$app->request->get('page');
+        if ($page !== null && intval($page) > 1) {
+            $url = $url . '/page/' . intval($page);
+        }
+
+        return $url;
     }
 
     private function registerOrUpdateMetaTag($tag)
