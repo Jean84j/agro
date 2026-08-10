@@ -69,10 +69,10 @@ if ($total_summ < $minimumOrderAmount->amount) {
                     <div class="flex-grow-1 me-2 text-break">
                         <?= $order->name ?>
                     </div>
-                    <div class="text-center me-3 flex-shrink-0" style="width: 50px;">
+                    <div class="text-center me-3 flex-shrink-0" style="width: 70px;">
                         <?= $order->quantity ?>
                     </div>
-                    <div class="text-end flex-shrink-0 fw-medium" style="width: 90px;">
+                    <div class="text-end flex-shrink-0 fw-medium" style="width: 90px; color: #212529; font-weight: bold;">
                         <?= Yii::$app->formatter->asCurrency($order->getPrice() * $order->quantity) ?>
                     </div>
                 </div>
@@ -82,7 +82,9 @@ if ($total_summ < $minimumOrderAmount->amount) {
         <!-- Итоговый блок -->
         <div class="checkout__totals-footer d-flex justify-content-between align-items-center pt-3 mt-2 fw-bold fs-5">
             <div><?= Yii::t('app', 'Разом') ?></div>
-            <div><?= Yii::$app->formatter->asCurrency($total_summ) ?></div>
+            <div style="color: #09a72d; font-weight: bold; font-size: 24px">
+                <?= Yii::$app->formatter->asCurrency($total_summ) ?>
+            </div>
         </div>
     </div>
 
