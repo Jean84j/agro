@@ -2,6 +2,20 @@
 
 /** @var $contacts */
 
+$placeholders = [
+    Yii::t('app', 'гліфосат'),
+    Yii::t('app', 'протруйники'),
+    Yii::t('app', 'Актара'),
+    Yii::t('app', 'колорадський'),
+    Yii::t('app', 'для сої'),
+    Yii::t('app', 'прилипач'),
+    Yii::t('app', 'від слимаків'),
+    Yii::t('app', 'Ацетохлор'),
+    Yii::t('app', 'соняшник'),
+    Yii::t('app', 'інсектициди'),
+    Yii::t('app', 'від мишей'),
+];
+
 ?>
 <div class="site-header__middle container">
     <div class="site-header__logo">
@@ -26,7 +40,8 @@
                       data-url="<?= Yii::$app->urlManager->createUrl(['search/suggestions-ajax']) ?>"
                       action="<?= Yii::$app->urlManager->createUrl(['search/suggestions']) ?>">
                     <input class="search__input" name="q"
-                           placeholder="<?= Yii::t('app', 'Пошук товарів') ?>"
+                           id="js-search-input"
+                           placeholder="<?= $placeholders[0] ?>"
                            aria-label="Site search" type="text" autocomplete="off">
                     <button class="search__button search__button--type--submit" type="submit"
                             aria-label="Site search">
@@ -52,3 +67,57 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('js-search-input');
+        if (!input) return;
+
+        let isFocused = false;
+
+        input.addEventListener('focus', () => { isFocused = true; });
+        input.addEventListener('blur', () => { isFocused = false; });
+
+        const phrases = <?= json_encode($placeholders) ?>;
+
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+
+        function typeEffect() {
+            if (isFocused || input.value.length > 0) {
+                setTimeout(typeEffect, 1000);
+                return;
+            }
+            const currentPhrase = phrases[phraseIndex];
+
+            if (isDeleting) {
+
+                input.setAttribute('placeholder', currentPhrase.substring(0, charIndex - 1));
+                charIndex--;
+                typingSpeed = 50;
+            } else {
+
+                input.setAttribute('placeholder', currentPhrase.substring(0, charIndex + 1));
+                charIndex++;
+                typingSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typingSpeed = 1000;
+                isDeleting = true;
+            }
+
+            else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typingSpeed = 300;
+            }
+
+            setTimeout(typeEffect, typingSpeed);
+        }
+
+        typeEffect();
+    });
+</script>

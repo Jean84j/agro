@@ -15,6 +15,8 @@ class PostPageAsset extends BaseAssetBundle
 
         YII_ENV_DEV ? 'js/post-page.js' : 'js/post-page.min.js',
     ];
-    public $depends = [];
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 
 }

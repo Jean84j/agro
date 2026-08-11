@@ -22,5 +22,7 @@ class CategoryCatalogPageAsset extends BaseAssetBundle
         'js/offcanvas-filters.js',
     ];
 
-    public $depends = [];
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 }

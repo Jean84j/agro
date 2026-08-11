@@ -24,6 +24,8 @@ class HomePageAsset extends BaseAssetBundle
         'js/block-brands-carousel.js',
         'js/block-posts-carousel.js',
     ];
-    public $depends = [];
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 
 }
