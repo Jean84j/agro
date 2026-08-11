@@ -87,7 +87,6 @@ class OrderController extends BaseFrontendController
     public function actionOrderSuccess()
     {
         $order_id = Yii::$app->session->get('order_id');
-
         if (!$order_id) {
             return $this->redirect(['/']);
         }
@@ -109,6 +108,9 @@ class OrderController extends BaseFrontendController
             $this->getSendTelegramMessage($chat_id, $order);
             $order->sent_message = true;
             $order->save();
+        } else {
+
+            return $this->redirect(['/']);
         }
 
         Yii::$app->metamaster
