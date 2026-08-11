@@ -18,10 +18,8 @@ use yii\widgets\MaskedInput;
                 <div class="col-md-8">
                     <?= $form->field($order, 'fio')->textInput([
                         'maxlength' => true,
+                        'id' => 'order-fio',
                         'class' => 'form-control',
-                        'options' => [
-                            'id' => 'order-fio',
-                        ],
                     ]) ?>
                 </div>
                 <div class="col-md-4">
@@ -48,7 +46,7 @@ use yii\widgets\MaskedInput;
                                             </span>
                             <span style="font-size:20px; margin:0 20px"><?= Yii::t('app', 'Нова Пошта') ?></span>
                         </label>
-                        <div class="payment-methods__item-container" style="">
+                        <div class="payment-methods__item-container">
                             <div class="payment-methods__item-description text-muted">
                                 <div class="form-group">
                                     <?php echo $form->field($order, 'area')->widget(Select2::class, [
@@ -142,7 +140,7 @@ use yii\widgets\MaskedInput;
                                                 </svg> </span>
                             <span style="font-size:20px; margin:0 20px"><?= Yii::t('app', 'Укрпошта') ?></span>
                         </label>
-                        <div class="payment-methods__item-container" style="">
+                        <div class="payment-methods__item-container">
                             <div class="payment-methods__item-description text-muted">
                                 <?= $form->field($order, 'ukrIndex')->textInput([
                                     'id' => 'ukr-post-area',
@@ -172,7 +170,7 @@ use yii\widgets\MaskedInput;
                                                     </span>
                                                 </span>
                         </label>
-                        <div class="payment-methods__item-container" style="">
+                        <div class="payment-methods__item-container">
                             <div class="payment-methods__item-description text-muted">
                                 <ul class="footer-contacts__contacts">
                                     <li>
@@ -207,73 +205,75 @@ use yii\widgets\MaskedInput;
 $js = <<<JS
     $(document).ready(function () {
 
-        var stock = $('input[name="checkout_payment_method"]:checked').val();
+        let stock = $('input[name="checkout_payment_method"]:checked').val();
+        
+        let orderAreas = $('#order-areas');
+        let orderCity = $('#order-city');
+        let orderWarehouses = $('#order-warehouses')
 
         $('input[name="checkout_payment_method"]').change(function () {
             stock = $(this).val();
             
-                $('#order-areas').val("").trigger("change");
-                $('#order-city').val("").trigger("change");
-                $('#order-warehouses').val("").trigger("change");
+                orderAreas.val("").trigger("change");
+                orderCity.val("").trigger("change");
+                orderWarehouses.val("").trigger("change");
                 $('#ukr-post-city').val("").trigger("change");
                 $('#ukr-post-area').val("").trigger("change");
            
         });
         
         if (stock !== "beznal") {
-            $('#order-areas').on('change', function () {
-                var urlCities = $(this).data('url-cities');
-                var areaId = $(this).val();
+            orderAreas.on('change', function () {
+                let urlCities = $(this).data('url-cities');
+                let areaId = $(this).val();
                 $.ajax({
                     url: urlCities,
                     type: 'POST',
                     data: {areaId: areaId},
                     success: function (data) {
                         if (data.cities) {
-                            var citySelect = $('#order-city');
-                            citySelect.empty();
+                            orderCity.empty();
                             $.each(data.cities, function (key, value) {
-                                citySelect.append(new Option(value, key, false, false));
+                                orderCity.append(new Option(value, key, false, false));
                             });
-                            citySelect.trigger('change');
+                            orderCity.trigger('change');
                         }
                     }
                 });
             });
 
-            $('#order-city').on('change', function () {
-                var urlWarehouses = $(this).data('url-warehouses');
-                var cityId = $(this).val();
+            orderCity.on('change', function () {
+                let urlWarehouses = $(this).data('url-warehouses');
+                let cityId = $(this).val();
                 $.ajax({
                     url: urlWarehouses,
                     type: 'POST',
                     data: {cityId: cityId},
                     success: function (data) {
                         if (data.warehouses) {
-                            var warehousesSelect = $('#order-warehouses');
-                            warehousesSelect.empty();
+                          
+                            orderWarehouses.empty();
                             $.each(data.warehouses, function (key, value) {
-                                warehousesSelect.append(new Option(value, key, false, false));
+                                orderWarehouses.append(new Option(value, key, false, false));
                             });
-                            warehousesSelect.trigger('change');
+                            orderWarehouses.trigger('change');
                         }
                     }
                 });
             });
-            $('#order-areas').select2();
-            $('#order-city').select2();
-            $('#order-warehouses').select2();
+            
+            orderAreas.select2();
+            orderCity.select2();
+            orderWarehouses.select2();
         }
-    });
-
-$(document).ready(function() {
-    $('#order-fio').on('input', function() {
+        
+        $('#order-fio').on('input', function() {
         let words = $(this).val().toLowerCase().replace(/(^|\s)\S/g, function(c) {
             return c.toUpperCase();
         });
         $(this).val(words);
     });
-});
+    });
 
 JS;
 $this->registerJs($js);
