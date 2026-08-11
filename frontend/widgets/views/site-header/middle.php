@@ -105,7 +105,7 @@ $placeholders = [
             }
 
             if (!isDeleting && charIndex === currentPhrase.length) {
-                typingSpeed = 1000;
+                typingSpeed = 1500;
                 isDeleting = true;
             }
 
