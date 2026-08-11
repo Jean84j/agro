@@ -95,6 +95,13 @@ if ($model->order_status_id == 'Повернення' || $model->order_pay_ment_
                                 </div>
                                 <div class="sa-page-meta__item d-flex align-items-center fs-6">
                                     <div class="col-auto d-flex">
+                                        <?php echo Html::a('Створити', Url::to(['create', 'old_id' => $model->id]), [
+                                            'class' => "btn btn-girl btn-sm",
+                                        ]) ?>
+                                    </div>
+                                </div>
+                                <div class="sa-page-meta__item d-flex align-items-center fs-6">
+                                    <div class="col-auto d-flex">
                                         <?= Html::a('<i class="fas fa-bell"></i>', '#', [
                                             'class' => 'btn btn-outline-danger btn-sm',
                                             'data-bs-toggle' => 'modal',

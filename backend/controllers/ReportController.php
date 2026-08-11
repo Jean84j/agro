@@ -82,7 +82,7 @@ class ReportController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate($order_id = null)
+    public function actionCreate($order_id = null, $old_id = null)
     {
         $model = new Report();
 
@@ -91,6 +91,11 @@ class ReportController extends Controller
         if ($order_id) {
             $order = $this->transferringDataFromOrder($model, $order_id);
         }
+
+        if ($old_id) {
+            $model = $this->transferringDataFromOldOrder($model, $old_id);
+        }
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 if (isset($order->id)) {
@@ -114,9 +119,10 @@ class ReportController extends Controller
                     Yii::$app->session->setFlash('info', ' Заявку створено, Додайте товари!');
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
+
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -136,6 +142,18 @@ class ReportController extends Controller
             $model->comments = $order->note;
             $model->address = $order->area . ' ' . $order->city . ' ' . $order->warehouses;
             return $order;
+        }
+        return null;
+    }
+
+    protected function transferringDataFromOldOrder($model, $old_id)
+    {
+        $oldReport = Report::findOne($old_id);
+        if ($oldReport) {
+            $model->fio = $oldReport->fio;
+            $model->tel_number = $oldReport->tel_number;
+            $model->address = $oldReport->address;
+            return $model;
         }
         return null;
     }
@@ -432,7 +450,6 @@ class ReportController extends Controller
             'smallNovaPaySum' => array_sum($smallNovaPay),
         ]);
     }
-
 
 
     public function actionPromReport()

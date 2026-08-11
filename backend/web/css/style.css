@@ -715,12 +715,20 @@ body {
   border-top-color: rgba(255, 255, 255, 0.6);
 }
 
+.btn-girl {
+  --sa-button--normal-bg-color: #fc4fc1;
+  --sa-button--normal-font-color: #fff;
+  --sa-arrow-opacity: 0.5;
+  --sa-button--hover-bg-color: #be1d93;
+}
+
 .btn-prom {
   --sa-button--normal-bg-color: #874bd0;
   --sa-button--normal-font-color: #fff;
   --sa-arrow-opacity: 0.5;
   --sa-button--hover-bg-color: #7236ba;
 }
+
 .btn-prom.btn-sa-loading:before {
   border-color: rgba(255, 255, 255, 0.2);
   border-top-color: rgba(255, 255, 255, 0.6);
