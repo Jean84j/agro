@@ -14,8 +14,6 @@ class OrderController extends BaseFrontendController
 {
     public function actionCheckout()
     {
-        $item_cart = Yii::$app->cart->getPositions();
-        if ($item_cart) {
             $order = new Order();
             if ($order->load($this->request->post()) && $order->save()) {
 
@@ -83,14 +81,13 @@ class OrderController extends BaseFrontendController
                 'qty_cart' => Yii::$app->cart->getCount(),
                 'minimumOrderAmount' => $this->getMinimumOrderAmount(),
             ]);
-        } else {
-            return $this->redirect(['/']);
-        }
+
     }
 
     public function actionOrderSuccess()
     {
         $order_id = Yii::$app->session->get('order_id');
+
         if (!$order_id) {
             return $this->redirect(['/']);
         }
@@ -112,11 +109,19 @@ class OrderController extends BaseFrontendController
             $this->getSendTelegramMessage($chat_id, $order);
             $order->sent_message = true;
             $order->save();
-        } else {
-
-            return $this->redirect(['/']);
         }
 
+        Yii::$app->metamaster
+            ->setIndexable(false)
+            ->setType('website')
+//                ->setTitle($seo->title)
+//                ->setDescription(strip_tags($seo->description))
+            ->setUrl(Url::canonical())
+            ->setAlternateUrls($this->getAlternateUrl())
+//            ->setImage('')
+//            ->setKeywords('')
+//            ->setPrice('')
+            ->register(Yii::$app->view);
         return $this->render('order-success', ['order' => $order]);
     }
 
