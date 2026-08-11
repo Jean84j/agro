@@ -18,7 +18,7 @@ class WishController extends BaseFrontendController
         $products = Product::find()->where(['id' => $wishList])->all();
 
         if ($language !== 'uk') {
-            $products = $this->translateProduct($products, $language);
+            $products = $this->translateProducts($products, $language);
         }
 
         $seo = Settings::seoPageTranslate('wish');

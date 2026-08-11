@@ -26,7 +26,7 @@ class CompareController extends BaseFrontendController
         $properties = $this->getProductProperties($categories_id, $language);
 
         if ($language !== 'uk') {
-            $products = $this->translateProduct($products, $language);
+            $products = $this->translateProducts($products, $language);
         }
 
         $seo = Settings::seoPageTranslate('compare');
@@ -101,7 +101,7 @@ class CompareController extends BaseFrontendController
             $properties = $this->getProductProperties($categories_id, $language);
 
             if ($language !== 'uk') {
-                $products = $this->translateProduct($products, $language);
+                $products = $this->translateProducts($products, $language);
             }
 
             return $this->asJson([

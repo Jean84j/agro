@@ -36,7 +36,7 @@ class BaseFrontendController extends Controller
      *
      *
      */
-    protected function translateProduct($products, $language)
+    protected function translateProducts($products, $language)
     {
         foreach ($products as $product) {
             if ($product) {

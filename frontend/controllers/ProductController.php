@@ -11,7 +11,6 @@ use common\models\shop\ProductPackaging;
 use common\models\shop\ProductProperties;
 use common\models\shop\Review;
 use common\models\shop\Brand;
-use yii\base\BaseObject;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use Yii;
@@ -25,26 +24,26 @@ class ProductController extends BaseFrontendController
         $language = Yii::$app->language;
         $mobile = Yii::$app->devicedetect->isMobile();
         $webp_support = ProductImage::imageWebp();
-        $product = Product::find()->with(['category.parent', 'images'])->where(['slug' => $slug])->one();
+
+        $product = $this->oneProduct($slug, $language);
 
         if ($product === null) {
             throw new NotFoundHttpException('Product not found ' . '" ' . $slug . ' "');
         }
 
-        $faq = $this->getFaqProduct($product, $language);
-        $productVariants = $this->getVariantsProduct($product);
-        $products_analog = $this->getAnalogsProduct($product);
+        $faq = $this->faqProduct($product, $language);
+        $productVariants = $this->variantsProduct($product);
+        $products_analog = $this->analogsProduct($product);
         $products_analog_count = count($products_analog);
         $images = $product->images;
         $priorities = array_column($images, 'priority');
         array_multisort($priorities, SORT_ASC, $images);
-        $product_properties = $this->getPropertiesProduct($product, $language);
+        $product_properties = $this->propertiesProduct($product, $language);
         $img_brand = Brand::find()->where(['id' => $product->brand_id])->one();
         $model_review = new Review();
 
         if ($language !== 'uk') {
-            $this->getProductTranslation($product, $language);
-            $this->getProductAnalogTranslation($products_analog, $language);
+            $this->translateProducts($products_analog, $language);
         }
 
         $schemaBreadcrumb = $product->getSchemaBreadcrumb();
@@ -83,80 +82,52 @@ class ProductController extends BaseFrontendController
         ]);
     }
 
-    protected function getProductTranslation($product, $language)
+    protected function oneProduct($slug, $language)
     {
-        if ($product) {
-            $translationProd = $product->getTranslation($language)->one();
-            if ($translationProd) {
-                if ($translationProd->name) {
-                    $product->name = $translationProd->name;
-                }
-                if ($translationProd->description) {
-                    $product->description = $translationProd->description;
-                }
-                if ($translationProd->short_description) {
-                    $product->short_description = $translationProd->short_description;
-                }
-                if ($translationProd->footer_description) {
-                    $product->footer_description = $translationProd->footer_description;
-                }
-                if ($translationProd->seo_title) {
-                    $product->seo_title = $translationProd->seo_title;
-                }
-                if ($translationProd->seo_description) {
-                    $product->seo_description = $translationProd->seo_description;
-                }
-                if ($translationProd->keywords) {
-                    $product->keywords = $translationProd->keywords;
-                }
-                if ($translationProd->h1) {
-                    $product->h1 = $translationProd->h1;
-                }
-            }
-            $translationCat = $product->category->getTranslation($language)->one();
-            if ($translationCat) {
-                if ($translationCat->name) {
-                    $product->category->name = $translationCat->name;
-                }
-                if ($translationCat->prefix) {
-                    $product->category->prefix = $translationCat->prefix;
-                }
-            }
-            if ($product->category->parent) {
-                $translationCatParent = $product->category->parent->getTranslation($language)->one();
-                if ($translationCatParent) {
-                    if ($translationCatParent->name) {
-                        $product->category->parent->name = $translationCatParent->name;
-                    }
-                }
-            }
-        }
+        return Product::find()
+            ->alias('p')
+            ->select([
+                'p.*',
+                'name' => 'COALESCE(pt.name, p.name)',
+                'description' => 'COALESCE(pt.description, p.description)',
+                'short_description' => 'COALESCE(pt.short_description, p.short_description)',
+                'footer_description' => 'COALESCE(pt.footer_description, p.footer_description)',
+                'seo_title' => 'COALESCE(pt.seo_title, p.seo_title)',
+                'seo_description' => 'COALESCE(pt.seo_description, p.seo_description)',
+                'keywords' => 'COALESCE(pt.keywords, p.keywords)',
+                'h1' => 'COALESCE(pt.h1, p.h1)',
+            ])
+            ->leftJoin('products_translate pt',
+                'pt.product_id = p.id AND pt.language = :language')
+            ->where(['p.slug' => $slug])
+            ->addParams([':language' => $language])
+            ->with([
+                'images',
+                'category' => function ($query) use ($language) {
+                    $query->alias('c')
+                        ->select([
+                            'c.id',
+                            'c.slug',
+                            'c.parentId',
+                            'name' => 'COALESCE(ct.name, c.name)',
+                            'prefix' => 'COALESCE(ct.prefix, c.prefix)',
+                        ])
+                        ->leftJoin('categories_translate ct', 'ct.category_id = c.id AND ct.language = :language', [':language' => $language]);
+                },
+                'category.parent' => function ($query) use ($language) {
+                    $query->alias('cp')
+                        ->select([
+                            'cp.id',
+                            'cp.slug',
+                            'name' => 'COALESCE(cpt.name, cp.name)',
+                        ])
+                        ->leftJoin('categories_translate cpt', 'cpt.category_id = cp.id AND cpt.language = :language', [':language' => $language]);
+                },
+            ])
+            ->one();
     }
 
-    protected function getProductAnalogTranslation($products_analog, $language)
-    {
-        if ($products_analog) {
-            foreach ($products_analog as $product) {
-                $translationProd = $product->getTranslation($language)->one();
-                if ($translationProd) {
-                    if ($translationProd->name) {
-                        $product->name = $translationProd->name;
-                    }
-                }
-                $translationCat = $product->category->getTranslation($language)->one();
-                if ($translationCat) {
-                    if ($translationCat->name) {
-                        $product->category->name = $translationCat->name;
-                    }
-                    if ($translationCat->prefix) {
-                        $product->category->prefix = $translationCat->prefix;
-                    }
-                }
-            }
-        }
-    }
-
-    protected function getFaqProduct($product, $language)
+    protected function faqProduct($product, $language)
     {
         return Faq::find()
             ->alias('f')
@@ -173,7 +144,7 @@ class ProductController extends BaseFrontendController
             ->all();
     }
 
-    protected function getPropertiesProduct($product, $language)
+    protected function propertiesProduct($product, $language)
     {
         return ProductProperties::find()
             ->alias('pp')
@@ -200,7 +171,7 @@ class ProductController extends BaseFrontendController
             ->all();
     }
 
-    protected function getVariantsProduct($product)
+    protected function variantsProduct($product)
     {
         return ProductPackaging::find()
             ->alias('pp')
@@ -218,7 +189,7 @@ class ProductController extends BaseFrontendController
             ->all();
     }
 
-    protected function getAnalogsProduct($product)
+    protected function analogsProduct($product)
     {
         return Product::find()
             ->alias('p')

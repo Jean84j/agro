@@ -280,7 +280,7 @@ class CategoryController extends BaseFrontendController
                 }
             }
 
-            $products = $this->translateProduct($products, $language);
+            $products = $this->translateProducts($products, $language);
 
             if ($auxiliaryCategories) {
                 foreach ($auxiliaryCategories as $auxiliaryCategory) {
@@ -403,7 +403,7 @@ class CategoryController extends BaseFrontendController
 
         if ($language !== 'uk') {
             $category = $this->translateCategory($category, $language);
-            $products = $this->translateProduct($products, $language);
+            $products = $this->translateProducts($products, $language);
         }
 
         $this->setAuxiliaryCatalogBreadCrumbSchema($category, $breadcrumbCategory);

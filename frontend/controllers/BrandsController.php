@@ -67,7 +67,7 @@ class BrandsController extends BaseFrontendController
         $products_all = $query->count();
 
         if ($language !== 'uk') {
-            $products = $this->translateProduct($products, $language);
+            $products = $this->translateProducts($products, $language);
         }
 
         Yii::$app->metamaster
