@@ -22,9 +22,9 @@ class CategoryController extends BaseFrontendController
     public function actionList()
     {
         $language = Yii::$app->language;
-        $categories = $this->getCategoriesCatalog($language);
+        $categories = $this->categories($language);
 
-        $auxiliaryCategories = $this->getAuxiliaryCategoriesCatalog();
+        $auxiliaryCategories = $this->popularAuxiliaryCategories($language);
 
         $seo = Settings::seoPageTranslate('catalog');
         $url = Url::canonical();
@@ -56,7 +56,7 @@ class CategoryController extends BaseFrontendController
             ]);
     }
 
-    protected function getCategoriesCatalog($language)
+    protected function categories($language)
     {
         return Category::find()
             ->alias('c')
@@ -76,15 +76,25 @@ class CategoryController extends BaseFrontendController
             ->all();
     }
 
-    protected function getAuxiliaryCategoriesCatalog()
+    protected function popularAuxiliaryCategories($language)
     {
         return Yii::$app->cache->getOrSet(
             'auxiliary_categories_random_12',
-            static function () {
+            static function ($language) {
                 return AuxiliaryCategories::find()
+                    ->alias('c')
+                    ->select([
+                        'c.id',
+                        'c.slug',
+                        'c.image',
+                        'name' => 'COALESCE(ct.name, c.name)',
+                        'c.visibility',
+                    ])
+                    ->leftJoin('auxiliary_translate ct', 'ct.category_id = c.id AND ct.language = :language')
                     ->orderBy(new Expression('RAND()'))
                     ->limit(12)
-                    ->andWhere(['visibility' => 1])
+                    ->andWhere(['c.visibility' => 1])
+                    ->addParams([':language' => $language])
                     ->all();
             },
             60 * 60 * 24 // 24 часа
@@ -111,43 +121,7 @@ class CategoryController extends BaseFrontendController
     {
         $language = Yii::$app->language;
 
-        $category = Category::find()
-            ->alias('c')
-            ->select([
-                'c.id',
-                'c.slug',
-                'c.file',
-                'c.parentId',
-                'c.name AS original_name', // Оригинальное название категории
-                'IFNULL(ct.name, c.name) AS name', // Переведенное название категории
-                'c.h1 AS original_h1',
-                'IFNULL(ct.h1, c.h1) AS h1',
-                'c.description AS original_description',
-                'IFNULL(ct.description, c.description) AS description',
-                'c.pageTitle AS original_pageTitle',
-                'IFNULL(ct.pageTitle, c.pageTitle) AS pageTitle',
-                'c.metaDescription AS original_metaDescription',
-                'IFNULL(ct.metaDescription, c.metaDescription) AS metaDescription',
-                'c.visibility',
-                'c.svg',
-            ])
-            ->leftJoin('categories_translate ct', 'ct.category_id = c.id AND ct.language = :language') // Присоединение переводов категории
-            ->leftJoin('categories_translate ctp', 'ctp.category_id = c.parentId AND ctp.language = :language') // Присоединение переводов родительской категории
-            ->where(['c.slug' => $slug]) // Фильтрация по слагу
-            ->andWhere(['c.visibility' => 1]) // Только видимые категории
-            ->addParams([':language' => $language]) // Добавление параметра языка
-            ->one();
-
-        if ($category->parents) {
-            foreach ($category->parents as $parent) {
-                if ($parent !== null) {
-                    $translationCatParent = $parent->getTranslation($language)->one();
-                    if ($translationCatParent) {
-                        $parent->name = $translationCatParent->name;
-                    }
-                }
-            }
-        }
+        $category = $this->category($slug, $language);
 
         Yii::$app->metamaster
             ->setIndexable(true)
@@ -168,6 +142,50 @@ class CategoryController extends BaseFrontendController
                 'category' => $category,
                 'language' => $language,
             ]);
+    }
+
+    protected function category($slug, $language)
+    {
+        $category = Category::find()
+            ->alias('c')
+            ->select([
+                'c.id',
+                'c.slug',
+                'c.file',
+                'c.parentId',
+                'c.visibility',
+                'c.svg',
+                'c.name AS original_name',
+                'c.h1 AS original_h1',
+                'c.description AS original_description',
+                'c.pageTitle AS original_pageTitle',
+                'c.metaDescription AS original_metaDescription',
+                'name' => 'COALESCE(ct.name, c.name)',
+                'h1' => 'COALESCE(ct.h1, c.h1)',
+                'description' => 'COALESCE(ct.description, c.description)',
+                'pageTitle' => 'COALESCE(ct.pageTitle, c.pageTitle)',
+                'metaDescription' => 'COALESCE(ct.metaDescription, c.metaDescription)',
+            ])
+            ->leftJoin('categories_translate ct', 'ct.category_id = c.id AND ct.language = :language')
+            ->where(['c.slug' => $slug, 'c.visibility' => 1])
+            ->addParams([':language' => $language])
+            ->with(['parents.translations' => function ($query) use ($language) {
+                $query->andWhere(['language' => $language]);
+            }
+            ])
+            ->one();
+
+        if ($category && !empty($category->parents)) {
+            foreach ($category->parents as $parent) {
+                if (!empty($parent->translations)) {
+                    $translation = $parent->translations[0] ?? null;
+                    if ($translation && !empty($translation->name)) {
+                        $parent->name = $translation->name;
+                    }
+                }
+            }
+        }
+        return $category;
     }
 
     public function actionCatalog($slug)
@@ -195,31 +213,9 @@ class CategoryController extends BaseFrontendController
             throw new NotFoundHttpException('Category not found ' . '" ' . $slug . ' "');
         }
 
-        $auxiliaryCategories = AuxiliaryCategories::find()
-            ->where(['parentId' => $category->id])
-            ->andWhere(['visibility' => 1])
-            ->all();
+        $auxiliaryCategories = $this->auxiliaryCategories($category->id, $language);
 
-        $propertiesFilter = CategoriesProperties::find()
-            ->alias('cp')
-            ->select([
-                'cp.property_id',
-                'cp.category_id',
-                'COALESCE(pnt.name, pn.name) AS name',
-            ])
-            ->leftJoin(
-                'properties_name pn',
-                'pn.id = cp.property_id'
-            )
-            ->leftJoin(
-                'properties_name_translate pnt',
-                'pnt.name_id = pn.id AND pnt.language = :language'
-            )
-            ->where(['cp.category_id' => $category->id])
-            ->orderBy(['pn.sort' => SORT_ASC])
-            ->addParams([':language' => $language])
-            ->asArray()
-            ->all();
+        $propertiesFilter = $this->propertiesFilter($category->id, $language);
 
         $query = Product::find()->where(['category_id' => $category->id]);
 
@@ -282,18 +278,7 @@ class CategoryController extends BaseFrontendController
 
             $products = $this->translateProducts($products, $language);
 
-            if ($auxiliaryCategories) {
-                foreach ($auxiliaryCategories as $auxiliaryCategory) {
-                    if ($auxiliaryCategory) {
-                        $translationAuxiliaryCategory = $auxiliaryCategory->getTranslation($language)->one();
-                        if ($translationAuxiliaryCategory) {
-                            if ($translationAuxiliaryCategory->name) {
-                                $auxiliaryCategory->name = $translationAuxiliaryCategory->name;
-                            }
-                        }
-                    }
-                }
-            }
+
         }
 
         $this->setCatalogBreadCrumbSchema($category);
@@ -323,6 +308,53 @@ class CategoryController extends BaseFrontendController
                 'mobile',
             ]));
     }
+
+    protected function auxiliaryCategories($category_id, $language)
+    {
+        return AuxiliaryCategories::find()
+            ->alias('c')
+            ->select([
+                'c.id',
+                'c.parentId',
+                'c.slug',
+                'c.image',
+                'name' => 'COALESCE(ct.name, c.name)',
+                'c.visibility',
+                'c.svg',
+            ])
+            ->leftJoin('auxiliary_translate ct', 'ct.category_id = c.id AND ct.language = :language')
+            ->where(['c.parentId' => $category_id])
+            ->andWhere(['c.visibility' => 1])
+            ->addParams([':language' => $language])
+            ->all();
+
+    }
+
+    protected function propertiesFilter($category_id, $language)
+    {
+        return CategoriesProperties::find()
+            ->alias('cp')
+            ->select([
+                'cp.property_id',
+                'cp.category_id',
+                'pn.sort', // Полезно добавить, если нужно знать порядок на фронтенде
+                'name' => 'COALESCE(pnt.name, pn.name, "")',
+            ])
+            ->leftJoin(
+                'properties_name pn',
+                'pn.id = cp.property_id'
+            )
+            ->leftJoin(
+                'properties_name_translate pnt',
+                'pnt.name_id = pn.id AND pnt.language = :language'
+            )
+            ->where(['cp.category_id' => $category_id])
+            ->orderBy(['pn.sort' => SORT_ASC])
+            ->addParams([':language' => $language])
+            ->asArray()
+            ->all();
+    }
+
 
     public function actionAuxiliaryCatalog($slug)
     {
@@ -552,7 +584,6 @@ class CategoryController extends BaseFrontendController
 
     protected function setCatalogBreadCrumbSchema($category)
     {
-
         $url = self::getUrlForSchema();
 
         if (isset($category->parent->name)) {
