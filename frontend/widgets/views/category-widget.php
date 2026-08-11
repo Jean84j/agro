@@ -3,16 +3,19 @@ use yii\helpers\Url;
 
 /** @var \common\models\shop\Category[] $categories */
 
-function renderProducts($items, $slug)
+function renderProducts($items, $slug): string
 {
     if (!$items) return '';
     $output = '';
     $i = 1;
     foreach ($items as $product) {
         if ($i < 6) {
-            $output .= '<li class="megamenu__item"><a href="' .
-                Url::to(['product/view', 'slug' => $product->slug]) . '">' .
-                $product->name . '</a></li>';
+            $output .= '<li class="megamenu__item">' .
+                '<a href="' . Url::to(['product/view', 'slug' => $product->slug]) . '" class="d-flex align-items-center gap-2">' .
+                '<img src="' . $product->getImgOne($product->getId()) . '" width="20" height="20" alt="' . $product->name . '" class="rounded">' .
+                '<span>' . shortName($product->name, 17) . '</span>' .
+                '</a>' .
+                '</li>';
         } elseif ($i === 6) {
             $output .= '<li class="megamenu__item">
                 <a href="' . Url::to(['category/catalog', 'slug' => $slug]) . '">
@@ -23,6 +26,13 @@ function renderProducts($items, $slug)
         $i++;
     }
     return $output;
+}
+
+function shortName($name, $long): string
+{
+    return  mb_strlen(strip_tags($name)) > $long
+        ? mb_substr(strip_tags($name), 0, $long - 3) . '...'
+        : strip_tags($name);
 }
 
 $isHome = Yii::$app->request->pathInfo === '';
@@ -39,7 +49,7 @@ $isHome = Yii::$app->request->pathInfo === '';
                             <a class="departments__item-link"
                                href="<?= Url::to(['category/' . ($category->parents ? 'children' : 'catalog'),
                                    'slug' => $category->slug]) ?>">
-                                <?= $category->svg . ' ' . $category->name ?>
+                                <?= $category->svg . ' ' . shortName($category->name, 23) ?>
                                 <?php if ($category->parents): ?>
                                     <svg class="departments__item-arrow" width="6" height="9">
                                         <use xlink:href="/images/sprite.svg#arrow-rounded-right-6x9"></use>
