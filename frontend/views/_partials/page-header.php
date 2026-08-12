@@ -10,7 +10,9 @@ use yii\helpers\Url;
 ?>
 <div class="page-header">
     <?php if (isset($files)): ?>
-        <?php echo BlockImages::widget(['files' => $files,]) ?>
+        <div class="block-images-wrapper">
+            <?= BlockImages::widget(['files' => $files]) ?>
+        </div>
     <?php endif; ?>
     <div class="page-header__container container">
         <div class="page-header__breadcrumb">
@@ -56,4 +58,9 @@ use yii\helpers\Url;
     .breadcrumb-arrow use {
         fill: rgba(255, 89, 0, 0.8) !important;
     }
+
+    .block-images-wrapper {
+        min-height: 100px;
+    }
+
 </style>
