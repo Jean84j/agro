@@ -78,9 +78,11 @@ class CategoryController extends BaseFrontendController
 
     protected function popularAuxiliaryCategories($language)
     {
+       $cacheKey = 'auxiliary_categories_random_12_' . $language;
+
         return Yii::$app->cache->getOrSet(
-            'auxiliary_categories_random_12',
-            static function ($language) {
+            $cacheKey,
+            function () use ($language) {
                 return AuxiliaryCategories::find()
                     ->alias('c')
                     ->select([
@@ -97,7 +99,7 @@ class CategoryController extends BaseFrontendController
                     ->addParams([':language' => $language])
                     ->all();
             },
-            60 * 60 * 24 // 24 часа
+            60 * 60 * 24
         );
     }
 
