@@ -71,6 +71,8 @@ $layout = Yii::$app->session->get('selectedLayout', 'grid-4-full');
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        line-height: 1.4;
+        max-height: 1.4em;
     }
 
     .grayscale {
