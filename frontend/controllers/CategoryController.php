@@ -78,11 +78,24 @@ class CategoryController extends BaseFrontendController
 
     protected function popularAuxiliaryCategories($language)
     {
-       $cacheKey = 'auxiliary_categories_random_12_' . $language;
+        $randomIds = Yii::$app->cache->getOrSet('popular_auxiliary_categories_ids', function () {
+            return AuxiliaryCategories::find()
+                ->select('id')
+                ->where(['visibility' => 1])
+                ->orderBy(new Expression('RAND()'))
+                ->limit(12)
+                ->column();
+        }, 60 * 60 * 24); // 24 часа
+
+        if (empty($randomIds)) {
+            return [];
+        }
+
+        $cacheKey = 'auxiliary_categories_list_' . $language;
 
         return Yii::$app->cache->getOrSet(
             $cacheKey,
-            function () use ($language) {
+            function () use ($language, $randomIds) {
                 return AuxiliaryCategories::find()
                     ->alias('c')
                     ->select([
@@ -93,9 +106,7 @@ class CategoryController extends BaseFrontendController
                         'c.visibility',
                     ])
                     ->leftJoin('auxiliary_translate ct', 'ct.category_id = c.id AND ct.language = :language')
-                    ->orderBy(new Expression('RAND()'))
-                    ->limit(12)
-                    ->andWhere(['c.visibility' => 1])
+                    ->where(['c.id' => $randomIds])
                     ->addParams([':language' => $language])
                     ->all();
             },
