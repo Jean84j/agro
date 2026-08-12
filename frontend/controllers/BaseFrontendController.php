@@ -8,9 +8,11 @@ use yii\data\Pagination;
 use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\db\Expression;
+use yii\web\Response;
 
 class BaseFrontendController extends Controller
 {
+
     /**
      * Применяет сортировку в запрос.
      *
@@ -174,6 +176,24 @@ class BaseFrontendController extends Controller
     protected function getMinimumOrderAmount()
     {
         return MinimumOrderAmount::find()->select('amount')->one();
+    }
+
+    /**
+     *
+     *
+     */
+    public function actionSetLayout()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $layout = Yii::$app->request->post('layout');
+
+        if (in_array($layout, ['grid-4-full', 'list'])) {
+            Yii::$app->session->set('selectedLayout', $layout);
+            return ['success' => true];
+        }
+
+        return ['success' => false];
     }
 
 }

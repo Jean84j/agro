@@ -1,14 +1,17 @@
 <?php
 
 use common\models\shop\Product;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var Product $products */
 
 $imageClass = '';
 
+$layout = Yii::$app->session->get('selectedLayout', 'grid-4-full');
+
 ?>
-<div class="products-view__list products-list" data-layout="grid-4-full"
+<div class="products-view__list products-list" data-layout="<?= Html::encode($layout) ?>"
      data-with-features="false" data-mobile-grid-columns="2">
     <div class="products-list__body">
         <?php foreach ($products as $product): ?>
@@ -17,7 +20,8 @@ $imageClass = '';
                 <?php $imageClass = 'grayscale'; ?>
             <?php endif; ?>
             <div class="products-list__item">
-                <div class="product-card product-card--hidden-actions <?= $background['class'] ?>" style="  background-image: url('<?= $background['image']?>');">
+                <div class="product-card product-card--hidden-actions <?= $background['class'] ?>"
+                     style="  background-image: url('<?= $background['image'] ?>');">
                     <?= $this->render('/_partials/quickview-button', ['product' => $product]) ?>
                     <?= $this->render('/_partials/badges-list', ['product' => $product]) ?>
                     <div class="product-card__image product-image">

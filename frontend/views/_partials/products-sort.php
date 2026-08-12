@@ -7,19 +7,26 @@ use yii\web\View;
 /** @var Product $products */
 /** @var Product $products_all */
 
+$layout = Yii::$app->session->get('selectedLayout', 'grid-4-full');
+
 ?>
     <div class="view-options__layout">
         <div class="layout-switcher">
             <div class="layout-switcher__list">
-                <button data-layout="grid-4-full" data-with-features="false"
+                <button data-layout="grid-4-full"
+                        data-with-features="false"
                         title="Плитка"
-                        type="button" class="layout-switcher__button">
+                        type="button"
+                        class="layout-switcher__button <?= $layout === 'grid-4-full' ? 'layout-switcher__button--active' : '' ?>">
                     <svg width="16px" height="16px">
                         <use xlink:href="/images/sprite.svg#layout-grid-16x16"></use>
                     </svg>
                 </button>
-                <button data-layout="list" data-with-features="false" title="Список"
-                        type="button" class="layout-switcher__button">
+                <button data-layout="list"
+                        data-with-features="false"
+                        title="Список"
+                        type="button"
+                        class="layout-switcher__button <?= $layout === 'list' ? 'layout-switcher__button--active' : '' ?>">
                     <svg width="16px" height="16px">
                         <use xlink:href="/images/sprite.svg#layout-list-16x16"></use>
                     </svg>
@@ -79,32 +86,27 @@ $(document).ready(function () {
 });
 
 $(function () {
-    // Загрузка предыдущего выбранного макета из localStorage при загрузке страницы
-  const savedLayout = localStorage.getItem('selectedLayout') || 'grid-4-full';
-    if (savedLayout) {
-        const productsList = $('.products-view .products-list');
+    $(document).on('click', '.layout-switcher__button', function () {
+        var btn = $(this);
         
-        // Установка предыдущего выбранного макета
-        productsList.attr('data-layout', savedLayout);
+        if (btn.hasClass('layout-switcher__button--active')) {
+            return;
+        }
         
-        // Пометка соответствующей кнопки как активной
-        $('.layout-switcher__button[data-layout="' + savedLayout + '"]').addClass('layout-switcher__button--active');
-    }
-
-    $('.layout-switcher__button').on('click', function() {
-        const selectedLayout = $(this).data('layout');
-        const layoutSwitcher = $(this).closest('.layout-switcher');
-        const productsView = $(this).closest('.products-view');
-        const productsList = productsView.find('.products-list');
+        var layout = btn.attr('data-layout');
         
-        layoutSwitcher.find('.layout-switcher__button').removeClass('layout-switcher__button--active');
-        $(this).addClass('layout-switcher__button--active');
+        $('.layout-switcher__button').removeClass('layout-switcher__button--active');
+        btn.addClass('layout-switcher__button--active');
+        $('.products-list').attr('data-layout', layout);
         
-        // Сохранение выбранного макета в localStorage
-        localStorage.setItem('selectedLayout', selectedLayout);
-
-        // Установка выбранного макета
-        productsList.attr('data-layout', selectedLayout);
+        $.ajax({
+            url: '/base-frontend/set-layout', 
+            type: 'POST',
+            data: {
+                layout: layout,
+                _csrf: yii.getCsrfToken()
+            }
+        });
     });
 });
 
