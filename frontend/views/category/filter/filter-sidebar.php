@@ -29,9 +29,7 @@ use yii\web\View;
                         <div class="widget-filters__list">
                                                     <?= $this->render('filters-item-categories', ['category' => $category]) ?>
 
-                            <!--                        --><?php //if (isset($auxiliaryCategories) and $auxiliaryCategories != null): ?>
-                            <!--                            --><? //= $this->render('filters-item-auxiliary', ['auxiliaryCategories' => $auxiliaryCategories]) ?>
-                            <!--                        --><?php //endif; ?>
+
                             <?= $this->render('filters-item-price', [
                                 'categoryMinPrice' => $categoryMinPrice,
                                 'categoryMaxPrice' => $categoryMaxPrice,
@@ -45,10 +43,6 @@ use yii\web\View;
                                 'products_all' => $products_all,
                             ]) ?>
 
-                            <!--                        --><? //= $this->render('filters-item-properties', [
-                            //                            'category' => $category,
-                            //                            'propertiesFilter' => $propertiesFilter,
-                            //                        ]) ?>
                         </div>
                     </form>
                 </div>
