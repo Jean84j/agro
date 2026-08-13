@@ -42,10 +42,14 @@ $breadcrumbItemActive = Yii::t('app', 'Товари бренду') . ' ' . $bran
                                 <?= $this->render('/_partials/products-sort', [
                                     'products' => $products,
                                     'products_all' => $products_all,
+                                    'layout' => $layout,
                                 ]) ?>
                             </div>
                         </div>
-                        <?= $this->render('/_partials/products-list', ['products' => $products]) ?>
+                        <?= $this->render('/_partials/products-list', [
+                                'products' => $products,
+                            'layout' => $layout,
+                        ]) ?>
                         <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
                     </div>

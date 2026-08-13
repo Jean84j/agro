@@ -42,6 +42,7 @@ class BrandsController extends BaseFrontendController
     public function actionCatalog($slug)
     {
         $language = Yii::$app->language;
+        $layout = Yii::$app->session->get('selectedLayout', 'grid-3-sidebar');
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];
@@ -87,6 +88,7 @@ class BrandsController extends BaseFrontendController
             'products_all' => $products_all,
             'pages' => $pages,
             'brand' => $brand,
+            'layout' => $layout,
         ]);
     }
 
