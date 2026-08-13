@@ -62,11 +62,15 @@ $breadcrumbItemActive = Yii::t('app', 'Продукти запиту');
                                 <?= $this->render('/_partials/products-sort', [
                                     'products' => $products,
                                     'products_all' => $products_all,
+                                    'layout' => $layout,
                                 ]) ?>
                             </div>
                         </div>
                         <?= $this->render('/_partials/products-list', ['products' => $products]) ?>
-                        <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
+                        <?= $this->render('/_partials/pagination', [
+                                'pages' => $pages,
+                            'layout' => $layout,
+                        ]) ?>
                         <br>
                         <div class="spec__disclaimer">
                             <?= $tag_name->getDescriptionTranslate($tag_name, $language) ?>
