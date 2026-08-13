@@ -125,6 +125,7 @@ class TagController extends BaseFrontendController
     public function actionView($slug, $category_slug = null)
     {
         $language = Yii::$app->language;
+        $layout = Yii::$app->session->get('selectedLayout', 'grid-3-sidebar');
 
         $categoryName = '';
 
@@ -252,6 +253,7 @@ class TagController extends BaseFrontendController
                 'pages' => $pages,
                 'language' => $language,
                 'categoryName' => $categoryName,
+                'layout' => $layout,
             ]);
 
     }
