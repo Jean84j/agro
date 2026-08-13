@@ -14,6 +14,7 @@ class SpecialController extends BaseFrontendController
     public function actionView()
     {
         $language = Yii::$app->language;
+        $layout = Yii::$app->session->get('selectedLayout', 'grid-3-sidebar');
 
         $params = $this->setSortAndCount();
         $sort = $params['sort'];
@@ -67,7 +68,8 @@ class SpecialController extends BaseFrontendController
             'pages',
             'language',
             'page_description',
-            'files'
+            'files',
+            'layout'
         ]));
     }
 

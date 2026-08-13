@@ -84,6 +84,20 @@ class BaseFrontendController extends Controller
                     $category->metaDescription = $translationCat->metaDescription;
                 }
             }
+            if (isset($category->parent) && $category->parent) {
+                $translationCatParent = $category->parent->getTranslation($language)->one();
+                if ($translationCatParent && $translationCatParent->name) {
+                    $category->parent->name = $translationCatParent->name;
+                }
+                if ($category->parent->parents) {
+                    foreach ($category->parent->parents as $parent) {
+                        $translationCatParentsParent = $parent->getTranslation($language)->one();
+                        if ($translationCatParentsParent && $translationCatParentsParent->name) {
+                            $parent->name = $translationCatParentsParent->name;
+                        }
+                    }
+                }
+            }
         }
 
         return $category;
@@ -95,21 +109,19 @@ class BaseFrontendController extends Controller
      */
     protected function setSortAndCount()
     {
-        if (!Yii::$app->session->has('sort')) {
+        // Обработка сортировки
+        if (Yii::$app->request->get('sort') !== null) {
+            Yii::$app->session->set('sort', Yii::$app->request->get('sort'));
+        } elseif (!Yii::$app->session->has('sort')) {
             Yii::$app->session->set('sort', '');
-        } else {
-            if (Yii::$app->request->post('sort') !== null) {
-                Yii::$app->session->set('sort', Yii::$app->request->post('sort'));
-            }
         }
         $sort = Yii::$app->session->get('sort');
 
-        if (!Yii::$app->session->has('count')) {
+        // Обработка количества на страницу
+        if (Yii::$app->request->get('count') !== null) {
+            Yii::$app->session->set('count', Yii::$app->request->get('count'));
+        } elseif (!Yii::$app->session->has('count')) {
             Yii::$app->session->set('count', 12);
-        } else {
-            if (Yii::$app->request->post('count') !== null) {
-                Yii::$app->session->set('count', Yii::$app->request->post('count'));
-            }
         }
         $count = intval(Yii::$app->session->get('count'));
 
@@ -188,7 +200,7 @@ class BaseFrontendController extends Controller
 
         $layout = Yii::$app->request->post('layout');
 
-        if (in_array($layout, ['grid-4-full', 'list'])) {
+        if (in_array($layout, ['grid-3-sidebar', 'list'])) {
             Yii::$app->session->set('selectedLayout', $layout);
             return ['success' => true];
         }

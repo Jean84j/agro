@@ -5,10 +5,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var Product $products */
+/** @var  $layout */
 
 $imageClass = '';
-
-$layout = Yii::$app->session->get('selectedLayout', 'grid-4-full');
 
 ?>
 <div class="products-view__list products-list" data-layout="<?= Html::encode($layout) ?>"

@@ -49,38 +49,52 @@ $breadcrumbItemActive = $category->name;
         ]) ?>
     <?php echo Html::beginForm(Url::current(), 'post', ['class' => 'form-inline']); ?>
     <div class="container">
-        <div class="row">
-            <div class="col-12">
+        <?php if (!$mobile && !empty($auxiliaryCategories)): ?>
+            <?php echo CategoriesAuxiliary::widget(['auxiliaryCategories' => $auxiliaryCategories]) ?>
+        <?php endif; ?>
+        <div class="shop-layout shop-layout--sidebar--start">
+            <div class="shop-layout__sidebar">
+                <?= $this->render('filter/filter-sidebar',
+                    [
+                        'category' => $category,
+                        'propertiesFilter' => $propertiesFilter,
+                        'auxiliaryCategories' => $auxiliaryCategories,
+                        'products_all' => $products_all,
+                        'category_products_all' => $category_products_all,
+                        'categoryMinPrice' => $categoryMinPrice,
+                        'categoryMaxPrice' => $categoryMaxPrice,
+                        'minPrice' => $minPrice,
+                        'maxPrice' => $maxPrice,
+                    ]) ?>
+            </div>
+            <div class="shop-layout__content">
                 <div class="block">
                     <div class="products-view">
-                        <?php if (!$mobile && !empty($auxiliaryCategories)): ?>
-                            <?php echo CategoriesAuxiliary::widget(['auxiliaryCategories' => $auxiliaryCategories]) ?>
-                        <?php endif; ?>
-                        <div class="products-view__options">
-                            <div class="view-options view-options--offcanvas--always">
-                                <div class="view-options__filters-button">
-                                    <button type="button" class="filters-button">
-                                        <svg class="filters-button__icon" width="16px" height="16px">
-                                            <use xlink:href="/images/sprite.svg#filters-16"></use>
-                                        </svg>
-                                        <span class="filters-button__title"><?= Yii::t('app', 'Фільтр') ?></span>
-                                        <span class="filters-button__counter"><?= $category->getCounterFilter() ?></span>
-                                    </button>
+                        <div id="products-wrapper">
+                            <div class="products-view__options">
+                                <div class="view-options view-options--offcanvas--mobile">
+                                    <div class="view-options__filters-button">
+                                        <button type="button" class="filters-button">
+                                            <svg class="filters-button__icon" width="16px" height="16px">
+                                                <use xlink:href="/images/sprite.svg#filters-16"></use>
+                                            </svg>
+                                            <span class="filters-button__title"><?= Yii::t('app', 'Фільтр') ?></span>
+                                            <span class="filters-button__counter"><?= $category->getCounterFilter() ?></span>
+                                        </button>
+                                    </div>
+                                    <?= $this->render('/_partials/products-sort', [
+                                        'products' => $products,
+                                        'layout' => $layout,
+                                        'products_all' => $products_all,
+                                    ]) ?>
                                 </div>
-                                <?= $this->render('/_partials/products-sort', [
-                                    'products' => $products,
-                                    'products_all' => $products_all,
-                                ]) ?>
                             </div>
-                        </div>
-                        <?= $this->render('/_partials/products-list', ['products' => $products]) ?>
-                        <?= $this->render('filter/filter-sidebar',
-                            [
-                                'category' => $category,
-                                'propertiesFilter' => $propertiesFilter,
-                                'auxiliaryCategories' => $auxiliaryCategories,
+                            <?= $this->render('/_partials/products-list', [
+                                    'products' => $products,
+                                    'layout' => $layout,
                             ]) ?>
-                        <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
+                            <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
+                        </div>
                         <?php if ($mobile && !empty($auxiliaryCategories)): ?>
                             <?php echo CategoriesAuxiliary::widget(['auxiliaryCategories' => $auxiliaryCategories]) ?>
                         <?php endif; ?>

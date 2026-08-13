@@ -102,6 +102,8 @@ class SearchController extends BaseFrontendController
     public function actionSuggestions(?string $q): string
     {
         $language = Yii::$app->language;
+        $layout = Yii::$app->session->get('selectedLayout', 'grid-3-sidebar');
+
         $id_prod = $this->findProductIdsByQuery($q);
         $id_cat = $this->findCategoryIdsByQuery($q);
 
@@ -144,6 +146,7 @@ class SearchController extends BaseFrontendController
             'pages' => $pages,
             'products_all' => $products_all,
             'categories' => $categories,
+            'layout' => $layout,
         ]);
     }
 

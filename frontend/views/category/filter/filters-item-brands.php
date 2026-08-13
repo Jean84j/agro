@@ -2,9 +2,12 @@
 
 use yii\helpers\Html;
 
+/** @var $category */
+/** @var $products_all */
+
 ?>
 <div class="widget-filters__item">
-    <div class="filter" data-collapse-item>
+    <div class="filter filter--opened" data-collapse-item>
         <button type="button" class="filter__title"
                 data-collapse-trigger>
             <?= Yii::t('app', 'Бренд') ?>
@@ -16,27 +19,48 @@ use yii\helpers\Html;
             <div class="filter__container">
                 <div class="filter-list">
                     <div class="filter-list__list">
-                        <?php $brandsCategory = $category->getBrandsCategoryFilter($category->id) ?>
+                        <?php
+                        $selectedBrand = Yii::$app->session->get('filter_radio_brand_check', '');
+                        $brandsCategory = $category->getBrandsCategoryFilter($category->id);
+
+                        $validBrandIds = array_column($brandsCategory, 'id');
+
+                        if (!empty($selectedBrand) && !in_array($selectedBrand, $validBrandIds)) {
+                            $selectedBrand = '';
+                            Yii::$app->session->set('filter_radio_brand_check', '');
+                        }
+                        ?>
+
+                        <label class="filter-list__item">
+        <span class="filter-list__input input-radio">
+            <span class="input-radio__body">
+                <input class="input-radio__input filter-change-trigger"
+                       name="filter_radio_brand"
+                       type="radio"
+                       value=""
+                       <?= (empty($selectedBrand)) ? 'checked' : '' ?>
+                >
+                <span class="input-radio__circle"></span>
+            </span>
+        </span>
+                            <span class="filter-list__title">Всі продукти</span>
+                            <span class="filter-list__counter"><?= $category_products_all ?></span>
+                        </label>
+
                         <?php foreach ($brandsCategory as $brand): ?>
-                            <label class="filter-list__item ">
-                                                                <span class="filter-list__input input-check">
-                                                                    <span class="input-check__body">
-                                                                        <input class="input-check__input"
-                                                                               type="checkbox"
-                                                                               name="brandCheck[]"
-                                                                               value="<?= Html::encode($brand->id) ?>"
-                                                                               <?= in_array($brand->id, Yii::$app->request->post('brandCheck', [])) ? 'checked' : '' ?>
-                                                                               >
-                                                                        <span class="input-check__box"></span>
-                                                                        <svg class="input-check__icon" width="9px"
-                                                                             height="7px">
-                                                                            <use xlink:href="/images/sprite.svg#check-9x7"></use>
-                                                                        </svg>
-                                                                    </span>
-                                                                </span>
-                                <span class="filter-list__title">
-                                                                 <?= $brand->name ?>
-                                                                </span>
+                            <label class="filter-list__item">
+            <span class="filter-list__input input-radio">
+                <span class="input-radio__body">
+                    <input class="input-radio__input filter-change-trigger"
+                           name="filter_radio_brand"
+                           type="radio"
+                           value="<?= Html::encode($brand->id) ?>"
+                           <?= ($brand->id == $selectedBrand) ? 'checked' : '' ?>
+                    >
+                    <span class="input-radio__circle"></span>
+                </span>
+            </span>
+                                <span class="filter-list__title"><?= Html::encode($brand->name) ?></span>
                                 <span class="filter-list__counter"><?= $brand->getBrandProductCountFilter($brand->id, $category->id) ?></span>
                             </label>
                         <?php endforeach; ?>

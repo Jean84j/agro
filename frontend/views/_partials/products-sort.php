@@ -6,18 +6,17 @@ use yii\web\View;
 
 /** @var Product $products */
 /** @var Product $products_all */
-
-$layout = Yii::$app->session->get('selectedLayout', 'grid-4-full');
+/** @var  $layout */
 
 ?>
     <div class="view-options__layout">
         <div class="layout-switcher">
             <div class="layout-switcher__list">
-                <button data-layout="grid-4-full"
+                <button data-layout="grid-3-sidebar"
                         data-with-features="false"
                         title="Плитка"
                         type="button"
-                        class="layout-switcher__button <?= $layout === 'grid-4-full' ? 'layout-switcher__button--active' : '' ?>">
+                        class="layout-switcher__button <?= $layout === 'grid-3-sidebar' ? 'layout-switcher__button--active' : '' ?>">
                     <svg width="16px" height="16px">
                         <use xlink:href="/images/sprite.svg#layout-grid-16x16"></use>
                     </svg>
@@ -42,28 +41,26 @@ $layout = Yii::$app->session->get('selectedLayout', 'grid-4-full');
     <div class="view-options__control">
         <label for="sort-form"><?= Yii::t('app', 'Сортувати') ?></label>
         <div>
-            <?php echo Html::dropDownList('sort', Yii::$app->session->get('sort'), [
+            <?= Html::dropDownList('sort', Yii::$app->session->get('sort'), [
                 '' => Yii::t('app', 'Наявність'),
                 'price_lowest' => Yii::t('app', 'Ціна Дешевші'),
                 'price_highest' => Yii::t('app', 'Ціна Дорожчі'),
                 'name_a' => Yii::t('app', 'Назва A-я'),
                 'name_z' => Yii::t('app', 'Назва Я-а'),
-            ], ['class' => 'form-control form-control-sm count-products', 'id' => 'sort-form']);
-            ?>
+            ], ['class' => 'form-control form-control-sm count-products', 'id' => 'sort-form']); ?>
         </div>
     </div>
+
     <div class="view-options__control">
         <label for="count-form"><?= Yii::t('app', 'Показати') ?></label>
         <div>
-            <?php
-            echo Html::dropDownList('count', Yii::$app->session->get('count'), [
-                '4' => '4',
-                '8' => '8',
+            <?= Html::dropDownList('count', Yii::$app->session->get('count'), [
+                '3' => '3',
+                '6' => '6',
                 '12' => '12',
-                '24' => '24',
-                '32' => '32',
-            ], ['class' => 'form-control form-control-sm count-products', 'id' => 'count-form']);
-            ?>
+                '18' => '18',
+                '30' => '30',
+            ], ['class' => 'form-control form-control-sm count-products', 'id' => 'count-form']); ?>
         </div>
     </div>
     <style>
@@ -76,14 +73,9 @@ $layout = Yii::$app->session->get('selectedLayout', 'grid-4-full');
             border-radius: 3px;
         }
     </style>
+
 <?php
 $script = <<< JS
-
-$(document).ready(function () {
-    $('#sort-form, #count-form').change(function () {
-        this.form.submit();
-    });
-});
 
 $(function () {
     $(document).on('click', '.layout-switcher__button', function () {
@@ -104,7 +96,6 @@ $(function () {
             type: 'POST',
             data: {
                 layout: layout,
-                _csrf: yii.getCsrfToken()
             }
         });
     });

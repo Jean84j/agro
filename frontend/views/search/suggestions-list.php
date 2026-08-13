@@ -35,11 +35,15 @@ $breadcrumbItemActive = Html::encode(Yii::$app->request->get('q'));
                                 <div class="view-options view-options--offcanvas--always">
                                     <?= $this->render('/_partials/products-sort', [
                                         'products' => $products,
+                                        'layout' => $layout,
                                         'products_all' => $products_all,
                                     ]) ?>
                                 </div>
                             </div>
-                            <?= $this->render('/_partials/products-list', ['products' => $products]) ?>
+                            <?= $this->render('/_partials/products-list', [
+                                    'products' => $products,
+                                'layout' => $layout,
+                            ]) ?>
                             <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                             <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
                         </div>

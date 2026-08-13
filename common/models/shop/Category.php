@@ -163,9 +163,10 @@ class Category extends ActiveRecord
             ->asArray()
             ->column();
 
-        $brands = Brand::find()->where(['id' => $brandsId])->all();
-
-        return $brands;
+        return Brand::find()
+            ->select(['id', 'name'])
+            ->where(['id' => $brandsId])
+            ->all();
     }
 
     public function getCounterFilter()
@@ -179,7 +180,8 @@ class Category extends ActiveRecord
             $propertiesCheck = [];
         }
 
-        $res = count($brandCheck) + count($propertiesCheck);
+//        $res = count($brandCheck) + count($propertiesCheck);
+        $res = 0;
 
         $minPrice = Yii::$app->session->get('minPriceFilter');
         $maxPrice = Yii::$app->session->get('maxPriceFilter');

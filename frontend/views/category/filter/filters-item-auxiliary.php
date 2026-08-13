@@ -4,7 +4,7 @@ use yii\helpers\Url;
 
 ?>
 <div class="widget-filters__item">
-    <div class="filter filter--opened" data-collapse-item>
+    <div class="filter" data-collapse-item>
         <button type="button" class="filter__title"
                 data-collapse-trigger>
             <?= Yii::t('app', 'Категорії допоміжні') ?>

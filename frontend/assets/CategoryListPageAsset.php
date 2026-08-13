@@ -8,7 +8,9 @@ class CategoryListPageAsset extends BaseAssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [];
-    public $depends = [];
+    public $depends = [
+        'yii\web\YiiAsset',
+    ];
 
 }
 
