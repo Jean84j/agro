@@ -31,7 +31,7 @@ class CronController extends Controller
             'file_get_content' // Используемый механизм запроса: curl (default) | file_get_content
         );
 
-        $begin = true;
+        $begin = null;
         $end = false;
 
         $cities = NpCity::find()
