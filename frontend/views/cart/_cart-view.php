@@ -98,8 +98,10 @@ if ($total_summ < $minimumOrderAmount->amount) {
                         <table class="cart__totals">
                             <tfoot class="cart__totals-footer">
                             <tr>
-                                <th><?= Yii::t('app', 'Загальна сума') ?></th>
-                                <td><?= Yii::$app->formatter->asCurrency($total_summ) ?></td>
+                                <th><?= Yii::t('app', 'Разом') ?></th>
+                                <td style="color: #078523; font-weight: bold; font-size: 26px">
+                                    <?= Yii::$app->formatter->asCurrency($total_summ) ?>
+                                </td>
                             </tr>
                             </tfoot>
                         </table>

@@ -84,7 +84,7 @@ class CartController extends BaseFrontendController
                 return [
                     'qty' => $qtyCart,
 
-                    'html' => $this->renderAjax($view, [
+                    'html' => $this->renderPartial($view, [
                         'orders' => $orders,
                         'total_summ' => $totalSumm,
                         'qty_cart' => $qtyCart,
@@ -92,7 +92,7 @@ class CartController extends BaseFrontendController
                         'urls' => $this->getUrls(),
                     ]),
 
-                    'order' => $this->renderAjax('/order/_totals-products', [
+                    'order' => $this->renderPartial('/order/_totals-products', [
                         'orders' => $orders,
                         'total_summ' => $totalSumm,
                         'minimumOrderAmount' => $minimumOrderAmount,
@@ -118,14 +118,14 @@ class CartController extends BaseFrontendController
         return [
             'qty' => $qtyCart,
 
-            'html' => $this->renderAjax('_cart-view', [
+            'html' => $this->renderPartial('_cart-view', [
                 'orders' => $orders,
                 'total_summ' => $totalSumm,
                 'qty_cart' => $qtyCart,
                 'minimumOrderAmount' => $minimumOrderAmount,
                 'urls' => $this->getUrls(),
             ]),
-            'order' => $this->renderAjax('/order/_totals-products', [
+            'order' => $this->renderPartial('/order/_totals-products', [
                 'orders' => $orders,
                 'total_summ' => $totalSumm,
                 'minimumOrderAmount' => $minimumOrderAmount,
