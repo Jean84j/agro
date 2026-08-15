@@ -50,15 +50,15 @@ use kartik\rating\StarRating;
                              data-url-review="<?= Yii::$app->urlManager->createUrl(['product/create']) ?>">
                             <label for="review-name"><?= Yii::t('app', 'Ваше ім’я') ?></label>
                             <input type="text" name="name" class="form-control" id="review-name"
-                                   oninvalid="this.setCustomValidity('Укажіть будь ласка Ваше ім’я')"
+                                   oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваше ім’я')"
                                    oninput="this.setCustomValidity('')"
-                                   placeholder="<?= Yii::t('app', 'Ваше ім’я') ?>" required>
+                                   placeholder="<?= Yii::t('app', 'Як до вас звертатися') ?>" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="review-email">Email</label>
                             <input type="text" name="email" class="form-control" id="review-email"
-                                   placeholder="Email"
-                                   oninvalid="this.setCustomValidity('Укажіть будь ласка Ваш email')"
+                                   placeholder="<?=Yii::t('app','Ваша пошта')?>"
+                                   oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваш email')"
                                    oninput="this.setCustomValidity('')"
                                    required>
                         </div>
@@ -66,7 +66,7 @@ use kartik\rating\StarRating;
                     <div class="form-group">
                         <label for="review-text"><?= Yii::t('app', 'Ваш відгук') ?></label>
                         <textarea class="form-control" name="message" id="review-text"
-                                  placeholder="<?= Yii::t('app', 'Ваш відгук') ?>"
+                                  placeholder="<?= Yii::t('app', 'Поділіться своїми враженнями про товар...') ?>"
                                   rows="6"
                                   oninvalid="this.setCustomValidity('Напишіть будь ласка Ваш відгук')"
                                   oninput="this.setCustomValidity('')"
