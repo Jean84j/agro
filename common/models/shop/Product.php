@@ -571,86 +571,42 @@ class Product extends ActiveRecord implements CartPositionInterface
         return $res;
     }
 
-    public
-    function getRating($id, $w = 18, $h = 17)
+    public function getRating($id, $w = 18, $h = 17)
     {
-        $product = Product::find()->with('reviews')->where(['id' => $id])->one();
+        $rating = (int) round(
+            Review::find()
+                ->where(['product_id' => $id])
+                ->average('rating') ?? 0
+        );
 
-        $res = '
-            <div class="rating">
-                                                    <div class="rating__body">';
-        if ($product->reviews) {
-            $s = [];
-            foreach ($product->reviews as $review) {
-                $s[] = $review->rating;
-            }
-            $rating = round(array_sum($s) / count($product->reviews));
+        $activeStar = '
+        <svg class="rating__star %s" width="' . $w . 'px" height="' . $h . 'px">
+            <g class="rating__fill">
+                <use xlink:href="/images/sprite.svg#star-normal"></use>
+            </g>
+            <g class="rating__stroke">
+                <use xlink:href="/images/sprite.svg#star-normal-stroke"></use>
+            </g>
+        </svg>
+        <div class="rating__star rating__star--only-edge %s">
+            <div class="rating__fill">
+                <div class="fake-svg-icon"></div>
+            </div>
+            <div class="rating__stroke">
+                <div class="fake-svg-icon"></div>
+            </div>
+        </div>';
 
-            if ($rating != null) {
-                for ($i = 1; $i <= $rating; $i++) {
-                    $res .= '<svg class="rating__star rating__star--active" width="' . $w . 'px" height="' . $h . 'px">
-                                                                    <g class="rating__fill">
-                                                                        <use xlink:href="/images/sprite.svg#star-normal"></use>
-                                                                    </g>
-                                                                    <g class="rating__stroke">
-                                                                        <use xlink:href="/images/sprite.svg#star-normal-stroke"></use>
-                                                                    </g>
-                                                                </svg>
-                                                                <div class="rating__star rating__star--only-edge rating__star--active">
-                                                                <div class="rating__fill">
-                                                                    <div class="fake-svg-icon"></div>
-                                                                </div>
-                                                                <div class="rating__stroke">
-                                                                    <div class="fake-svg-icon"></div>
-                                                                </div>
-                                                            </div>';
-                }
-                if (5 - $rating != 0) {
-                    for ($i = 1; $i <= 5 - $rating; $i++) {
-                        $res .= '<svg class="rating__star " width="' . $w . 'px" height="' . $h . 'px">
-                                                                        <g class="rating__fill">
-                                                                            <use xlink:href="/images/sprite.svg#star-normal"></use>
-                                                                        </g>
-                                                                        <g class="rating__stroke">
-                                                                            <use xlink:href="/images/sprite.svg#star-normal-stroke"></use>
-                                                                        </g>
-                                                                    </svg>
-                                                                    <div class="rating__star rating__star--only-edge ">
-                                                                        <div class="rating__fill">
-                                                                            <div class="fake-svg-icon"></div>
-                                                                        </div>
-                                                                        <div class="rating__stroke">
-                                                                            <div class="fake-svg-icon"></div>
-                                                                        </div>
-                                                                    </div>';
-                    }
-                }
-            }
+        $html = '<div class="rating"><div class="rating__body">';
 
-        } else {
-            for ($i = 1; $i <= 5; $i++) {
-                $res .= '<svg class="rating__star " width="' . $w . 'px" height="' . $h . 'px">
-                                                                    <g class="rating__fill">
-                                                                        <use xlink:href="/images/sprite.svg#star-normal"></use>
-                                                                    </g>
-                                                                    <g class="rating__stroke">
-                                                                        <use xlink:href="/images/sprite.svg#star-normal-stroke"></use>
-                                                                    </g>
-                                                                </svg>
-                                                                <div class="rating__star rating__star--only-edge ">
-                                                                <div class="rating__fill">
-                                                                    <div class="fake-svg-icon"></div>
-                                                                </div>
-                                                                <div class="rating__stroke">
-                                                                    <div class="fake-svg-icon"></div>
-                                                                </div>
-                                                            </div>';
-            }
+        for ($i = 1; $i <= 5; $i++) {
+            $class = $i <= $rating ? 'rating__star--active' : '';
+            $html .= sprintf($activeStar, $class, $class);
         }
-        $res .= '</div>
-                                                </div>';
 
-        return $res;
+        $html .= '</div></div>';
+
+        return $html;
     }
 
     public function getFooterDescription($description, $name)
