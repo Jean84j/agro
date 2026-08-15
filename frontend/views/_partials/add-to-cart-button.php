@@ -20,7 +20,6 @@ use common\models\shop\Product;
             data-default-btn="<?= Yii::t('app', 'Купити') ?>"
             data-product-id="<?= $product->id ?>"
             data-url-cart-view="<?= $isAvailable ? Yii::$app->urlManager->createUrl(['cart/cart-view']) : '' ?>"
-            data-url-qty-cart="<?= $isAvailable ? Yii::$app->urlManager->createUrl(['cart/qty-cart']) : '' ?>"
         <?= $isAvailable ? '' : 'disabled' ?>>
         <svg width="20px" height="20px" style="display: unset;">
             <use xlink:href="/images/sprite.svg#cart-20"></use>

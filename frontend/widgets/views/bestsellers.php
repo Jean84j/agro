@@ -63,64 +63,8 @@ $borderColor ?? $borderColor = '#f5962ecc';
                         </div>
                         <div class="product-card__actions">
                             <?= $this->render('/_partials/status', ['product' => $products[0]]) ?>
-                            <?php if ($products[0]->old_price == null) { ?>
-                                <div class="product-card__prices">
-                                    <?= Yii::$app->formatter->asCurrency($products[0]->getPrice()) ?>
-                                </div>
-                            <?php } else { ?>
-                                <div class="product-card__prices">
-                                    <span class="product-card__new-price"><?= Yii::$app->formatter->asCurrency($products[0]->getPrice()) ?></span>
-                                    <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($products[0]->getOldPrice()) ?></span>
-                                </div>
-                            <?php } ?>
-                            <div class="form-group product__option-widgets">
-                                        <span class="text-success" style="padding: 3px 1px;font-size: 25px;">
-                            </span>
-                            </div>
-                            <div class="product-card__buttons">
-                                <?php if ($products[0]->status_id != 2) { ?>
-                                    <button class="btn btn-primary product-card__addtocart "
-                                            type="button"
-                                            data-default-btn="<?= Yii::t('app', 'Купити') ?>"
-                                            data-status-btn="<?= Yii::t('app', 'В кошику') ?>"
-                                            data-product-id="<?= $products[0]->id ?>"
-                                            data-url-cart-view="<?= Yii::$app->urlManager->createUrl(['cart/cart-view']) ?>"
-                                            data-url-qty-cart="<?= Yii::$app->urlManager->createUrl(['cart/qty-cart']) ?>"
-                                    >
-                                        <svg width="20px" height="20px" style="display: unset;">
-                                            <use xlink:href="/images/sprite.svg#cart-20"></use>
-                                        </svg>
-                                        <?= !$products[0]->getIssetToCart($products[0]->id) ? Yii::t('app', 'Купити') : Yii::t('app', 'В кошику') ?>
-                                    </button>
-                                <?php } else { ?>
-                                    <button class="btn btn-secondary disabled"
-                                            type="button"
-                                            data-product-id="<?= $products[0]->id ?>">
-                                        <svg width="20px" height="20px" style="display: unset;">
-                                            <use xlink:href="/images/sprite.svg#cart-20"></use>
-                                        </svg>
-                                        <?= Yii::t('app', 'Купити') ?>
-                                    </button>
-                                <?php } ?>
-                                <button type="button"
-                                        class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wish"
-                                        aria-label="add wish list"
-                                        data-url-wish="<?= Yii::$app->urlManager->createUrl(['wish/add-to-wish']) ?>"
-                                        data-wish-product-id="<?= $products[0]->id ?>">
-                                    <svg width="20px" height="20px">
-                                        <use xlink:href="/images/sprite.svg#wishlist-16"></use>
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                        class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__compare"
-                                        aria-label="add compare list"
-                                        data-url-compare="<?= Yii::$app->urlManager->createUrl(['compare/add-to-compare']) ?>"
-                                        data-compare-product-id="<?= $products[0]->id ?>">
-                                    <svg width="20px" height="20px">
-                                        <use xlink:href="/images/sprite.svg#compare-16"></use>
-                                    </svg>
-                                </button>
-                            </div>
+                            <?= $this->render('/_partials/price', ['product' => $products[0]]) ?>
+                            <?= $this->render('/_partials/add-to-cart-button', ['product' => $products[0]]) ?>
                         </div>
                     </div>
                 </div>

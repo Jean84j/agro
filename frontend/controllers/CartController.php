@@ -11,24 +11,40 @@ class CartController extends BaseFrontendController
 {
     public function actionCartView($id, $qty = 1)
     {
-
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $cart = Yii::$app->cart;
 
-        $model = Product::find()->select(['id', 'price', 'name', 'slug', 'currency'])->where(['id' => $id])->one();
+        $model = Product::find()
+            ->select(['id', 'price', 'name', 'slug', 'currency'])
+            ->where(['id' => $id])
+            ->one();
 
-        !$model->getIssetToCart($model->id) ? '' : $qty = 0;
-
-        if ($model) {
-            $cart->put($model, $qty);
-            return $this->renderPartial('cart-view', [
-                'orders' => Yii::$app->cart->getPositions(),
-                'total_summ' => Yii::$app->cart->getCost(),
-                'qty_cart' => Yii::$app->cart->getCount(),
-                'minimumOrderAmount' => $this->getMinimumOrderAmount(),
-                'urls' => $this->getUrls(),
-            ]);
+        if (!$model) {
+            throw new NotFoundHttpException();
         }
-        throw new NotFoundHttpException();
+
+        if ($model->getIssetToCart($model->id)) {
+            $qty = 0;
+        }
+
+        $cart->put($model, $qty);
+
+        $qtyCart = $cart->getCount();
+        $orders = $cart->getPositions();
+        $totalSumm = $cart->getCost();
+        $minimumOrderAmount = $this->getMinimumOrderAmount();
+
+        return [
+            'qty' => $qtyCart,
+
+            'html' => $this->renderPartial('cart-view', [
+                'orders' => $orders,
+                'total_summ' => $totalSumm,
+                'qty_cart' => $qtyCart,
+                'minimumOrderAmount' => $minimumOrderAmount,
+                'urls' => $this->getUrls(),
+            ]),
+        ];
     }
 
     public function actionCartViewAll()
@@ -59,14 +75,27 @@ class CartController extends BaseFrontendController
                 if (Yii::$app->cart->getCount() < 1) {
                     $view = 'cart-empty';
                 }
+
+                $orders = Yii::$app->cart->getPositions();
+                $totalSumm = Yii::$app->cart->getCost();
+                $qtyCart = Yii::$app->cart->getCount();
+                $minimumOrderAmount = $this->getMinimumOrderAmount();
+
                 return [
-                    'qty' => Yii::$app->cart->getCount(),
+                    'qty' => $qtyCart,
+
                     'html' => $this->renderAjax($view, [
-                        'orders' => Yii::$app->cart->getPositions(),
-                        'total_summ' => Yii::$app->cart->getCost(),
-                        'qty_cart' => Yii::$app->cart->getCount(),
-                        'minimumOrderAmount' => $this->getMinimumOrderAmount(),
+                        'orders' => $orders,
+                        'total_summ' => $totalSumm,
+                        'qty_cart' => $qtyCart,
+                        'minimumOrderAmount' => $minimumOrderAmount,
                         'urls' => $this->getUrls(),
+                    ]),
+
+                    'order' => $this->renderAjax('/order/_totals-products', [
+                        'orders' => $orders,
+                        'total_summ' => $totalSumm,
+                        'minimumOrderAmount' => $minimumOrderAmount,
                     ]),
                 ];
             }
@@ -74,46 +103,41 @@ class CartController extends BaseFrontendController
         return null;
     }
 
-    public function actionQtyCart()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return [
-            'orders' => Yii::$app->cart->getPositions(),
-            'total_summ' => Yii::$app->cart->getCost(),
-            'qty_cart' => Yii::$app->cart->getCount(),
-        ];
-    }
-
-    public function actionQtyOrder()
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $this->renderAjax('/order/_totals-products', [
-            'orders' => Yii::$app->cart->getPositions(),
-            'total_summ' => Yii::$app->cart->getCost(),
-            'minimumOrderAmount' => $this->getMinimumOrderAmount(),
-        ]);
-    }
 
     public function actionUpdate($id, $qty = null)
     {
         $product = Product::findOne($id);
         Yii::$app->cart->update($product, $qty);
-                Yii::$app->response->format = Response::FORMAT_JSON;
-        return $this->renderAjax('_cart-view', [
-            'orders' => Yii::$app->cart->getPositions(),
-            'total_summ' => Yii::$app->cart->getCost(),
-            'qty_cart' => Yii::$app->cart->getCount(),
-            'minimumOrderAmount' => $this->getMinimumOrderAmount(),
-            'urls' => $this->getUrls(),
-        ]);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $orders = Yii::$app->cart->getPositions();
+        $totalSumm = Yii::$app->cart->getCost();
+        $qtyCart = Yii::$app->cart->getCount();
+        $minimumOrderAmount = $this->getMinimumOrderAmount();
+
+        return [
+            'qty' => $qtyCart,
+
+            'html' => $this->renderAjax('_cart-view', [
+                'orders' => $orders,
+                'total_summ' => $totalSumm,
+                'qty_cart' => $qtyCart,
+                'minimumOrderAmount' => $minimumOrderAmount,
+                'urls' => $this->getUrls(),
+            ]),
+            'order' => $this->renderAjax('/order/_totals-products', [
+                'orders' => $orders,
+                'total_summ' => $totalSumm,
+                'minimumOrderAmount' => $minimumOrderAmount,
+            ]),
+        ];
+
     }
 
     protected function getUrls()
     {
         return [
             'urlUpdate' => Yii::$app->urlManager->createUrl(['cart/update']),
-            'urlQty' => Yii::$app->urlManager->createUrl(['cart/qty-cart']),
-            'urlOrderQty' => Yii::$app->urlManager->createUrl(['cart/qty-order']),
             'urlRemove' => Yii::$app->urlManager->createUrl(['cart/remove']),
         ];
     }

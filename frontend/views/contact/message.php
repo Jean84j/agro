@@ -11,29 +11,30 @@
                 <input type="text" name="name" class="form-control"
                        oninvalid="this.setCustomValidity('<?=Yii::t('app','Вкажіть будь ласка Ваше ім’я')?>')"
                        oninput="this.setCustomValidity('')"
-                       placeholder="<?=Yii::t('app','Ваше ім’я')?>" required>
+                       placeholder="<?=Yii::t('app','Як до вас звертатися')?>" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="messages-email">Email</label>
                 <input type="text" name="email" class="form-control"
-                       placeholder="<?=Yii::t('app','Адреса електронної пошти')?>"
+                       placeholder="<?=Yii::t('app','Ваша електронна пошта')?>"
                        oninvalid="this.setCustomValidity('<?=Yii::t('app','Вкажіть будь ласка Ваш email')?>')"
                        oninput="this.setCustomValidity('')"
                        required>
             </div>
         </div>
         <div class="form-group">
-            <label for="messages-subject"><?=Yii::t('app','Тема')?></label>
+            <label for="messages-subject"><?=Yii::t('app','Тема повідомлення')?></label>
             <input type="text" name="subject" class="form-control"
-                   placeholder="<?=Yii::t('app','Тема')?>"
+                   placeholder="<?=Yii::t('app','Про що ви хочете запитати?')?>"
                    oninvalid="this.setCustomValidity('<?=Yii::t('app','Вкажіть будь ласка Тему')?>')"
                    oninput="this.setCustomValidity('')"
                    required>
         </div>
         <div class="form-group">
-            <label for="messages-messages"><?=Yii::t('app','Повідомлення')?></label>
+            <label for="messages-messages"><?=Yii::t('app','Ваше повідомлення')?></label>
             <textarea name="message" class="form-control" rows="4"
-                      oninvalid="this.setCustomValidity('<?=Yii::t('app','Напишіть будь ласка Ваше повідомлення')?>')"
+                      placeholder="<?=Yii::t('app','Напишіть ваше повідомлення...')?>"
+                      oninvalid="this.setCustomValidity('<?=Yii::t('app','Напишіть ваше запитання або повідомлення...')?>')"
                       oninput="this.setCustomValidity('')"
                       required></textarea>
         </div>
