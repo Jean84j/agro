@@ -8,7 +8,6 @@
 /** @var $maxPrice */
 /** @var $filterBrandsItem */
 /** @var $category_products_all */
-
 /** @var $products_all */
 
 use yii\web\View;
@@ -45,7 +44,6 @@ use yii\web\View;
                             ]) ?>
 
                             <?= $this->render('filters-item-brands', [
-                                'category' => $category,
                                 'filterBrandsItem' => $filterBrandsItem,
                                 'category_products_all' => $category_products_all,
                                 'products_all' => $products_all,

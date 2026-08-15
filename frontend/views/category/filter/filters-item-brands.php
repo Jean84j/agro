@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var $category */
 /** @var $products_all */
 /** @var $filterBrandsItem */
 /** @var $category_products_all */
@@ -55,17 +54,17 @@ use yii\helpers\Html;
                     <input class="input-radio__input filter-change-trigger"
                            name="filter_radio_brand"
                            type="radio"
-                           value="<?= Html::encode($brand->id) ?>"
-                           <?= ($brand->id == $selectedBrand) ? 'checked' : '' ?>
+                           value="<?= Html::encode($brand['id']) ?>"
+                           <?= ($brand['id'] == $selectedBrand) ? 'checked' : '' ?>
                     >
                     <span class="input-radio__circle"></span>
                 </span>
             </span>
-                                <span class="filter-list__title"><?= Html::encode($brand->name) ?></span>
+                                <span class="filter-list__title"><?= Html::encode($brand['name']) ?></span>
                                 <span class="filter-list__counter">
-                                <?php if (isset($category)): ?>
-                                    <?= $brand->getBrandProductCountFilter($brand->id, $category->id) ?>
-                                <?php endif; ?>
+
+                                    <?= $brand['count'] ?>
+
                                 </span>
                             </label>
                         <?php endforeach; ?>

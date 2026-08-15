@@ -56,7 +56,6 @@ $breadcrumbItemActive = $category->name;
             <div class="shop-layout__sidebar">
                 <?= $this->render('filter/filter-sidebar',
                     [
-                        'category' => $category,
                         'filterBrandsItem' => $filterBrandsItem,
                         'propertiesFilter' => $propertiesFilter,
                         'auxiliaryCategories' => $auxiliaryCategories,

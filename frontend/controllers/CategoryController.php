@@ -364,14 +364,21 @@ class CategoryController extends BaseFrontendController
 
     protected function getFilterBrands($category_id)
     {
-        $brandsId = Product::find()->select('brand_id')
-            ->where(['category_id' => $category_id])
-            ->asArray()
-            ->column();
-
         return Brand::find()
-            ->select(['id', 'name'])
-            ->where(['id' => $brandsId])
+            ->alias('b')
+            ->select([
+                'b.id',
+                'b.name',
+                'count' => 'COUNT(p.id)',
+            ])
+            ->innerJoin(
+                ['p' => Product::tableName()],
+                'p.brand_id = b.id AND p.category_id = :category_id',
+                [':category_id' => $category_id]
+            )
+            ->groupBy(['b.id', 'b.name'])
+            ->orderBy(['count' => SORT_DESC])
+            ->asArray()
             ->all();
     }
 
