@@ -4,6 +4,8 @@ use yii\helpers\Html;
 
 /** @var $category */
 /** @var $products_all */
+/** @var $filterBrandsItem */
+/** @var $category_products_all */
 
 ?>
 <div class="widget-filters__item">
@@ -21,9 +23,8 @@ use yii\helpers\Html;
                     <div class="filter-list__list">
                         <?php
                         $selectedBrand = Yii::$app->session->get('filter_radio_brand_check', '');
-                        $brandsCategory = $category->getBrandsCategoryFilter($category->id);
 
-                        $validBrandIds = array_column($brandsCategory, 'id');
+                        $validBrandIds = array_column($filterBrandsItem, 'id');
 
                         if (!empty($selectedBrand) && !in_array($selectedBrand, $validBrandIds)) {
                             $selectedBrand = '';
@@ -47,7 +48,7 @@ use yii\helpers\Html;
                             <span class="filter-list__counter"><?= $category_products_all ?></span>
                         </label>
 
-                        <?php foreach ($brandsCategory as $brand): ?>
+                        <?php foreach ($filterBrandsItem as $brand): ?>
                             <label class="filter-list__item">
             <span class="filter-list__input input-radio">
                 <span class="input-radio__body">
@@ -61,7 +62,11 @@ use yii\helpers\Html;
                 </span>
             </span>
                                 <span class="filter-list__title"><?= Html::encode($brand->name) ?></span>
-                                <span class="filter-list__counter"><?= $brand->getBrandProductCountFilter($brand->id, $category->id) ?></span>
+                                <span class="filter-list__counter">
+                                <?php if (isset($category)): ?>
+                                    <?= $brand->getBrandProductCountFilter($brand->id, $category->id) ?>
+                                <?php endif; ?>
+                                </span>
                             </label>
                         <?php endforeach; ?>
                     </div>

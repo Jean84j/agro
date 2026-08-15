@@ -57,6 +57,7 @@ $breadcrumbItemActive = $category->name;
                 <?= $this->render('filter/filter-sidebar',
                     [
                         'category' => $category,
+                        'filterBrandsItem' => $filterBrandsItem,
                         'propertiesFilter' => $propertiesFilter,
                         'auxiliaryCategories' => $auxiliaryCategories,
                         'products_all' => $products_all,

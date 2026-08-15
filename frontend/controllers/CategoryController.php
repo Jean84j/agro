@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Settings;
 use common\models\shop\AuxiliaryCategories;
+use common\models\shop\Brand;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\ProductProperties;
 use common\models\shop\Category;
@@ -219,6 +220,8 @@ class CategoryController extends BaseFrontendController
             throw new NotFoundHttpException('Category not found "' . $slug . '"');
         }
 
+        $filterBrandsItem = $this->getFilterBrands($category->id);
+
         // СБРОС СЕССИИ: Если перешли в ДРУГУЮ категорию — очищаем старые фильтры
         $lastCategoryId = Yii::$app->session->get('last_category_id');
         if ($lastCategoryId !== $category->id) {
@@ -328,6 +331,7 @@ class CategoryController extends BaseFrontendController
         $renderParams = [
             'products' => $products,
             'category' => $category,
+            'filterBrandsItem' => $filterBrandsItem,
             'pages' => $pages,
             'products_all' => $products_all,
             'category_products_all' => $category_products_all,
@@ -358,6 +362,18 @@ class CategoryController extends BaseFrontendController
         return $this->render('catalog', $renderParams);
     }
 
+    protected function getFilterBrands($category_id)
+    {
+        $brandsId = Product::find()->select('brand_id')
+            ->where(['category_id' => $category_id])
+            ->asArray()
+            ->column();
+
+        return Brand::find()
+            ->select(['id', 'name'])
+            ->where(['id' => $brandsId])
+            ->all();
+    }
 
     protected function auxiliaryCategories($category_id, $language)
     {

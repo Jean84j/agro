@@ -1,8 +1,15 @@
 <?php
 
 /** @var $category */
-
 /** @var $propertiesFilter */
+/** @var $categoryMinPrice */
+/** @var $categoryMaxPrice */
+/** @var $minPrice */
+/** @var $maxPrice */
+/** @var $filterBrandsItem */
+/** @var $category_products_all */
+
+/** @var $products_all */
 
 use yii\web\View;
 
@@ -19,7 +26,6 @@ use yii\web\View;
                 </button>
             </div>
             <div class="block-sidebar__item">
-
                 <div class="widget-filters widget widget-filters--offcanvas--mobile"
                      data-collapse
                      data-collapse-opened-class="filter--opened">
@@ -27,8 +33,9 @@ use yii\web\View;
 
                     <form id="filter-form">
                         <div class="widget-filters__list">
-                                                    <?= $this->render('filters-item-categories', ['category' => $category]) ?>
-
+                            <?php if (isset($category)): ?>
+<!--                                --><?php //echo $this->render('filters-item-categories', ['category' => $category]) ?>
+                            <?php endif; ?>
 
                             <?= $this->render('filters-item-price', [
                                 'categoryMinPrice' => $categoryMinPrice,
@@ -39,9 +46,16 @@ use yii\web\View;
 
                             <?= $this->render('filters-item-brands', [
                                 'category' => $category,
+                                'filterBrandsItem' => $filterBrandsItem,
                                 'category_products_all' => $category_products_all,
                                 'products_all' => $products_all,
                             ]) ?>
+
+<!--                            --><?php //echo $this->render('filters-item-properties', [
+//                                'category' => $category,
+//                                'propertiesFilter' => $propertiesFilter,
+//                            ]) ?>
+
 
                         </div>
                     </form>

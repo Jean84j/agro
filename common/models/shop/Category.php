@@ -156,19 +156,6 @@ class Category extends ActiveRecord
         return $categories;
     }
 
-    public function getBrandsCategoryFilter($id)
-    {
-        $brandsId = Product::find()->select('brand_id')
-            ->where(['category_id' => $id])
-            ->asArray()
-            ->column();
-
-        return Brand::find()
-            ->select(['id', 'name'])
-            ->where(['id' => $brandsId])
-            ->all();
-    }
-
     public function getCounterFilter()
     {
         $brandCheck = Yii::$app->session->get('brandCheckFilter');

@@ -90,7 +90,7 @@ return [
 
             // List all supported languages here
             // Make sure, you include your app's default language.
-            'languages' => ['en-US', 'en', 'ru', 'uk'],
+            'languages' => ['ru', 'uk'],
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
