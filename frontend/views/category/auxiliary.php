@@ -41,27 +41,49 @@ $breadcrumbItemActive = $category->name;
             'breadcrumbItems' => $breadcrumbItems,
             'breadcrumbItemActive' => $breadcrumbItemActive,
         ]) ?>
-    <?php
-    echo Html::beginForm(Url::current(), 'post', ['class' => 'form-inline']); ?>
+    <?php echo Html::beginForm(Url::current(), 'post', ['class' => 'form-inline']); ?>
     <div class="container">
-        <div class="row">
-            <div class="col-12">
+        <div class="shop-layout shop-layout--sidebar--start">
+            <div class="shop-layout__sidebar">
+                <?= $this->render('filter/filter-sidebar',
+                    [
+                        'filterBrandsItem' => $filterBrandsItem,
+                        'products_all' => $products_all,
+                        'category_products_all' => $category_products_all,
+//                        'categoryMinPrice' => $categoryMinPrice,
+//                        'categoryMaxPrice' => $categoryMaxPrice,
+//                        'minPrice' => $minPrice,
+//                        'maxPrice' => $maxPrice,
+                    ]) ?>
+            </div>
+            <div class="shop-layout__content">
                 <div class="block">
                     <div class="products-view">
-                        <div class="products-view__options">
-                            <div class="view-options view-options--offcanvas--always">
-                                <?= $this->render('/_partials/products-sort', [
-                                    'products' => $products,
-                                    'layout' => $layout,
-                                    'products_all' => $products_all,
-                                ]) ?>
+                        <div id="products-wrapper">
+                            <div class="products-view__options">
+                                <div class="view-options view-options--offcanvas--mobile">
+                                    <div class="view-options__filters-button">
+                                        <button type="button" class="filters-button">
+                                            <svg class="filters-button__icon" width="16px" height="16px">
+                                                <use xlink:href="/images/sprite.svg#filters-16"></use>
+                                            </svg>
+                                            <span class="filters-button__title"><?= Yii::t('app', 'Фільтр') ?></span>
+                                            <span class="filters-button__counter"><?php // echo $category->getCounterFilter() ?></span>
+                                        </button>
+                                    </div>
+                                    <?= $this->render('/_partials/products-sort', [
+                                        'products' => $products,
+                                        'layout' => $layout,
+                                        'products_all' => $products_all,
+                                    ]) ?>
+                                </div>
                             </div>
-                        </div>
-                        <?= $this->render('/_partials/products-list', [
+                            <?= $this->render('/_partials/products-list', [
                                 'products' => $products,
-                            'layout' => $layout,
-                        ]) ?>
-                        <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
+                                'layout' => $layout,
+                            ]) ?>
+                            <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
+                        </div>
                         <div class="spec__disclaimer">
                             <?= $category->description ?>
                         </div>
@@ -70,6 +92,7 @@ $breadcrumbItemActive = $category->name;
             </div>
         </div>
     </div>
-    <?php echo Html::endForm(); ?>
+    <?php echo Html::hiddenInput('slug', $category->slug);
+    echo Html::endForm(); ?>
     <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
 </div>

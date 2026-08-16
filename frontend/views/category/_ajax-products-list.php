@@ -10,7 +10,7 @@
                         <use xlink:href="/images/sprite.svg#filters-16"></use>
                     </svg>
                     <span class="filters-button__title"><?= Yii::t('app', 'Фільтр') ?></span>
-                    <span class="filters-button__counter"><?= $category->getCounterFilter() ?></span>
+                    <span class="filters-button__counter"><?php // echo $category->getCounterFilter() ?></span>
                 </button>
             </div>
 

@@ -438,15 +438,7 @@ class CategoryController extends BaseFrontendController
         $sort = $params['sort'];
         $count = $params['count'];
 
-//        $brandCheck = Yii::$app->request->post('brandCheck');
-//        $propertiesCheck = Yii::$app->request->post('propertiesCheck');
-//        $minPrice = Yii::$app->request->post('minPrice');
-//        $maxPrice = Yii::$app->request->post('maxPrice');
-//
-//        Yii::$app->session->set('brandCheckFilter', $brandCheck);
-//        Yii::$app->session->set('propertiesCheckFilter', $propertiesCheck);
-//        Yii::$app->session->set('minPriceFilter', $minPrice);
-//        Yii::$app->session->set('maxPriceFilter', $maxPrice);
+
 
 
         $category = AuxiliaryCategories::find()->where(['slug' => $slug])->one();
@@ -464,41 +456,91 @@ class CategoryController extends BaseFrontendController
             ->where(['category_id' => $categoryId])
             ->andWhere(['like', 'value', $category->object]);
 
+
+
         $productsId = $subQuery->column();
 
-//        $propertiesFilter = ProductProperties::find()
-//            ->select(['properties'])
-//            ->distinct()
-//            ->where(['category_id' => $categoryId])
-//            ->orderBy(['sort' => SORT_ASC])
-//            ->column();
+
+        $filterBrandsItem = $this->getFilterBrandsAux($productsId, $category->object);
+
 
         $query = Product::find()->where(['id' => $productsId]);
+        $category_products_all = (int)$query->count();
 
-//        $query->andFilterWhere(['>=', 'price', $minPrice])
-//            ->andFilterWhere(['<=', 'price', $maxPrice]);
+        $lastCategoryId = Yii::$app->session->get('last_category_id');
+        if ($lastCategoryId !== $category->id) {
+            Yii::$app->session->remove('minPriceFilter');
+            Yii::$app->session->remove('maxPriceFilter');
+            Yii::$app->session->remove('filter_radio_brand_check');
+            Yii::$app->session->set('last_category_id', $category->id);
+        }
 
-//        if ($propertiesCheck !== null) {
-//            $queryProdId = ProductProperties::find()
-//                ->select('product_id')
-//                ->where(['category_id' => $categoryId]);
-//
-//            foreach ($propertiesCheck as $value) {
-//                $subQuery = ProductProperties::find()
-//                    ->select('product_id')
-//                    ->where(['category_id' => $categoryId])
-//                    ->andWhere(['like', 'value', $value]);
-//
-//                $queryProdId->andWhere(['in', 'product_id', $subQuery]);
-//            }
-//            $productsId = $queryProdId->column();
-//
-//            $query->andFilterWhere(['in', 'id', $productsId]);
-//        }
-//
-//        if ($brandCheck !== null) {
-//            $query->andFilterWhere(['in', 'brand_id', $brandCheck]);
-//        }
+        // 2. Логика получения Бренда
+        $getBrand = Yii::$app->request->get('filter_radio_brand');
+        if ($getBrand !== null) {
+            $filterBrandId = $getBrand;
+            Yii::$app->session->set('filter_radio_brand_check', $filterBrandId);
+        } else {
+            $filterBrandId = Yii::$app->session->get('filter_radio_brand_check', '');
+        }
+
+        // 3. Логика получения Цен
+        if (Yii::$app->request->get('minPrice') !== null || Yii::$app->request->get('maxPrice') !== null) {
+            $minPrice = Yii::$app->request->get('minPrice');
+            $maxPrice = Yii::$app->request->get('maxPrice');
+        } elseif ($getBrand !== null) {
+            // Сменили бренд -> сбрасываем цены под новый бренд
+            $minPrice = null;
+            $maxPrice = null;
+        } else {
+            // Берем из сессии
+            $minPrice = Yii::$app->session->get('minPriceFilter');
+            $maxPrice = Yii::$app->session->get('maxPriceFilter');
+        }
+
+
+        // 4. Считаем абсолютные границы цен категории / выбранного бренда (ЧИСТЫЙ ЗАПРОС)
+        $boundsQuery = Product::find()->where(['id' => $productsId]);
+        if (!empty($filterBrandId)) {
+            $boundsQuery->andWhere(['brand_id' => $filterBrandId]);
+        }
+
+        $categoryMinPrice = floor((float)$boundsQuery->min('price'));
+        $categoryMaxPrice = ceil((float)$boundsQuery->max('price'));
+
+        // Защита, если в категории нет цен или товары пустые
+        if ($categoryMinPrice <= 0 && $categoryMaxPrice <= 0) {
+            $categoryMinPrice = 0;
+            $categoryMaxPrice = 1000;
+        }
+
+        // Подгоняем выбранные цены в актуальные рамки
+        if ($minPrice === null || $minPrice < $categoryMinPrice || $minPrice > $categoryMaxPrice) {
+            $minPrice = $categoryMinPrice;
+        }
+        if ($maxPrice === null || $maxPrice > $categoryMaxPrice || $maxPrice < $categoryMinPrice) {
+            $maxPrice = $categoryMaxPrice;
+        }
+
+        // Сохраняем реальные валидные цены в сессию
+        Yii::$app->session->set('minPriceFilter', $minPrice);
+        Yii::$app->session->set('maxPriceFilter', $maxPrice);
+
+
+        // Фильтр: Бренд
+        if (!empty($filterBrandId)) {
+            $query->andWhere(['brand_id' => $filterBrandId]);
+        }
+
+        // Фильтр: Цена
+        if ($minPrice > $categoryMinPrice) {
+            $query->andWhere(['>=', 'price', (float)$minPrice]);
+        }
+        if ($maxPrice < $categoryMaxPrice) {
+            $query->andWhere(['<=', 'price', (float)$maxPrice]);
+        }
+
+
 
         $this->applySorting($query, $sort);
 
@@ -527,19 +569,67 @@ class CategoryController extends BaseFrontendController
 //            ->setPrice('')
             ->register(Yii::$app->view);
 
-        return $this->render('auxiliary',
-            compact([
-                'products',
-                'category',
-                'pages',
-                'products_all',
-                'breadcrumbCategory',
-                'language',
-                'layout',
-//                'propertiesFilter',
-//                'auxiliaryCategories',
-            ]));
+        $renderParams = [
+            'products' => $products,
+            'category' => $category,
+            'filterBrandsItem' => $filterBrandsItem,
+            'pages' => $pages,
+            'products_all' => $products_all,
+            'category_products_all' => $category_products_all,
+            'language' => $language,
+            'minPrice' => $minPrice,
+            'maxPrice' => $maxPrice,
+            'categoryMinPrice' => $categoryMinPrice,
+            'categoryMaxPrice' => $categoryMaxPrice,
+            'breadcrumbCategory' => $breadcrumbCategory,
+            'layout' => $layout,
+        ];
+
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            return [
+                'success' => true,
+                'categoryMinPrice' => $categoryMinPrice,
+                'categoryMaxPrice' => $categoryMaxPrice,
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice,
+                'html' => $this->renderPartial('_ajax-products-list', $renderParams),
+            ];
+        }
+
+        return $this->render('auxiliary', $renderParams);
     }
+
+    protected function getFilterBrandsAux($productsId, $object)
+    {
+        return Brand::find()
+            ->alias('b')
+            ->select([
+                'b.id',
+                'b.name',
+                'count' => 'COUNT(DISTINCT p.id)',
+            ])
+            ->innerJoin(
+                ['p' => Product::tableName()],
+                'p.brand_id = b.id'
+            )
+            ->innerJoin(
+                ['pp' => ProductProperties::tableName()],
+                'pp.product_id = p.id'
+            )
+            ->where(['p.id' => $productsId])
+            ->andWhere(['like', 'pp.value', $object])
+            ->groupBy(['b.id', 'b.name'])
+            ->orderBy(['count' => SORT_DESC])
+            ->asArray()
+            ->all();
+    }
+
+
+
+
+
 
     protected function setChildrenProductSchema($category)
     {

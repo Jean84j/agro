@@ -8,6 +8,7 @@
 /** @var $maxPrice */
 /** @var $filterBrandsItem */
 /** @var $category_products_all */
+
 /** @var $products_all */
 
 use yii\web\View;
@@ -33,15 +34,17 @@ use yii\web\View;
                     <form id="filter-form">
                         <div class="widget-filters__list">
                             <?php if (isset($category)): ?>
-<!--                                --><?php //echo $this->render('filters-item-categories', ['category' => $category]) ?>
+                                <!--                                --><?php //echo $this->render('filters-item-categories', ['category' => $category]) ?>
                             <?php endif; ?>
 
-                            <?= $this->render('filters-item-price', [
-                                'categoryMinPrice' => $categoryMinPrice,
-                                'categoryMaxPrice' => $categoryMaxPrice,
-                                'minPrice' => $minPrice,
-                                'maxPrice' => $maxPrice,
-                            ]) ?>
+                            <?php if (isset($categoryMinPrice)): ?>
+                                <?= $this->render('filters-item-price', [
+                                    'categoryMinPrice' => $categoryMinPrice,
+                                    'categoryMaxPrice' => $categoryMaxPrice,
+                                    'minPrice' => $minPrice,
+                                    'maxPrice' => $maxPrice,
+                                ]) ?>
+                            <?php endif; ?>
 
                             <?= $this->render('filters-item-brands', [
                                 'filterBrandsItem' => $filterBrandsItem,
@@ -49,10 +52,10 @@ use yii\web\View;
                                 'products_all' => $products_all,
                             ]) ?>
 
-<!--                            --><?php //echo $this->render('filters-item-properties', [
-//                                'category' => $category,
-//                                'propertiesFilter' => $propertiesFilter,
-//                            ]) ?>
+                            <!--                            --><?php //echo $this->render('filters-item-properties', [
+                            //                                'category' => $category,
+                            //                                'propertiesFilter' => $propertiesFilter,
+                            //                            ]) ?>
 
 
                         </div>
