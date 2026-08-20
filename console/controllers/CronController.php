@@ -175,7 +175,6 @@ class CronController extends Controller
         $limit = 300;
 
         self::removalDuplicateLinks($limit);
-        self::removalUnknownLinks($limit);
         self::removalPageLinks($limit);
         self::removalSiteTransitionsLinks($limit);
         self::removalBotIp($limit);
@@ -220,25 +219,6 @@ class CronController extends Controller
             $deleted = ActivePages::deleteAll(['id' => $matchedIds]);
 
             Console::output("\n 🗑️ Видалено записів: {$deleted}");
-        }
-    }
-
-    protected function removalUnknownLinks($limit)
-    {
-        $urls = ActivePages::find()
-            ->where(['client_from' => 'Не известно'])
-            ->limit($limit)
-            ->orderBy(['date_visit' => SORT_DESC])
-            ->all();
-
-        if ($urls) {
-            Console::output("\n\t====================================================");
-            Console::output("\n\t 🗑️ **** Убрать ссылки с неизвестным переходом ****");
-            foreach ($urls as $url) {
-                if ($url->delete()) {
-                    Console::output("\n ❌ [IP: {$url->ip_user}] «{$url->url_page}»: Статус: {$url->status_serv}");
-                }
-            }
         }
     }
 
@@ -450,9 +430,10 @@ class CronController extends Controller
         $resUrls = [
             'https://www.agropro.org.ua/',
             'https://agropro.org.ua',
+            'Не известно',
         ];
         $urls = ActivePages::find()
-            ->where(['client_from' => 'https://www.agropro.org.ua/'])
+            ->where(['client_from' => $resUrls])
             ->limit($limit)
             ->orderBy(['date_visit' => SORT_DESC])
             ->all();
