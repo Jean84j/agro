@@ -8,9 +8,18 @@ class SpecialPageAsset extends BaseAssetBundle
     public $baseUrl = '@web';
     public $css = [
 
+        'css/filter.css',
+        'css/filters-button.css',
+        'css/nouislider.css',
         'css/view-options.css',
+        'css/block-sidebar.css',
+        'css/widget-filters.css',
     ];
-    public $js = [];
+    public $js = [
+        'vendor/nouislider/nouislider.min.js',
+        'js/price-filter.js',
+        'js/offcanvas-filters.js'
+    ];
     public $depends = [];
 
 }

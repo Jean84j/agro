@@ -15,9 +15,11 @@ class CategoryAuxiliaryPageAsset extends BaseAssetBundle
         'css/block-sidebar.css',
         'css/widget-filters.css',
     ];
-    public $js = [ 'vendor/nouislider/nouislider.min.js',
+    public $js = [
+        'vendor/nouislider/nouislider.min.js',
         'js/price-filter.js',
-        'js/offcanvas-filters.js',];
+        'js/offcanvas-filters.js'
+    ];
     public $depends = [];
 
 }
