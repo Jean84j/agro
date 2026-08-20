@@ -339,4 +339,171 @@ class XController extends Controller
         }
     }
 
+
+
+    /**
+     *  спарсить цену на сайте  ****************************
+     */
+    public function actionParsePrice()
+    {
+        $noLoadPage = 'Не удалось загрузить страницу';
+        $noPrice = 'Цена не найдена';
+
+        $url = 'https://kurkul.com.ua/dolina/3079/';
+
+        $html = file_get_contents($url);
+        
+
+        if ($html === false) {
+            return dd($noLoadPage);
+        }
+
+        libxml_use_internal_errors(true);
+
+        $dom = new \DOMDocument();
+        $dom->loadHTML($html);
+
+        $xpath = new \DOMXPath($dom);
+
+
+        /*
+         * ==========================================================
+         * 1. Ищем цену в JSON-LD
+         * ==========================================================
+         */
+
+        $scripts = $xpath->query(
+            '//script[@type="application/ld+json"]'
+        );
+
+        foreach ($scripts as $script) {
+
+            $json = trim($script->textContent);
+
+            $data = json_decode($json, true);
+
+            if (!$data) {
+                continue;
+            }
+
+            // Product
+            if (
+                isset($data['@type']) &&
+                $data['@type'] === 'Product' &&
+                isset($data['offers']['price'])
+            ) {
+                return dd((float)$data['offers']['price']);
+            }
+
+            // @graph
+            if (
+                isset($data['@graph']) &&
+                is_array($data['@graph'])
+            ) {
+
+                foreach ($data['@graph'] as $item) {
+
+                    if (
+                        isset($item['@type']) &&
+                        $item['@type'] === 'Product' &&
+                        isset($item['offers']['price'])
+                    ) {
+                        return dd((float)$item['offers']['price']);
+                    }
+                }
+            }
+        }
+
+
+        /*
+ * ==========================================================
+ * 2. Ищем meta itemprop="price"
+ * ==========================================================
+ */
+
+        $priceNode = $xpath->query(
+            '//meta[@itemprop="price"]'
+        )->item(0);
+
+        if ($priceNode) {
+
+            $price = $priceNode->getAttribute('content');
+
+            if ($price !== '') {
+                return dd((float)$price);
+            }
+        }
+
+        /*
+         * ==========================================================
+         * 2. Ищем цену по классам HTML
+         * ==========================================================
+         */
+
+        $classes = [
+            'price',
+            'product-price',
+            'product__price',
+            'product-price__value',
+            'price-current',
+            'current-price',
+            'price_value',
+            'product_price',
+            'product__prices',
+            'prices',
+            'cost',
+            'amount',
+            'product-price__item',
+        ];
+
+        foreach ($classes as $class) {
+
+            $query = "//*[contains(
+            concat(' ', normalize-space(@class), ' '),
+            ' {$class} '
+        )]";
+
+            $nodes = $xpath->query($query);
+
+            foreach ($nodes as $node) {
+
+                $text = trim($node->textContent);
+
+                if (preg_match(
+                    '/(?:\d[\d\s&nbsp;.,]*)(?:₴|грн|UAH|\$|USD|€|EUR)/iu',
+                    $text,
+                    $matches
+                )) {
+
+                    $price = $matches[0];
+
+                    // Убираем валюту, пробелы и другие символы
+                    $price = preg_replace('/[^\d.,]/u', '', $price);
+
+                    // 3 300,00 → 3300.00
+                    if (strpos($price, ',') !== false) {
+
+                        $price = str_replace('.', '', $price);
+                        $price = str_replace(',', '.', $price);
+
+                    } else {
+
+                        // 3.300 → 3300
+                        $price = str_replace('.', '', $price);
+                    }
+
+                    return dd((float)$price);
+                }
+            }
+        }
+
+
+        /*
+         * ==========================================================
+         * 3. Цена не найдена
+         * ==========================================================
+         */
+
+        return dd($noPrice);
+    }
 }
