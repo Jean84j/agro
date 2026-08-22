@@ -1,7 +1,7 @@
 <?php
 
 use common\models\shop\Brand;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use common\models\shop\Label;
 use backend\models\ProductsBackend;
 use common\models\shop\Status;

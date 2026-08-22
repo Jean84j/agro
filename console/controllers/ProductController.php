@@ -2,7 +2,7 @@
 
 namespace console\controllers;
 
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductTag;

@@ -1,9 +1,9 @@
 <?php
 
 use frontend\assets\CategoryCatalogPageAsset;
-use common\models\shop\AuxiliaryCategories;
+use common\models\Categories\AuxiliaryCategories;
 use common\models\ActivePages;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use common\models\shop\Product;
 use frontend\widgets\CategoriesAuxiliary;
 use frontend\widgets\ViewProduct;

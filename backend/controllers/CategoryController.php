@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
-use common\models\shop\CategoriesProperties;
-use common\models\shop\CategoriesTranslate;
-use common\models\shop\Category;
+use common\models\Categories\CategoriesProperties;
+use common\models\Categories\CategoriesTranslate;
+use common\models\Categories\Category;
 use backend\models\search\CategorySearch;
 use Yii;
 use yii\helpers\Inflector;

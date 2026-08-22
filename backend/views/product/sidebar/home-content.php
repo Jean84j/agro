@@ -1,7 +1,7 @@
 <?php
 
 use common\models\shop\Brand;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use common\models\shop\Status;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;

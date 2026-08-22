@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\Category $model */
+/** @var common\models\Categories\Category $model */
 /** @var ActiveForm $form */
 ?>
 

@@ -2,7 +2,7 @@
 
 namespace common\models\Tags;
 
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use common\models\shop\Product;
 use common\models\shop\ProductTag;
 use Yii;

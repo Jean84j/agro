@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\shop\CategoriesProperties;
+use common\models\Categories\CategoriesProperties;
 use common\models\shop\PropertiesName;
 use backend\models\search\PropertiesNameSearch;
 use common\models\shop\PropertiesNameTranslate;

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\AuxiliaryCategories $model */
+/** @var common\models\Categories\AuxiliaryCategories $model */
 
 $this->title = Yii::t('app', 'Create Auxiliary Categories');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Auxiliary Categories'), 'url' => ['index']];

@@ -4,10 +4,10 @@ namespace backend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 
 /**
- * CategorySearch represents the model behind the search form of `common\models\shop\Category`.
+ * CategorySearch represents the model behind the search form of `common\models\Categories\Category`.
  */
 class CategorySearch extends Category
 {

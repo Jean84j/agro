@@ -1,7 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\AuxiliaryCategories $model */
+/** @var common\models\Categories\AuxiliaryCategories $model */
 
 $this->title = Yii::t('app', 'Update Auxiliary Categories: {name}', [
     'name' => $model->name,

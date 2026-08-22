@@ -3,8 +3,9 @@
 namespace common\models;
 
 use backend\models\ProductsBackend;
-use common\models\shop\AuxiliaryCategories;
-use common\models\shop\Category;
+use common\models\Categories\AuxiliaryCategories;
+use common\models\Categories\Category;
+use common\models\Posts\Posts;
 use common\models\shop\Product;
 use common\models\shop\ProductImage;
 use yii\db\ActiveRecord;

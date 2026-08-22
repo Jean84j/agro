@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use kartik\form\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\AuxiliaryCategories $model */
+/** @var common\models\Categories\AuxiliaryCategories $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 <?php

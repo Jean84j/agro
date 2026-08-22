@@ -3,11 +3,11 @@
 namespace frontend\controllers;
 
 use common\models\Settings;
-use common\models\shop\AuxiliaryCategories;
+use common\models\Categories\AuxiliaryCategories;
 use common\models\shop\Brand;
-use common\models\shop\CategoriesProperties;
+use common\models\Categories\CategoriesProperties;
 use common\models\shop\ProductProperties;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use common\models\shop\Product;
 use Spatie\SchemaOrg\Schema;
 use yii\db\Expression;

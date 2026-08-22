@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
-/** @var common\models\shop\Category $model */
+/** @var common\models\Categories\Category $model */
 
 $this->title = Yii::t('app', 'Create Category');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Categories'), 'url' => ['index']];

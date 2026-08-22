@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 

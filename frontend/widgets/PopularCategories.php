@@ -2,7 +2,7 @@
 
 namespace frontend\widgets;
 
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use Yii;
 use yii\base\Widget;
 

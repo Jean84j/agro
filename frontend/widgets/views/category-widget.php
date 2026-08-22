@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 
-/** @var \common\models\shop\Category[] $categories */
+/** @var \common\models\Categories\Category[] $categories */
 
 function renderProducts($items, $slug): string
 {

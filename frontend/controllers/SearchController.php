@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
-use common\models\shop\AuxiliaryCategories;
-use common\models\shop\AuxiliaryTranslate;
-use common\models\shop\CategoriesTranslate;
-use common\models\shop\Category;
+use common\models\Categories\AuxiliaryCategories;
+use common\models\Categories\AuxiliaryTranslate;
+use common\models\Categories\CategoriesTranslate;
+use common\models\Categories\Category;
 use common\models\shop\ProductsTranslate;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductTag;

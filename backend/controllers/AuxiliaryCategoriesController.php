@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
-use common\models\shop\AuxiliaryCategories;
+use common\models\Categories\AuxiliaryCategories;
 use backend\models\search\AuxiliaryCategoriesSearch;
-use common\models\shop\AuxiliaryTranslate;
+use common\models\Categories\AuxiliaryTranslate;
 use Yii;
 use yii\helpers\Inflector;
 use yii\web\Controller;

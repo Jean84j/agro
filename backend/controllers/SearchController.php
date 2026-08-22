@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Report;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use backend\models\ProductsBackend;
 use Yii;
 use yii\web\Controller;

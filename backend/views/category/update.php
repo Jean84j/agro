@@ -2,7 +2,7 @@
 
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\Category $model */
+/** @var common\models\Categories\Category $model */
 
 $this->title = Yii::t('app', 'Update Category: {name}', [
     'name' => $model->name,

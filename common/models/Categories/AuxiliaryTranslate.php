@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\shop;
+namespace common\models\Categories;
 
 use Yii;
 use yii\db\ActiveRecord;

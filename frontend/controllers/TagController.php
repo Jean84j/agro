@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Settings;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use common\models\shop\ProductTag;
 use common\models\shop\Product;
 use common\models\Tags\Tag;

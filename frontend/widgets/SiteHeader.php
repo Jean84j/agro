@@ -3,7 +3,7 @@
 namespace frontend\widgets;
 
 use common\models\Contact;
-use common\models\shop\Category;
+use common\models\Categories\Category;
 use Yii;
 use yii\base\Widget;
 use yii\caching\DbDependency;

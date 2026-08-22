@@ -1,6 +1,6 @@
 <?php
 
-/** @var \common\models\shop\Category $categories */
+/** @var \common\models\Categories\Category $categories */
 /** @var $title */
 
 use yii\helpers\Url;

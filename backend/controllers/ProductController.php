@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use backend\models\SeoWords;
-use common\models\shop\CategoriesProperties;
-use common\models\shop\CategoriesTranslate;
-use common\models\shop\Category;
+use common\models\Categories\CategoriesProperties;
+use common\models\Categories\CategoriesTranslate;
+use common\models\Categories\Category;
 use common\models\shop\Faq;
 use common\models\shop\FaqTranslate;
 use common\models\shop\ProductPackaging;
