@@ -2,6 +2,7 @@
 
 namespace common\models\shop;
 
+use common\models\Tags\Tag;
 use Yii;
 use yii\db\ActiveRecord;
 

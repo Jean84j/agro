@@ -2,6 +2,7 @@
 
 namespace common\models\shop;
 
+use common\models\Categories\Category;
 use common\models\Orders\Order;
 use common\models\Orders\OrderItem;
 use Yii;

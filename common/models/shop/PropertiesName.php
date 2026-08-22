@@ -2,6 +2,8 @@
 
 namespace common\models\shop;
 
+use common\models\Categories\CategoriesProperties;
+use common\models\Categories\Category;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Html;
