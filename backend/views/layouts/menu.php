@@ -1,7 +1,7 @@
 <?php
 
 use common\models\Messages;
-use common\models\PostsReview;
+use common\models\Posts\PostsReview;
 use backend\models\ReportReminder;
 use common\models\shop\Order;
 use common\models\shop\Review;

@@ -1,6 +1,6 @@
 <?php
 
-use common\models\Posts;
+use common\models\Posts\Posts;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\bootstrap5\LinkPager;

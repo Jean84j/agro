@@ -1,6 +1,6 @@
 <?php
 
-use common\models\PostsReview;
+use common\models\Posts\PostsReview;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;

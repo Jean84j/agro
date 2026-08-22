@@ -3,7 +3,7 @@
 namespace backend\widgets;
 
 use common\models\shop\ActivePages;
-use common\models\Posts;
+use common\models\Posts\Posts;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 

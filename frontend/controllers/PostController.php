@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use common\models\PostProducts;
-use common\models\Posts;
-use common\models\PostsReview;
+use common\models\Posts\PostProducts;
+use common\models\Posts\Posts;
+use common\models\Posts\PostsReview;
 use Yii;
 use yii\helpers\Url;
 use common\models\shop\Product;

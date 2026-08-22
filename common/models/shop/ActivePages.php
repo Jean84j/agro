@@ -5,7 +5,7 @@ namespace common\models\shop;
 use backend\models\ProductsBackend;
 use common\models\Bots;
 use backend\models\IpBot;
-use common\models\Posts;
+use common\models\Posts\Posts;
 use common\models\SiteErrors;
 use Yii;
 use yii\db\ActiveRecord;

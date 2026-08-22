@@ -1,7 +1,7 @@
 <?php
 
-use common\models\PostProducts;
-use common\models\Posts;
+use common\models\Posts\PostProducts;
+use common\models\Posts\Posts;
 use common\models\shop\ActivePages;
 use common\models\shop\Product;
 use common\models\shop\ProductImage;

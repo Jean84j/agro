@@ -3,7 +3,7 @@
 use common\models\shop\ProductImage;
 use yii\helpers\Url;
 
-/** @var \common\models\Posts $posts */
+/** @var \common\models\Posts\Posts $posts */
 
 $webp_support = ProductImage::imageWebp();
 

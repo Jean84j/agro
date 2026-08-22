@@ -2,7 +2,7 @@
 
 namespace backend\widgets;
 
-use common\models\PostsReview;
+use common\models\Posts\PostsReview;
 use yii\base\Widget;
 
 class PostReviews extends Widget

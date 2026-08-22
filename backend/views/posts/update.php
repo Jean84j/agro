@@ -1,7 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var common\models\Posts $model */
+/** @var common\models\Posts\Posts $model */
 
 $this->title = Yii::t('app', 'Update Posts: {name}', [
     'name' => $model->title,

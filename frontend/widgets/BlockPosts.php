@@ -3,7 +3,7 @@
 namespace frontend\widgets;
 
 use Yii;
-use common\models\Posts;
+use common\models\Posts\Posts;
 use yii\base\Widget;
 use yii\caching\DbDependency;
 

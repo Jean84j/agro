@@ -1,18 +1,18 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Posts $model */
+/** @var common\models\Posts\Posts $model */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 
 <div id="top" class="sa-app__body">

@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
-use common\models\PostProducts;
-use common\models\Posts;
+use common\models\Posts\PostProducts;
+use common\models\Posts\Posts;
 use backend\models\search\PostsSearch;
-use common\models\PostsTranslate;
+use common\models\Posts\PostsTranslate;
 use yii\helpers\FileHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

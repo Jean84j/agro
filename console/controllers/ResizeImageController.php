@@ -3,7 +3,7 @@
 
 namespace console\controllers;
 
-use common\models\Posts;
+use common\models\Posts\Posts;
 use common\models\shop\ProductImage;
 use Yii;
 use yii\console\Controller;

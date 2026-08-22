@@ -1,11 +1,10 @@
 <?php
 
-use yii\bootstrap5\Breadcrumbs;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\PostsReview $model */
+/** @var common\models\Posts\PostsReview $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 <?php $form = ActiveForm::begin(); ?>

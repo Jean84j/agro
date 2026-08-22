@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\PostsReview $model */
+/** @var common\models\Posts\PostsReview $model */
 
 $this->title = Yii::t('app', 'Create Posts Review');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Posts Reviews'), 'url' => ['index']];

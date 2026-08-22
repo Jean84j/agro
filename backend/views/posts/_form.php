@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use kartik\form\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\Posts $model */
+/** @var common\models\Posts\Posts $model */
 /** @var yii\widgets\ActiveForm $form */
 
 ?>

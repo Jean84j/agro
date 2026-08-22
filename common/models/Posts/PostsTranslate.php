@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace common\models\Posts;
 
 use Yii;
 use yii\db\ActiveRecord;

@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Posts;
+use common\models\Posts\Posts;
 use common\models\SeoPages;
 use common\models\shop\AuxiliaryCategories;
 use common\models\shop\Category;

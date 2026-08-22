@@ -3,7 +3,7 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\Posts;
+use common\models\Posts\Posts;
 use yii\helpers\ArrayHelper;
 
 class PostViews extends BaseWidgetBackend

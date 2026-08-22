@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\Posts;
+use common\models\Posts\Posts;
 use common\models\Settings;
 use Spatie\SchemaOrg\Schema;
 use yii\helpers\Url;

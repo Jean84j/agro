@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\PostsReview;
+use common\models\Posts\PostsReview;
 use backend\models\search\PostsReviewSearch;
 use Yii;
 use yii\web\Controller;
