@@ -2,6 +2,8 @@
 
 namespace common\models\shop;
 
+use common\models\Orders\Order;
+use common\models\Orders\OrderItem;
 use Yii;
 use yii\db\ActiveRecord;
 
