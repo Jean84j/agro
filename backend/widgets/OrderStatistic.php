@@ -3,9 +3,9 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\OrderPayMent;
-use common\models\shop\Order;
-use common\models\shop\OrderStatus;
+use common\models\Orders\OrderPayMent;
+use common\models\Orders\Order;
+use common\models\Orders\OrderStatus;
 
 class OrderStatistic extends BaseWidgetBackend
 {

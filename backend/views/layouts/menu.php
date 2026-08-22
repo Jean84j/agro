@@ -3,7 +3,7 @@
 use common\models\Messages;
 use common\models\Posts\PostsReview;
 use backend\models\ReportReminder;
-use common\models\shop\Order;
+use common\models\Orders\Order;
 use common\models\shop\Review;
 use common\models\SiteErrors;
 use yii\helpers\Url;

@@ -2,7 +2,7 @@
 
 namespace backend\widgets;
 
-use common\models\shop\Order;
+use common\models\Orders\Order;
 use yii\base\Widget;
 
 class RecentOrders extends Widget

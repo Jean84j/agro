@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\shop\OrderProvider;
+use common\models\Orders\OrderProvider;
 use backend\models\search\OrderProviderSearch;
 use Yii;
 use yii\web\Controller;

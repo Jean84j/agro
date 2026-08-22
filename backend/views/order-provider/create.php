@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
-/** @var common\models\shop\OrderProvider $model */
+/** @var common\models\Orders\OrderProvider $model */
 
 $this->title = Yii::t('app', 'Create Order Provider');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Order Providers'), 'url' => ['index']];

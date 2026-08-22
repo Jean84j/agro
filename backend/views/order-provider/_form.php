@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\OrderProvider $model */
+/** @var common\models\Orders\OrderProvider $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

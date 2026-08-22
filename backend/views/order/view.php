@@ -8,7 +8,7 @@ use yii\helpers\Url;
 use yii\web\YiiAsset;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\Order $model */
+/** @var common\models\Orders\Order $model */
 
 $this->title = $model->fio;
 $this->params['breadcrumbs'][] = ['label' => 'Замовлення', 'url' => ['index']];

@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
-use common\models\shop\Order;
+use common\models\Orders\Order;
 use backend\models\search\OrderSearch;
-use common\models\shop\OrderItem;
+use common\models\Orders\OrderItem;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

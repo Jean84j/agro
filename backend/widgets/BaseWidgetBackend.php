@@ -3,8 +3,8 @@
 namespace app\widgets;
 
 use common\models\shop\ActivePages;
-use common\models\shop\Order;
-use common\models\shop\OrderItem;
+use common\models\Orders\Order;
+use common\models\Orders\OrderItem;
 use backend\models\ProductsBackend;
 use yii\base\Widget;
 use DateInterval;

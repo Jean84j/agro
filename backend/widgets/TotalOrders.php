@@ -3,7 +3,7 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\shop\Order;
+use common\models\Orders\Order;
 
 class TotalOrders extends BaseWidgetBackend
 {

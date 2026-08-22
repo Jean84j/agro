@@ -3,8 +3,8 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\shop\OrderItem;
-use common\models\shop\Order;
+use common\models\Orders\OrderItem;
+use common\models\Orders\Order;
 
 class AverageOrder extends BaseWidgetBackend
 {

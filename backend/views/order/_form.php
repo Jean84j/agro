@@ -1,15 +1,15 @@
 <?php
 
-use common\models\OrderPayMent;
-use common\models\shop\OrderProvider;
-use common\models\shop\OrderStatus;
+use common\models\Orders\OrderPayMent;
+use common\models\Orders\OrderProvider;
+use common\models\Orders\OrderStatus;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\Order $model */
+/** @var common\models\Orders\Order $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 <?php $form = ActiveForm::begin(); ?>

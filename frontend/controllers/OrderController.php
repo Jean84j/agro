@@ -3,8 +3,8 @@
 namespace frontend\controllers;
 
 use common\models\NovaPoshta\NpAreas;
-use common\models\shop\OrderItem;
-use common\models\shop\Order;
+use common\models\Orders\OrderItem;
+use common\models\Orders\Order;
 use yii\helpers\ArrayHelper;
 
 use common\models\Contact;
