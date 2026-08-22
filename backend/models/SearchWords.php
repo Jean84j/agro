@@ -2,7 +2,6 @@
 
 namespace backend\models;
 
-use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductsTranslate;
 use common\models\shop\ProductTag;
@@ -68,7 +67,7 @@ class SearchWords extends ActiveRecord
         $id_prod = array_merge($id_prod, $val_products);
 
         // Поиск по продуктам
-        $product_ids = Product::find()
+        $product_ids = ProductsBackend::find()
             ->select('id')
             ->where(['like', 'sku', $q])
             ->orWhere(['like', 'keywords', $q])
