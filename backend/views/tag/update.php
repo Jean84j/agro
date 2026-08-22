@@ -1,7 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\Tag $model */
+/** @var common\models\Tags\Tag $model */
 
 $this->title = Yii::t('app', 'Update Tag: {name}', [
     'name' => $model->name,

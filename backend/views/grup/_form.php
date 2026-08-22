@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\Tag $model */
+/** @var common\models\Tags\Tag $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

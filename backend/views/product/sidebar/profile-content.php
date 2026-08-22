@@ -3,7 +3,7 @@
 use common\models\shop\Grup;
 use common\models\shop\Label;
 use backend\models\ProductsBackend;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 

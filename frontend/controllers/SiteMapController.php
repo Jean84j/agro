@@ -7,7 +7,7 @@ use common\models\SeoPages;
 use common\models\shop\AuxiliaryCategories;
 use common\models\shop\Category;
 use common\models\shop\Product;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;

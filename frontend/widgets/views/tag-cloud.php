@@ -2,7 +2,7 @@
 
 use yii\helpers\Url;
 
-/** @var \common\models\shop\Tag $tags */
+/** @var \common\models\Tags\Tag $tags */
 
 $symbol = '<span style="color: #de820b; font-size: 18px"># </span>';
 

@@ -3,6 +3,7 @@
 namespace common\models\shop;
 
 use common\models\Settings;
+use common\models\Tags\Tag;
 use DateTime;
 use Spatie\SchemaOrg\Schema;
 use Yii;

@@ -6,7 +6,7 @@ use common\models\shop\Category;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductTag;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 use yii\console\Controller;
 
 class ProductController extends Controller

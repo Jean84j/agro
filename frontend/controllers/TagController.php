@@ -6,7 +6,7 @@ use common\models\Settings;
 use common\models\shop\Category;
 use common\models\shop\ProductTag;
 use common\models\shop\Product;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\web\NotFoundHttpException;

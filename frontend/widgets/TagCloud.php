@@ -3,7 +3,7 @@
 namespace frontend\widgets;
 
 use common\models\shop\ProductTag;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 use Yii;
 use yii\base\Widget;
 

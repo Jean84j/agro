@@ -4,10 +4,10 @@ namespace backend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 
 /**
- * TagSearch represents the model behind the search form of `common\models\shop\Tag`.
+ * TagSearch represents the model behind the search form of `common\models\Tags\Tag`.
  */
 class TagSearch extends Tag
 {

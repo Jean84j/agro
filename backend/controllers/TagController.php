@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use common\models\shop\ProductTag;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 use backend\models\search\TagSearch;
-use common\models\TagTranslate;
+use common\models\Tags\TagTranslate;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

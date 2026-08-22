@@ -5,7 +5,7 @@ namespace backend\widgets;
 use common\models\Posts\Posts;
 use common\models\shop\Brand;
 use backend\models\ProductsBackend;
-use common\models\shop\Tag;
+use common\models\Tags\Tag;
 use kartik\base\Widget;
 use Yii;
 

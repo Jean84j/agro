@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace common\models\Tags;
 
 use Yii;
 use yii\db\ActiveRecord;
