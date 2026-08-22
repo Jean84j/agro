@@ -3,10 +3,11 @@
 namespace common\models\shop;
 
 use backend\models\Report;
+
 use Yii;
-use common\models\NpAreas;
-use common\models\NpCity;
-use common\models\NpWarehouses;
+use common\models\NovaPoshta\NpAreas;
+use common\models\NovaPoshta\NpCity;
+use common\models\NovaPoshta\NpWarehouses;
 use common\models\OrderPayMent;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;

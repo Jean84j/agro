@@ -2,10 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\models\NovaPoshta\NpAreas;
 use common\models\shop\OrderItem;
 use common\models\shop\Order;
 use yii\helpers\ArrayHelper;
-use common\models\NpAreas;
+
 use common\models\Contact;
 use yii\helpers\Url;
 use Yii;

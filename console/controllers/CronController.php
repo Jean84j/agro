@@ -3,14 +3,14 @@
 namespace console\controllers;
 
 use backend\models\IpBot;
+use common\models\NovaPoshta\NpCity;
+use common\models\NovaPoshta\NpWarehouses;
 use common\models\SiteErrors;
 use LisDev\Delivery\NovaPoshtaApi2;
 use common\models\shop\ActivePages;
-use common\models\NpWarehouses;
 use backend\models\SearchWords;
 use common\models\shop\Product;
 use yii\console\Controller;
-use common\models\NpCity;
 use yii\helpers\Console;
 use yii\db\Query;
 use Yii;

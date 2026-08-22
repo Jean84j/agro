@@ -2,9 +2,9 @@
 
 namespace console\controllers;
 
-use common\models\NpAreas;
-use common\models\NpCity;
-use common\models\NpWarehouses;
+use common\models\NovaPoshta\NpAreas;
+use common\models\NovaPoshta\NpCity;
+use common\models\NovaPoshta\NpWarehouses;
 use Yii;
 use yii\console\Controller;
 use LisDev\Delivery\NovaPoshtaApi2;
@@ -162,7 +162,7 @@ class NovaPoshtaController extends Controller
         foreach ($cities as $city) {
 //            $warehouses = $np->getWarehouses($city->ref);
             $warehouses = $np->getWarehouses('38861002-de39-11ea-80fb-b8830365bd04');
-            dd($warehouses);
+
             if ($warehouses['data'] == null) {
                 echo "\033[0;32m" . "|- " . $i . " | " . $city->ref . '<>' . $city->description . " Без отделений\n";
                 echo "\r+--------------------------------------------------------------------------------------------------------+\n";

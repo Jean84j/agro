@@ -4,18 +4,16 @@ namespace console\controllers;
 
 use backend\models\IpBot;
 use backend\models\ReportItem;
-use common\models\NpAreas;
-use common\models\NpCity;
-use common\models\NpWarehouses;
 use common\models\shop\ActivePages;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\Category;
-use common\models\shop\Order;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;
 use common\models\shop\ProductPropertiesTranslate;
 use common\models\shop\ProductTag;
 use common\models\shop\PropertiesNameTranslate;
+use DOMDocument;
+use DOMXPath;
 use Yii;
 use yii\console\Controller;
 use yii\db\Expression;
@@ -199,10 +197,10 @@ class XController extends Controller
     public function actionReportProductsName()
     {
 
-        $productsName = Product::find()
-            ->select(['name'])
-            ->asArray()
-            ->column();
+//        $productsName = Product::find()
+//            ->select(['name'])
+//            ->asArray()
+//            ->column();
 
         $products = ReportItem::find()
             ->select(['product_name', 'COUNT(*) AS count'])
@@ -360,10 +358,10 @@ class XController extends Controller
 
         libxml_use_internal_errors(true);
 
-        $dom = new \DOMDocument();
+        $dom = new DOMDocument();
         $dom->loadHTML($html);
 
-        $xpath = new \DOMXPath($dom);
+        $xpath = new DOMXPath($dom);
 
 
         /*

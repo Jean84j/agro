@@ -2,13 +2,14 @@
 
 namespace frontend\controllers;
 
-use common\models\NpCity;
-use common\models\NpWarehouses;
+use common\models\NovaPoshta\NpCity;
+use common\models\NovaPoshta\NpWarehouses;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\web\Controller;
 use yii\web\Response;
 
-class NPController extends \yii\web\Controller
+class NPController extends Controller
 {
     public function actionCities()
     {
