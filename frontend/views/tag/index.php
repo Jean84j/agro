@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use frontend\assets\TagPageAsset;
 use frontend\widgets\ViewProduct;
 use yii\helpers\Url;

@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\shop\Product;
 use frontend\assets\TagPageAsset;
 use frontend\controllers\TagController;

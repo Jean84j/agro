@@ -1,7 +1,7 @@
 <?php
 
-/** @var \common\models\shop\ActivePages $resultArray  */
-/** @var \common\models\shop\ActivePages $resultArrayOld  */
+/** @var \common\models\ActivePages $resultArray  */
+/** @var \common\models\ActivePages $resultArrayOld  */
 
 ?>
 

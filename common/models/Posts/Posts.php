@@ -2,7 +2,7 @@
 
 namespace common\models\Posts;
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\shop\Product;
 use DateTime;
 use Spatie\SchemaOrg\Schema;

@@ -1,7 +1,7 @@
 <?php
 
 use common\models\Settings;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use yii\helpers\Url;
 
 /** @var  $orders */

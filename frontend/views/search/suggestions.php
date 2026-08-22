@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use yii\helpers\Url;
 
 /** @var $products */

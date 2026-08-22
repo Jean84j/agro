@@ -1,7 +1,7 @@
 <?php
 
 use backend\widgets\IpInfoCustom;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use kartik\grid\ActionColumn;
 use kartik\grid\GridView;
 use yii\helpers\Html;

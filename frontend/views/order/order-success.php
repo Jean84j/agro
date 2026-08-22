@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use frontend\assets\OrderSuccessPageAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;

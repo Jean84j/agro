@@ -2,7 +2,7 @@
 
 namespace app\widgets;
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\Orders\Order;
 use common\models\Orders\OrderItem;
 use backend\models\ProductsBackend;

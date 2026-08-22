@@ -2,7 +2,7 @@
 
 namespace backend\models;
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\shop\AnalogProducts;
 use common\models\shop\Product;
 use common\models\shop\ProductProperties;

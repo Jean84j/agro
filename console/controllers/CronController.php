@@ -7,7 +7,7 @@ use common\models\NovaPoshta\NpCity;
 use common\models\NovaPoshta\NpWarehouses;
 use common\models\SiteErrors;
 use LisDev\Delivery\NovaPoshtaApi2;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use backend\models\SearchWords;
 use common\models\shop\Product;
 use yii\console\Controller;

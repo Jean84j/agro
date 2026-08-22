@@ -4,7 +4,7 @@ namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
 use backend\models\IpBot;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\SiteErrors;
 use Yii;
 use yii\httpclient\Client;

@@ -4,10 +4,10 @@ namespace backend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 
 /**
- * ReviewsSearch represents the model behind the search form of `common\models\shop\ActivePages`.
+ * ReviewsSearch represents the model behind the search form of `common\models\ActivePages`.
  */
 class ActivePagesSearch extends ActivePages
 {

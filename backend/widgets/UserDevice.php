@@ -2,7 +2,7 @@
 
 namespace backend\widgets;
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use kartik\base\Widget;
 
 class UserDevice extends Widget

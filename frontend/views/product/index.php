@@ -3,7 +3,7 @@
 use common\models\shop\ProductProperties;
 use frontend\assets\ProductPageAsset;
 use frontend\widgets\RelatedProducts;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use frontend\widgets\ViewProduct;
 use common\models\shop\Product;
 use common\models\shop\Review;

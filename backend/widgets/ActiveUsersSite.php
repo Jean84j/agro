@@ -3,7 +3,7 @@
 namespace backend\widgets;
 
 use app\widgets\BaseWidgetBackend;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 
 class ActiveUsersSite extends BaseWidgetBackend
 {

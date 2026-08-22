@@ -9,7 +9,7 @@ use frontend\widgets\ProductsCarouselGazon;
 use frontend\widgets\ProductsCarousel;
 use frontend\widgets\FeaturedProduct;
 use frontend\widgets\BlockSlideshow;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use frontend\widgets\BlockFeatures;
 use frontend\widgets\BlockBanner;
 use frontend\widgets\ViewProduct;

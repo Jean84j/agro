@@ -4,7 +4,7 @@ namespace console\controllers;
 
 use backend\models\IpBot;
 use backend\models\ReportItem;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\shop\CategoriesProperties;
 use common\models\shop\Category;
 use common\models\shop\Product;

@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\ActivePages $model */
+/** @var common\models\ActivePages $model */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Active Pages'), 'url' => ['index']];

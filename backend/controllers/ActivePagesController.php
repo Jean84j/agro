@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use backend\models\search\ActivePagesSearch;
 use Yii;
 use yii\web\Controller;

@@ -1,7 +1,7 @@
 <?php
 
 use frontend\assets\CategoryAuxiliaryPageAsset;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\shop\Product;
 use frontend\widgets\ViewProduct;
 use yii\helpers\Html;

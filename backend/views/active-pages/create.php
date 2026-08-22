@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\ActivePages $model */
+/** @var common\models\ActivePages $model */
 
 $this->title = Yii::t('app', 'Create Active Pages');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Active Pages'), 'url' => ['index']];

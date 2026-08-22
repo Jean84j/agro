@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use frontend\assets\ComparePageAsset;
 use frontend\widgets\ProductsCarousel;
 use frontend\widgets\ViewProduct;

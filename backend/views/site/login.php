@@ -1,7 +1,7 @@
 <?php
 
 use yii\bootstrap5\ActiveForm;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 
 ActivePages::setActiveUser();
 

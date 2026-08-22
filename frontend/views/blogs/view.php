@@ -2,7 +2,7 @@
 
 use frontend\widgets\ProductsCarousel;
 use common\models\shop\ProductImage;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use frontend\assets\BlogsPageAsset;
 use common\models\Posts\Posts;
 use frontend\widgets\ViewProduct;

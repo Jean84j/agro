@@ -2,7 +2,7 @@
 
 use frontend\assets\CategoryCatalogPageAsset;
 use common\models\shop\AuxiliaryCategories;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\shop\Category;
 use common\models\shop\Product;
 use frontend\widgets\CategoriesAuxiliary;

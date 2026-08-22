@@ -2,7 +2,7 @@
 
 use common\models\Posts\PostProducts;
 use common\models\Posts\Posts;
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use common\models\shop\Product;
 use common\models\shop\ProductImage;
 use frontend\assets\PostPageAsset;

@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\ActivePages;
+use common\models\ActivePages;
 use frontend\assets\OrderCheckoutPageAsset;
 use frontend\widgets\ViewProduct;
 use kartik\form\ActiveForm;
