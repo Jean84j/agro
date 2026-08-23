@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\MinimumOrderAmount $model */
+/** @var common\models\MinimumOrderAmount $model */
 
 $this->title = Yii::t('app', 'Create Minimum Order Amount');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Minimum Order Amounts'), 'url' => ['index']];

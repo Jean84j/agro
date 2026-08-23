@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\MinimumOrderAmount $model */
+/** @var common\models\MinimumOrderAmount $model */
 
 $this->title = Yii::t('app', 'Update Minimum Order Amount: {name}', [
     'name' => $model->id,

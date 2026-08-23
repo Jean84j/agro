@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\shop\MinimumOrderAmount $model */
+/** @var common\models\MinimumOrderAmount $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

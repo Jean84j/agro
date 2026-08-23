@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\shop\MinimumOrderAmount;
+use common\models\MinimumOrderAmount;
 use backend\models\search\MinimumOrderAmountSearch;
 use Yii;
 use yii\web\Controller;

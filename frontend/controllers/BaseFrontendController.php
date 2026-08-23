@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use common\models\shop\MinimumOrderAmount;
+use common\models\MinimumOrderAmount;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\FileHelper;

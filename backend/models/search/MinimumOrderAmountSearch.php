@@ -4,10 +4,10 @@ namespace backend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\shop\MinimumOrderAmount;
+use common\models\MinimumOrderAmount;
 
 /**
- * MinimumOrderAmountSearch represents the model behind the search form of `common\models\shop\MinimumOrderAmount`.
+ * MinimumOrderAmountSearch represents the model behind the search form of `common\models\MinimumOrderAmount`.
  */
 class MinimumOrderAmountSearch extends MinimumOrderAmount
 {

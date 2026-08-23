@@ -1,8 +1,9 @@
 <?php
 
-namespace common\models\shop;
+namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "minimum_order_amount".
@@ -10,7 +11,7 @@ use Yii;
  * @property int $id
  * @property float $amount Минимальная сумма заказа
  */
-class MinimumOrderAmount extends \yii\db\ActiveRecord
+class MinimumOrderAmount extends ActiveRecord
 {
     /**
      * {@inheritdoc}

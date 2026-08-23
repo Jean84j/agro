@@ -1,6 +1,6 @@
 <?php
 
-use common\models\shop\MinimumOrderAmount;
+use common\models\MinimumOrderAmount;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
