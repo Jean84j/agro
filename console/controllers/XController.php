@@ -379,44 +379,64 @@ class XController extends Controller
     /**
      * Извлечение цены с ранним выходом (Early Return)
      */
+    /**
+     * Извлечение цены с универсальным порядком приоритетов
+     */
     private function extractPrice(string $html): ?float
     {
-        // 1. Быстрый поиск в JSON-LD без парсинга всего DOM (намного быстрее DOMDocument)
+        // 1. БЫСТРЫЙ ПОИСК: Поиск прямо в HTML по атрибутам data-finalprice, data-price и т.д.
+        $dataAttributes = ['data-finalprice', 'data-price', 'data-product-price'];
+        foreach ($dataAttributes as $attr) {
+            if (preg_match('/' . $attr . '=["\']([^"\']+)["\']/ui', $html, $m)) {
+                $price = $this->cleanPrice($m[1]);
+                if ($price > 0) return $price;
+            }
+        }
+
+        // 2. Поиск в JSON-LD (микроразметка)
         if (preg_match_all('/<script[^>]+type=["\']application\/ld\+json["\'][^>]*>(.*?)<\/script>/sui', $html, $matches)) {
             foreach ($matches[1] as $jsonText) {
                 $data = json_decode(trim($jsonText), true);
                 if (!$data) continue;
 
                 $price = $this->parseJsonLd($data);
-                if ($price !== null) {
-                    return $price;
-                }
+                if ($price !== null) return $price;
             }
         }
 
-        // 2. Если JSON-LD не дал результат, подключаем DOMDocument
+        // Подключаем DOMDocument для детального анализа
         libxml_use_internal_errors(true);
         $dom = new \DOMDocument();
         @$dom->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_NOERROR | LIBXML_NOWARNING);
         $xpath = new \DOMXPath($dom);
 
-        // Поиск в <meta itemprop="price">
+        // 3. Поиск по популярным ID с ценой (например, id="totalPrice")
+        $priorityIds = ['totalPrice', 'product-price', 'price'];
+        foreach ($priorityIds as $id) {
+            $node = $xpath->query("//*[@id='{$id}']")->item(0);
+            if ($node) {
+                $price = $this->cleanPrice($node->textContent);
+                if ($price > 0) return $price;
+            }
+        }
+
+        // 4. Поиск в <meta itemprop="price">
         $metaNode = $xpath->query('//meta[@itemprop="price"]/@content')->item(0);
         if ($metaNode && !empty($metaNode->nodeValue)) {
             $price = $this->cleanPrice($metaNode->nodeValue);
             if ($price > 0) return $price;
         }
 
-        // Поиск по CSS-классам
+        // 5. Поиск по классам HTML (с фильтрацией зачеркнутых/старых цен)
         $classes = [
             'price', 'product-price', 'product__price', 'product-price__value',
             'price-current', 'current-price', 'price_value', 'product_price',
-            'product__prices', 'prices', 'cost', 'amount', 'product-price__item'
+            'cost', 'amount', 'product-price__item'
         ];
 
-        // Формируем один эффективный XPath запрос вместо 13 отдельных
+        // Исключаем старые/зачеркнутые цены, чтобы случайно не парсить old-price
         $conditions = array_map(fn($c) => "contains(concat(' ', normalize-space(@class), ' '), ' {$c} ')", $classes);
-        $xpathQuery = '//*[' . implode(' or ', $conditions) . ']';
+        $xpathQuery = '//*[' . implode(' or ', $conditions) . '][not(contains(@class, "old")) and not(contains(@class, "del"))]';
 
         $nodes = $xpath->query($xpathQuery);
         foreach ($nodes as $node) {
