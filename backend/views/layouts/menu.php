@@ -265,6 +265,13 @@ $menuSections = [
             'title' => 'Stickers',
         ],
     ],
+    '13' => [
+        'sticker' => [
+            'url' => '/competitors',
+            'icon' => '<span style="font-size: 22px">💸</span>',
+            'title' => 'Competitors',
+        ],
+    ],
 ];
 
 ?>

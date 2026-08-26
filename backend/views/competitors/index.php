@@ -1,13 +1,16 @@
 <?php
 
+use backend\models\Competitors\Competitors;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var backend\models\search\OrderProviderSearch $searchModel */
+/** @var backend\models\search\CompetitorsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Order Providers');
+$this->title = 'Competitors';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="top" class="sa-app__body">
@@ -34,7 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr>
                         <th><?=Yii::t('app', 'ID')?></th>
                         <th class="min-w-15x"><?=Yii::t('app', 'name')?></th>
-                        <th class="min-w-15x"><?=Yii::t('app', 'Count')?></th>
                         <th class="w-min" data-orderable="false"></th>
                     </tr>
                     </thead>
@@ -46,11 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <span class="me-4"><?=$model->id?></span>
                                 </div>
                             </td>
-                            <td><a href="<?=Url::to(['order-provider/update', 'id' => $model->id])?>" class="text-reset"><?=$model->name?></a></td>
-                            <td>
-<!--                                --><?php //= $model->getProductStatus($model->id) ?>
-                            </td>
-
+                            <td><a href="<?=Url::to(['update', 'id' => $model->id])?>" class="text-reset"><?=$model->product->name?></a></td>
                             <td>
                                 <div class="dropdown">
                                     <button
@@ -71,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <li><a class="dropdown-item" href="<?php //Url::to(['category/remove-tag', 'id' => $model->id])?>"><?php //Yii::t('app', 'Remove tag')?></a></li>
                                         <li><hr class="dropdown-divider" /></li>
                                         <li>
-                                            <?= Html::a(Yii::t('app', 'Delete'), ['order-provider/delete', 'id' => $model->id], ['class'=>"dropdown-item text-danger",
+                                            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], ['class'=>"dropdown-item text-danger",
                                                 'data' => [
                                                     'confirm' => 'Are you sure you want to delete this item?',
                                                     'method' => 'post'
@@ -89,4 +87,3 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
-
