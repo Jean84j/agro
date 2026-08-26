@@ -62,7 +62,7 @@ class Competitors extends ActiveRecord
             ->andWhere(['name' => $name])
             ->scalar();
 
-        return $price ?: '❌';
+        return $price ? number_format((float)$price, 2, '.', '') : '❌';
     }
 
     public function getImage($id)
