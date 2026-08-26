@@ -40,6 +40,7 @@ $competitorsName = CompetitorPrice::find()
                     <thead>
                     <tr>
                         <th><?= Yii::t('app', 'ID') ?></th>
+                        <th><?= 'Img' ?></th>
                         <th class="min-w-15x"><?= Yii::t('app', 'name') ?></th>
                         <th class="min-w-15x"><?= Yii::t('app', 'price') ?></th>
 
@@ -58,6 +59,19 @@ $competitorsName = CompetitorPrice::find()
                                     <span class="me-4"><?= $model->id ?></span>
                                 </div>
                             </td>
+
+
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <a href="#" class="me-4">
+                                        <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg">
+                                            <img src="<?= $model->getImage($model->product->id) ?>"
+                                                 width="40" height="40" alt=""/>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+
                             <td><a href="<?= Url::to(['update', 'id' => $model->id]) ?>"
                                    class="text-reset"><?= $model->product->name ?></a></td>
                             <td> <?= $model->product->price ?> </td>

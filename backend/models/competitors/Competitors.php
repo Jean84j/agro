@@ -4,6 +4,8 @@ namespace backend\models\competitors;
 
 use common\models\shop\Product;
 
+use common\models\shop\ProductImage;
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -61,6 +63,27 @@ class Competitors extends ActiveRecord
             ->scalar();
 
         return $price ?: '❌';
+    }
+
+    public function getImage($id)
+    {
+        $webp_support = ProductImage::imageWebp();
+        $product = Product::find()->with('images')->where(['id' => $id])->one();
+
+        $images = $product->images;
+        $priorities = array_column($images, 'priority');
+        array_multisort($priorities, SORT_ASC, $images);
+
+        if (isset($images[0])) {
+            if ($webp_support == true && isset($images[0]->webp_extra_small)) {
+                $img = Yii::$app->request->hostInfo . '/product/' . $images[0]->webp_extra_small;
+            } else {
+                $img = Yii::$app->request->hostInfo . '/product/' . $images[0]->extra_small;
+            }
+        } else {
+            $img = Yii::$app->request->hostInfo . "/images/no-image.png";
+        }
+        return $img;
     }
 
 }
