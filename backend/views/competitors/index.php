@@ -39,7 +39,7 @@ $priceClass = 'text-my_price';
                     />
                 </div>
                 <div class="sa-divider"></div>
-                <div style="max-height: 800px; overflow-y: auto;">
+                <div style="max-height: 700px; overflow-y: auto;">
                     <table class="sa-datatables-init" data-order='[[ 1, "asc" ]]' data-sa-search-input="#table-search">
                         <thead>
                         <tr>
