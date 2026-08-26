@@ -39,7 +39,6 @@ $priceClass = 'text-my_price';
                     />
                 </div>
                 <div class="sa-divider"></div>
-                <div style="max-height: 600px; overflow-y: auto;">
                     <table class="sa-datatables-init" data-order='[[ 1, "asc" ]]' data-sa-search-input="#table-search">
                         <thead>
                         <tr>
@@ -148,22 +147,11 @@ $priceClass = 'text-my_price';
                         <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
             </div>
         </div>
     </div>
 </div>
 <style>
-
-    /* Делаем ячейки шапки липкими */
-    .sa-datatables-init thead th {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background-color: #fff; /* Обязательно! Иначе контент таблицы будет просвечивать под текстом */
-        box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Опционально: легкая тень снизу для красоты */
-    }
-
     .text-my_price {
         color: #0c8c28;
         font-weight: bold;
