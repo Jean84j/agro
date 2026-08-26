@@ -3,7 +3,7 @@
 namespace backend\models\competitors;
 
 use common\models\shop\Product;
-use Yii;
+
 use yii\db\ActiveRecord;
 
 /**

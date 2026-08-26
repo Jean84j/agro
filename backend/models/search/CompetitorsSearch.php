@@ -4,7 +4,7 @@ namespace backend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Competitors\Competitors;
+use backend\models\competitors\Competitors;
 
 /**
  * CompetitorsSearch represents the model behind the search form of `backend\models\Competitors\Competitors`.

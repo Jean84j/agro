@@ -2,7 +2,7 @@
 
 namespace backend\models\competitors;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "competitor_price".
@@ -14,7 +14,7 @@ use Yii;
  * @property float|null $price
  * @property int|null $last_checked_at
  */
-class CompetitorPrice extends \yii\db\ActiveRecord
+class CompetitorPrice extends ActiveRecord
 {
 
 
