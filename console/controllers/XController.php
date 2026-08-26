@@ -431,7 +431,7 @@ class XController extends Controller
         $classes = [
             'price', 'product-price', 'product__price', 'product-price__value',
             'price-current', 'current-price', 'price_value', 'product_price',
-            'cost', 'amount', 'product-price__item'
+            'cost', 'amount', 'product-price__item', 'span_price_full'
         ];
 
         // Исключаем старые/зачеркнутые цены, чтобы случайно не парсить old-price
