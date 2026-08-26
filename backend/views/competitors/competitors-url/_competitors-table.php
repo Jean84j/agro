@@ -10,7 +10,7 @@ use yii\helpers\Url;
         <tr>
             <td><?= $competitor['id'] ?></td>
             <td><?= $competitor['url'] ?></td>
-            <td><?= 'Price' ?></td>
+            <td><?= $competitor['price'] ?></td>
             <td class="text-center align-middle">
 
             </td>

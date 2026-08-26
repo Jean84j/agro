@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use backend\models\competitors\CompetitorPrice;
 use backend\models\IpBot;
 use backend\models\ReportItem;
 use common\models\ActivePages;
@@ -344,164 +345,179 @@ class XController extends Controller
      */
     public function actionParsePrice()
     {
-        $noLoadPage = 'Не удалось загрузить страницу';
-        $noPrice = 'Цена не найдена';
+        // Отключаем лимит времени выполнения
+        set_time_limit(0);
 
-        $url = 'https://kurkul.com.ua/dolina/3079/';
+        // Работаем через generator/batch, чтобы не забивать память ActiveQuery
+        foreach (CompetitorPrice::find()->each(50) as $competitor) {
 
-        $html = file_get_contents($url);
-        
+            Console::output("\n📦 Товар: {$competitor->name}");
 
-        if ($html === false) {
-            return dd($noLoadPage);
-        }
+            $html = $this->fetchUrl($competitor->url);
 
-        libxml_use_internal_errors(true);
-
-        $dom = new DOMDocument();
-        $dom->loadHTML($html);
-
-        $xpath = new DOMXPath($dom);
-
-
-        /*
-         * ==========================================================
-         * 1. Ищем цену в JSON-LD
-         * ==========================================================
-         */
-
-        $scripts = $xpath->query(
-            '//script[@type="application/ld+json"]'
-        );
-
-        foreach ($scripts as $script) {
-
-            $json = trim($script->textContent);
-
-            $data = json_decode($json, true);
-
-            if (!$data) {
+            if (!$html) {
+                Console::output("❌ Не удалось загрузить страницу: {$competitor->url}");
                 continue;
             }
 
-            // Product
-            if (
-                isset($data['@type']) &&
-                $data['@type'] === 'Product' &&
-                isset($data['offers']['price'])
-            ) {
-                return dd((float)$data['offers']['price']);
+            $price = $this->extractPrice($html);
+
+            if ($price !== null && $price !== $competitor->price) {
+                // Сохраняем или выводим найденную цену
+                Console::output("✅ Цена: {$price}");
+                 $competitor->price = $price;
+                 $competitor->last_checked_at = time();
+                $competitor->save(false, ['price', 'last_checked_at']);
+            } else {
+                Console::output("⚠️ Цена не найдена");
             }
+        }
+    }
 
-            // @graph
-            if (
-                isset($data['@graph']) &&
-                is_array($data['@graph'])
-            ) {
+    /**
+     * Извлечение цены с ранним выходом (Early Return)
+     */
+    private function extractPrice(string $html): ?float
+    {
+        // 1. Быстрый поиск в JSON-LD без парсинга всего DOM (намного быстрее DOMDocument)
+        if (preg_match_all('/<script[^>]+type=["\']application\/ld\+json["\'][^>]*>(.*?)<\/script>/sui', $html, $matches)) {
+            foreach ($matches[1] as $jsonText) {
+                $data = json_decode(trim($jsonText), true);
+                if (!$data) continue;
 
-                foreach ($data['@graph'] as $item) {
-
-                    if (
-                        isset($item['@type']) &&
-                        $item['@type'] === 'Product' &&
-                        isset($item['offers']['price'])
-                    ) {
-                        return dd((float)$item['offers']['price']);
-                    }
+                $price = $this->parseJsonLd($data);
+                if ($price !== null) {
+                    return $price;
                 }
             }
         }
 
+        // 2. Если JSON-LD не дал результат, подключаем DOMDocument
+        libxml_use_internal_errors(true);
+        $dom = new \DOMDocument();
+        @$dom->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_NOERROR | LIBXML_NOWARNING);
+        $xpath = new \DOMXPath($dom);
 
-        /*
- * ==========================================================
- * 2. Ищем meta itemprop="price"
- * ==========================================================
- */
-
-        $priceNode = $xpath->query(
-            '//meta[@itemprop="price"]'
-        )->item(0);
-
-        if ($priceNode) {
-
-            $price = $priceNode->getAttribute('content');
-
-            if ($price !== '') {
-                return dd((float)$price);
-            }
+        // Поиск в <meta itemprop="price">
+        $metaNode = $xpath->query('//meta[@itemprop="price"]/@content')->item(0);
+        if ($metaNode && !empty($metaNode->nodeValue)) {
+            $price = $this->cleanPrice($metaNode->nodeValue);
+            if ($price > 0) return $price;
         }
 
-        /*
-         * ==========================================================
-         * 2. Ищем цену по классам HTML
-         * ==========================================================
-         */
-
+        // Поиск по CSS-классам
         $classes = [
-            'price',
-            'product-price',
-            'product__price',
-            'product-price__value',
-            'price-current',
-            'current-price',
-            'price_value',
-            'product_price',
-            'product__prices',
-            'prices',
-            'cost',
-            'amount',
-            'product-price__item',
+            'price', 'product-price', 'product__price', 'product-price__value',
+            'price-current', 'current-price', 'price_value', 'product_price',
+            'product__prices', 'prices', 'cost', 'amount', 'product-price__item'
         ];
 
-        foreach ($classes as $class) {
+        // Формируем один эффективный XPath запрос вместо 13 отдельных
+        $conditions = array_map(fn($c) => "contains(concat(' ', normalize-space(@class), ' '), ' {$c} ')", $classes);
+        $xpathQuery = '//*[' . implode(' or ', $conditions) . ']';
 
-            $query = "//*[contains(
-            concat(' ', normalize-space(@class), ' '),
-            ' {$class} '
-        )]";
+        $nodes = $xpath->query($xpathQuery);
+        foreach ($nodes as $node) {
+            $text = trim($node->textContent);
+            if (preg_match('/(?:\d[\d\s&nbsp;.,]*)(?:₴|грн|UAH|\$|USD|€|EUR)/iu', $text, $m)) {
+                $price = $this->cleanPrice($m[0]);
+                if ($price > 0) return $price;
+            }
+        }
 
-            $nodes = $xpath->query($query);
+        libxml_clear_errors();
+        return null;
+    }
 
-            foreach ($nodes as $node) {
+    /**
+     * Рекурсивный парсер JSON-LD структуры
+     */
+    private function parseJsonLd($data): ?float
+    {
+        if (!is_array($data)) return null;
 
-                $text = trim($node->textContent);
+        // Вложенный @graph
+        if (isset($data['@graph']) && is_array($data['@graph'])) {
+            foreach ($data['@graph'] as $item) {
+                $price = $this->parseJsonLd($item);
+                if ($price !== null) return $price;
+            }
+        }
 
-                if (preg_match(
-                    '/(?:\d[\d\s&nbsp;.,]*)(?:₴|грн|UAH|\$|USD|€|EUR)/iu',
-                    $text,
-                    $matches
-                )) {
+        // Проверка типа Product
+        if (isset($data['@type']) && (
+                $data['@type'] === 'Product' ||
+                (is_array($data['@type']) && in_array('Product', $data['@type']))
+            )) {
+            if (isset($data['offers'])) {
+                $offers = $data['offers'];
 
-                    $price = $matches[0];
+                // Если offers это массив предложений
+                if (isset($offers[0])) {
+                    $offers = $offers[0];
+                }
 
-                    // Убираем валюту, пробелы и другие символы
-                    $price = preg_replace('/[^\d.,]/u', '', $price);
-
-                    // 3 300,00 → 3300.00
-                    if (strpos($price, ',') !== false) {
-
-                        $price = str_replace('.', '', $price);
-                        $price = str_replace(',', '.', $price);
-
-                    } else {
-
-                        // 3.300 → 3300
-                        $price = str_replace('.', '', $price);
-                    }
-
-                    return dd((float)$price);
+                if (isset($offers['price'])) {
+                    return $this->cleanPrice((string)$offers['price']);
+                }
+                if (isset($offers['lowPrice'])) {
+                    return $this->cleanPrice((string)$offers['lowPrice']);
                 }
             }
         }
 
+        return null;
+    }
 
-        /*
-         * ==========================================================
-         * 3. Цена не найдена
-         * ==========================================================
-         */
+    /**
+     * Нормализация и очистка цены до float (3 300,00 -> 3300.00)
+     */
+    private function cleanPrice(string $priceStr): float
+    {
+        // Оставляем только цифры, точки и запятые
+        $priceStr = preg_replace('/[^\d.,]/u', '', $priceStr);
 
-        return dd($noPrice);
+        if (empty($priceStr)) return 0.0;
+
+        // Если есть и точка, и запятая (например 1,250.00 или 1.250,00)
+        if (strpos($priceStr, '.') !== false && strpos($priceStr, ',') !== false) {
+            if (strrpos($priceStr, '.') > strrpos($priceStr, ',')) {
+                // 1,250.00 -> 1250.00
+                $priceStr = str_replace(',', '', $priceStr);
+            } else {
+                // 1.250,00 -> 1250.00
+                $priceStr = str_replace('.', '', $priceStr);
+                $priceStr = str_replace(',', '.', $priceStr);
+            }
+        } else {
+            // Если только запятая (3300,00 -> 3300.00)
+            $priceStr = str_replace(',', '.', $priceStr);
+        }
+
+        return (float)$priceStr;
+    }
+
+    /**
+     * Безопасная загрузка страниц через cURL
+     */
+    private function fetchUrl(string $url): ?string
+    {
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 5,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return ($httpCode === 200 && $response) ? $response : null;
     }
 }

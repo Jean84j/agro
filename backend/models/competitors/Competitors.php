@@ -51,4 +51,16 @@ class Competitors extends ActiveRecord
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
+    public function getPriceCompetitor($product_id, $name)
+    {
+
+        $price = CompetitorPrice::find()
+            ->select('price')
+            ->where(['product_id' => $product_id])
+            ->andWhere(['name' => $name])
+            ->scalar();
+
+        return $price ?: '❌';
+    }
+
 }
