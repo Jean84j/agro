@@ -339,7 +339,7 @@ class XController extends Controller
     }
 
 
-
+    //======================================================
     /**
      *  спарсить цену на сайте  ****************************
      */
@@ -351,7 +351,7 @@ class XController extends Controller
         // Работаем через generator/batch, чтобы не забивать память ActiveQuery
         foreach (CompetitorPrice::find()->each(50) as $competitor) {
 
-            usleep(random_int(1000000, 5000000));
+            usleep(random_int(2000000, 8000000));
 
             Console::output("\n📦 Товар: {$competitor->name}");
 
@@ -482,7 +482,7 @@ class XController extends Controller
         if (empty($priceStr)) return 0.0;
 
         // Если есть и точка, и запятая (например 1,250.00 или 1.250,00)
-        if (strpos($priceStr, '.') !== false && strpos($priceStr, ',') !== false) {
+        if (str_contains($priceStr, '.') && str_contains($priceStr, ',')) {
             if (strrpos($priceStr, '.') > strrpos($priceStr, ',')) {
                 // 1,250.00 -> 1250.00
                 $priceStr = str_replace(',', '', $priceStr);
@@ -513,7 +513,8 @@ class XController extends Controller
             CURLOPT_TIMEOUT => 10,
             CURLOPT_CONNECTTIMEOUT => 5,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            CURLOPT_USERAGENT => $this->getRandomUserAgent(),
+            CURLOPT_REFERER => $this->getRandomRefer($url),
         ]);
 
         $response = curl_exec($ch);
@@ -521,5 +522,41 @@ class XController extends Controller
         curl_close($ch);
 
         return ($httpCode === 200 && $response) ? $response : null;
+    }
+
+    private function getRandomUserAgent(): string
+    {
+        $default = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
+
+        $randomId = ActivePages::find()->select('id')->orderBy('RAND()')->scalar();
+
+        if (!$randomId) {
+            return $default;
+        }
+
+        $userAgent = ActivePages::find()
+            ->select('user_agent')
+            ->where(['id' => $randomId])
+            ->scalar();
+
+        return $userAgent ?: $default;
+    }
+
+    private function getRandomRefer(string $url): string
+    {
+        $host = parse_url($url, PHP_URL_HOST);
+        $scheme = parse_url($url, PHP_URL_SCHEME) ?: 'https';
+
+        $domainUrl = $host ? "{$scheme}://{$host}/" : 'https://www.google.com/';
+
+        $refers = [
+            'https://www.google.com/',
+            'https://www.google.com/search?q=' . urlencode($host ?? 'shop'),
+            'https://www.bing.com/',
+            'https://www.bing.com/search?q=' . urlencode($host ?? 'shop'),
+            $domainUrl,
+        ];
+
+        return $refers[array_rand($refers)];
     }
 }
