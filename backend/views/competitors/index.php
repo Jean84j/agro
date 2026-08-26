@@ -152,6 +152,16 @@ $priceClass = 'text-my_price';
     </div>
 </div>
 <style>
+
+    /* Делаем ячейки шапки липкими */
+    .sa-datatables-init thead th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #fff; /* Обязательно! Иначе контент таблицы будет просвечивать под текстом */
+        box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Опционально: легкая тень снизу для красоты */
+    }
+
     .text-my_price {
         color: #0c8c28;
         font-weight: bold;
