@@ -10,7 +10,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var backend\models\Competitors\Competitors $model */
+/** @var backend\models\competitors\Competitors $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

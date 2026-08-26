@@ -3,11 +3,9 @@
 namespace backend\controllers;
 
 use backend\models\competitors\CompetitorPrice;
-use backend\models\Competitors\Competitors;
+use backend\models\competitors\Competitors;
 use backend\models\search\CompetitorsSearch;
-use common\models\shop\Product;
 use Yii;
-use yii\base\BaseObject;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

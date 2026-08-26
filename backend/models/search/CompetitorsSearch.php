@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\competitors\Competitors;
 
 /**
- * CompetitorsSearch represents the model behind the search form of `backend\models\Competitors\Competitors`.
+ * CompetitorsSearch represents the model behind the search form of `backend\models\competitors\Competitors`.
  */
 class CompetitorsSearch extends Competitors
 {
