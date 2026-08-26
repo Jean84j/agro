@@ -53,16 +53,14 @@ class Competitors extends ActiveRecord
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
-    public function getPriceCompetitor($product_id, $name)
+
+    public function getCompetitorPricesMap($productId)
     {
-
-        $price = CompetitorPrice::find()
-            ->select('price')
-            ->where(['product_id' => $product_id])
-            ->andWhere(['name' => $name])
-            ->scalar();
-
-        return $price ? number_format((float)$price, 2, '.', '') : '❌';
+        return CompetitorPrice::find()
+            ->select(['price', 'name'])
+            ->where(['product_id' => $productId])
+            ->indexBy('name') // Индексируем массив по имени конкурента
+            ->column();
     }
 
     public function getImage($id)

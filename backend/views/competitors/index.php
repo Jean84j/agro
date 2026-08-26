@@ -15,6 +15,9 @@ $competitorsName = CompetitorPrice::find()
     ->select('name')
     ->distinct()
     ->column();
+
+$priceClass = 'text-my_price';
+
 ?>
 <div id="top" class="sa-app__body">
     <div class="mx-sm-2 px-2 px-sm-3 px-xxl-4 pb-6">
@@ -41,11 +44,11 @@ $competitorsName = CompetitorPrice::find()
                     <tr>
                         <th><?= Yii::t('app', 'ID') ?></th>
                         <th><?= 'Img' ?></th>
-                        <th class="min-w-15x"><?= Yii::t('app', 'name') ?></th>
-                        <th class="min-w-15x"><?= Yii::t('app', 'price') ?></th>
+                        <th class="min-w-10x"><?= Yii::t('app', 'name') ?></th>
+                        <th class="min-w-10x"><?= Yii::t('app', 'price') ?></th>
 
                         <?php foreach ($competitorsName as $name): ?>
-                            <th class="min-w-15x"><?= $name ?></th>
+                            <th class="min-w-10x"><?= $name ?></th>
                         <?php endforeach; ?>
 
                         <th class="w-min" data-orderable="false"></th>
@@ -74,11 +77,33 @@ $competitorsName = CompetitorPrice::find()
 
                             <td><a href="<?= Url::to(['update', 'id' => $model->id]) ?>"
                                    class="text-reset"><?= $model->product->name ?></a></td>
-                            <td> <?= $model->product->price ?> </td>
+                            <td class="text-my_price"> <?= $model->product->price ?> </td>
 
+
+                            <?php
+                            $myPrice = (float)$model->product->price;
+                            $pricesMap = $model->getCompetitorPricesMap($model->product_id);
+                            ?>
 
                             <?php foreach ($competitorsName as $name): ?>
-                                <td> <?= $model->getPriceCompetitor($model->product_id,$name) ?> </td>
+                                <?php
+                                $price = $pricesMap[$name] ?? '❌';
+                                $priceClass = '';
+
+                                if (is_numeric($price)) {
+                                    $compPrice = (float)$price;
+                                    if ($myPrice === $compPrice) {
+                                        $priceClass = 'text-my_price';
+                                    } elseif ($myPrice > $compPrice) {
+                                        $priceClass = 'text-my_price_big';
+                                    } else {
+                                        $priceClass = 'text-my_price_small';
+                                    }
+
+                                    $price = number_format($compPrice, 2, '.', '');
+                                }
+                                ?>
+                                <td class="<?= $priceClass ?>"><?= $price ?></td>
                             <?php endforeach; ?>
 
 
@@ -126,3 +151,19 @@ $competitorsName = CompetitorPrice::find()
         </div>
     </div>
 </div>
+<style>
+    .text-my_price {
+        color: #0c8c28;
+        font-weight: bold;
+    }
+
+    .text-my_price_big {
+        color: #c50f49;
+        font-weight: bold;
+    }
+
+    .text-my_price_small {
+        color: #0f67c5;
+        font-weight: bold;
+    }
+</style>
