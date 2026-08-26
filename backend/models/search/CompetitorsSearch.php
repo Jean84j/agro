@@ -46,6 +46,7 @@ class CompetitorsSearch extends Competitors
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => false,
         ]);
 
         $this->load($params, $formName);
