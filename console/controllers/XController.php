@@ -410,6 +410,18 @@ class XController extends Controller
         @$dom->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_NOERROR | LIBXML_NOWARNING);
         $xpath = new \DOMXPath($dom);
 
+
+        // 3. ТОЧНЫЙ ПОИСК: Ищем элементы итоговой цены (span_price_full, price-final и т.д.)
+        $exactClasses = ['span_price_full', 'final-price', 'full-price'];
+        foreach ($exactClasses as $exactClass) {
+            $exactNode = $xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' {$exactClass} ')]")->item(0);
+            if ($exactNode) {
+                $price = $this->cleanPrice($exactNode->textContent);
+                if ($price > 0) return $price; // Вернёт 592.00
+            }
+        }
+
+
         // 3. Поиск по популярным ID с ценой (например, id="totalPrice")
         $priorityIds = ['totalPrice', 'product-price', 'price'];
         foreach ($priorityIds as $id) {
