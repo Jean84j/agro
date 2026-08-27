@@ -37,7 +37,7 @@ $competitorsName = CompetitorPrice::find()
                 </div>
                 <div class="sa-divider"></div>
                 <table class="sa-datatables-init" data-order='[[ 1, "asc" ]]' data-sa-search-input="#table-search">
-                    <thead  style="background-color: #f5bf068f">
+                    <thead>
                     <tr>
                         <th><?= Yii::t('app', 'ID') ?></th>
                         <th><?= 'Img' ?></th>
