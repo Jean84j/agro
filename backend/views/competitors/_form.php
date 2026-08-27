@@ -39,7 +39,6 @@ use yii\widgets\ActiveForm;
                                 <div class="card-body p-5">
                                     <?= $this->render('/_partials/card-name-label', ['cardName' => 'Basic information']); ?>
                                     <div class="mb-4">
-
                                         <?php if ($model->isNewRecord): ?>
                                             <div class="d-flex align-items-start gap-3">
                                                 <div class="flex-grow-0" style="width: 272px;">
@@ -50,10 +49,8 @@ use yii\widgets\ActiveForm;
                                                         ->orderBy('id')
                                                         ->all();
 
-                                                    // 1. Формируем список [id => name]
                                                     $data = ArrayHelper::map($products, 'id', 'name');
 
-                                                    // 2. Формируем data-image атрибут для каждого <option>
                                                     $options = [];
                                                     foreach ($products as $product) {
                                                         $options[$product->id] = [
@@ -61,7 +58,6 @@ use yii\widgets\ActiveForm;
                                                         ];
                                                     }
 
-                                                    // 3. JS-шаблон для рендера картинки и названия
                                                     $formatResult = new JsExpression('function(item) {
                                                             if (!item.id) { return item.text; }
                                                             var img = $(item.element).data("image");
@@ -73,26 +69,31 @@ use yii\widgets\ActiveForm;
                                                         'options' => ['class' => 'mb-0']
                                                     ])->widget(Select2::class, [
                                                         'data' => $data,
+                                                        'id' => 'competitors-product_id',
                                                         'theme' => Select2::THEME_KRAJEE_BS4,
                                                         'maintainOrder' => true,
                                                         'pluginLoading' => false,
                                                         'options' => [
                                                             'placeholder' => Yii::t('app', 'Select product...'),
                                                             'class' => 'sa-select2 form-select',
-                                                            'options' => $options, // Передаем data-атрибуты
+                                                            'options' => $options,
                                                         ],
                                                         'pluginOptions' => [
                                                             'allowClear' => false,
                                                             'width' => '100%',
-                                                            'templateResult' => $formatResult,    // Картинка в выпадающем списке
-                                                            'templateSelection' => $formatResult, // Картинка в выбранном поле
-                                                            'escapeMarkup' => new JsExpression('function(m) { return m; }'), // Разрешаем HTML
+                                                            'templateResult' => $formatResult,
+                                                            'templateSelection' => $formatResult,
+                                                            'escapeMarkup' => new JsExpression('function(m) { return m; }'),
                                                         ],
                                                     ])->label(false);
                                                     ?>
                                                 </div>
 
-                                                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+                                                <?= Html::submitButton(Yii::t('app', 'Save'), [
+                                                    'class' => 'btn btn-primary',
+                                                    'id' => 'btn-save-competitor',
+                                                    'disabled' => true
+                                                ]) ?>
                                             </div>
 
                                         <?php else: ?>
@@ -147,3 +148,19 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+<?php
+$js = <<<JS
+var \$select = $('#competitors-product_id');
+var \$btn = $('#btn-save-competitor');
+
+function toggleSubmitBtn() {
+    \$btn.prop('disabled', !\$select.val());
+}
+
+toggleSubmitBtn();
+\$select.on('change select2:select select2:clear', function () {
+    toggleSubmitBtn();
+});
+JS;
+$this->registerJs($js);
+?>
