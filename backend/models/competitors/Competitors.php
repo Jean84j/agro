@@ -59,7 +59,16 @@ class Competitors extends ActiveRecord
         return CompetitorPrice::find()
             ->select(['price', 'name'])
             ->where(['product_id' => $productId])
-            ->indexBy('name') // Индексируем массив по имени конкурента
+            ->indexBy('name')
+            ->column();
+    }
+
+    public function getCompetitorUrlsMap($productId)
+    {
+        return CompetitorPrice::find()
+            ->select(['url', 'name'])
+            ->where(['product_id' => $productId])
+            ->indexBy('name')
             ->column();
     }
 
