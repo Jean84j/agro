@@ -6,6 +6,7 @@ use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -23,11 +24,10 @@ use yii\widgets\ActiveForm;
                         <?= $this->render('/_partials/breadcrumbs'); ?>
                         <div class="col-auto d-flex">
                             <?php if (!$model->isNewRecord): ?>
-                                <!--                            <a href="#" class="btn btn-secondary me-3">--><?php ////Yii::t('app', 'Duplicate')?><!--</a>-->
                                 <?= Html::a(Yii::t('app', 'List'), Url::to(['index']), ['class' => 'btn btn-secondary me-3']) ?>
                                 <?= Html::a(Yii::t('app', 'Create more'), Url::to(['create']), ['class' => 'btn btn-success me-3']) ?>
+                                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
                             <?php endif; ?>
-                            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
                         </div>
                     </div>
                 </div>
@@ -41,30 +41,59 @@ use yii\widgets\ActiveForm;
                                     <div class="mb-4">
 
                                         <?php if ($model->isNewRecord): ?>
+                                            <div class="d-flex align-items-start gap-3">
+                                                <div class="flex-grow-0" style="width: 272px;">
+                                                    <?php
+                                                    $subQuery = Competitors::find()->select('product_id');
+                                                    $products = Product::find()
+                                                        ->where(['not in', 'id', $subQuery])
+                                                        ->orderBy('id')
+                                                        ->all();
 
-                                            <?php
-                                            $subQuery = Competitors::find()->select('product_id');
-                                            $data = ArrayHelper::map(Product::find()
-                                                ->where(['not in', 'id', $subQuery])
-                                                ->orderBy('id')
-                                                ->asArray()
-                                                ->all(), 'id', 'name');
+                                                    // 1. Формируем список [id => name]
+                                                    $data = ArrayHelper::map($products, 'id', 'name');
 
-                                            echo $form->field($model, 'product_id')->widget(Select2::class, [
-                                                'data' => $data,
-                                                'theme' => Select2::THEME_DEFAULT,
-                                                'maintainOrder' => true,
-                                                'pluginLoading' => false,
-                                                'options' => [
-                                                    'placeholder' => Yii::t('app', 'Select product...'),
-                                                    'class' => 'sa-select2 form-select',
-                                                ],
-                                                'pluginOptions' => [
-                                                    'allowClear' => true,
-                                                    'width' => '272px',
-                                                ],
-                                            ])->label(false);
-                                            ?>
+                                                    // 2. Формируем data-image атрибут для каждого <option>
+                                                    $options = [];
+                                                    foreach ($products as $product) {
+                                                        $options[$product->id] = [
+                                                            'data-image' => $model->getImage($product->id)
+                                                        ];
+                                                    }
+
+                                                    // 3. JS-шаблон для рендера картинки и названия
+                                                    $formatResult = new JsExpression('function(item) {
+                                                            if (!item.id) { return item.text; }
+                                                            var img = $(item.element).data("image");
+                                                            if (!img) { return item.text; }
+                                                            return $(\'<span class="d-flex align-items-center gap-2"><img src="\' + img + \'" width="24" height="24" style="object-fit:cover; border-radius:4px;" /> \' + item.text + \'</span>\');
+                                                        }');
+
+                                                    echo $form->field($model, 'product_id', [
+                                                        'options' => ['class' => 'mb-0']
+                                                    ])->widget(Select2::class, [
+                                                        'data' => $data,
+                                                        'theme' => Select2::THEME_KRAJEE_BS4,
+                                                        'maintainOrder' => true,
+                                                        'pluginLoading' => false,
+                                                        'options' => [
+                                                            'placeholder' => Yii::t('app', 'Select product...'),
+                                                            'class' => 'sa-select2 form-select',
+                                                            'options' => $options, // Передаем data-атрибуты
+                                                        ],
+                                                        'pluginOptions' => [
+                                                            'allowClear' => false,
+                                                            'width' => '100%',
+                                                            'templateResult' => $formatResult,    // Картинка в выпадающем списке
+                                                            'templateSelection' => $formatResult, // Картинка в выбранном поле
+                                                            'escapeMarkup' => new JsExpression('function(m) { return m; }'), // Разрешаем HTML
+                                                        ],
+                                                    ])->label(false);
+                                                    ?>
+                                                </div>
+
+                                                <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+                                            </div>
 
                                         <?php else: ?>
 

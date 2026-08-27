@@ -19,7 +19,7 @@
 
             <?php echo $this->render('modal-add-competitor', ['model' => $model]); ?>
 
-            <div class="card-body card-background_color-faq">
+            <div class="card-body card-background_color">
                 <div class="card">
                     <div class="sa-divider"></div>
                     <table class="table table-hover mb-0">
@@ -44,13 +44,8 @@
         </div>
     </div>
     <style>
-        .checkbox-lg {
-            transform: scale(1.2); /* Увеличение */
-            margin: 5px; /* Чтобы не прилипал */
-        }
-
-        .card-background_color-faq {
-            background-color: #2400ff17;
+        .card-background_color {
+            background-color: rgba(255, 225, 0, 0.61);
         }
     </style>
 
