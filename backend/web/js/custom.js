@@ -59,37 +59,32 @@
 
         const template = '' +
             '<"sa-datatables"' +
-                '<"sa-datatables__table"t>' +
-                '<"sa-datatables__footer"' +
-                    '<"sa-datatables__pagination"p>' +
-                    '<"sa-datatables__controls"' +
-                        '<"sa-datatables__legend"i>' +
-                        '<"sa-datatables__divider">' +
-                        '<"sa-datatables__page-size"l>' +
-                    '>' +
-                '>' +
+            '<"sa-datatables__table"t>' +
+            '<"sa-datatables__footer"' +
+            '<"sa-datatables__pagination"p>' +
+            '<"sa-datatables__controls"' +
+            '<"sa-datatables__legend"i>' +
+            '<"sa-datatables__divider">' +
+            '<"sa-datatables__page-size"l>' +
+            '>' +
+            '>' +
             '>';
 
-            $('.sa-datatables-init').each(function() {
+        $('.sa-datatables-init').each(function() {
             const tableSearchSelector = $(this).data('sa-search-input');
             const table = $(this).DataTable({
-
                 dom: template,
                 paging: true,
                 ordering: false,
-                // order: [[0, 'asc']],
-                "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "Все"] ],
-                "language": {
-                    "paginate": {
-                      "next": ">>",
-                      "previous": "<<"
-                    },
-                    "infoFiltered": " - отфильтровано из _MAX_ записей",
-                         "loadingRecords": "Подождите, идет загрузка...",
-                  },
+                lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "Все"] ],
+                language: {
+                    paginate: { "next": ">>", "previous": "<<" },
+                    infoFiltered: " - отфильтровано из _MAX_ записей",
+                    loadingRecords: "Подождите, идет загрузка...",
+                },
                 drawCallback: function() {
                     $(this.api().table().container()).find('.pagination').addClass('pagination-sm');
-                },
+                }
             });
 
             if (tableSearchSelector) {
@@ -98,7 +93,6 @@
                 });
             }
         });
-
     })();
 
 

@@ -8573,3 +8573,23 @@ input:checked + .sa-color-checkbox__box {
   padding: .05rem .8rem .1rem;
   line-height: inherit;
 }
+
+/* 1. Сбрасываем позиционирование у шаблона DataTables, чтобы sticky работал корректно */
+.sa-datatables__table {
+  position: static !important;
+  overflow: visible !important;
+}
+
+/* 2. Настраиваем прилипание ячеек шапки */
+.sa-datatables-init thead th {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  /* Увеличиваем отступ сверху, чтобы шапка выходила из-под топ-бара (подберите 60px..70px) */
+  top: 50px !important;
+  z-index: 100 !important;
+
+  /* Обязательно плотный белый фон и нижняя рамка */
+  background-color: #f9da4d !important;
+  /*border-bottom: 2px solid #dee2e6 !important;*/
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
