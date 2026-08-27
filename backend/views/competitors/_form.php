@@ -2,7 +2,6 @@
 
 use backend\models\competitors\Competitors;
 use common\models\shop\Product;
-
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -69,20 +68,44 @@ use yii\widgets\ActiveForm;
 
                                         <?php else: ?>
 
+                                            <?php
+                                            $product = $model->product;
+                                            $productName = $product->name ?? Yii::t('app', 'Not set');
+                                            $productPrice = isset($product->price) ? number_format($product->price, 0, '', ' ') : null;
+                                            $productImage = $model->getImage($product->id ?? null);
+                                            ?>
+
                                             <div class="form-group mb-3">
                                                 <label class="form-label"><?= Yii::t('app', 'Product') ?></label>
-                                                <p class="form-control-plaintext fw-bold">
-                                                    <?= Html::encode($model->product->name ?? Yii::t('app', 'Not set')) ?>
-                                                </p>
+
+                                                <div class="d-flex align-items-center justify-content-between gap-3 p-2 border rounded">
+                                                    <div class="d-flex align-items-center gap-3 overflow-hidden">
+                                                        <div class="sa-symbol sa-symbol--shape--rounded sa-symbol--size--lg flex-shrink-0">
+                                                            <img src="<?= $productImage ?>" width="40" height="40"
+                                                                 alt="<?= Html::encode($productName) ?>"/>
+                                                        </div>
+                                                        <span class="fw-bold fs-6 text-truncate">
+                                                         <?= Html::encode($productName) ?>
+                                                         </span>
+                                                    </div>
+
+                                                    <?php if ($productPrice !== null): ?>
+                                                        <div class="text-end text-nowrap flex-shrink-0 ms-2">
+                                                            <span class="fw-bold fs-5" style="color: #00a629">
+                                                                <?= $productPrice ?>
+                                                            </span>
+                                                            <span class="text-muted fs-7 ms-1">грн</span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
 
                                             <?= $this->render('competitors-url/urls', [
                                                 'model' => $model,
-                                               'competitors' => $competitors,
+                                                'competitors' => $competitors,
                                             ]); ?>
 
                                         <?php endif; ?>
-
 
                                     </div>
                                 </div>

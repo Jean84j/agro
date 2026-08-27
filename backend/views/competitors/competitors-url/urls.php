@@ -1,54 +1,58 @@
 <?php use yii\helpers\Url; ?>
 
-<div class="card">
-    <div class="card-body p-5">
-        <div class="mb-5 d-flex align-items-center justify-content-between">
+    <div class="card">
+        <div class="card-body p-5">
+            <div class="mb-5 d-flex align-items-center justify-content-between">
                                     <span class="sa-nav__menu-item-badge badge badge-sa-pill badge-sa-theme-cart">
                                         <h2 class="mb-0 fs-exact-18">
-                                            <?= Yii::t('app', 'FAQ') ?>
+                                            <?= Yii::t('app', 'Competitors') ?>
                                         </h2>
                                     </span>
-            <div class="text-muted fs-exact-14"><a href="#" data-bs-toggle="modal"
-                                                   data-bs-target="#addCompetitorsModal"><i
-                            class="fas fa-plus"></i></a></div>
+                <div class="text-muted fs-exact-14">
+                    <a href="#" data-bs-toggle="modal"
+                       data-bs-target="#addCompetitorsModal">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
 
-        </div>
+            </div>
 
-        <?php echo $this->render('modal-add-competitor', ['model' => $model]); ?>
+            <?php echo $this->render('modal-add-competitor', ['model' => $model]); ?>
 
-        <div class="card-body card-background_color-faq">
-            <div class="card">
-                <div class="sa-divider"></div>
-                <table class="table table-hover mb-0">
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th class="min-w-15x">Посилання</th>
-                        <th class="min-w-15x">Ціна</th>
-                        <th class="w-min"></th>
-                    </tr>
-                    </thead>
+            <div class="card-body card-background_color-faq">
+                <div class="card">
+                    <div class="sa-divider"></div>
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th class="min-w-15x">Посилання</th>
+                            <th class="min-w-15x">Ціна</th>
+                            <th class="min-w-10x">Оновлено</th>
+                            <th class="w-min"></th>
+                        </tr>
+                        </thead>
 
-                    <?php echo $this->render('_competitors-table', [
-                        'model' => $model,
-                        'competitors' => $competitors,
-                    ]); ?>
+                        <?php echo $this->render('_competitors-table', [
+                            'model' => $model,
+                            'competitors' => $competitors,
+                        ]); ?>
 
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<style>
-    .checkbox-lg {
-        transform: scale(1.2); /* Увеличение */
-        margin: 5px; /* Чтобы не прилипал */
-    }
+    <style>
+        .checkbox-lg {
+            transform: scale(1.2); /* Увеличение */
+            margin: 5px; /* Чтобы не прилипал */
+        }
 
-    .card-background_color-faq {
-        background-color: #2400ff17;
-    }
-</style>
+        .card-background_color-faq {
+            background-color: #2400ff17;
+        }
+    </style>
 
 <?php
 

@@ -11,6 +11,7 @@ use yii\helpers\Url;
             <td><?= $competitor['id'] ?></td>
             <td><?= $competitor['url'] ?></td>
             <td><?= $competitor['price'] ?></td>
+            <td><?= date('d.m.Y', $competitor['last_checked_at']) ?></td>
             <td class="text-center align-middle">
 
             </td>
