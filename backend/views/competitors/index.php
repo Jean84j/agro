@@ -57,7 +57,7 @@ $competitorsName = CompetitorPrice::find()
                             <td>
                                 <div class="d-flex align-items-center"
                                     data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
+                                    data-bs-placement="right"
                                      data-bs-custom-class="custom-tooltip"
                                     data-bs-title="<?= htmlspecialchars($model->product->category->name . ' | ' . $model->product->package) ?>">
                                     <span class="me-4"><?= $model->id ?></span>
