@@ -370,7 +370,8 @@ class XController extends Controller
 
             if ($price !== null) {
                 if ($price !== (float)$competitor->price) {
-                    Console::output("\t\t✅ New Цена: {$price}  ❌ Old Цена: {$competitor->price}");
+                    $oldPrice = $competitor->price ?? '❌';
+                    Console::output("\t\t✅ New Цена: {$price}  ❌ Old Цена: {$oldPrice}");
                     $competitor->price = $price;
                     $competitor->last_checked_at = time();
                     $competitor->save(false, ['price', 'last_checked_at']);
