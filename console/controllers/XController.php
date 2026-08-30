@@ -354,7 +354,7 @@ class XController extends Controller
         // Работаем через generator/batch, чтобы не забивать память ActiveQuery
         foreach (CompetitorPrice::find()->each(50) as $competitor) {
 
-            usleep(random_int(2000000, 8000000));
+            usleep(random_int(1000000, 3000000));
 
             Console::output("\n {$i} / {$countUpdate} \t✅ Сайт: {$competitor->name}");
             Console::output("\t\t✅ Товар: {$competitor->product->name}");
