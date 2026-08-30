@@ -384,14 +384,6 @@ class XController extends Controller
      */
     private function extractPrice(string $html): ?float
     {
-        // 1. БЫСТРЫЙ ПОИСК: Поиск прямо в HTML по атрибутам data-finalprice, data-price и т.д.
-        $dataAttributes = ['data-finalprice', 'data-price', 'data-product-price'];
-        foreach ($dataAttributes as $attr) {
-            if (preg_match('/' . $attr . '=["\']([^"\']+)["\']/ui', $html, $m)) {
-                $price = $this->cleanPrice($m[1]);
-                if ($price > 0) return $price;
-            }
-        }
 
         // 2. Поиск в JSON-LD (микроразметка)
         if (preg_match_all('/<script[^>]+type=["\']application\/ld\+json["\'][^>]*>(.*?)<\/script>/sui', $html, $matches)) {
@@ -401,6 +393,17 @@ class XController extends Controller
 
                 $price = $this->parseJsonLd($data);
                 if ($price !== null) return $price;
+            }
+        }
+
+        // 1. БЫСТРЫЙ ПОИСК: Поиск прямо в HTML по атрибутам data-finalprice, data-price и т.д.
+        $dataAttributes = ['data-finalprice', 'data-price', 'data-product-price',
+            'current-price'];
+        foreach ($dataAttributes as $attr) {
+            if (preg_match('/' . $attr . '=["\']([^"\']+)["\']/ui', $html, $m)) {
+                $price = $this->cleanPrice($m[1]);
+
+                if ($price > 0) return $price;
             }
         }
 
