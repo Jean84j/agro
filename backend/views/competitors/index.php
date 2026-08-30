@@ -55,8 +55,14 @@ $competitorsName = CompetitorPrice::find()
                     <?php foreach ($dataProvider->models as $model): ?>
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                     data-bs-custom-class="custom-tooltip"
+                                    data-bs-title="<?= htmlspecialchars($model->product->category->name . ' | ' . $model->product->package) ?>">
                                     <span class="me-4"><?= $model->id ?></span>
+                                    <span style="display: none;"><?= $model->product->category->name ?></span>
+                                    <span style="display: none;"><?= $model->product->package ?></span>
                                 </div>
                             </td>
 
@@ -174,5 +180,14 @@ $competitorsName = CompetitorPrice::find()
     .text-my_price_small {
         color: #0f67c5;
         font-weight: bold;
+    }
+
+    .custom-tooltip .tooltip-inner {
+        background-color: #3b4045; /* Цвет фона */
+        color: #ffc107;            /* Цвет текста */
+        font-size: 14px;           /* Размер шрифта */
+        font-weight: 500;          /* Жирность */
+        padding: 8px 12px;         /* Отступы */
+        border-radius: 6px;        /* Скругление */
     }
 </style>

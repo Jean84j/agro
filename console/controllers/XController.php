@@ -385,7 +385,7 @@ class XController extends Controller
     private function extractPrice(string $html): ?float
     {
 
-        // 2. Поиск в JSON-LD (микроразметка)
+        // 1. Поиск в JSON-LD (микроразметка)
         if (preg_match_all('/<script[^>]+type=["\']application\/ld\+json["\'][^>]*>(.*?)<\/script>/sui', $html, $matches)) {
             foreach ($matches[1] as $jsonText) {
                 $data = json_decode(trim($jsonText), true);
@@ -396,7 +396,7 @@ class XController extends Controller
             }
         }
 
-        // 1. БЫСТРЫЙ ПОИСК: Поиск прямо в HTML по атрибутам data-finalprice, data-price и т.д.
+        // 2. БЫСТРЫЙ ПОИСК: Поиск прямо в HTML по атрибутам data-finalprice, data-price и т.д.
         $dataAttributes = ['data-finalprice', 'data-price', 'data-product-price',
             'current-price'];
         foreach ($dataAttributes as $attr) {
