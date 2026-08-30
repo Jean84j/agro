@@ -2,6 +2,7 @@
 
 namespace backend\models\competitors;
 
+use common\models\shop\Product;
 use yii\db\ActiveRecord;
 
 /**
@@ -52,6 +53,11 @@ class CompetitorPrice extends ActiveRecord
             'price' => 'Price',
             'last_checked_at' => 'Last Checked At',
         ];
+    }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
 }

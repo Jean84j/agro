@@ -340,6 +340,7 @@ class XController extends Controller
 
 
     //======================================================
+
     /**
      *  спарсить цену на сайте  ****************************
      */
@@ -348,12 +349,15 @@ class XController extends Controller
         // Отключаем лимит времени выполнения
         set_time_limit(0);
 
+        $i = 1;
+        $countUpdate = CompetitorPrice::find()->count();
         // Работаем через generator/batch, чтобы не забивать память ActiveQuery
         foreach (CompetitorPrice::find()->each(50) as $competitor) {
 
             usleep(random_int(2000000, 8000000));
 
-            Console::output("\n📦 Товар: {$competitor->name}");
+            Console::output("\n {$i} / {$countUpdate} \t✅ Сайт: {$competitor->name}");
+            Console::output("\t✅ Товар: {$competitor->product->name}");
 
             $html = $this->fetchUrl($competitor->url);
 
@@ -364,15 +368,20 @@ class XController extends Controller
 
             $price = $this->extractPrice($html);
 
-            if ($price !== null && $price !== $competitor->price) {
-                // Сохраняем или выводим найденную цену
-                Console::output("✅ Цена: {$price}");
-                 $competitor->price = $price;
-                 $competitor->last_checked_at = time();
-                $competitor->save(false, ['price', 'last_checked_at']);
+            if ($price !== null) {
+                if ($price !== (float)$competitor->price) {
+                    Console::output("\t✅ New Цена: {$price}  ❌ Old Цена: {$competitor->price}");
+                    $competitor->price = $price;
+                    $competitor->last_checked_at = time();
+                    $competitor->save(false, ['price', 'last_checked_at']);
+                } else {
+                    $lastChecked = date('d.m.Y', $competitor->last_checked_at);
+                    Console::output("\t⚠️ Цена не поменялась  >>>  [ {$competitor->price} ]  с даты  >>>  [ {$lastChecked} ]");
+                }
+
             } else {
-                Console::output("⚠️ Цена не найдена");
-            }
+                Console::output("\t⚠️ Цена не найдена");
+            } $i++;
         }
     }
 
@@ -420,7 +429,7 @@ class XController extends Controller
             $exactNode = $xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' {$exactClass} ')]")->item(0);
             if ($exactNode) {
                 $price = $this->cleanPrice($exactNode->textContent);
-                if ($price > 0) return $price; // Вернёт 592.00
+                if ($price > 0) return $price;
             }
         }
 
