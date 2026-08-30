@@ -343,6 +343,7 @@ class XController extends Controller
 
     /**
      *  спарсить цену на сайте  ****************************
+     * @throws \Exception
      */
     public function actionParsePrice()
     {
@@ -363,6 +364,7 @@ class XController extends Controller
 
             if (!$html) {
                 Console::output("\t\t❌ Не удалось загрузить страницу: {$competitor->url}");
+                $i++;
                 continue;
             }
 
