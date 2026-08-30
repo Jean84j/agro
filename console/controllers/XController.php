@@ -357,12 +357,12 @@ class XController extends Controller
             usleep(random_int(2000000, 8000000));
 
             Console::output("\n {$i} / {$countUpdate} \t✅ Сайт: {$competitor->name}");
-            Console::output("\t✅ Товар: {$competitor->product->name}");
+            Console::output("\t\t✅ Товар: {$competitor->product->name}");
 
             $html = $this->fetchUrl($competitor->url);
 
             if (!$html) {
-                Console::output("❌ Не удалось загрузить страницу: {$competitor->url}");
+                Console::output("\t\t❌ Не удалось загрузить страницу: {$competitor->url}");
                 continue;
             }
 
@@ -370,17 +370,17 @@ class XController extends Controller
 
             if ($price !== null) {
                 if ($price !== (float)$competitor->price) {
-                    Console::output("\t✅ New Цена: {$price}  ❌ Old Цена: {$competitor->price}");
+                    Console::output("\t\t✅ New Цена: {$price}  ❌ Old Цена: {$competitor->price}");
                     $competitor->price = $price;
                     $competitor->last_checked_at = time();
                     $competitor->save(false, ['price', 'last_checked_at']);
                 } else {
                     $lastChecked = date('d.m.Y', $competitor->last_checked_at);
-                    Console::output("\t⚠️ Цена не поменялась  >>>  [ {$competitor->price} ]  с даты  >>>  [ {$lastChecked} ]");
+                    Console::output("\t\t⚠️ Цена не поменялась  >>>  [ {$competitor->price} ]  с даты  >>>  [ {$lastChecked} ]");
                 }
 
             } else {
-                Console::output("\t⚠️ Цена не найдена");
+                Console::output("\t\t⚠️ Цена не найдена");
             } $i++;
         }
     }
