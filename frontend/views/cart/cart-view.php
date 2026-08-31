@@ -35,18 +35,17 @@ ActivePages::setActiveUser();
     </div>
 </div>
 <script>
-    let qtyTimeout = null;
+    var qtyTimeout = qtyTimeout || null;
 
-    // Функция отправки AJAX
     function updateQty(prodId, qty, urlUpdate) {
         if (qty <= 0) return;
 
-        // Отменяем предыдущий таймер, если пользователь продолжает ввод
         clearTimeout(qtyTimeout);
 
         qtyTimeout = setTimeout(function () {
             $.ajax({
                 url: urlUpdate,
+                type: 'POST',
                 data: { id: prodId, qty: qty },
                 success: function (data) {
 
@@ -63,10 +62,9 @@ ActivePages::setActiveUser();
                     console.error('Ошибка обновления количества товара:', textStatus, errorThrown);
                 }
             });
-        }, 300); // 300ms задержка для предотвращения спама запросами
+        }, 300);
     }
 
-    // Валидация и запуск обновления
     function validateAndUpdateQty(input, prodId, urlUpdate) {
         var rawValue = input.value.trim();
 
@@ -91,6 +89,7 @@ ActivePages::setActiveUser();
         let orders = $('#orders-total');
         $.ajax({
             url: urlRemove,
+            type: 'POST',
             data: { id: id },
             success: function (data) {
 

@@ -9,9 +9,13 @@ use Yii;
 
 class CartController extends BaseFrontendController
 {
-    public function actionCartView($id, $qty = 1)
+    public function actionCartView()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+        $qty = Yii::$app->request->post('qty', 1);
+
         $cart = Yii::$app->cart;
 
         $model = Product::find()
@@ -64,14 +68,15 @@ class CartController extends BaseFrontendController
         ]);
     }
 
-    public function actionRemove($id)
+    public function actionRemove()
     {
         $view = '_cart-view';
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = Yii::$app->request->post('id');
         $product = Product::findOne($id);
         if ($product) {
             Yii::$app->cart->remove($product);
             if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
                 if (Yii::$app->cart->getCount() < 1) {
                     $view = 'cart-empty';
                 }
@@ -104,8 +109,11 @@ class CartController extends BaseFrontendController
     }
 
 
-    public function actionUpdate($id, $qty = null)
+    public function actionUpdate()
     {
+        $id = Yii::$app->request->post('id');
+        $qty = Yii::$app->request->post('qty');
+
         $product = Product::findOne($id);
         Yii::$app->cart->update($product, $qty);
         Yii::$app->response->format = Response::FORMAT_JSON;
