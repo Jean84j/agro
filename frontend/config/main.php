@@ -114,7 +114,10 @@ return [
             'rules' => [
                 '/' => 'site/index',
 
+                'catalog/page/<page:\d+>' => 'category/list',
                 'catalog' => 'category/list',
+
+
                 'catalog/<slug:[\w+-]*\w+>' => 'category/children',
                 'product-list/<slug>/page/<page:\d+>' => 'category/catalog',
                 'product-list/<slug:[\w+-]*\w+>' => 'category/catalog',

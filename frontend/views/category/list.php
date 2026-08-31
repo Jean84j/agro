@@ -93,6 +93,17 @@ ActivePages::setActiveUser();
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </div>
+
+                            <div class="products-categories">
+                                <h2><?= Yii::t('app', 'Товари в магазині AgroPro') ?></h2>
+                            </div>
+                            <?= $this->render('/_partials/products-list', [
+                                'products' => $products,
+                                'layout' => $layout,
+                            ]) ?>
+                            <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
+                            <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
+
                             <div class="spec__disclaimer">
                                 <?= $page_description ?>
                             </div>
@@ -106,6 +117,9 @@ ActivePages::setActiveUser();
 </div>
 <style>
     .popular-sub_categories {
+        margin: 30px 5px;
+
+    } .products-categories {
         margin: 30px 5px;
     }
 </style>

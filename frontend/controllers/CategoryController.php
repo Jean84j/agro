@@ -24,6 +24,7 @@ class CategoryController extends BaseFrontendController
     public function actionList()
     {
         $language = Yii::$app->language;
+        $layout = Yii::$app->session->get('selectedLayout', 'grid-3-sidebar');
         $categories = $this->categories($language);
 
         $auxiliaryCategories = $this->popularAuxiliaryCategories($language);
@@ -31,6 +32,27 @@ class CategoryController extends BaseFrontendController
         $seo = Settings::seoPageTranslate('catalog');
         $url = Url::canonical();
         $image = '';
+
+
+
+        $query = Product::find()
+            ->orderBy([
+                new Expression('FIELD(status_id, 1, 3, 4, 2)')
+            ]);
+
+        $count = 24;
+
+        $pages = $this->setPagination($query, $count);
+
+        $products = $query->offset($pages->offset)->limit($pages->limit)->all();
+
+
+        if ($language !== 'uk') {
+            $products = $this->translateProducts($products, $language);
+        }
+
+
+
 
         Yii::$app->metamaster
             ->setIndexable(true)
@@ -55,6 +77,9 @@ class CategoryController extends BaseFrontendController
                 'language' => $language,
                 'page_description' => $seo->page_description,
                 'files' => $files,
+                'layout' => $layout,
+                'products' => $products,
+                'pages' => $pages,
             ]);
     }
 
