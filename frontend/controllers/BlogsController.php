@@ -55,7 +55,7 @@ class BlogsController extends BaseFrontendController
 //            ->setPrice('')
             ->register(Yii::$app->view);
 
-        $files = $this->getRelativeFiles('@webroot/images/blogs');
+        $files = $this->getRelativeFiles('@webroot/images/block-images/blogs');
 
         $this->getSchemaBlogs($posts, $seo->description);
 

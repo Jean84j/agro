@@ -60,7 +60,7 @@ class SpecialController extends BaseFrontendController
 
         $this->setSpecialSchema($title, $description, $image, $url);
 
-        $files = $this->getRelativeFiles('@webroot/images/special');
+        $files = $this->getRelativeFiles('@webroot/images/block-images/special');
 
         return $this->render('view', compact([
             'products',

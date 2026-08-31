@@ -29,31 +29,23 @@ class CategoryController extends BaseFrontendController
 
         $auxiliaryCategories = $this->popularAuxiliaryCategories($language);
 
-        $seo = Settings::seoPageTranslate('catalog');
-        $url = Url::canonical();
-        $image = '';
-
-
-
         $query = Product::find()
             ->orderBy([
                 new Expression('FIELD(status_id, 1, 3, 4, 2)')
             ]);
 
         $count = 24;
-
         $pages = $this->setPagination($query, $count);
-
         $products = $query->offset($pages->offset)->limit($pages->limit)->all();
-
-
+        
         if ($language !== 'uk') {
             $products = $this->translateProducts($products, $language);
         }
 
-
-
-
+        $seo = Settings::seoPageTranslate('catalog');
+        $url = Url::canonical();
+        $image = '';
+        
         Yii::$app->metamaster
             ->setIndexable(true)
             ->setType('website')
@@ -68,7 +60,7 @@ class CategoryController extends BaseFrontendController
 
         $this->setCatalogSchema($seo->title, $seo->description, $image, $url);
 
-        $files = $this->getRelativeFiles('@webroot/images/catalog-categories');
+        $files = $this->getRelativeFiles('@webroot/images/block-images/catalog');
 
         return $this->render('list',
             [
