@@ -102,7 +102,7 @@ class CategoryController extends BaseFrontendController
                 ->select('id')
                 ->where(['visibility' => 1])
                 ->orderBy(new Expression('RAND()'))
-                ->limit(12)
+                ->limit(8)
                 ->column();
         }, 60 * 60 * 24); // 24 часа
 
