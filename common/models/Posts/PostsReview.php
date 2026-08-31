@@ -46,6 +46,9 @@ class PostsReview extends ActiveRecord
     public function rules()
     {
         return [
+            [['message', 'name'], 'trim'],
+            [['message', 'name'], 'filter', 'filter' => 'strip_tags'],
+            [['email'], 'email'],
             [['post_id', 'created_at'], 'integer'],
             [['rating'], 'number'],
             [['message'], 'string'],

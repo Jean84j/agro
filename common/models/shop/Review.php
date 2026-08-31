@@ -47,6 +47,9 @@ class Review extends ActiveRecord
     public function rules()
     {
         return [
+            [['message', 'name'], 'trim'],
+            [['message', 'name'], 'filter', 'filter' => 'strip_tags'],
+            [['email'], 'email'],
             [['product_id', 'created_at', 'viewed'], 'integer'],
             [['rating'], 'number'],
             [['name', 'email', 'message'], 'string', 'max' => 255],

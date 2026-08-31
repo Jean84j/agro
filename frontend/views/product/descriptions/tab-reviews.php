@@ -56,7 +56,7 @@ use kartik\rating\StarRating;
                         </div>
                         <div class="form-group col-md-4">
                             <label for="review-email">Email</label>
-                            <input type="text" name="email" class="form-control" id="review-email"
+                            <input type="email" name="email" class="form-control" id="review-email"
                                    placeholder="<?=Yii::t('app','Ваша пошта')?>"
                                    oninvalid="this.setCustomValidity('Вкажіть будь ласка Ваш email')"
                                    oninput="this.setCustomValidity('')"
