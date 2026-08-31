@@ -6,6 +6,9 @@ use common\models\Messages;
 use common\models\Settings;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use frontend\widgets\Bestsellers;
+use frontend\widgets\BestsellersDacha;
+use frontend\widgets\PopularCategories;
 use Spatie\SchemaOrg\Schema;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -306,30 +309,29 @@ class SiteController extends BaseFrontendController
 
     public function actionLoadContent()
     {
-        $name = Yii::$app->request->get('widgetName');
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
-        switch ($name) {
-            case 'bestsellers':
-                $content = $this->renderPartial('_load-bestsellers-widgets');
-                break;
-            case 'popular-categories':
-                $content = $this->renderPartial('_load-popular-categories-widgets');
-                break;
-            case 'bestsellers-dacha':
-                $content = $this->renderPartial('_load-bestsellers-dacha-widgets');
-                break;
-            case 'columns':
-                $content = $this->renderPartial('_load-columns-widgets');
-                break;
-            default:
-                // Обработка ситуации, когда значение widgetName не соответствует ожидаемым
-                $content = 'Unknown widgetName';
+        $name = Yii::$app->request->post('widgetName');
+
+        $widgetsMap = [
+            'bestsellers'        => Bestsellers::class,
+            'bestsellers-dacha'  => BestsellersDacha::class,
+            'popular-categories' => PopularCategories::class,
+
+        ];
+
+        if (!isset($widgetsMap[$name])) {
+            return [
+                'success' => false,
+                'message' => 'Неизвестный виджет',
+            ];
         }
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
+        $widgetClass = $widgetsMap[$name];
+
         return [
             'success' => true,
-            'content' => $content,
+            'content' => $widgetClass::widget(),
         ];
     }
 
