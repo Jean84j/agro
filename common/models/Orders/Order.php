@@ -72,6 +72,8 @@ class Order extends ActiveRecord
             ['ukrIndex', 'match', 'pattern' => '/^\d{5}$/', 'message' => 'Індекс повинен містити 5 цифр.'],
             ['ukrCity', 'string', 'max' => 40],
             [['fio', 'phone'], 'required'],
+            [['fio', 'note', 'ukrCity'], 'trim'],
+            [['fio', 'note', 'ukrCity'], 'filter', 'filter' => 'strip_tags'],
             [['sent_message'], 'boolean'],
             [['created_at', 'updated_at', 'order_status_id', 'order_pay_ment_id', 'order_provider_id'], 'integer'],
             [['fio', 'phone', 'city', 'area', 'warehouses'], 'string', 'max' => 255],
