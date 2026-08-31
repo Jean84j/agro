@@ -15,7 +15,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="messages-email">Email</label>
-                <input type="text" name="email" class="form-control"
+                <input type="email" name="email" class="form-control"
                        placeholder="<?=Yii::t('app','Ваша електронна пошта')?>"
                        oninvalid="this.setCustomValidity('<?=Yii::t('app','Вкажіть будь ласка Ваш email')?>')"
                        oninput="this.setCustomValidity('')"

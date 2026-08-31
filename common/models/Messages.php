@@ -44,6 +44,9 @@ class Messages extends ActiveRecord
     public function rules()
     {
         return [
+            [['message', 'comment', 'name', 'subject'], 'trim'],
+            [['message', 'comment', 'name', 'subject'], 'filter', 'filter' => 'strip_tags'],
+            [['email'], 'email'],
             [['message', 'comment'], 'string'],
             [['viewed', 'created_at'], 'integer'],
             [['name', 'email', 'subject'], 'string', 'max' => 255],
