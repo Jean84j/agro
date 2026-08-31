@@ -9,6 +9,9 @@ use yii\helpers\Url;
 /** @var \frontend\controllers\CategoryController $page_description */
 /** @var  $files */
 /** @var  $auxiliaryCategories */
+/** @var  $pages */
+/** @var  $layout */
+/** @var  $products */
 
 $h1 = 'Категорії';
 $breadcrumbItemActive = 'Категорії';
