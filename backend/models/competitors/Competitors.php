@@ -93,4 +93,36 @@ class Competitors extends ActiveRecord
         return $img;
     }
 
+
+    public static function getHeadCompetitors($name)
+    {
+        return match ($name) {
+
+            'agroprocvit.com.ua' => [
+                'name' => 'Агропроцвіт',
+                'image' => Yii::$app->request->hostInfo . '/admin/images/competitors/agroprocvit.png',
+            ],
+                        'hectare.ua' => [
+                'name' => 'Гектар',
+                'image' => Yii::$app->request->hostInfo . '/admin/images/competitors/hectar.ico',
+            ],
+                        'agro-market.net' => [
+                'name' => 'АгроМаркет',
+                'image' => Yii::$app->request->hostInfo . '/admin/images/competitors/agro-market.png',
+            ],
+                        'tovpaz.com' => [
+                'name' => 'Поділля',
+                'image' => Yii::$app->request->hostInfo . '/admin/images/competitors/tovpaz.png',
+            ],
+                        'agromag.ua' => [
+                'name' => 'АгроМаг',
+                'image' => Yii::$app->request->hostInfo . '/admin/images/competitors/agro-mag.ico',
+            ],
+            default => [
+                'name' => $name,
+                'image' => null,
+            ],
+        };
+    }
+
 }

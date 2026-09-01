@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\competitors\CompetitorPrice;
+use backend\models\competitors\Competitors;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -45,7 +46,13 @@ $competitorsName = CompetitorPrice::find()
                         <th class="min-w-10x"><?= Yii::t('app', 'price') ?></th>
 
                         <?php foreach ($competitorsName as $name): ?>
-                            <th class="min-w-10x"><?= $name ?></th>
+                            <?php $head = Competitors::getHeadCompetitors($name); ?>
+                            <th class="">
+                                <?php if ($head['image']): ?>
+                                    <img src="<?= $head['image'] ?>" width="20" height="20" alt="<?= Html::encode($head['name']) ?>">
+                                <?php endif; ?>
+                                <?= Html::encode($head['name']) ?>
+                            </th>
                         <?php endforeach; ?>
 
                         <th class="w-min" data-orderable="false"></th>
