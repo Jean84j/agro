@@ -75,7 +75,7 @@ class SiteController extends Controller
     /**
      * Login action.
      *
-     * @return string|Response
+     * @return array|string|Response
      */
     public function actionLogin()
     {
@@ -83,13 +83,28 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $this->layout = 'blank';
-
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+        // Обробка AJAX-запиту від нашого робота
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            if ($model->login()) {
+                return [
+                    'success' => true,
+                    'redirect' => Yii::$app->user->getReturnUrl(),
+                ];
+            }
+
+            $firstError = current($model->getFirstErrors());
+            return [
+                'success' => false,
+                'message' => $firstError ?: 'Невірний логін або пароль.',
+            ];
         }
 
+        // Звичайний відображення сторінки (GET-запит)
+        $this->layout = 'blank';
         $model->password = '';
 
         return $this->render('login', [
