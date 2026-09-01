@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\competitors\Competitors;
 use yii\helpers\Url;
 
 ?>
@@ -9,8 +10,17 @@ use yii\helpers\Url;
     <?php foreach ($competitors as $competitor): ?>
         <tr>
             <td><?= $competitor['id'] ?></td>
-            <td><?= $competitor['url'] ?></td>
-            <td><?= $competitor['price'] ?></td>
+            <?php
+            $item = Competitors::getHeadCompetitors($competitor['name']);
+            if ($item['image']) {
+                $image = $item['image'];
+            } else {
+                $image = Yii::$app->request->hostInfo . '/images/no-image.png';
+            }
+            ?>
+            <td><img src="<?= $image ?>" width="20" height="20" alt=""></td>
+            <td class="text-break"><?= $competitor['url'] ?></td>
+            <td class="text fw-bold"><?= $competitor['price'] ?></td>
             <td><?= date('d.m.Y', $competitor['last_checked_at']) ?></td>
             <td class="text-center align-middle">
 

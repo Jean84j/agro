@@ -26,6 +26,7 @@
                         <thead>
                         <tr>
                             <th>id</th>
+                            <th>Img</th>
                             <th class="min-w-15x">Посилання</th>
                             <th class="min-w-15x">Ціна</th>
                             <th class="min-w-10x">Оновлено</th>
