@@ -1,12 +1,10 @@
 <?php
 
-use backend\assets\LoginAsset;
 use common\models\ActivePages;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 ActivePages::setActiveUser();
-LoginAsset::register($this);
 
 ?>
 <div class="scene">
@@ -57,8 +55,8 @@ LoginAsset::register($this);
         </div>
 
         <form id="login-form" class="card" action="<?= Url::to(['site/login']) ?>" method="post" novalidate>
-            <?= Html::csrfMetaTags() ?>
-            <input type="hidden" name="<?= Yii::$app->request->csrfParam ?>" value="<?= Yii::$app->request->getCsrfToken() ?>">
+            <input type="hidden" name="<?= Yii::$app->request->csrfParam ?>"
+                   value="<?= Yii::$app->request->getCsrfToken() ?>">
 
             <span class="hand hand--l" aria-hidden="true"></span>
             <span class="hand hand--r" aria-hidden="true"></span>
