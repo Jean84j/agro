@@ -87,48 +87,25 @@ use yii\helpers\Url;
             <div class="sa-suggestions__item sa-suggestions__item--type--product">
                 <div class="sa-suggestions__product">
                     <div class="sa-suggestions__product-image">
-                        <?php if (!empty($report->order_status_id) && trim($report->order_status_id) !== ''): ?>
-                            <?php switch (trim($report->order_status_id)):
-                                 case 'Одержано': ?>
-                                    <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-done.jpg' ?>"
-                                         width="40" height="40" alt="Одержано"/>
-                                    <?php break; ?>
+                        <?php
+                        $status = trim($report->order_status_id ?? '');
 
-                                <?php case 'Повернення': ?>
-                                    <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-return.jpg' ?>"
-                                         width="40" height="40" alt="Повернення"/>
-                                    <?php break; ?>
+                        $statusMap = [
+                            'Одержано' => ['file' => 'order-done.jpg', 'alt' => 'Одержано'],
+                            'Повернення' => ['file' => 'order-return.jpg', 'alt' => 'Повернення'],
+                            'Відміна' => ['file' => 'order-cancel.jpg', 'alt' => 'Відміна'],
+                            'Очікується' => ['file' => 'order-expected.jpg', 'alt' => 'Очікується'],
+                            'Комплектується' => ['file' => 'order-completed.jpg', 'alt' => 'Комплектується'],
+                            'Доставляється' => ['file' => 'order-delivered.jpg', 'alt' => 'Доставляється'],
+                        ];
 
-                                <?php case 'Відміна': ?>
-                                    <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-cancel.jpg' ?>"
-                                         width="40" height="40" alt="Відміна"/>
-                                    <?php break; ?>
+                        $default = ['file' => 'order-none.jpg', 'alt' => $status !== '' ? 'Статус не визначено' : 'Статус отсутствует'];
 
-                                <?php case 'Очікується': ?>
-                                    <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-expected.jpg' ?>"
-                                         width="40" height="40" alt="Очікується"/>
-                                    <?php break; ?>
+                        $imageInfo = $statusMap[$status] ?? $default;
+                        $src = Yii::$app->request->hostInfo . '/admin/images/suggestions/' . $imageInfo['file'];
+                        ?>
 
-                                <?php case 'Комплектується': ?>
-                                    <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-completed.jpg' ?>"
-                                         width="40" height="40" alt="Комплектується"/>
-                                    <?php break; ?>
-
-                                <?php case 'Доставляється': ?>
-                                    <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-delivered.jpg' ?>"
-                                         width="40" height="40" alt="Доставляється"/>
-                                    <?php break; ?>
-
-                                <?php default: ?>
-                                    <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-none.jpg' ?>"
-                                         width="40" height="40" alt="Статус не визначено"/>
-                                    <?php break; ?>
-                                <?php endswitch; ?>
-                        <?php else: ?>
-                            <img src="<?= Yii::$app->request->hostInfo . '/admin/images/order-none.jpg' ?>"
-                                 width="40" height="40" alt="Статус отсутствует"/>
-                        <?php endif; ?>
-                    </div>
+                        <img src="<?= $src ?>" width="40" height="40" alt="<?= $imageInfo['alt'] ?>"/></div>
                     <div class="sa-suggestions__product-info">
                         <a href="<?= Url::to(['report/view', 'id' => $report->id]) ?>">
                             <div class="sa-suggestions__product-name" style="color: black"><?= $report->fio ?></div>

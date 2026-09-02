@@ -1,5 +1,7 @@
 <?php
 
+/** @var $model */
+
 use common\models\ActivePages;
 use yii\helpers\Html;
 use yii\helpers\Url;

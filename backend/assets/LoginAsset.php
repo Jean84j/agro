@@ -5,7 +5,7 @@ namespace backend\assets;
 use yii\web\AssetBundle;
 
 /**
- * Main backend application asset bundle.
+ * Login backend application asset bundle.
  */
 class LoginAsset extends AssetBundle
 {
