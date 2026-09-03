@@ -152,7 +152,6 @@ class SearchController extends BaseFrontendController
 
     private function findProductIdsByQuery(?string $q = null): array
     {
-        $q = trim($q);
         if (!$q) {
             return [];
         }
@@ -191,7 +190,6 @@ class SearchController extends BaseFrontendController
 
     private function findCategoryIdsByQuery(?string $q = null): array
     {
-        $q = trim($q);
         if (!$q) {
             return [];
         }
@@ -213,7 +211,6 @@ class SearchController extends BaseFrontendController
 
     private function findAuxCategoryIdsByQuery(?string $q = null): array
     {
-        $q = trim($q);
         if (!$q) {
             return [];
         }
