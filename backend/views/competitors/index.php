@@ -4,6 +4,7 @@ use backend\models\competitors\CompetitorPrice;
 use backend\models\competitors\Competitors;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
 
 /** @var yii\web\View $this */
 /** @var backend\models\search\CompetitorsSearch $searchModel */
@@ -87,7 +88,19 @@ $competitorsName = CompetitorPrice::find()
 
                             <td><a href="<?= Url::to(['update', 'id' => $model->id]) ?>"
                                    class="text-reset"><?= $model->product->name ?></a></td>
-                            <td class="text-my_price"> <?= $model->product->price ?> </td>
+
+
+
+                            <td
+                                    class="text-my_price"
+                                    contenteditable="true"
+                                    data-id="<?= $model->product->id ?>"
+                                    data-url="<?= Url::to(['product/update-price-ajax']) ?>"
+                            >
+                                <?= $model->product->price ?>
+                            </td>
+
+
 
 
                             <?php
@@ -198,3 +211,66 @@ $competitorsName = CompetitorPrice::find()
         border-radius: 6px;        /* Скругление */
     }
 </style>
+
+<?php
+$script = <<< JS
+    document.addEventListener('focusin', function (e) {
+        if (!e.target.classList.contains('text-my_price')) {
+            return;
+        }
+
+        e.target.dataset.oldPrice = e.target.textContent.trim();
+    });
+
+    document.addEventListener('focusout', function (e) {
+        if (!e.target.classList.contains('text-my_price')) {
+            return;
+        }
+
+        const td = e.target;
+
+        const id = td.dataset.id;
+        const price = td.textContent.trim().replace(',', '.');
+        const oldPrice = td.dataset.oldPrice;
+        const url = td.dataset.url;
+
+        if (price === oldPrice) {
+            return;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                id: id,
+                price: price
+            },
+            success: function (data) {
+                if (data.success) {
+                    td.textContent = parseFloat(price).toFixed(2);
+                    $(td).css('background', '#50e373');
+
+                    setTimeout(() => {
+                        $(td).css('background', '');
+                    }, 500);
+                } else {
+                    $(td).css('background', '#d74e5b7a');
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                $(td).css('background', '#d74e5b7a');
+            }
+        });
+    });
+
+    $(document).on('keypress', '.text-my_price', function (e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            $(this).blur();
+        }
+    });
+JS;
+
+$this->registerJs($script, View::POS_END);
+?>
