@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 
-/** @var  $product */
+/** @var  $reviews */
 
 ?>
 <ol class="reviews-list__content">
-    <?php foreach ($product->reviews as $review):
+    <?php foreach ($reviews as $review):
         $rating = $review->rating;
         ?>
         <li class="reviews-list__item">
@@ -90,7 +90,7 @@ use yii\helpers\Html;
                     </div>
                     <div class="review__text"><?= Html::encode($review->message) ?></div>
                     <div class="review__date"><?= Yii::$app->formatter->asDate($review->created_at) ?></div>
-                    <?php if ($review->respond_message): ?>
+                    <?php if (isset($review->respond_message)): ?>
                         <div class="pl-5">
                             <div class="review__admin mt-2"><?= Yii::t('app', 'Адміністратор AgroPro') ?></div>
                             <div class="review__text"><?= $review->respond_message ?></div>

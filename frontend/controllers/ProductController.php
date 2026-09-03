@@ -211,10 +211,10 @@ class ProductController extends BaseFrontendController
             $model->message = $post['mess'];
             if ($model->save()) {
                 $product = Product::find()->with('reviews')->where(['id' => $post['id']])->one();
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $this->renderAjax('_review', [
+
+                return $this->renderPartial('/_partials/_add-review', [
                     'model_review' => $model,
-                    'product' => $product
+                    'reviews' => $product->reviews
                 ]);
             }
         }

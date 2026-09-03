@@ -123,10 +123,9 @@ class PostController extends BaseFrontendController
             $model->message = $post['mess'];
             if ($model->save()) {
                 $res = Posts::find()->with('reviews')->where(['id' => $post['id']])->one();
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $this->renderAjax('_review', [
-                    'model_review' => $model,
-                    'postItem' => $res
+
+                return $this->renderPartial('/_partials/_add-review', [
+                    'reviews' => $res->reviews
                 ]);
             }else{
                 return '';

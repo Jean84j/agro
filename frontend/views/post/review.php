@@ -11,7 +11,7 @@ use kartik\rating\StarRating;
             <h3 class="reviews-view__header"><?= Yii::t('app', 'Відгуки читачів') ?></h3>
         <?php } ?>
         <div class="reviews-list">
-            <?= $this->render('_review', ['postItem' => $postItem]) ?>
+            <?= $this->render('/_partials/_add-review', ['reviews' => $postItem->reviews]) ?>
         </div>
     </div>
 </div>

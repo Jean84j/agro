@@ -19,7 +19,7 @@ use kartik\rating\StarRating;
                 <?php } ?>
             <?php endif; ?>
             <div class="reviews-list">
-                <?= $this->render('/product/_review', ['product' => $product]) ?>
+                <?= $this->render('/_partials/_add-review', ['reviews' => $product->reviews]) ?>
             </div>
         </div>
         <form id="form-review">

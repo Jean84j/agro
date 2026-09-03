@@ -643,11 +643,6 @@ class CategoryController extends BaseFrontendController
             ->all();
     }
 
-
-
-
-
-
     protected function setChildrenProductSchema($category)
     {
         $url = self::getUrlForSchema();
