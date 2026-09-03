@@ -71,7 +71,6 @@ ActivePages::setActiveUser();
                         type="text"
                         id="name"
                         name="LoginForm[username]"
-                        value="<?= Html::encode($model->username) ?>"
                         placeholder="Ваше ім'я"
                         autocomplete="username"
                         aria-label="Your name"

