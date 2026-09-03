@@ -5,16 +5,13 @@ namespace backend\controllers;
 use backend\models\Report;
 use common\models\Categories\Category;
 use backend\models\ProductsBackend;
-use Yii;
 use yii\web\Controller;
-use yii\web\Response;
 
 class SearchController extends Controller
 {
     public function actionAjaxSearch($search): ?string
     {
         $search = trim($search);
-        Yii::$app->response->format = Response::FORMAT_JSON;
 
         if (empty($search)) {
             return null;
@@ -37,7 +34,7 @@ class SearchController extends Controller
             ->all();
 
         if (!empty($categories) || !empty($products) || !empty($reports)) {
-            return $this->renderAjax('suggestions', [
+            return $this->renderPartial('suggestions', [
                 'categories' => $categories,
                 'products' => $products,
                 'reports' => $reports,
