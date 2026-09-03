@@ -13,7 +13,6 @@ use common\models\shop\Product;
 use common\models\Tags\Tag;
 use yii\db\Expression;
 use yii\helpers\Url;
-use yii\web\Response;
 use Yii;
 
 class SearchController extends BaseFrontendController
@@ -26,15 +25,13 @@ class SearchController extends BaseFrontendController
         $id_cat = $this->findCategoryIdsByQuery($q);
         $id_aux_cat = $this->findAuxCategoryIdsByQuery($q);
 
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
         $products = $this->getProducts($id_prod);
         $categories = $this->getCategories($id_cat, $language);
         $aux_categories = $this->getAuxCategories($id_aux_cat, $language);
 
         $categories_merge = array_merge($categories, $aux_categories);
 
-        return $this->renderAjax('suggestions', [
+        return $this->renderPartial('suggestions', [
             'products' => $products,
             'categories' => $categories_merge
         ]);

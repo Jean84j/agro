@@ -43,9 +43,7 @@ class ContactController extends BaseFrontendController
 
     public function actionCreate()
     {
-        $seo = Settings::seoPageTranslate('contact');
         if ($this->request->isPost) {
-            $contacts = Contact::find()->one();
             $post = Yii::$app->request->post();
             $model = new Messages();
             $model->subject = $post['subject'];
@@ -53,18 +51,16 @@ class ContactController extends BaseFrontendController
             $model->email = $post['email'];
             $model->message = $post['mess'];
             if ($model->save()) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $this->renderAjax('view', [
-                    'contacts' => $contacts,
-                    'page_description' => $seo->page_description,
-                ]);
-            } else {
 
-                return null;
+                Yii::$app->response->format = Response::FORMAT_JSON;
+
+                return [
+                    'success' => true
+                ];
             }
         }
-        return null;
     }
+
 
     protected function setSchemaLocalBusiness()
     {
