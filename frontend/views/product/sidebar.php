@@ -13,39 +13,26 @@ use common\models\shop\Product;
 
 ?>
 <div class="product__sidebar">
-    <div class="product__availability"
-         style="text-align: center; font-size: 1.5rem; font-weight: 600; letter-spacing: 1px;">
-        <?php
-        $statuses = [
-            1 => ['icon' => 'fas fa-check', 'color' => '#28a745'],
-            2 => ['icon' => 'fas fa-ban', 'color' => '#ff0000'],
-            3 => ['icon' => 'fas fa-truck', 'color' => '#ff8300'],
-            4 => ['icon' => 'fa fa-bars', 'color' => '#0331fc'],
-        ];
-
-        $status = $statuses[$product->status_id] ?? ['icon' => '', 'color' => '#060505'];
-        $statusIcon = $status['icon'] ? '<i style="margin: 5px; color: ' . $status['color'] . ';" class="' . $status['icon'] . '"></i>' : '';
-        $statusStyle = 'color: ' . $status['color'] . ';';
-
-        echo $statusIcon . '<span style="' . $statusStyle . '">' . Yii::t('app', $product->status->name) . '</span>';
-        ?>
-    </div>
+    <?= $this->render('/_partials/status', ['product' => $product]) ?>
     <?php if ($products_analog_count > 0 && $product->status_id == 2) : ?>
         <div class="product-card__badge--analog"
              style="text-align: center"><?= Yii::t('app', 'Але є аналоги') . ' ' . $products_analog_count ?></div>
     <?php endif; ?>
     <div class="product__prices" style="text-align: center">
-        <?php $price = Yii::$app->formatter->asCurrency($product->getPrice()) ?>
-        <?php if ($product->old_price == null) { ?>
-            <div class="product-card__prices">
-                <?= $price ?>
-            </div>
-        <?php } else { ?>
-            <div class="product-card__prices">
+        <?php
+        $price = Yii::$app->formatter->asCurrency($product->getPrice());
+        $oldPrice = $product->old_price !== null
+            ? Yii::$app->formatter->asCurrency($product->getOldPrice())
+            : null;
+        ?>
+        <div class="product-card__prices">
+            <?php if ($oldPrice !== null): ?>
                 <span class="product-card__new-price"><?= $price ?></span>
-                <span class="product-card__old-price"><?= Yii::$app->formatter->asCurrency($product->getOldPrice()) ?></span>
-            </div>
-        <?php } ?>
+                <span class="product-card__old-price"><?= $oldPrice ?></span>
+            <?php else: ?>
+                <?= $price ?>
+            <?php endif; ?>
+        </div>
     </div>
     <div class="product__options">
         <div class="form-group product__option">
@@ -101,7 +88,7 @@ use common\models\shop\Product;
     </div>
     <?php if ($product->price < $minimumOrderAmount): ?>
         <div class="product__terms-purchase">
-            <span class="product__terms-text"><?=Yii::t('app','Мінімальне замовлення на сайті від')?></span>
+            <span class="product__terms-text"><?= Yii::t('app', 'Мінімальне замовлення на сайті від') ?></span>
             <span class="product__terms-amount"><?= $minimumOrderAmount ?> грн.</span>
         </div>
         <style>
@@ -135,8 +122,8 @@ use common\models\shop\Product;
     <?php endif; ?>
     <?php if ($product->brand_id === 38): ?>
         <div class="product__terms-purchase">
-            <span class="product__terms-text"><?=Yii::t('app','Від 10 п.о доставка насіння')?></span>
-            <span class="product__terms-free"><?=Yii::t('app','БЕЗКОШТОВНА')?></span>
+            <span class="product__terms-text"><?= Yii::t('app', 'Від 10 п.о доставка насіння') ?></span>
+            <span class="product__terms-free"><?= Yii::t('app', 'БЕЗКОШТОВНА') ?></span>
         </div>
         <style>
             .product__terms-purchase {
