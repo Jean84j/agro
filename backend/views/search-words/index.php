@@ -23,6 +23,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => function ($model) {
+            if ($model->getCountSearchResult($model->word) == 0) {
+
+                return [
+                    'style' => 'background-color: #fb031aa3; font-weight: bold;',
+                    'class' => 'danger-row'
+                ];
+
+            }
+            return [];
+        },
         'pager' => [
             'class' => LinkPager::class,
             'options' => ['class' => 'pagination justify-content-center'],
@@ -54,6 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-
 </div>
+<style>
+    tr.danger-row td,
+    tr.danger-row td a {
+        color: #ffffff !important;
+    }
+</style>
