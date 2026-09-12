@@ -15,12 +15,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'email')->textInput(['type' => 'email']) ?>
+    <?= $form->field($model, 'role')->dropDownList([
+        User::ROLE_ADMIN => 'admin',
+        User::ROLE_MANAGER => 'manager',
+        User::ROLE_USER => 'user',
+    ]) ?>
     <?= $form->field($model, 'status')->dropDownList([
             User::STATUS_INACTIVE => 'Неактивный',
             User::STATUS_ACTIVE => 'Активный',
             User::STATUS_DELETED => 'Удаленный',
     ]) ?>
-    <?= $form->field($model, 'password')->passwordInput() ?>
+<!--    --><?php //echo $form->field($model, 'password')->passwordInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
