@@ -12,6 +12,7 @@ use yii\web\IdentityInterface;
  * User model
  *
  * @property integer $id
+ * @property integer $role
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
@@ -61,8 +62,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email'], 'required'],
-            [['username', 'email', 'password', 'role'], 'string'],
+            [['username', 'email', 'password'], 'string'],
             [['role'], 'integer'],
+            ['role', 'default', 'value' => self::ROLE_USER],
+            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_MANAGER, self::ROLE_ADMIN]],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
@@ -245,12 +248,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function isAdmin()
     {
-        return (int)$this->role === self::ROLE_ADMIN;
+        return $this->role === self::ROLE_ADMIN;
     }
 
     public function canAdmin()
     {
-        return in_array((int)$this->role, [
+        return in_array($this->role, [
             self::ROLE_MANAGER,
             self::ROLE_ADMIN,
         ], true);
