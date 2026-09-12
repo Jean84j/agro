@@ -7,14 +7,13 @@ use common\models\Tags\Tag;
 use backend\models\search\TagSearch;
 use common\models\Tags\TagTranslate;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * TagController implements the CRUD actions for Tag model.
  */
-class TagController extends Controller
+class TagController extends BaseBackendController
 {
     /**
      * @inheritDoc

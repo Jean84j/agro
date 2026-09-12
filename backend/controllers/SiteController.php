@@ -13,7 +13,7 @@ use yii\web\Response;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseBackendController
 {
     /**
      * {@inheritdoc}
@@ -80,7 +80,9 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            if ((int)Yii::$app->user->identity->role !== 1) {
+                return $this->goHome();
+            }
         }
 
         $model = new LoginForm();
@@ -89,8 +91,19 @@ class SiteController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
 
             if ($model->login()) {
+
                 $guest = false;
                 $this->writeData($guest);
+
+                if ((int)Yii::$app->user->identity->role === 1) {
+                    Yii::$app->user->logout();
+
+                    return [
+                        'success' => false,
+                        'reload' => true,
+                        'message' => 'У вас немає доступу до адміністративної панелі.',
+                    ];
+                }
 
                 return [
                     'success' => true,
@@ -116,18 +129,18 @@ class SiteController extends Controller
 
     private function writeData($guest)
     {
-        $ip        = Yii::$app->request->userIP;
+        $ip = Yii::$app->request->userIP;
         $userAgent = Yii::$app->request->userAgent;
-        $referrer  = Yii::$app->request->referrer;
-        $url       = Yii::$app->request->absoluteUrl;
-        $method    = Yii::$app->request->method;
-        $userId    = Yii::$app->user->isGuest ? 'Guest' : Yii::$app->user->id;
+        $referrer = Yii::$app->request->referrer;
+        $url = Yii::$app->request->absoluteUrl;
+        $method = Yii::$app->request->method;
+        $userId = Yii::$app->user->isGuest ? 'Guest' : Yii::$app->user->id;
         $sessionId = Yii::$app->session->id;
 
         $loginForm = Yii::$app->request->post('LoginForm', []);
-        $filePath  = Yii::getAlias('@runtime/debug_post.txt');
+        $filePath = Yii::getAlias('@runtime/debug_post.txt');
 
-        $textData  = "[" . date('Y-m-d H:i:s') . "]\n";
+        $textData = "[" . date('Y-m-d H:i:s') . "]\n";
         $textData .= "  User ID:    {$userId}\n";
         $textData .= "  IP:         {$ip}\n";
         $textData .= "  Method:     {$method} -> {$url}\n";
@@ -136,7 +149,7 @@ class SiteController extends Controller
         $textData .= "  Session ID: {$sessionId}\n";
         $textData .= "  Data:\n";
 
-        if ($guest){
+        if ($guest) {
             foreach ($loginForm as $key => $value) {
 
                 $textData .= "       [{$key}] => {$value}\n";

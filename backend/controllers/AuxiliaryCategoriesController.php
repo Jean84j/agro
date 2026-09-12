@@ -7,7 +7,6 @@ use backend\models\search\AuxiliaryCategoriesSearch;
 use common\models\Categories\AuxiliaryTranslate;
 use Yii;
 use yii\helpers\Inflector;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -15,7 +14,7 @@ use yii\web\UploadedFile;
 /**
  * AuxiliaryCategoriesController implements the CRUD actions for AuxiliaryCategoriesSearch model.
  */
-class AuxiliaryCategoriesController extends Controller
+class AuxiliaryCategoriesController extends BaseBackendController
 {
     /**
      * @inheritDoc

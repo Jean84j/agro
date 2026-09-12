@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * LabelController implements the CRUD actions for Label model.
  */
-class LabelController extends Controller
+class LabelController extends BaseBackendController
 {
     /**
      * @inheritDoc

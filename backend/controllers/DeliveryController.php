@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * DeliveryController implements the CRUD actions for Delivery model.
  */
-class DeliveryController extends Controller
+class DeliveryController extends BaseBackendController
 {
     /**
      * @inheritDoc

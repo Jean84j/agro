@@ -7,7 +7,7 @@ use common\models\Categories\Category;
 use backend\models\ProductsBackend;
 use yii\web\Controller;
 
-class SearchController extends Controller
+class SearchController extends BaseBackendController
 {
     public function actionAjaxSearch($search): ?string
     {

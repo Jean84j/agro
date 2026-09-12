@@ -26,7 +26,7 @@ use yii\web\Response;
 /**
  * ReportController implements the CRUD actions for Report model.
  */
-class ReportController extends Controller
+class ReportController extends BaseBackendController
 {
     /**
      * @inheritDoc

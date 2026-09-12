@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * SeoPagesController implements the CRUD actions for SeoPages model.
  */
-class SeoPagesController extends Controller
+class SeoPagesController extends BaseBackendController
 {
     /**
      * @inheritDoc

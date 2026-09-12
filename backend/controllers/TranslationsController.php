@@ -5,14 +5,13 @@ namespace backend\controllers;
 use common\models\Translations;
 use backend\models\search\TranslationsSearch;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * TranslationsController implements the CRUD actions for Translations model.
  */
-class TranslationsController extends Controller
+class TranslationsController extends BaseBackendController
 {
     /**
      * @inheritDoc

@@ -16,7 +16,7 @@ use yii\web\Response;
 /**
  * GrupController implements the CRUD actions for Grup model.
  */
-class GrupController extends Controller
+class GrupController extends BaseBackendController
 {
     /**
      * @inheritDoc

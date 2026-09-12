@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
 /**
  * PropertiesNameController implements the CRUD actions for PropertiesNameSearch model.
  */
-class PropertiesNameController extends Controller
+class PropertiesNameController extends BaseBackendController
 {
     /**
      * @inheritDoc

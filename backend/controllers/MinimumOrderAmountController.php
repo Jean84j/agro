@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * MinimumOrderAmountController implements the CRUD actions for MinimumOrderAmount model.
  */
-class MinimumOrderAmountController extends Controller
+class MinimumOrderAmountController extends BaseBackendController
 {
     /**
      * @inheritDoc

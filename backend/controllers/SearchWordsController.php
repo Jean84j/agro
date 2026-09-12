@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * SearchWordsController implements the CRUD actions for SearchWords model.
  */
-class SearchWordsController extends Controller
+class SearchWordsController extends BaseBackendController
 {
     /**
      * @inheritDoc

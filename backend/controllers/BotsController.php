@@ -5,7 +5,6 @@ namespace backend\controllers;
 use common\models\Bots;
 use backend\models\search\BotsSearch;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -13,7 +12,7 @@ use yii\web\Response;
 /**
  * BotsController implements the CRUD actions for Bots model.
  */
-class BotsController extends Controller
+class BotsController extends BaseBackendController
 {
     /**
      * @inheritDoc

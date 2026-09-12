@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 
-class ReportAnalyticController extends Controller
+class ReportAnalyticController extends BaseBackendController
 {
     public function actionIndex()
     {

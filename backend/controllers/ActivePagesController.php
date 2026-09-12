@@ -5,14 +5,13 @@ namespace backend\controllers;
 use common\models\ActivePages;
 use backend\models\search\ActivePagesSearch;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * ActivePagesController implements the CRUD actions for ActivePages model.
  */
-class ActivePagesController extends Controller
+class ActivePagesController extends BaseBackendController
 {
     /**
      * @inheritDoc

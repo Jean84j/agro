@@ -5,14 +5,13 @@ namespace backend\controllers;
 use common\models\About;
 use backend\models\search\AboutSearch;
 use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * AboutController implements the CRUD actions for About model.
  */
-class AboutController extends Controller
+class AboutController extends BaseBackendController
 {
     /**
      * @inheritDoc

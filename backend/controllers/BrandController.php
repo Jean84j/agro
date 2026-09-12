@@ -7,7 +7,6 @@ use backend\models\search\BrandSearch;
 use common\models\shop\BrandsTranslate;
 use Yii;
 use yii\helpers\Inflector;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -15,7 +14,7 @@ use yii\web\UploadedFile;
 /**
  * BrandController implements the CRUD actions for Brand model.
  */
-class BrandController extends Controller
+class BrandController extends BaseBackendController
 {
     /**
      * @inheritDoc

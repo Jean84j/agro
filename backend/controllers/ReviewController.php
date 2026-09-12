@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ReviewController implements the CRUD actions for Review model.
  */
-class ReviewController extends Controller
+class ReviewController extends BaseBackendController
 {
     /**
      * @inheritDoc

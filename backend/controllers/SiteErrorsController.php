@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * SiteErrorsController implements the CRUD actions for SiteErrors model.
  */
-class SiteErrorsController extends Controller
+class SiteErrorsController extends BaseBackendController
 {
     /**
      * @inheritDoc

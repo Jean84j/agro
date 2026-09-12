@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ContactController implements the CRUD actions for Contact model.
  */
-class ContactController extends Controller
+class ContactController extends BaseBackendController
 {
     /**
      * @inheritDoc

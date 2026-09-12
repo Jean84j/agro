@@ -3,7 +3,7 @@ namespace backend\controllers;
 
 use yii\web\Controller;
 
-class StickerController extends Controller
+class StickerController extends BaseBackendController
 {
     public function actionIndex()
     {

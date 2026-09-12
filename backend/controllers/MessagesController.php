@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * MessagesController implements the CRUD actions for Messages model.
  */
-class MessagesController extends Controller
+class MessagesController extends BaseBackendController
 {
     /**
      * @inheritDoc

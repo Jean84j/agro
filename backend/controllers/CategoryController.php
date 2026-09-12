@@ -8,7 +8,6 @@ use common\models\Categories\Category;
 use backend\models\search\CategorySearch;
 use Yii;
 use yii\helpers\Inflector;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -17,7 +16,7 @@ use yii\web\UploadedFile;
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
-class CategoryController extends Controller
+class CategoryController extends BaseBackendController
 {
     /**
      * @inheritDoc

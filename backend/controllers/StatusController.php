@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * StatusController implements the CRUD actions for Status model.
  */
-class StatusController extends Controller
+class StatusController extends BaseBackendController
 {
     /**
      * @inheritDoc

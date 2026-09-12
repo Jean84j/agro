@@ -39,7 +39,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
-class ProductController extends Controller
+class ProductController extends BaseBackendController
 {
     /**
      * @inheritDoc

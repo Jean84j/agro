@@ -13,7 +13,7 @@ use yii\web\Response;
 /**
  * ReportReminderController implements the CRUD actions for ReportReminder model.
  */
-class ReportReminderController extends Controller
+class ReportReminderController extends BaseBackendController
 {
     /**
      * @inheritDoc

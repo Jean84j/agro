@@ -13,7 +13,7 @@ use yii\web\Response;
 /**
  * IpBotController implements the CRUD actions for IpBotSearch model.
  */
-class IpBotController extends Controller
+class IpBotController extends BaseBackendController
 {
     /**
      * @inheritDoc

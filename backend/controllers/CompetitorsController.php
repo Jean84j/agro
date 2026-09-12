@@ -15,7 +15,7 @@ use yii\web\Response;
 /**
  * CompetitorsController implements the CRUD actions for Competitors model.
  */
-class CompetitorsController extends Controller
+class CompetitorsController extends BaseBackendController
 {
     /**
      * @inheritDoc
