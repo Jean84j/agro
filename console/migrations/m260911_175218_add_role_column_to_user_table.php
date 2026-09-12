@@ -12,7 +12,7 @@ class m260911_175218_add_role_column_to_user_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{%user}}', 'role', $this->string(30));
+        $this->addColumn('{{%user}}', 'role', $this->integer());
     }
 
     /**
