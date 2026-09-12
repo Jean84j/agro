@@ -29,6 +29,10 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const ROLE_USER = 1;
+    const ROLE_MANAGER = 2;
+    const ROLE_ADMIN = 3;
+
     public $password;
 
 
@@ -57,7 +61,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email'], 'required'],
-            [['username', 'email', 'password'], 'string'],
+            [['username', 'email', 'password', 'role'], 'string'],
+            [['role'], 'integer'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
@@ -68,13 +73,11 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function beforeSave($insert)
     {
-        if ($this->password){
+        if ($this->password) {
             $this->setPassword($this->password);
             $this->generateAuthKey();
-        }elseif ($insert){
-            $this->addError('password', 'Пароль не может быть пустым');
-       return false;
         }
+
         return parent::beforeSave($insert);
     }
 
@@ -230,4 +233,27 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public static function roleList()
+    {
+        return [
+            self::ROLE_USER => 'Користувач',
+            self::ROLE_MANAGER => 'Менеджер',
+            self::ROLE_ADMIN => 'Адміністратор',
+        ];
+    }
+
+    public function isAdmin()
+    {
+        return (int)$this->role === self::ROLE_ADMIN;
+    }
+
+    public function canAdmin()
+    {
+        return in_array((int)$this->role, [
+            self::ROLE_MANAGER,
+            self::ROLE_ADMIN,
+        ], true);
+    }
+
 }
