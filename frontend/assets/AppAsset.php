@@ -16,7 +16,7 @@ class AppAsset extends BaseAssetBundle
         YII_ENV_DEV ? 'css/widgets.css' : 'css/widgets.min.css',
 
         YII_ENV_DEV ? 'css/account-menu.css' : 'css/account-menu.min.css',
-        YII_ENV_DEV ? 'css/description_page.css' : 'css/description_page.min.css',
+        YII_ENV_DEV ? 'css/description_page.css' : 'css/description_page.css',
 
 
         'vendor/owl-carousel/assets/owl.carousel.min.css',
@@ -29,7 +29,7 @@ class AppAsset extends BaseAssetBundle
         YII_ENV_DEV ? 'js/main.js' : 'js/main.min.js',
         YII_ENV_DEV ? 'js/collapse.js' : 'js/collapse.min.js',
 
-        YII_ENV_DEV ? 'js/description_page.js' : 'js/description_page.min.js',
+        YII_ENV_DEV ? 'js/description_page.js' : 'js/description_page.js',
 
         'vendor/owl-carousel/owl.carousel.min.js',
     ];
