@@ -84,12 +84,13 @@ $breadcrumbItemActive = $category->name;
                             ]) ?>
                             <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         </div>
-                        <div class="spec__disclaimer">
-                            <?= $category->description ?>
-                        </div>
+
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="spec__disclaimer description_page">
+            <?= $category->description ?>
         </div>
     </div>
     <?php echo Html::hiddenInput('slug', $category->slug);

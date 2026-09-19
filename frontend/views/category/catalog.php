@@ -90,20 +90,20 @@ $breadcrumbItemActive = $category->name;
                                 </div>
                             </div>
                             <?= $this->render('/_partials/products-list', [
-                                    'products' => $products,
-                                    'layout' => $layout,
+                                'products' => $products,
+                                'layout' => $layout,
                             ]) ?>
                             <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         </div>
                         <?php if ($mobile && !empty($auxiliaryCategories)): ?>
                             <?php echo CategoriesAuxiliary::widget(['auxiliaryCategories' => $auxiliaryCategories]) ?>
                         <?php endif; ?>
-                        <div class="spec__disclaimer">
-                            <?= $category->description ?>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="spec__disclaimer description_page">
+            <?= $category->description ?>
         </div>
     </div>
     <?php echo Html::hiddenInput('slug', $category->slug);

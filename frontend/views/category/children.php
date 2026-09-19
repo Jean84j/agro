@@ -67,7 +67,7 @@ $breadcrumbItemActive = $category->name;
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </div>
-                            <div class="spec__disclaimer">
+                            <div class="spec__disclaimer description_page">
                                 <?= $category->description ?>
                             </div>
                         </div>
