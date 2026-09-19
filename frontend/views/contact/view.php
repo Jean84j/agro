@@ -51,7 +51,7 @@ $breadcrumbItemActive = 'Зв’язок з нами';
                     </div>
                 </div>
             </div>
-            <div class="spec__disclaimer">
+            <div class="spec__disclaimer description_page">
                 <?= $page_description ?>
             </div>
         </div>

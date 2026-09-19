@@ -80,7 +80,7 @@ $webp_support = ProductImage::imageWebp();
 <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
 <div class="container">
     <?php echo ProductsCarousel::widget() ?>
-    <div class="spec__disclaimer">
+    <div class="spec__disclaimer  description_page">
         <?= $page_description ?>
     </div>
     <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>

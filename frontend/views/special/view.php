@@ -49,7 +49,7 @@ $breadcrumbItemActive = 'Спеціальні пропозиції';
                         ]) ?>
                         <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         <?php if (Yii::$app->session->get('viewedProducts', [])) echo ViewProduct::widget() ?>
-                        <div class="spec__disclaimer">
+                        <div class="spec__disclaimer description_page">
                             <?= $page_description ?>
                         </div>
                     </div>

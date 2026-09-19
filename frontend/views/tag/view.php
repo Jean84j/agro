@@ -72,7 +72,7 @@ $breadcrumbItemActive = Yii::t('app', 'Продукти запиту');
                         ]) ?>
                         <?= $this->render('/_partials/pagination', ['pages' => $pages]) ?>
                         <br>
-                        <div class="spec__disclaimer">
+                        <div class="spec__disclaimer description_page">
                             <?= $tag_name->getDescriptionTranslate($tag_name, $language) ?>
                         </div>
                         <br>

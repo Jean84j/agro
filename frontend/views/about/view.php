@@ -59,7 +59,7 @@ $mobile = Yii::$app->devicedetect->isMobile();
                     </div>
                 </div>
             </div>
-            <div class="spec__disclaimer">
+            <div class="spec__disclaimer description_page">
                 <?= $page_description ?>
             </div>
             <?php echo ProductsCarousel::widget() ?>

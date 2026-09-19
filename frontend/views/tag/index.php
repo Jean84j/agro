@@ -44,7 +44,7 @@ $breadcrumbItemActive = 'Всі теги сайту';
                 <?php endforeach; ?>
                 <hr class="hr-mod">
                 <br>
-                <div class="spec__disclaimer">
+                <div class="spec__disclaimer description_page">
                     <?= $page_description ?>
                 </div>
                 <br>
