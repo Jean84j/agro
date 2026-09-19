@@ -15,7 +15,8 @@ class AppAsset extends BaseAssetBundle
         YII_ENV_DEV ? 'css/style.css' : 'css/style.min.css',
         YII_ENV_DEV ? 'css/widgets.css' : 'css/widgets.min.css',
 
-        YII_ENV_DEV ? 'css/account-menu.css' : 'css/account-menu.min.css',
+
+        'css/account-menu.css',
         'css/description_page.css',
 
 
@@ -29,7 +30,9 @@ class AppAsset extends BaseAssetBundle
         YII_ENV_DEV ? 'js/main.js' : 'js/main.min.js',
         YII_ENV_DEV ? 'js/collapse.js' : 'js/collapse.min.js',
 
+
         'js/description_page.js',
+
 
         'vendor/owl-carousel/owl.carousel.min.js',
     ];
