@@ -3,14 +3,12 @@
 namespace common\models\Orders;
 
 use backend\models\Report;
-
 use common\models\shop\Product;
 use common\models\shop\ProductImage;
 use Yii;
 use common\models\NovaPoshta\NpAreas;
 use common\models\NovaPoshta\NpCity;
 use common\models\NovaPoshta\NpWarehouses;
-
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -18,6 +16,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "order".
  *
  * @property int $id
+ * @property int $user_id
  * @property int|null $created_at Дата створення
  * @property int|null $updated_at Дата оновлення
  * @property int|null $order_status_id Статус
@@ -75,7 +74,7 @@ class Order extends ActiveRecord
             [['fio', 'note', 'ukrCity'], 'trim'],
             [['fio', 'note', 'ukrCity'], 'filter', 'filter' => 'strip_tags'],
             [['sent_message'], 'boolean'],
-            [['created_at', 'updated_at', 'order_status_id', 'order_pay_ment_id', 'order_provider_id'], 'integer'],
+            [['created_at', 'updated_at', 'order_status_id', 'order_pay_ment_id', 'order_provider_id', 'user_id'], 'integer'],
             [['fio', 'phone', 'city', 'area', 'warehouses'], 'string', 'max' => 255],
             [['note', 'comment'], 'string'],
             [['order_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrderStatus::class, 'targetAttribute' => ['order_status_id' => 'id']],
