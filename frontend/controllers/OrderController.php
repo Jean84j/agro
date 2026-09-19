@@ -41,6 +41,12 @@ class OrderController extends BaseFrontendController
                     $order->save();
                 }
 
+                if (!Yii::$app->user->isGuest) {
+                    $order->user_id = Yii::$app->user->id;
+
+                    $order->save();
+                }
+
                 foreach (Yii::$app->cart->getPositions() as $order_cart) {
                     $order_item = new OrderItem();
                     $order_item->order_id = $order->id;
