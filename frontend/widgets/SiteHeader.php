@@ -50,6 +50,12 @@ class SiteHeader extends Widget
         $topBarLinks = $this->getTopBarLinks();
         $itemsMenu = $this->getItemsMobileMenu();
 
+        $avatar = '';
+        if (!Yii::$app->user->isGuest){
+          $avatar = $this->getAvatar();
+        }
+
+
         return $this->render('site-header/header',
             [
                 'contacts' => $contacts,
@@ -62,6 +68,7 @@ class SiteHeader extends Widget
                 'path' => $path,
                 'lang' => $lang,
                 'isMobile' => $isMobile,
+                'avatar' => $avatar,
             ]);
     }
 
@@ -171,5 +178,16 @@ class SiteHeader extends Widget
                 'icon' => '<i class="fas fa-file-alt"> </i>',
             ]
         ];
+    }
+
+    protected function getAvatar()
+    {
+        $dir = Yii::getAlias('@frontendWeb/images/avatars/');
+        $name = Yii::$app->user->identity->username;
+        $firstLetter = mb_strtolower(mb_substr($name, 0, 1, 'UTF-8'));
+        if (file_exists($dir . $firstLetter . '.jpg')) {
+            return $firstLetter;
+        }
+        return 'no';
     }
 }
