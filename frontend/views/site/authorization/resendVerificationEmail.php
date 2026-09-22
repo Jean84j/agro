@@ -7,13 +7,13 @@
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 
-$this->title = 'Resend verification email';
+$this->title = 'Надіслати лист із підтвердженням ще раз';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-resend-verification-email">
+<div class="container site-resend-verification-email">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A verification email will be sent there.</p>
+    <p>Будь ласка, вкажіть свою електронну адресу. На неї буде надіслано лист із підтвердженням.</p>
 
     <div class="row">
         <div class="col-lg-5">
