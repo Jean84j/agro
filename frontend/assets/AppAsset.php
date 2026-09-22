@@ -12,8 +12,8 @@ class AppAsset extends BaseAssetBundle
 
     public $css = [
         YII_ENV_DEV ? 'css/mobile-header.css' : 'css/mobile-header.min.css',
-//        YII_ENV_DEV ? 'css/style.css' : 'css/style.min.css',
-       'css/style.css',
+        YII_ENV_DEV ? 'css/style.css' : 'css/style.min.css',
+//       'css/style.css',
         YII_ENV_DEV ? 'css/widgets.css' : 'css/widgets.min.css',
 
 
