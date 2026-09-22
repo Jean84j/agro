@@ -17,7 +17,7 @@ echo AlertBlock::widget([
             'icon' => 'fas fa-check-circle',
             'linkOptions' => ['style' => 'display:none;'],
             'pluginOptions' => [
-                'delay' => 5000,
+                'delay' => 4000,
                 'z_index' => 3031,
                 'placement' => [
                     'from' => 'bottom',

@@ -120,14 +120,15 @@ class SiteErrorsController extends BaseBackendController
     public function actionCheckDelete()
     {
         $selectedItems = Yii::$app->request->post('selection', []);
-
+        $count = count($selectedItems);
         $ips = [];
+        $i = 1;
         foreach ($selectedItems as $id) {
             $model = $this->findModel($id);
             if ($model !== null) {
-                $ips[] = 'Запис ' . 'ID => [' . $model->id . ']  IP => [' .  $model->ip_user . ']  видалено';
+                $ips[] = $i . '/' . $count . ' Запис ' . 'ID [' . $model->id . ']  IP [' .  $model->ip_user . ']  видалено';
                 $model->delete();
-            }
+            } $i++;
         }
         Yii::$app->session->setFlash('errorsDelete', $ips);
         return $this->redirect(['index']);
