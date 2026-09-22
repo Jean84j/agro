@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var $categories */
@@ -137,6 +138,98 @@ use yii\helpers\Url;
                         </ul>
                     </div>
                 </li>
+
+
+
+                <li class="mobile-links__item" data-collapse-item>
+                    <div class="mobile-links__item-title">
+                        <span data-collapse-trigger class="mobile-links__item-link"><i class="fas fa-user"></i> Account</span>
+                        <button class="mobile-links__item-toggle menu-color" type="button" data-collapse-trigger>
+                            <svg class="mobile-links__item-arrow" width="24px" height="14px">
+                                <use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mobile-links__item-sub-links" data-collapse-content>
+                        <ul class="mobile-links mobile-links--level--1">
+
+                            <?php if (!isset(Yii::$app->user->identity->username)): ?>
+                                <li class="mobile-links__item" data-collapse-item>
+                                    <span class="mobile-links__item-title">
+                                        <a href="<?= Url::to(['site/login']) ?>" class="mobile-links__item-link">
+                                            <i class="fas fa-arrow-circle-right"></i> Login
+                                        </a>
+                                    </span>
+                                </li>
+
+                                <li class="mobile-links__item" data-collapse-item>
+                                    <div class="mobile-links__item-title">
+
+                                        <a href="<?= Url::to(['site/signup']) ?>" class="mobile-links__item-link">
+                                            <i class="fas fa-user-plus"></i> Signup
+                                        </a>
+                                    </div>
+                                </li>
+
+                            <?php else: ?>
+
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <a href="account-dashboard.html" class="mobile-links__item-link">Dashboard</a>
+                                    </div>
+                                </li>
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <a href="account-profile.html" class="mobile-links__item-link">Edit Profile</a>
+                                    </div>
+                                </li>
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <a href="account-orders.html" class="mobile-links__item-link">Order History</a>
+                                    </div>
+                                </li>
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <a href="account-order-details.html" class="mobile-links__item-link">Order
+                                            Details</a>
+                                    </div>
+                                </li>
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <a href="account-addresses.html" class="mobile-links__item-link">Address
+                                            Book</a>
+                                    </div>
+                                </li>
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <a href="account-edit-address.html" class="mobile-links__item-link">Edit
+                                            Address</a>
+                                    </div>
+                                </li>
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <a href="account-password.html" class="mobile-links__item-link">Change
+                                            Password</a>
+                                    </div>
+                                </li>
+                                <li class="mobile-links__item" data-collapse-item="">
+                                    <div class="mobile-links__item-title">
+                                        <?= Html::a('Logout', ['site/logout'], [
+                                            'data' => [
+                                                'method' => 'post',
+                                            ],
+                                            'class' => 'mobile-links__item-link'
+                                        ]) ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </li>
+
+
+
+
                 <li class="mobile-links__item">
                     <div class="mobile-links__item-title">
                     </div>

@@ -2,14 +2,22 @@
 
 use yii\helpers\Url;
 
-/** @var $checkoutUrl */
-
 $session = Yii::$app->session;
 $compareList = $session->get('compareList', []);
 $compareList = count($compareList);
 
 $wishList = $session->get('wishList', []);
 $wishList = count($wishList);
+
+$visibleWishIndicator = 'display: none';
+$visibleCompareIndicator = 'display: none';
+
+if ($wishList !== 0){
+    $visibleWishIndicator = '';
+}
+if ($compareList !== 0){
+    $visibleCompareIndicator = '';
+}
 
 ?>
 <header class="site__header d-lg-none">
@@ -64,7 +72,7 @@ $wishList = count($wishList);
                                         </span>
                             </button>
                         </div>
-                        <div class="indicator">
+                        <div class="indicator" id="mobVisibleWishIndicator" style="<?= $visibleWishIndicator ?>">
                             <a href="<?= Url::to(['wish/view']) ?>" data-toggle="tooltip" title="Бажання"
                                class="indicator__button">
                                             <span class="indicator__area">
@@ -76,7 +84,7 @@ $wishList = count($wishList);
                                             </span>
                             </a>
                         </div>
-                        <div class="indicator">
+                        <div class="indicator" id="mobVisibleCompareIndicator" style="<?= $visibleCompareIndicator ?>">
                             <a href="<?= Url::to(['compare/view']) ?>" data-toggle="tooltip" title="Порівняння"
                                class="indicator__button">
                                             <span class="indicator__area">
@@ -88,11 +96,10 @@ $wishList = count($wishList);
                                             </span>
                             </a>
                         </div>
-<!--                        --><?php //if (!$checkoutUrl) : ?>
-                            <div class="indicator indicator--trigger--click cart-header">
-                                <a href="#" class="indicator__button"
-                                   data-url-cart-view-all="<?= Yii::$app->urlManager->createUrl(['cart/cart-view-all']) ?>"
-                                >
+                        <div class="indicator indicator--trigger--click cart-header">
+                            <a href="#" class="indicator__button"
+                               data-url-cart-view-all="<?= Yii::$app->urlManager->createUrl(['cart/cart-view-all']) ?>"
+                            >
                                     <span class="indicator__area">
                                         <svg width="20px" height="20px">
                                             <use xlink:href="/images/sprite.svg#cart-20"></use>
@@ -100,9 +107,8 @@ $wishList = count($wishList);
                                         <span class="indicator__value"
                                               id="desc-qty-cart"><?= Yii::$app->cart->getCount() ?></span>
                                     </span>
-                                </a>
-                            </div>
-<!--                        --><?php //endif; ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

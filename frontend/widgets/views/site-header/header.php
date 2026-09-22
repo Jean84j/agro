@@ -10,12 +10,11 @@
 /** @var $navLinks */
 /** @var $topBarLinks */
 /** @var $itemsMenu */
-
-$checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
+/** @var $avatar */
 
 ?>
 <?php if ($isMobile): ?>
-    <?= $this->render('mobile-header', ['checkoutUrl' => $checkoutUrl]) ?>
+    <?= $this->render('mobile-header') ?>
     <?= $this->render('mobile-menu',
         [
             'categories' => $categories,
@@ -45,7 +44,7 @@ $checkoutUrl = str_contains(Yii::$app->request->url, 'checkout');
                     'navLinks' => $navLinks,
                     'compareList' => $compareList,
                     'wishList' => $wishList,
-                    'checkoutUrl' => $checkoutUrl,
+                    'avatar' => $avatar,
                 ]) ?>
         </div>
     </header>

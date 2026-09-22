@@ -89,6 +89,42 @@ use yii\helpers\Url;
                     </button>
                 </div>
             </div>
+
+            <?php if (YII_ENV_DEV): ?>
+                <?php
+                $status = '';
+                $color = '';
+
+                if (Yii::$app->user->isGuest) {
+                    $status = '🥶 Гість';
+                    $color = 'cornflowerblue';
+                } else {
+                    if (Yii::$app->user->identity->role === 1) {
+                        $status = '😉 Користувач';
+                        $color = '#37b937';
+                    }
+                    if (Yii::$app->user->identity->role === 2) {
+                        $status = '🦝 Менеджер';
+                        $color = 'crimson';
+                    }
+                    if (Yii::$app->user->identity->role === 3) {
+                        $status = '🤖 Адміністратор';
+                        $color = 'crimson';
+                    }
+                }
+                ?>
+                <div class="topbar__item">
+                    <div class="topbar-dropdown">
+                        <button class="topbar-dropdown__btn" type="button" style="background-color: <?= $color ?>">
+                            <span style="color: white; font-weight: bold">
+                            <?= $status ?>
+                            </span>
+
+                        </button>
+                    </div>
+                </div>
+            <?php endif; ?>
+
         </div>
     </div>
 </div>
