@@ -188,9 +188,9 @@ if ($compareList !== 0){
                                 <div class="account-menu__divider"></div>
 
 <!--                                <ul class="account-menu__links">-->
-<!--                                    <li><a href="--><?//= Url::to(['account/view', 'card' => 'edit-profile']) ?><!--">Edit Profile</a></li>-->
-<!--                                    <li><a href="--><?//= Url::to(['account/view', 'card' => 'orders']) ?><!--">Історія замовлень</a></li>-->
-<!--                                    <li><a href="--><?//= Url::to(['account/view', 'card' => 'password']) ?><!--">Password</a></li>-->
+<!--                                    <li><a href="--><?php //= Url::to(['account/view', 'card' => 'edit-profile']) ?><!--">Edit Profile</a></li>-->
+<!--                                    <li><a href="--><?php //= Url::to(['account/view', 'card' => 'orders']) ?><!--">Історія замовлень</a></li>-->
+<!--                                    <li><a href="--><?php //= Url::to(['account/view', 'card' => 'password']) ?><!--">Password</a></li>-->
 <!--                                </ul>-->
 
                                 <div class="account-menu__divider"></div>
