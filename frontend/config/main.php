@@ -113,6 +113,9 @@ return [
 
             'rules' => [
                 '/' => 'site/index',
+                'login' => 'site/login',
+
+                'account/<card:[\w+-]*\w+>' => 'account/view',
 
                 'catalog/page/<page:\d+>' => 'category/list',
                 'catalog' => 'category/list',
