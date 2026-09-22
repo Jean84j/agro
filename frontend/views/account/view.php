@@ -26,23 +26,23 @@ $breadcrumbItemActive = 'Мій акаунт';
                             <li class="account-nav__item  <?= $card === 'dashboard' ? 'account-nav__item--active' : '' ?>">
                                 <a href="<?= Url::to(['account/view', 'card' => 'dashboard']) ?>">Dashboard</a>
                             </li>
-<!--                            <li class="account-nav__item --><?//= $card === 'edit-profile' ? 'account-nav__item--active' : '' ?><!--">-->
-<!--                                <a href="--><?//= Url::to(['account/view', 'card' => 'edit-profile']) ?><!--">Edit Profile</a>-->
+<!--                            <li class="account-nav__item --><?php //= $card === 'edit-profile' ? 'account-nav__item--active' : '' ?><!--">-->
+<!--                                <a href="--><?php //= Url::to(['account/view', 'card' => 'edit-profile']) ?><!--">Edit Profile</a>-->
 <!--                            </li>-->
-<!--                            <li class="account-nav__item --><?//= $card === 'orders' ? 'account-nav__item--active' : '' ?><!--">-->
-<!--                                <a href="--><?//= Url::to(['account/view', 'card' => 'orders']) ?><!--">Історія замовлень</a>-->
+<!--                            <li class="account-nav__item --><?php //= $card === 'orders' ? 'account-nav__item--active' : '' ?><!--">-->
+<!--                                <a href="--><?php //= Url::to(['account/view', 'card' => 'orders']) ?><!--">Історія замовлень</a>-->
 <!--                            </li>-->
-<!--                            <li class="account-nav__item --><?//= $card === 'order-details' ? 'account-nav__item--active' : '' ?><!--">-->
-<!--                                <a href="--><?//= Url::to(['account/view', 'card' => 'order-details']) ?><!--">Order Details</a>-->
+<!--                            <li class="account-nav__item --><?php //= $card === 'order-details' ? 'account-nav__item--active' : '' ?><!--">-->
+<!--                                <a href="--><?php //= Url::to(['account/view', 'card' => 'order-details']) ?><!--">Order Details</a>-->
 <!--                            </li>-->
-<!--                            <li class="account-nav__item --><?//= $card === 'addresses-list' ? 'account-nav__item--active' : '' ?><!--">-->
-<!--                                <a href="--><?//= Url::to(['account/view', 'card' => 'addresses-list']) ?><!--">Addresses</a>-->
+<!--                            <li class="account-nav__item --><?php //= $card === 'addresses-list' ? 'account-nav__item--active' : '' ?><!--">-->
+<!--                                <a href="--><?php //= Url::to(['account/view', 'card' => 'addresses-list']) ?><!--">Addresses</a>-->
 <!--                            </li>-->
-<!--                            <li class="account-nav__item --><?//= $card === 'edit-address' ? 'account-nav__item--active' : '' ?><!--">-->
-<!--                                <a href="--><?//= Url::to(['account/view', 'card' => 'edit-address']) ?><!--">Edit Address</a>-->
+<!--                            <li class="account-nav__item --><?php //= $card === 'edit-address' ? 'account-nav__item--active' : '' ?><!--">-->
+<!--                                <a href="--><?php //= Url::to(['account/view', 'card' => 'edit-address']) ?><!--">Edit Address</a>-->
 <!--                            </li>-->
-<!--                            <li class="account-nav__item --><?//= $card === 'password' ? 'account-nav__item--active' : '' ?><!--">-->
-<!--                                <a href="--><?//= Url::to(['account/view', 'card' => 'password']) ?><!--">Password</a>-->
+<!--                            <li class="account-nav__item --><?php //= $card === 'password' ? 'account-nav__item--active' : '' ?><!--">-->
+<!--                                <a href="--><?php //= Url::to(['account/view', 'card' => 'password']) ?><!--">Password</a>-->
 <!--                            </li>-->
                             <li class="account-nav__item ">
                                 <?= Html::a('Logout', ['site/logout'], [
