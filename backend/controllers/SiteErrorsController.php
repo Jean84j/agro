@@ -121,13 +121,15 @@ class SiteErrorsController extends BaseBackendController
     {
         $selectedItems = Yii::$app->request->post('selection', []);
 
+        $ips = [];
         foreach ($selectedItems as $id) {
             $model = $this->findModel($id);
             if ($model !== null) {
+                $ips[] = 'Запис ' . 'ID => [' . $model->id . ']  IP => [' .  $model->ip_user . ']  видалено';
                 $model->delete();
             }
         }
-
+        Yii::$app->session->setFlash('errorsDelete', $ips);
         return $this->redirect(['index']);
     }
 
