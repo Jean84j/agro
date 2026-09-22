@@ -146,7 +146,7 @@ use yii\helpers\Url;
                         <span data-collapse-trigger class="mobile-links__item-link"><i class="fas fa-user"></i> Account</span>
                         <button class="mobile-links__item-toggle menu-color" type="button" data-collapse-trigger>
                             <svg class="mobile-links__item-arrow" width="24px" height="14px">
-                                <use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
+                                <use xlink:href="/images/sprite.svg#arrow-rounded-down-12x7"></use>
                             </svg>
                         </button>
                     </div>
@@ -173,45 +173,45 @@ use yii\helpers\Url;
 
                             <?php else: ?>
 
-                                <li class="mobile-links__item" data-collapse-item="">
-                                    <div class="mobile-links__item-title">
-                                        <a href="account-dashboard.html" class="mobile-links__item-link">Dashboard</a>
-                                    </div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item="">
-                                    <div class="mobile-links__item-title">
-                                        <a href="account-profile.html" class="mobile-links__item-link">Edit Profile</a>
-                                    </div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item="">
-                                    <div class="mobile-links__item-title">
-                                        <a href="account-orders.html" class="mobile-links__item-link">Order History</a>
-                                    </div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item="">
-                                    <div class="mobile-links__item-title">
-                                        <a href="account-order-details.html" class="mobile-links__item-link">Order
-                                            Details</a>
-                                    </div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item="">
-                                    <div class="mobile-links__item-title">
-                                        <a href="account-addresses.html" class="mobile-links__item-link">Address
-                                            Book</a>
-                                    </div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item="">
-                                    <div class="mobile-links__item-title">
-                                        <a href="account-edit-address.html" class="mobile-links__item-link">Edit
-                                            Address</a>
-                                    </div>
-                                </li>
-                                <li class="mobile-links__item" data-collapse-item="">
-                                    <div class="mobile-links__item-title">
-                                        <a href="account-password.html" class="mobile-links__item-link">Change
-                                            Password</a>
-                                    </div>
-                                </li>
+<!--                                <li class="mobile-links__item" data-collapse-item="">-->
+<!--                                    <div class="mobile-links__item-title">-->
+<!--                                        <a href="account-dashboard.html" class="mobile-links__item-link">Dashboard</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="mobile-links__item" data-collapse-item="">-->
+<!--                                    <div class="mobile-links__item-title">-->
+<!--                                        <a href="account-profile.html" class="mobile-links__item-link">Edit Profile</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="mobile-links__item" data-collapse-item="">-->
+<!--                                    <div class="mobile-links__item-title">-->
+<!--                                        <a href="account-orders.html" class="mobile-links__item-link">Order History</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="mobile-links__item" data-collapse-item="">-->
+<!--                                    <div class="mobile-links__item-title">-->
+<!--                                        <a href="account-order-details.html" class="mobile-links__item-link">Order-->
+<!--                                            Details</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="mobile-links__item" data-collapse-item="">-->
+<!--                                    <div class="mobile-links__item-title">-->
+<!--                                        <a href="account-addresses.html" class="mobile-links__item-link">Address-->
+<!--                                            Book</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="mobile-links__item" data-collapse-item="">-->
+<!--                                    <div class="mobile-links__item-title">-->
+<!--                                        <a href="account-edit-address.html" class="mobile-links__item-link">Edit-->
+<!--                                            Address</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="mobile-links__item" data-collapse-item="">-->
+<!--                                    <div class="mobile-links__item-title">-->
+<!--                                        <a href="account-password.html" class="mobile-links__item-link">Change-->
+<!--                                            Password</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                                 <li class="mobile-links__item" data-collapse-item="">
                                     <div class="mobile-links__item-title">
                                         <?= Html::a('Logout', ['site/logout'], [
