@@ -2,12 +2,7 @@
 return [
     'bsVersion' => '4.x',
     'telegram.chat_id' => 0,
-    'adminEmail' => 'admin@example.com',
-    'email.from'   => 'no-reply@example.com',
-    'email.admins' => ['admin@example.com'],
-    'supportEmail' => 'support@example.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'email.from'   => 'noreply@agropro.org.ua',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
 ];

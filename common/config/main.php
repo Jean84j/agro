@@ -8,7 +8,7 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    // 'bootstrap' => ['assetsAutoCompress'],
+    // 'bootstrap' => [''],
     'components' => [
         'cache' => [
             'class' => FileCache::class,
