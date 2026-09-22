@@ -56,6 +56,7 @@ AppAsset::register($this);
         </main>
         <?php echo SiteFooter::widget() ?>
     </div>
+    <?= $this->render('alert-block-widgets') ?>
     <?= $this->render('quickview-modal') ?>
     <?= $this->render('cart-view-modal') ?>
     <?= $this->render('success-compare') ?>
