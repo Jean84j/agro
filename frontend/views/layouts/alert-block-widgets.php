@@ -6,6 +6,14 @@ use kartik\growl\GrowlAsset;
 
 GrowlAsset::register($this)->addTheme('growl');
 
+$placementFrom = 'top';
+$placementAlign = 'left';
+
+if (Yii::$app->devicedetect->isMobile()){
+    $placementFrom = 'bottom';
+    $placementAlign = 'center';
+}
+
 echo AlertBlock::widget([
     'type' => AlertBlock::TYPE_GROWL,
     'useSessionFlash' => true,
@@ -21,8 +29,8 @@ echo AlertBlock::widget([
                 'delay' => 3000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'left'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ],
             ]
         ],
@@ -37,8 +45,8 @@ echo AlertBlock::widget([
                 'delay' => 3000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'left'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ],
             ]
         ],
@@ -53,8 +61,8 @@ echo AlertBlock::widget([
                 'delay' => 30000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'left'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ],
             ]
         ],
@@ -70,8 +78,8 @@ echo AlertBlock::widget([
                 'delay' => 30000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'left'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ],
             ]
         ],
@@ -86,8 +94,8 @@ echo AlertBlock::widget([
                 'delay' => 30000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'left'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ],
             ]
         ],
@@ -102,8 +110,8 @@ echo AlertBlock::widget([
                 'delay' => 30000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'left'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ],
             ]
         ],
@@ -118,8 +126,8 @@ echo AlertBlock::widget([
                 'delay' => 3000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'right'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ],
             ]
         ],
@@ -132,7 +140,7 @@ echo AlertBlock::widget([
                 'z_index' => 3031,
                 'placement' => [
                     'from' => 'bottom',
-                    'align' => 'right'
+                    'align' => $placementAlign
                 ]
             ]
         ],
@@ -145,8 +153,8 @@ echo AlertBlock::widget([
             'pluginOptions' => [
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'right'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ]
             ]
         ],
@@ -160,8 +168,8 @@ echo AlertBlock::widget([
                 'delay' => 5000,
                 'z_index' => 3031,
                 'placement' => [
-                    'from' => 'top',
-                    'align' => 'right'
+                    'from' => $placementFrom,
+                    'align' => $placementAlign
                 ]
             ]
         ]
