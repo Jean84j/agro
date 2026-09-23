@@ -95,8 +95,12 @@ echo AlertBlock::widget([
 
 
     [data-notify="container"].alert-errors-delete {
-        background-color: rgba(254, 1, 1, 0.5);
-        border: 2px solid rgba(254, 3, 154, 0.99);
+        background-color: rgba(254, 1, 1, 0.8);
+        /*border: 2px solid rgba(254, 1, 1, 0.7);*/
+        box-shadow:
+                0 0 5px rgba(254, 1, 1, 0.7),
+                0 0 15px rgba(254, 1, 1, 0.6),
+                0 0 30px rgba(254, 1, 1, 0.5);
     }
 
     [data-notify="container"].alert-errors-delete [data-notify="icon"],
