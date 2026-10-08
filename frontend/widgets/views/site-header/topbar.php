@@ -1,10 +1,14 @@
 <?php
 
+use common\models\ActivePages;
 use yii\helpers\Url;
 
 /** @var $path */
 /** @var $lang */
 /** @var $topBarLinks */
+
+$urlImgFlagUk = '/images/languages/language-UK.png';
+$urlImgFlagRu = '/images/languages/language-RU.png';
 
 ?>
 <div class="site-header__topbar topbar">
@@ -56,7 +60,7 @@ use yii\helpers\Url;
                                     <a class="menu__item-link"
                                        href="<?php echo Url::to(['/' . $path, 'language' => 'uk']) ?>">
                                         <div class="menu__item-icon">
-                                            <img src="/images/languages/language-UK.png" width="20"
+                                            <img src="<?= $urlImgFlagUk ?>" width="20"
                                                  height="16" alt="UK">
                                         </div>
                                         Українська
@@ -67,7 +71,7 @@ use yii\helpers\Url;
                                     <a class="menu__item-link"
                                        href="<?php echo Url::to(['/' . $path, 'language' => 'ru']) ?>">
                                         <div class="menu__item-icon">
-                                            <img src="/images/languages/language-RU.png" width="20"
+                                            <img src="<?= $urlImgFlagRu ?>" width="20"
                                                  height="16" alt="RU">
                                         </div>
                                         Русский
@@ -82,13 +86,35 @@ use yii\helpers\Url;
                 <div class="topbar-dropdown">
                     <button class="topbar-dropdown__btn" type="button">
                         <?php if ($lang == 'UK') { ?>
-                            <img src="/images/languages/language-UK.png" width="20" height="16" alt="UK">
+                            <img src="<?= $urlImgFlagUk ?>" width="20" height="16" alt="UK">
                         <?php } else { ?>
-                            <img src="/images/languages/language-RU.png" width="20" height="16" alt="RU">
+                            <img src="<?= $urlImgFlagRu ?>" width="20" height="16" alt="RU">
                         <?php } ?>
                     </button>
                 </div>
             </div>
+
+            <?php
+
+            $user = Yii::$app->user;
+            if (!$user->isGuest && $user->identity->role === 3):
+                $count = Yii::$app->cache->getOrSet('active_online_users_count', function () {
+                    return (int)ActivePages::find()
+                        ->where(['>=', 'date_visit', time() - 300])
+                        ->andWhere(['is not', 'ip_user', null])
+                        ->count('DISTINCT ip_user');
+                }, 30);
+
+                ?>
+
+                <div class="topbar__item">
+                    <div class="topbar-dropdown">
+                        <button class="topbar-dropdown__btn" type="button">
+                            <span> 😉 > <?= $count ?> </span>
+                        </button>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <?php if (YII_ENV_DEV): ?>
                 <?php
@@ -124,7 +150,6 @@ use yii\helpers\Url;
                     </div>
                 </div>
             <?php endif; ?>
-
         </div>
     </div>
 </div>
