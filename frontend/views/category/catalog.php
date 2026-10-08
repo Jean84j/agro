@@ -20,6 +20,13 @@ ActivePages::setActiveUser();
 /** @var AuxiliaryCategories $auxiliaryCategories */
 /** @var Category $category */
 /** @var $mobile */
+/** @var $filterBrandsItem */
+/** @var $category_products_all */
+/** @var $categoryMinPrice */
+/** @var $categoryMaxPrice */
+/** @var $minPrice */
+/** @var $maxPrice */
+/** @var $layout */
 
 $h1 = $category->h1 ?: $category->name;
 
